@@ -1,0 +1,95 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: godlee
+ * Date: 2015/10/29
+ * Time: 10:50
+ */
+include_once '../includePackage.php';
+session_start();
+
+
+
+
+if(isset($_SESSION['login'])) {
+    if (isset($_POST['insert'])) {
+        $g_id = pdoInsert('g_inf_tbl', array('name' => $_POST['g_name'], 'sc_id' => $_POST['sc_id'], 'inf' => addslashes($_POST['g_inf'])));
+        if ($g_id != null) {
+            if (isset($_POST['sale'])) {
+                $d_id = pdoInsert('g_detail_tbl', array('g_id' => $g_id, 'category' => '默认', 'sale' => $_POST['sale'], 'wholesale' => $_POST['wholesale']));
+            }
+            $sc_id = $_POST['sc_id'];
+//        printView('admin/view/goods_edit.html.php');
+            header('location:index.php?goods-config=1&g_id=' . $g_id . '&sc_id=' . $sc_id);
+            exit;
+        }
+        exit;
+    }
+    if (isset($_POST['category'])) {
+
+        pdoInsert('category_tbl',array('name'=>$_POST['category'],'remark'=>$_POST['remark']));
+        init();
+        header('location:index.php?category-config=1');
+        exit;
+    }
+    if (isset($_POST['sub_category']) && $_POST['father_cg_id'] != '0') {
+        pdoInsert('sub_category_tbl',array('name'=>$_POST['sub_category'],'father_id'=>$_POST['father_cg_id'],'remark'=>$_POST['sub_remark']));
+        init();
+        header('location:index.php?category-config=1');
+        exit;
+
+    }
+    if (isset($_POST['alter'])) {
+        pdoUpdate('g_inf_tbl',array('name'=>$_POST['name'],'intro'=>addslashes($_POST['intro']),'inf'=>addslashes($_POST['g_inf'])),array('id'=>$_POST['g_id']));
+        $g_id = $_POST['g_id'];
+        header('location:index.php?goods-config=1&g_id=' . $g_id);
+        exit;
+    }
+    if (isset($_POST['filtOrder'])){
+        pdoUpdate('order_tbl',array('stu'=>$_POST['stu'],'express_id'=>$_POST['express'],'express_order'=>$_POST['expressNumber']),
+            array('id'=>$_POST['filtOrder']));
+        header('location:index.php?orders=1');
+        exit;
+    }
+    if (isset($_GET['start_promotions'])) {
+        pdoInsert('promotions_tbl', array('g_id' => $_GET['g_id'], 'd_id' => $_GET['d_id']));
+        header('location: index.php?promotions=1');
+        exit;
+
+    }
+    if (isset($_GET['delete_promotions'])) {
+        $str = 'delete from promotions_tbl where d_id=' . $_GET['d_id'];
+        exeNew($str);
+        header('location: index.php?promotions=1');
+        exit;
+    }
+    if(isset($_GET['del_detail_id'])){
+        $query=pdoQuery('user_order_view',array('count(*) as num'),array('d_id'=>$_GET['del_detail_id']),' ');
+        $value=$query->fetch();
+        if($value['num']>0){
+            echo 'cannot delete';
+        }else{
+            pdoDelete('g_detail_tbl',array('id'=>$_GET['del_detail_id']));
+            header('location:index.php?goods-config=1&g_id=' .$_GET['g_id']);
+        }
+        exit;
+    }
+    if(isset($_GET['wechat'])){
+
+        include_once '../wechat/serveManager.php';
+        if(isset($_GET['createButton'])){
+            createButtonTemp();
+            exit;
+        }
+
+    }
+    if(isset($_GET['imgUpdate'])){
+        mylog('update');
+    }
+    if(isset($_GET['goodsSituation'])){
+        pdoUpdate('g_inf_tbl',array('situation'=>$_GET['goodsSituation']),array('id'=>$_GET['g_id']));
+        $g_id=$_GET['g_id'];
+        header('location:index.php?goods-config=1&g_id=' . $g_id);
+        exit;
+    }
+}

@@ -1,0 +1,149 @@
+<?php
+define('DEBUG',true);
+//$province=null;
+//$city=null;
+//$area=null;
+
+function html($text)
+{
+	return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+}
+
+function htmlout($text)
+{
+	echo html($text);
+}
+
+function output($string){
+    header("Content-Type:text/html; charset=utf-8");
+    echo '<p class = "warning">'. $string.'</p>';
+
+}
+function formatOutput($string){
+//    $str=html($string);
+    $str=preg_replace('/___/','<input type="text"/>',$string);
+    return $str;
+
+}
+
+function printInf($p){
+    echo '<br/>'.'{';
+    foreach ($p as $k=>$v) {
+       echo $k.':  ';
+        if(is_array($v)){
+            printInf($v);
+        }else{
+            echo $v.',';
+        }
+
+    }
+    echo '}';
+}
+
+//debug
+
+function getArrayInf($array){
+    $s='{';
+    foreach ($array as $k=>$v) {
+        $s=$s.','.$k.': ';
+        if(is_array($v)){
+            $s=$s.getArrayInf($v);
+        }else{
+            $s=$s.$v;
+        }
+    }
+    return $s.'}';
+
+}
+
+
+function mylog($str){
+    if(DEBUG) {
+        $log = date('Y.m.d.H:i:s', time()) . ':  ' . $str . "\n";
+        file_put_contents('../log.txt', $log, FILE_APPEND);
+    }
+}
+
+
+
+
+
+
+//微信用
+/**随机字符串生成器
+ * @param int $length
+ * @return string
+ */
+function getRandStr($length = 16)
+{
+    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    $str = "";
+    for ($i = 0; $i < $length; $i++) {
+        $str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+    }
+    return $str;
+}
+
+/**
+ * 格式化参数格式化成url参数
+ */
+function ToUrlParams(array $value)
+{
+    $buff = "";
+    foreach ($value as $k => $v)
+    {
+        if($k != "sign" && $v != "" && !is_array($v)){
+            $buff .= $k . "=" . $v . "&";
+        }
+    }
+
+    $buff = trim($buff, "&");
+    return $buff;
+}
+
+/**
+ * 生成微信所需签名
+ * @param $key
+ * @return string
+ */
+function makeSign(array $value,$key)
+{
+    //签名步骤一：按字典序排序参数
+    ksort($value);
+    $string =ToUrlParams($value);
+    //签名步骤二：在string后加入KEY
+    $string = $string . $key;
+    //签名步骤三：MD5加密
+    $string = md5($string);
+    //签名步骤四：所有字符转为大写
+    $result = strtoupper($string);
+    return $result;
+}
+
+/**
+ * @param array $values 待转化的数组
+ * @return string
+ * @throws WxPayException
+ */
+function toXml(array $values)
+{
+    if(!is_array($values)
+        || count($values) <= 0)
+    {
+        return '<xml><error>数组错误</error></xml>';
+    }
+
+    $xml = "<xml>";
+    foreach ($values as $key=>$val)
+    {
+        if (is_numeric($val)){
+            $xml.="<".$key.">".$val."</".$key.">";
+        }else{
+            $xml.="<".$key."><![CDATA[".$val."]]></".$key.">";
+        }
+    }
+    $xml.="</xml>";
+    return $xml;
+}
+
+

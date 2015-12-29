@@ -1,0 +1,86 @@
+body{
+    background-color: #F4F3EF;
+    font-family: "LiSu";
+
+}
+
+img.scroll {
+    max-width:100%;
+    height:auto;
+}
+
+div.maincate {
+    margin: 2%;
+    float: left;
+    width:26%;
+    height:20%;
+    /*box-shadow: 10px 10px 5px #888888;*/
+    font-weight: 600;
+}
+
+div.goods-promotion {
+    position: relative;
+    text-align: center;
+    padding: 2%;
+    margin:0;
+    float:left;;
+    width:45.65%;
+    height:auto;
+    border-right-style: solid;
+    border-color:#dcdcdc;
+    border-width: thin;
+
+}
+div.promotion-name {
+    position:absolute;
+    left:0px;
+    top:0px;
+    margin:2px;
+    max-width: 70%;
+    height: auto;
+    font-size: larger;
+
+}
+div.promotion-sale{
+    font-size: smaller;
+}
+div.promotion-price{
+    font-size: larger;
+    position:absolute;
+    left:0px;
+    bottom:0px;
+}
+div.promotion-img{
+    padding: 0;
+    margin: 0;
+    width:60%;
+    position:absolute;
+    right:0px;
+    bottom:0px;
+
+}
+.block{
+    position: relative;
+    float: left;
+    width: 40%;
+    height: 30%;
+    padding: 0;
+    border-style: solid;
+    margin: 1%;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border-color:#dcdcdc;
+    border-width: thin;
+}
+.main-cate-icon{
+    padding-top: 10px;
+    text-align:center;
+}
+.main-cate-text{
+    text-align: center;
+    font-size: small;
+}
+img.cate-icon{
+    width: 20%;
+    height:auto;
+}
