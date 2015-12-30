@@ -33,7 +33,7 @@ if(isset($_SESSION['login'])) {
         $file = $_FILES['spic'];
         $inf = '';
         for ($i = 0; $i < count($file['name']); $i++) {
-            if ((($file["type"][$i] == "image/gif")
+            if ((($file["type"][$i] == "image/png")
                     || ($file["type"][$i] == "image/jpeg")
                     || ($file["type"][$i] == "image/pjpeg"))
                 && ($file["size"][$i] < 500000)

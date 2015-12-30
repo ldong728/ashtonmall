@@ -5,7 +5,7 @@ $sc_id=(isset($_GET['sc_id'])? $_GET['sc_id'] : -1);
 $m_i=(isset($_GET['made_in'])? $_GET['made_in']:-1);
 
 ?>
-
+<script src="js/ajaxfileupload.js"></script>
 <script>
     var g_id = <?php echo $g_id?>;
     var sc_id=
@@ -86,6 +86,29 @@ $m_i=(isset($_GET['made_in'])? $_GET['made_in']:-1);
         </div>
 
     </div>
+
+    <div class="img-upload">
+    <input type="file"id="tmp"name="tmp"style="display: none">
+        <input id="upbutton" type="button"value="上传">
+
+    </div>
+    <script>
+        $('#upbutton').click(function(){
+            $('#tmp').click();
+        })
+        $('#tmp').change(function(){
+            $.ajaxFileUpload({
+                url:'upload.php?g_id='+g_id,
+                secureuri: false,
+                fileElementId: 'tmp', //文件上传域的ID
+                dataType: 'json', //返回值类型 一般设置为json
+                success: function (data, status){}  //服务器成功响应处理函数
+
+
+            })
+        })
+
+    </script>
 </div>
 <script type="text/javascript" charset="utf-8" src="../uedit/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="../uedit/umeditor.min.js"></script>

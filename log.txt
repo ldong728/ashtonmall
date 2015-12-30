@@ -56,3 +56,13 @@
 2015.12.29.19:53:44:  INSERT INTO cart_tbl SET c_id="admin",g_id="1",d_id="",number="1" ON DUPLICATE KEY UPDATE number=1
 2015.12.29.21:36:31:  {"errcode":0,"errmsg":"ok","ticket":"sM4AOVdWfPE4DxkXGEs8VLiZonwq165wMQc4rnz4TMJqZk4OTasVZ-3CPngSSBg4j480xgOdY5gW0zTK3sd39w","expires_in":7200}
 2015.12.29.21:36:31:  get jsapiTicketOnLine
+2015.12.30.10:10:35:  {"errcode":0,"errmsg":"ok","ticket":"sM4AOVdWfPE4DxkXGEs8VLiZonwq165wMQc4rnz4TMIv6fQ7BGqjwHqysZqLJe14OfLYMXCTtyfTg_idNcqN4w","expires_in":7200}
+2015.12.30.10:10:35:  get jsapiTicketOnLine
+2015.12.30.12:47:18:  {"errcode":0,"errmsg":"ok","ticket":"sM4AOVdWfPE4DxkXGEs8VLiZonwq165wMQc4rnz4TMJrIyL1-Rwmy6soIcrOmbVR5bwZUQgsIMEO4Z2bkhlyQQ","expires_in":7200}
+2015.12.30.12:47:18:  get jsapiTicketOnLine
+2015.12.30.23:33:52:  1
+2015.12.30.23:33:52:  LOGO.png
+2015.12.30.23:35:10:  1
+2015.12.30.23:35:10:  LOGO.png
+2015.12.30.23:37:42:  1
+2015.12.30.23:37:42:  flag.png

@@ -69,7 +69,7 @@ div.foot-nav{
 }
 div.icon-block div.icon{
 
-    margin: 5px auto -10px auto;
+    margin: 5px auto -5px auto;
     width: 50%;
     height: 70%;
     background-repeat: no-repeat;
@@ -119,6 +119,7 @@ div.foot{
     background-image: url(images/foot.png);
     background-size: 100% 30px;
     background-color:#282828;
+    z-index: 999;
 }
 
 
@@ -297,10 +298,13 @@ div .h-border{
 }
 /*商品详情*/
 .pDetail{width:100%; min-width:320px; max-width:1024px; overflow:hidden; margin-bottom:58px;background-color: #e1e1e1}
+div .module-box{
+    overflow:hidden; background-color:#fff; width:100%; margin-top:1.5vh;
+}
 /*商品基本信息*/
 .pDetail .baseInfo{width:100%; min-width:320px; max-width:1024px; position:relative; padding-bottom:2px;}
-.pDetail .baseInfo .pd_info{overflow:hidden; background-color:#fff;box-shadow:0 1px 1px #dcdcdc;}
-.baseInfo .pd_info .pName{overflow:hidden;width: 90%; margin: 1vh auto;min-height: 5vh;}
+.pDetail .baseInfo .pd_info{overflow:hidden; background-color:#fff;box-shadow:0 1px 1px #dcdcdc;border-bottom-style: solid}
+.baseInfo .pd_info .pName{overflow:hidden;width: 90vw; margin: 1vh auto;min-height: 5vh;}
 .pName span.pro_Name{font-size: 5vw;display: block;line-height: 5vh;font-weight: 600 }
 .baseInfo .pd_info h1{color:#333; height:44px; overflow:hidden;}
 .baseInfo .pd_info h1 span{font-size:14px; display:block; height:44px; overflow:hidden; line-height:22px;}
@@ -309,18 +313,15 @@ div .h-border{
 .baseInfo .pdDot{position:absolute; bottom:30px; left:0; width:100%; height:8px; text-align: center; z-index: 10; opacity:0.9;}
 .baseInfo .pd_info dl .price{font-size:1.7em;color:#333}
 .baseInfo .pd_info dl .cl_red{font-size:18px; line-height:18px; color:#eb0b30;}
-/*.baseInfo .pd_info .pd_imgList{margin:15px 0; overflow:hidden;}*/
-/*.baseInfo .pd_info .pd_imgList li{margin:0; width:200px; height:200px;}*/
-/*.baseInfo .pd_info .pd_imgList img{width:200px; height:200px; margin:0 auto; display:block;}*/
-.baseInfo .pd_info dl{width: 90%;margin:1vh auto 0 auto; overflow:hidden; position:relative;}
+.baseInfo .pd_info dl{width: 90vw;margin:1vh auto 0 auto; overflow:hidden; position:relative;}
 .baseInfo .pd_info dl dt{float:left; clear:left; padding-bottom:10px; color:#999; line-height:18px; margin-right:5px;}
 .baseInfo .pd_info dl dd{float:left; color:#999; line-height:18px;}
 .baseInfo .pd_info dl dd a{text-decoration:none; color:#999;}
 .baseInfo .pd_info dl b{display:inline-block; width:12px;}
 
-.pDetail .baseInfo .buy{overflow:hidden; background-color:#fff; width:100%; margin-top:1.5vh; box-shadow:0 1px 1px #dcdcdc;}
+.pDetail .baseInfo .buy{border-style: solid none}
 .buy dl{
-    width: 90%;
+    width: 90vw;
     margin:1.5vh auto 0 auto;
 }
 .buy dl dd{float:left; margin:8px 0; color:#666;}
@@ -330,7 +331,7 @@ div .h-border{
     border-style: solid;
     border-width: thin;
     /*padding: 0.5vh 0.3vw;*/
-    margin:0px 5px 8px 5px;
+    margin:0px 5px 8px 0;
     padding: 1%;
     min-width:10vw;
     max-width:16vw;
@@ -354,5 +355,148 @@ div .h-border{
 .buy .countBox .plus{background-color:#e1e1e1;text-decoration:none; border:1px solid #e3e3e3; font-size:5vw; line-height:5.2vh; width:6vw; height:5.2vh; text-align:center; display:inline-block;float:left; font-weight:500;}
 .buy .countBox .count{border:none; border-top:1px solid #e3e3e3; border-bottom:1px solid #e3e3e3; line-height:5.2vh; height:5.2vh; width:12vw; text-align:center; display:inline-block;float:left;}
 .baseInfo .buy .singleBox{margin:8px 0 10px; line-height:28px; border:1px solid #e3e3e3; padding:3px 15px; color:#333;}
-.buy .button-box{overflow:hidden;width: 90%; margin: 1vh auto;min-height: 6vh;}
+.buy .button-box{overflow:hidden;width: 90vw; margin: 1vh auto;min-height: 6vh;}
+.button-box button{
+    font-size: 3.5vw;
+    float: left;
+    width: 25vw;
+    height: 5vh;
+    background-color: #fff;
+    border-color: red;
+    color:red;
+}
+.button-box button.buy-now{
+    margin: 0 10vw 0 13vw;
+}
+.button-box button.add-cart{
+    background-color: red;
+    color: #ffffff;
+}
+
+/*配件选择*/
+.pDetail .baseInfo .part{
+    border-style: solid none;
+    min-height: 15vh;
+
+}
+
+.part .title{
+    width: 90vw;
+    font-size: 4vw;
+    line-height: 5vw;
+    margin: 2vh auto;
+}
+.part .partInf{
+    position: relative;
+    width: 90vw;
+    min-height: 15vh;
+    margin: 1vh auto;
+
+}
+.part .partInf .check-box{
+    float: left;
+    height: 15vh;
+    width: 7vw;
+    background-image: url(images/icon-grey-tick.jpg);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: 0 4vh;
+}
+.part .partInf .checked{
+    background-image: url(images/icon-tick.jpg);
+}
+.part .partDetail{
+    margin-left: 1vw;
+    float:left;
+    height: 15vh;
+    width: 81vw;
+}
+.part .partDetail img{
+    border:thin solid #939393;
+    float:left;
+    width:20vw;
+    height: auto;
+}
+.part .partDetail dl{
+    margin-left: 6vw;
+    position: relative;
+    width:50vw;
+    height: 15vh;
+    float: left;
+}
+.partDetail dl dt{
+    margin: 0;
+    font-size: 3.5vw;
+    line-height: 4vw;
+    float:left; clear:left; padding-bottom:1vh; color:#999;;
+}
+.partDetail dl dd{
+    /*max-width: 35vw;*/
+    font-size: 3.5vw;
+    line-height: 4vw;
+    float:left;
+}
+.partDetail dl dt.detail{
+    margin: 0;
+    padding: 0;
+}
+.partDetail dl dd.price{
+    color: red;
+}
+/*用户评价*/
+.pDetail .baseInfo .evaluate{
+
+}
+
+/*详情*/
+.pDetail .baseInfo .g-detail{
+    min-height: 60vh;
+    overflow-x: hidden;
+}
+.g-detail .detail-nav{
+    text-align: center;
+    margin: 1vh auto;
+    width: 90vw;
+    height: 8vh;
+    border-width: thin;
+    border-style: solid none;
+}
+.g-detail .detail-nav li{
+    margin: 0 3vw;
+    width: 30vw;
+    line-height: 8vh;
+    font-size: 4vw;
+    display: inline;
+}
+.g-detail .detail-info{
+    width: 100%;
+    min-height: 60vh;
+    background-color: #00415e;
+}
+
+.g-detail .detail-par{
+    width: 100%;
+    min-height: 60vh;
+    background-color: #ef0808;
+}
+.detail-par table{
+    border-collapse:collapse;
+    /*text-align: center;*/
+    border-width: thin;
+    border-style: solid;
+}
+.detail-par table td{
+    width: auto;
+    /*font-size: 0.7em;*/
+    padding: 0;
+    text-align: center;
+    border-width: thin;
+    border-style: solid;
+}
+.g-detail .detail-after{
+    width: 100%;
+    min-height: 60vh;
+    background-color: #00a213;
+}
+
 

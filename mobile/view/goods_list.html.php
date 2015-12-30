@@ -55,34 +55,7 @@
 
         </div>
     </div>
-    <div class="foot-nav">
-        <div class="category-nav">
-            <div class="space"></div>
-            <?php foreach ($maincate as $row): ?>
-                <div class="nave-block" id="<?php echo $row['id'] ?>"
-                     onclick="selectCate(this)"><?php echo $row['name'] ?></div>
-                <div class="nave-slash"></div>
-            <?php endforeach ?>
-        </div>
-        <div class="con-nav">
-            <div class="icon-block">
-                <div class="icon user-center">
-                </div>
-                个人中心
-            </div>
-
-            <div class="icon-block">
-                <div class="icon kf"></div>
-                在线客服
-            </div>
-
-        </div>
-
-    </div>
-    <div class="foot">
-
-
-    </div>
+<?php include_once 'templates/foot.php'?>
 
 
 </div>
