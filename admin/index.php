@@ -6,12 +6,18 @@ session_start();
 if (!isset($_SESSION['mq']) || !isset($_SESSION['smq'])) {
     init();
 }
+else{
+}
 if (isset($_SESSION['login'])) {
     if (isset($_GET['add-goods'])) {
         printView('admin/view/addgoods.html.php', '添加货品');
         exit;
     }
     if (isset($_GET['goods-config'])) {
+        if(isset($_GET['is_part'])){
+            printView('admin/view/part_edit.html.php', '货品修改');
+            exit;
+        }
         printView('admin/view/goods_edit.html.php', '货品修改');
         exit;
     }

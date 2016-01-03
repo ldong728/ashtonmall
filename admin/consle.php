@@ -12,15 +12,16 @@ session_start();
 
 
 if(isset($_SESSION['login'])) {
-    if (isset($_POST['insert'])) {
-        $g_id = pdoInsert('g_inf_tbl', array('name' => $_POST['g_name'], 'sc_id' => $_POST['sc_id'], 'inf' => addslashes($_POST['g_inf'])));
+    if (isset($_POST['insert'])&&isset($_POST['name'])) {
+        $g_id = pdoInsert('g_inf_tbl', array('produce_id'=>$_POST['produce_id'],'name' => $_POST['g_name'], 'sc_id' => $_POST['sc_id']));
         if ($g_id != null) {
             if (isset($_POST['sale'])) {
                 $d_id = pdoInsert('g_detail_tbl', array('g_id' => $g_id, 'category' => '默认', 'sale' => $_POST['sale'], 'wholesale' => $_POST['wholesale']));
             }
             $sc_id = $_POST['sc_id'];
 //        printView('admin/view/goods_edit.html.php');
-            header('location:index.php?goods-config=1&g_id=' . $g_id . '&sc_id=' . $sc_id);
+            $part_input=isset($_POST['is_part'])?'&is_part=1':'';
+            header('location:index.php?goods-config=1&g_id=' . $g_id . '&sc_id=' . $sc_id.$part_input);
             exit;
         }
         exit;
@@ -40,7 +41,7 @@ if(isset($_SESSION['login'])) {
 
     }
     if (isset($_POST['alter'])) {
-        pdoUpdate('g_inf_tbl',array('name'=>$_POST['name'],'intro'=>addslashes($_POST['intro']),'inf'=>addslashes($_POST['g_inf'])),array('id'=>$_POST['g_id']));
+        pdoUpdate('g_inf_tbl',array('name'=>$_POST['name'],'intro'=>addslashes($_POST['intro']),'inf'=>addslashes($_POST['g_inf']),'produce_id'=>$_POST['produce_id']),array('id'=>$_POST['g_id']));
         $g_id = $_POST['g_id'];
         header('location:index.php?goods-config=1&g_id=' . $g_id);
         exit;
@@ -91,5 +92,17 @@ if(isset($_SESSION['login'])) {
         $g_id=$_GET['g_id'];
         header('location:index.php?goods-config=1&g_id=' . $g_id);
         exit;
+    }
+    if(isset($_GET['updateParm'])){
+        $value['g_id']=$_GET['g_id'];
+        foreach ($_POST as $k=>$v) {
+            $value[$k]=$v;
+        }
+        pdoInsert('parameter_tbl',$value,'update');
+        $g_id=$_GET['g_id'];
+        header('location:index.php?goods-config=1&g_id=' . $g_id);
+        exit;
+
+
     }
 }

@@ -7,12 +7,12 @@ if (g_id != -1) {
     });
     getGInf();
 }
-$('input').attr('onkeypress',"if(event.keyCode == 13) return false;");//屏蔽回车键
 $("#g_name").change(function () {
     g_id = $("#g_name option:selected").val();
     getGInf();
 });
 $("#sc_id").change(function () {
+    //alert('change');
     $("#g_name").load("ajax_request.php", {
         categoryCheck: $("#sc_id option:selected").val(),
         country_id: $(".country option:selected").val()
@@ -20,12 +20,11 @@ $("#sc_id").change(function () {
 });
 $('#changeSc').change(function(){
     $.post('ajax_request.php',{alterCategory: $("#changeSc option:selected").val(),g_id:g_id},function(data){
+
     });
 });
 $(document).on('change', '.category', function () {
-    $.post('ajax_request.php', {changeCategory: 1, d_id: $(this).attr('id'), value: $(this).val()},function(data){
-        showToast('修改成功');
-    });
+    $.post('ajax_request.php', {changeCategory: 1, d_id: $(this).attr('id'), value: $(this).val()});
 
 })
 $(document).on('change', '.sale', function () {
@@ -43,7 +42,7 @@ $(document).on('click', '.is_cover', function () {
     $.post('ajax_request.php', {set_cover_id: $(this).val(), g_id: g_id});
 });
 $(document).on('click','.img-upload',function(){
-   $('#g-img-up').click();
+    $('#g-img-up').click();
 });
 $(document).on('change','#g-img-up',function(){
     $.ajaxFileUpload({
@@ -54,7 +53,7 @@ $(document).on('change','#g-img-up',function(){
         success: function (v, status){
             var isCheck = (1 == v.front_cover ? 'checked = true' : '');
             var content = '<div class="demo-box"><input type="radio" name="is_cover"class="is_cover"value="' + v.id + '"' + isCheck + '/>'
-                + '<a href="delete.php?delimg=' + v.url + '&g_id=' + g_id + '"><img class="demo" src= "../' + v.url + '" alt = "error" /></a></div>';
+                + '<a href="delete.php?delimg=' + v.urlInDb + '&g_id=' + g_id + '"><img class="demo" src= "' + v.url + '" alt = "error" /></a></div>';
 
             $('.img-upload').before(content);
 
@@ -85,7 +84,6 @@ function getGInf() {
         $('#intro').append(inf.goodsInf.intro);
         $('#changeSituation').append(stub);
         $('#name').val(inf.goodsInf.name);
-        $('#produce_id').val(inf.goodsInf.produce_id);
         if(null!=inf.goodsInf.inf) {
             um.setContent(inf.goodsInf.inf);
         }else{
@@ -94,17 +92,15 @@ function getGInf() {
 
         if(null!=inf.detail) {
             $.each(inf.detail, function (k, v) {
-                var content = '<p>规格：<input class="detail-input category" type="text" id="' + v.id + '"value="' + v.category + '"/>' +
-                    '售价：<input class="detail-input" type="text" class="sale" id="' + v.id + '"value="' + v.sale + '"/>' +
-                    //'批发价：<input class="detail-input" type="text" class="wholesale" id="' + v.id + '"value="' + v.wholesale + '"/>' +
-                    '<a class="detail-delete" href="consle.php?del_detail_id=' + v.id + '&g_id=' + g_id + '">删除此规格</a>' +
+                var content = '<p>规格：<input type="text" class="category" id="' + v.id + '"value="' + v.category + '"/>' +
+                    '售价：<input type="text" class="sale" id="' + v.id + '"value="' + v.sale + '"/>' +
+                    '批发价：<input type="text" class="wholesale" id="' + v.id + '"value="' + v.wholesale + '"/>' +
+                    '<a href="consle.php?del_detail_id=' + v.id + '&g_id=' + g_id + '">删除此规格</a>' +
                     '</p>';
                 $('#goods_detail').append(content);
             });
-            $('#goods_detail').append('<div class="divButton"><p id="add_category">添加规格</p></div>');
         }
         if (null != inf.img) {
-            $('#goods_image').append('<div class="module-title"><h4>图片展示</h4></div>');
             $.each(inf.img, function (k, v) {
                 var isCheck = (1 == v.front_cover ? 'checked = true' : '');
                 var content = '<div class="demo-box"><input type="radio" name="is_cover"class="is_cover"value="' + v.id + '"' + isCheck + '/>设为主图'
@@ -115,12 +111,10 @@ function getGInf() {
 
         }
         $('#goods_image').append('<a class="img-upload"></a><input type="file"id="g-img-up"name="g-img-up"style="display: none">');
-        var precon='<div class="module-title">'+
-            '<h4>参数设置</h4>'+
-            '</div><form id="updateParm"action="consle.php?updateParm=1&g_id='+g_id+'"method="post">';
+        var precon='<form id="updateParm"action="consle.php?updateParm=1&g_id='+g_id+'"method="post">';
         $.each(inf.parm,function(k,v){
             var cateName=k;
-            var con='<table class="parmInput"><tr><td colspan="2">'+cateName+'</td></tr>'
+            var con='<table class="parmInput"><tr>'+cateName+'</tr>'
             $.each(v,function(subk,subv){
                 var scon='<tr><td>'+subv.name+'</td><td><input type="text" name="'+subv.col+'"value="'+subv.value+'"/></td></tr>'
                 con+=scon;
@@ -129,16 +123,10 @@ function getGInf() {
             precon+=con
             //$('.parm-set').append(con);
         });
-        $('.parm-set').append(precon+'<button>提交参数修改</button></form>');
+        $('.parm-set').append(precon+'<input type="submit"value="修改参数"/></form>');
 
 
         $('#g_inf').slideDown('fast');
         $('#changeCategory').css('display','block');
     });
-}
-function showToast(str){
-    $('.toast').empty();
-    $('.toast').append(str)
-    $('.toast').fadeIn('fast')
-    var t = setTimeout('$(".toast").fadeOut("slow")', 800);
 }

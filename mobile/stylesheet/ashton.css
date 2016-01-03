@@ -22,7 +22,7 @@ a{
 div{
     cursor: pointer;
 }
-div .toast{padding:20px 30px; border:1px solid #333; border-radius:5px; position:fixed; top:50%; left:50%; transform:translate(-50%,-45%); -webkit-transform:translate(-50%,-45%); background-color:#333; opacity:0.8; display:none; color:#fff; font-size:16px; font-weight:700; line-height:24px; text-align:center; min-width:126px; max-width:196px;}
+div .toast{z-index:999;padding:20px 30px; border:1px solid #333; border-radius:5px; position:fixed; top:50%; left:50%; transform:translate(-50%,-45%); -webkit-transform:translate(-50%,-45%); background-color:#333; opacity:0.8; display:none; color:#fff; font-size:16px; font-weight:700; line-height:24px; text-align:center; min-width:126px; max-width:196px;}
 div.wrap{
     /*position: relative;*/
     min-width: 320px;
@@ -199,6 +199,8 @@ ul.sub-category{
     list-style-type: none;
 }
 .main-left li{
+    font-size: 1.4em;
+    padding: 1vh 0;
     cursor: pointer;
 }
 .sub-category h5{
@@ -234,7 +236,7 @@ div.main-right{
 div.main-right .produce-intro{
     position: relative;
     width:100%;
-    height:150px;
+    min-height:150px;
     /*background-color: #007aff;*/
     margin-left: 15px;
 
@@ -257,8 +259,8 @@ div.main-right .produce-intro{
     /*background-color: #00415e;*/
 }
 .produce-img img{
-    height: 100%;
-    width: auto;
+    width:100%;
+    max-height: 300px;
 }
 .produce-inf{
     width: 9em;
@@ -326,7 +328,7 @@ div .module-box{
 }
 .buy dl dd{float:left; margin:8px 0; color:#666;}
 .buy dl dd.selectBox{
-
+    cursor: pointer;
     position: relative;
     border-style: solid;
     border-width: thin;
@@ -341,8 +343,13 @@ div .module-box{
     /*font-weight: 400;*/
     text-align: center;
 }
-.buy dl dd.selected{
+
+.buy dl dd.detail-selected{
     border-color: red;
+    background-image: url(images/icon-tick.jpg);
+    background-size: 20% auto;
+    background-repeat: no-repeat;
+    background-position: 96% 96%;
 }
 .baseInfo .buy dl dt{float:left; clear:left; margin:8px 5px 8px 0; line-height:5vw; font-size:4vw;}
 
@@ -376,7 +383,7 @@ div .module-box{
 /*配件选择*/
 .pDetail .baseInfo .part{
     border-style: solid none;
-    min-height: 15vh;
+    min-height: 18vh;
 
 }
 
@@ -414,7 +421,7 @@ div .module-box{
 .part .partDetail img{
     border:thin solid #939393;
     float:left;
-    width:20vw;
+    width:25%;
     height: auto;
 }
 .part .partDetail dl{
@@ -457,29 +464,44 @@ div .module-box{
     text-align: center;
     margin: 1vh auto;
     width: 90vw;
-    height: 8vh;
+    height: 6vh;
     border-width: thin;
     border-style: solid none;
 }
-.g-detail .detail-nav li{
-    margin: 0 3vw;
-    width: 30vw;
-    line-height: 8vh;
+.detail-nav .slash{
+    float: left;
+    width: 1px;
+    height: 6vh;
+    border-left-style: solid;
+}
+.g-detail .detail-nav .nav{
+    float: left;
+    /*margin: 0 6vw;*/
+    cursor: pointer;
+    width: 29vw;
+    line-height: 6vh;
     font-size: 4vw;
     display: inline;
 }
+.nav-selected{
+    color: red;
+}
 .g-detail .detail-info{
     width: 100%;
-    min-height: 60vh;
-    background-color: #00415e;
+    height: 100vh;
+    overflow-y: scroll;
 }
 
 .g-detail .detail-par{
+    text-align: center;
     width: 100%;
-    min-height: 60vh;
-    background-color: #ef0808;
+    height: 100vh;
+    overflow-y: scroll;
+    /*background-color: #ef0808;*/
 }
 .detail-par table{
+    margin: 2vw auto;
+    width: 90%;
     border-collapse:collapse;
     /*text-align: center;*/
     border-width: thin;
@@ -487,7 +509,11 @@ div .module-box{
 }
 .detail-par table td{
     width: auto;
+    padding: 1vw;
     /*font-size: 0.7em;*/
+    font-size: 4vw;
+    line-height: 5vw;
+    height: 7vw;
     padding: 0;
     text-align: center;
     border-width: thin;
@@ -495,7 +521,8 @@ div .module-box{
 }
 .g-detail .detail-after{
     width: 100%;
-    min-height: 60vh;
+    height: 100vh;
+    overflow-y: scroll;
     background-color: #00a213;
 }
 

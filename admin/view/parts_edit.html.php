@@ -66,13 +66,13 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
                         <textarea id="intro" name="intro"></textarea>
                     </label>
                 </div>
-                <div class="g-inf-detail">
-                    <label for="inf">图文信息：
-                        <script type="text/plain" id="uInput" name="g_inf" style="width:1000px;height:240px;">
-                <p>在这里编辑商品信息</p>
-                        </script>
-                    </label>
-                </div>
+<!--                <div class="g-inf-detail">-->
+<!--                    <label for="inf">图文信息：-->
+<!--                        <script type="text/plain" id="uInput" name="g_inf" style="width:1000px;height:240px;">-->
+<!--                <p>在这里编辑商品信息</p>-->
+<!--                        </script>-->
+<!--                    </label>-->
+<!--                </div>-->
                 <input type="hidden" name="alter" value="1"/>
                 <input type="hidden" name="g_id" id="hidden_g_id" value="' . $_POST['g_id'] . '"/>
                 <button>提交商品信息修改</button>
@@ -107,21 +107,19 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
                 dataType: 'json', //返回值类型 一般设置为json
                 success: function (data, status) {
                 }  //服务器成功响应处理函数
-
-
             })
         })
 
     </script>
 </div>
-<script>
-    var editWidth=$(document).width()*0.4;
-    var editHeight=600;
-</script>
-<script type="text/javascript" charset="utf-8" src="../uedit/umeditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="../uedit/umeditor.min.js"></script>
-<script type="text/javascript">
-    var um = UM.getEditor('uInput');
-</script>
-<script src="js/goodsInfEdit.js"></script>
+<!--<script>-->
+<!--    var editWidth=$(document).width()*0.4;-->
+<!--    var editHeight=600;-->
+<!--</script>-->
+<!--<script type="text/javascript" charset="utf-8" src="../uedit/umeditor.config.js"></script>-->
+<!--<script type="text/javascript" charset="utf-8" src="../uedit/umeditor.min.js"></script>-->
+<!--<script type="text/javascript">-->
+<!--    var um = UM.getEditor('uInput');-->
+<!--</script>-->
+<script src="js/partsInfEdit.js"></script>
 

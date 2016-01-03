@@ -125,9 +125,10 @@ if(isset($_SESSION['login'])) {
 
     }
     if (isset($_POST["g_id"])) {
-        $query = pdoQuery('g_inf_tbl', array('name', 'intro','inf','situation'), array('id' => $_POST['g_id']), ' limit 1');
+        $query = pdoQuery('g_inf_tbl', array('name', 'intro','inf','situation','sc_id','produce_id'), array('id' => $_POST['g_id']), ' limit 1');
         if ($goodsInf = $query->fetch()) {
             $back['goodsInf']=$goodsInf;
+            $sc_id=$back['goodsInf']['sc_id'];
             $query = pdoQuery('g_detail_tbl', array('id', 'category', 'sale', 'wholesale'), array('g_id' => $_POST['g_id']), null);
             foreach ($query as $detailRow) {
                 $back['detail'][]=$detailRow;
@@ -136,13 +137,11 @@ if(isset($_SESSION['login'])) {
             foreach($img as $imgrow){
                 $back['img'][]=$imgrow;
             }
+            $back['parm']=getGoodsPar($_POST['g_id'],$sc_id);
             $jsonBack=json_encode($back,JSON_UNESCAPED_UNICODE);
-//            mylog($jsonBack);
             echo $jsonBack;
             exit;
-
         }
-
     }
     if (isset($_POST['start_time_change'])) {
         pdoUpdate('promotions_tbl', array('start_time' => $_POST['value']), array('id' => $_POST['id']));
@@ -234,12 +233,10 @@ if(isset($_SESSION['login'])) {
             $colExist[]=$row['col_name'];
         }
         $namePool=array_diff($colList,$colExist);
-//        rsort($namePool);
         $col_name=array_pop($namePool);
         mylog($col_name);
         pdoInsert('par_col_tbl',array('sc_id'=>$_POST['sc_id'],'col_name'=>$col_name,'name'=>$_POST['name'],
             'par_category'=>$_POST['par_category'],'dft_value'=>$_POST['dft_value']),'update');
-
         echo $col_name;
         exit;
     }

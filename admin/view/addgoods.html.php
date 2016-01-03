@@ -17,8 +17,13 @@ $smq=$_SESSION['smq'];
             </select>
             <br/>
             <label for="g_name">名称：
-                <input type="text" name="g_name">
+                <input type="text" name="g_name"/>
             </label>
+            <label for="produce_id">型号：
+                <input type="text" name="produce_id"/>
+            </label>
+            <input type="checkbox"name="is_part"value="1"/>配件
+
         </div>
         <div>
         </div>

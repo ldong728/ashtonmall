@@ -87,6 +87,21 @@ function getArea($pro,$city,$area){
         }
     }
 }
+function getGoodsPar($g_id,$sc_id){
+    $back=array();
+    $parmKeyQuery=pdoQuery('par_col_tbl',null,array('sc_id'=>$sc_id),' limit 25');
+    $parmQuery=pdoQuery('parameter_tbl',null,array('g_id'=>$g_id),' limit 1');
+    if($parm=$parmQuery->fetch()){
+        foreach($parmKeyQuery as $parRow){
+            $back[$parRow['par_category']][]=array('col'=>$parRow['col_name'],'name'=>$parRow['name'],'value'=>$parm[$parRow['col_name']]);
+        }
+    }else{
+        foreach($parmKeyQuery as $parRow){
+            $back[$parRow['par_category']][]=array('col'=>$parRow['col_name'],'name'=>$parRow['name'],'value'=>$parRow['dft_value']);
+        }
+    }
+    return $back;
+}
 function getConfig($path){
     $data=file_get_contents($path);
     return json_decode($data,true);

@@ -52,7 +52,6 @@ function pdoQuery($tableName, $fields, $where, $append)
     if($append!=null){
         $sql=$sql.' '.$append;
     }
-//    mylog('sql:'.$sql);
     try {
         $query = $GLOBALS['pdo']->query($sql);
         return $query;

@@ -1,10 +1,10 @@
 //$(document).ready(function () {
 
-    $(document).on('change', '#category-select', function () {
-        d_id = $('#category-select option:selected').val();
-        $('#select-display').empty();
-        $('#select-display').append($('#category-select option:selected').text())
-        $.post('ajax.php', {getdetailprice: 1, d_id: $('#category-select option:selected').val()}, function (data) {
+    $(document).on('click', '.selectBox', function () {
+        d_id = $(this).attr('id').slice(3);
+        $('.selectBox').removeClass('detail-selected');
+        $(this).addClass('detail-selected')
+        $.post('ajax.php', {getdetailprice: 1, d_id: d_id}, function (data) {
             var inf = eval('(' + data + ')');
             $('#price').empty();
             $('#sale').empty();
@@ -15,9 +15,11 @@
                 $('#sale').append('¥' + inf.sale);
             }
             $('#price').append('¥' + realPrice);
+
         });
 
     });
+
     $(document).on('click', '.number-button', function () {
         var currentNum = parseInt($('#number').val());
         if ('plus' == $(this).attr('id')) {
@@ -36,7 +38,7 @@
     $(document).on('change','#number',function(){
         number=$(this).val();
     });
-    $(document).on('click', '#add-to-cart', function () {
+    $(document).on('click', '.add-cart', function () {
         $.post('ajax.php', {addToCart: 1, g_id: g_id, d_id: d_id, number: number}, function (data) {
             //$('#add-cart-sucessful').fadeIn('fast')
             //var t = setTimeout('$("#add-cart-sucessful").fadeOut("slow")', 800);
@@ -56,6 +58,17 @@
         });
         $('#goodsInf').fadeToggle('slow');
     });
+/**
+ * 商品信息-参数栏切换
+ */
+    $(document).on('click','.nav',function(){
+        //$('.nav').removeClass('nav-selected');
+        //$(this).addClass('nav-selected');
+        var index=$(this).attr('id').slice(3);
+        detailSwiper.slideTo(index);
+
+    })
+
 
 
 

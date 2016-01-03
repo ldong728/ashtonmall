@@ -34,24 +34,6 @@
         <div class="v-border"></div>
 
         <div class="main-right">
-<!--            <div class="produce-intro">-->
-<!--                <div class="produce-img">-->
-<!--                    <img src="../g_img/demo.jpg"/>-->
-<!--                </div>-->
-<!--                <div class="produce-inf name">-->
-<!--                    <h3>型号</h3>-->
-<!--                </div>-->
-<!--                <div class="produce-inf discrib">-->
-<!--                    <p>商品信息</p>-->
-<!--                </div>-->
-<!--                <div class="produce-inf price">-->
-<!--                    <h3>RMB 1234</h3>-->
-<!--                </div>-->
-<!--                <a class="produce-inf buy-button"></a>-->
-<!---->
-<!--            </div>-->
-<!---->
-<!--            <div class="h-border"></div>-->
 
         </div>
     </div>
@@ -64,9 +46,9 @@
 
 <script>
     $(document).on('click', '.cate-ul', function () {
+
         var id = $(this).attr('id');
-        $('.sub-ul').slideUp('slow');
-        $('#sub' + id).slideDown('slow');
+        getProduceList(id);
     })
 </script>
 <script>
@@ -74,8 +56,7 @@
 
 
     function getProduceList(sc_id){
-        $('.main_right').empty();
-//        $('.main_right').fadeOut('fast')
+        $('.main-right').empty();
         $.post('ajax.php',{getProduceList:1,sc_id:sc_id},function(data){
             var value=eval('('+data+')');
             $.each(value,function(k,v){

@@ -211,6 +211,7 @@ if(isset($_GET['goodsdetail'])){
         $detailQuery=pdoQuery('user_detail_view',null,array('g_id'=>$_GET['g_id']),null);
         $default=$detailQuery->fetch();
     }
+    $parm=getGoodsPar($_GET['g_id'],$inf['sc_id']);
     include 'view/goods_inf.html.php';
     exit;
 }

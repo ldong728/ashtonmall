@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="stylesheet/goodinf-swiper.min.css"/>
     <link rel="stylesheet" href="stylesheet/myswiper.css"/>
     <script src="../js/swiper.min.js"></script>
-    <link rel="stylesheet" href="stylesheet/goods_inf.css"/>
+<!--    <link rel="stylesheet" href="stylesheet/goods_inf.css"/>-->
     <script src="../js/lazyload.js"></script>
 
 </head>
@@ -53,10 +53,10 @@
             <div class="buy module-box">
                 <dl>
                     <dt>颜色：</dt>
-                    <dd class="selectBox" id="<?php echo $default['d_id'] ?>"><?php echo $default['category'] ?></dd>
+                    <dd class="selectBox detail-selected" id="dtl<?php echo $default['d_id'] ?>"><?php echo $default['category'] ?></dd>
                     <?php foreach ($detailQuery as $default): ?>
                         <dd class="selectBox"
-                            id="<?php echo $default['d_id'] ?>"><?php echo $default['category'] ?></dd>
+                            id="dtl<?php echo $default['d_id'] ?>"><?php echo $default['category'] ?></dd>
                     <?php endforeach ?>
 
 
@@ -101,21 +101,31 @@
 
             </div>
             <div class="g-detail module-box">
-                <ul class="detail-nav">
-                    <li>商品介绍</li>
-                    <li>参数规格</li>
-                    <li>售后保障</li>
-                </ul>
+                <div class="detail-nav">
+                    <div class="nav nav-selected"id="nav0">商品介绍</div>
+                    <div class="slash"></div>
+                    <div class="nav"id="nav1">参数规格</div>
+                    <div class="slash"></div>
+                    <div class="nav"id="nav2">售后保障</div>
+                </div>
                 <div class="swiper-container" id="detail_swiper">
                     <div class="swiper-wrapper" style="width: 4368px; height: auto">
                         <div class="swiper-slide">
                             <div class="detail-info">
-
+                                <?php echo $inf['inf']?>
                             </div>
                         </div>
                         <div class="swiper-slide">
                             <div class="detail-par">
+                                <table>
+                                    <?php foreach($parm as $k=>$v):?>
+                                    <tr><td colspan="2"><?php echo $k?></td></tr>
+                                        <?php foreach($v as $row):?>
+                                            <tr><td><?php echo $row['name']?></td><td><?php echo $row['value']?></td></tr>
+                                        <?php endforeach?>
 
+                                    <?php endforeach ?>
+                                </table>
                             </div>
                         </div>
                         <div class="swiper-slide">
@@ -127,10 +137,11 @@
                 </div>
                 <script>
                     var detailSwiper = new Swiper('#detail_swiper', {
-//                            paginationClickable: true,
-//                            autoplay: 5000,
-//                            lazyLoading: true,
-//                            loop: true
+                        onSlideChangeEnd: function(a){
+
+                            $('.nav').removeClass('nav-selected');
+                            $('#nav'+a.activeIndex).addClass('nav-selected');
+                        }
                     });
                 </script>
             </div>
@@ -143,7 +154,7 @@
 </div>
 <script>
     var g_id =<?php echo $inf['g_id']?>;
-    var d_id = $('#category-select option:selected').val();
+    var d_id = $('.detail-selected').attr('id').slice(3);
     var realPrice =<?php echo (isset($default['price'])? $default['price'] : $default['sale'])?>;//保存在js中的价格
     var number = parseInt($('#number').val());
 </script>

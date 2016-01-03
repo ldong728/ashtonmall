@@ -13,6 +13,7 @@
 </head>
 
 <body>
+<div class="toast"></div>
 
 <nav align="center">
     <ul>
