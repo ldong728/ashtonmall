@@ -19,6 +19,9 @@ if (!isset($_SESSION['maincate'])) {
 }
 if (isset($_GET['c_id'])) {
     $_SESSION['customerId'] = $_GET['c_id'];
+    $inf=pdoQuery('custom_inf_tbl',null,array('openid'=>$_SESSION['customerId']),' limit 1');
+    $_SESSION['userInf']=$inf->fetch();
+    mylog(getArrayInf($_SESSION['userInf']));
 }
 $config = getConfig('config/config.json');
 $adQuery = pdoQuery('ad_tbl', null, null, '');

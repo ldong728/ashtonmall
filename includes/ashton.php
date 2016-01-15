@@ -88,9 +88,9 @@ function getArea($pro,$city,$area){
     }
 }
 function getReview($g_id,$index=0,$limit=3){
-    $query=pdoQuery('user_output_review_view',null,array('g_id'=>$g_id,'public'=>'1','father_v_id'=>'-1'),
-        ' or (c_id="'.$_SESSION['customerId'].'" and g_id="'.$g_id.'" and father_v_id=-1) order by priority asc,review_time desc limit '.$index.','.$limit);
-    $numquery=pdoQuery('review_count_view',null,array('g_id'=>$g_id),null);
+    $query=pdoQuery('user_output_review_view',null,array('g_id'=>$g_id,'father_v_id'=>'-1'),
+        ' and (c_id="'.$_SESSION['customerId'].'" or public=1) order by priority asc,review_time desc limit '.$index.','.$limit);
+    $numquery=pdoQuery('review_tbl',array('count(*) as num'),array('g_id'=>$g_id,'father_v_id'=>'-1'),' and (public=1 or c_id="'.$_SESSION['customerId'].'")');
     $count=$numquery->fetch();
     foreach ($query as $row) {
         if(!isset($review[$row['id']])){

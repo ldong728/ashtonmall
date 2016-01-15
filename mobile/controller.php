@@ -248,9 +248,9 @@ if (isset($_GET['oauth'])) {
             if ('subscribe_time' == $k) {
                 $v = date('Y-m-d H:i:s', $v);
             }
-            $date[$k] = addslashes($v);
+            $data[$k] = addslashes($v);
         }
-        $re = pdoInsert('custom_inf_tbl', $date, 'update');
+        $re = pdoInsert('custom_inf_tbl', $data, 'update');
 //        mylog($re);
     }
 
