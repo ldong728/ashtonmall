@@ -59,7 +59,7 @@ class JSSDK {
         $this->mInterfaceHander->reflashAccessToken();
       $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=ACCESS_TOKEN";
       $temptoken=$this->mInterfaceHander->getByCurl($url);
-        mylog($temptoken);
+//        mylog($temptoken);
       $res = json_decode($temptoken);
       $ticket = $res->ticket;
       if ($ticket) {
@@ -68,7 +68,7 @@ class JSSDK {
           $data=json_encode($data);
         file_put_contents($GLOBALS['mypath'].'/tokens/jsapi_ticket.dat',$data);
       }
-      mylog('get jsapiTicketOnLine');
+//      mylog('get jsapiTicketOnLine');
     } else {
       $ticket = $data->jsapi_ticket;
 //      wxlog('get jsapiTicket from file');

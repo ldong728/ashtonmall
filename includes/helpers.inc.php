@@ -45,21 +45,24 @@ function printInf($p){
 function getArrayInf($array){
     $s='{';
     foreach ($array as $k=>$v) {
-        $s=$s.','.$k.': ';
+        $s.=$k.': ';
         if(is_array($v)){
             $s=$s.getArrayInf($v);
         }else{
-            $s=$s.$v;
+            $s.=$v.',';
         }
     }
+    $s=trim($s,',');
     return $s.'}';
 
 }
 
 
-function mylog($str){
+function mylog($str='mark'){
     if(DEBUG) {
-        $log = date('Y.m.d.H:i:s', time()) . ':  ' . $str . "\n";
+        $debugInfo=debug_backtrace();
+        $message = $debugInfo[0]['file'].$debugInfo[0]['line'];
+        $log = date('Y.m.d.H:i:s', time()) . ':'.$message.':' . $str . "\n";
         file_put_contents('../log.txt', $log, FILE_APPEND);
     }
 }
@@ -112,8 +115,12 @@ function makeSign(array $value,$key)
     ksort($value);
     $string =ToUrlParams($value);
     //签名步骤二：在string后加入KEY
-    $string = $string . $key;
-    //签名步骤三：MD5加密
+    if(''!=$key){
+        $string = $string ."&key=".$key;
+        //签名步骤三：MD5加密
+    }
+//    mylog($string);
+
     $string = md5($string);
     //签名步骤四：所有字符转为大写
     $result = strtoupper($string);
@@ -144,6 +151,33 @@ function toXml(array $values)
     }
     $xml.="</xml>";
     return $xml;
+}
+function xmlToArray($xmlData){
+    $postStr = $xmlData;
+    if (!empty($postStr)) {
+        libxml_disable_entity_loader(true);
+        $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+        foreach ($postObj->children() as $child) {
+            $msg[$child->getName()] = (string)$child;
+        }
+        return $msg;
+    }
+}
+function signVerify($array){
+    foreach ($array as $k => $v) {
+        if('sign'==$k){
+            $inValue=$v;
+        }else{
+            $data[$k]=$v;
+        }
+    }
+    $outValue=makeSign($data,KEY);
+    if($outValue==$inValue){
+        return true;
+    }else{
+        return false;
+    }
+
 }
 
 

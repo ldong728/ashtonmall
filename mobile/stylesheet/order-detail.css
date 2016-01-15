@@ -21,7 +21,10 @@
 .orderTransp .transport .trCont .word{float:left; word-break:break-all; width:86%; font-family:microsoft yahei; margin-left:5px; margin-bottom:3px; margin-top:-4px; line-height:18px;}
 .ordreDetail .orderState{margin:10px 0; border:1px solid #ccc; border-bottom:none;}
 .ordreDetail .orderState div{height:38px; line-height:38px; font-size:14px; background-color:#fff; padding-left:15px; color:#666; border-bottom:1px solid #ccc;}
-.ordreDetail .orderState .cl_sta{float:left;font-size:14px;color:#666;width:70px;margin-top:10px;}
+.ordreDetail .orderState .cl_sta{float:left;font-size:14px;color:#666;width:70px;line-height: 38px;}
+.orderState span{
+    line-height: 38px;
+}
 .ordreDetail .orderState .cl_red{color:#eb0b30; font-size:14px;background:url(images/icon-right.png) no-repeat; background-size:10px 14px; background-position:right center; display:block; float:left;margin-top:10px;width:69%;width:calc(100% - 80px);line-height:20px;}
 .ordreDetail .orderState .drawback{color:#4197E8; font-size:14px; float:right; line-height:38px; margin-right:15px;}
 .ordreDetail .orderList .list_hd{height:44px; background-color:#f6f6f6; border:1px solid #ccc;}
@@ -44,6 +47,12 @@
 .orderList .comboDetail .cl_red{color:#eb0b30;}
 .orderList .comboDetail .cl_red{color:#eb0b30;}
 .orderList .comboDetail .combo_count, .orderList .comboDetail  .combo_price{padding-left:80px;}
+.orderList a{
+    line-height: 15px;
+}
+.orderList dd{
+    line-height: 14px;
+}
 .ordreDetail .orderInfo{border:1px solid #ccc; border-bottom:0; margin-top:10px; background-color:#fff;}
 .ordreDetail .orderInfo div{height:44px; line-height:44px; font-size:14px; border-bottom:1px solid #ccc; color:#666; padding-left:15px;}
 .ordreDetail .orderInfo div span{font-size:14px;}
@@ -58,6 +67,18 @@
 .ordreDetail .order_btn{margin-top:10px;}
 .ordreDetail .order_btn a{float:left; display:inline-block; width:48%; height:30px; line-height:30px; text-align:center; text-decoration:none; font-size:14px; box-shadow:1px 1px 1px #ccc;}
 .ordreDetail .order_btn .btn_orange{background-color:#ff6600; border:1px solid #aaaaaa; color:#fff;}
+
 .ordreDetail .order_btn .btn_white{background-color:#fff; border:1px solid #aaaaaa; float:right;}
 .ordreDetail .order_btn .btn_long{background-color:#fff; border:1px solid #aaaaaa; width:99%;}
+.remark{
+    height:45px; background-color:#fff; border:1px solid #ccc; margin-top:10px;
+}
+.remark span{
+    line-height: 45px; margin-left: 10px;
+}
+.review_button{
+    display:inline-block; width:70%; height:30px; line-height:30px; text-align:center; text-decoration:none; font-size:14px; box-shadow:1px 1px 1px #ccc;
+    margin: 10px 15% 20px 15%;
+    background-color:#ff6600; border:1px solid #aaaaaa; color:#fff;
+}
 /*优惠券 红包页*/

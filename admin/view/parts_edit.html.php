@@ -32,6 +32,7 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
 
 
         <select id="g_name" name="g_name"></select>
+        <a href="index.php?goods-config=1">主商品修改</a>
 
         <label id="changeCategory" style="display: none">更改分类为
             <select id="changeSc">
@@ -66,16 +67,10 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
                         <textarea id="intro" name="intro"></textarea>
                     </label>
                 </div>
-<!--                <div class="g-inf-detail">-->
-<!--                    <label for="inf">图文信息：-->
-<!--                        <script type="text/plain" id="uInput" name="g_inf" style="width:1000px;height:240px;">-->
-<!--                <p>在这里编辑商品信息</p>-->
-<!--                        </script>-->
-<!--                    </label>-->
-<!--                </div>-->
                 <input type="hidden" name="alter" value="1"/>
+                <input type="hidden"name="is_part"value="1"/>
                 <input type="hidden" name="g_id" id="hidden_g_id" value="' . $_POST['g_id'] . '"/>
-                <button>提交商品信息修改</button>
+                <button>提交配件信息修改</button>
             </form>
         </div>
         <div id="goods_detail">
@@ -83,43 +78,14 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
         </div>
 
         <div id="goods_image">
+
         </div>
-        <div class="parm-set">
-            <div class="module-title">
-                <h4>参数设置</h4>
-            </div>
+        <div id="host_set">
+
         </div>
         <div id="changeSituation">
         </div>
     </div>
-
-
-
-    <script>
-        $('#upbutton').click(function () {
-            $('#tmp').click();
-        })
-        $('#tmp').change(function () {
-            $.ajaxFileUpload({
-                url: 'upload.php?g_id=' + g_id,
-                secureuri: false,
-                fileElementId: 'tmp', //文件上传域的ID
-                dataType: 'json', //返回值类型 一般设置为json
-                success: function (data, status) {
-                }  //服务器成功响应处理函数
-            })
-        })
-
-    </script>
 </div>
-<!--<script>-->
-<!--    var editWidth=$(document).width()*0.4;-->
-<!--    var editHeight=600;-->
-<!--</script>-->
-<!--<script type="text/javascript" charset="utf-8" src="../uedit/umeditor.config.js"></script>-->
-<!--<script type="text/javascript" charset="utf-8" src="../uedit/umeditor.min.js"></script>-->
-<!--<script type="text/javascript">-->
-<!--    var um = UM.getEditor('uInput');-->
-<!--</script>-->
 <script src="js/partsInfEdit.js"></script>
 

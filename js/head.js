@@ -21,6 +21,9 @@ function showToast(str){
     $('.toast').fadeIn('fast')
     var t = setTimeout('$(".toast").fadeOut("slow")', 800);
 }
+function antCacheRand(){
+    return Math.random().toString(36).substr(2);
+}
 function selectCate(o){
 //        alert(o.id);
     window.location.href='controller.php?getFcList=1&fc_id='+ o.id;

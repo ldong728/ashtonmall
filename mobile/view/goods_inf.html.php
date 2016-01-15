@@ -46,7 +46,7 @@
                         <del id="sale"><?php echo(isset($default['price']) ? '¥' . $default['sale'] : '') ?></del>
                     </dd>
                     <dd class="evaluate-count">
-                        评价：XX条
+                        评价：<?php echo $review['num']?>条
                     </dd>
                 </dl>
             </div>
@@ -82,22 +82,55 @@
                 <div class="title">
                     配件:
                 </div>
+                <?php foreach($parts as $r):?>
                 <div class="partInf">
-                    <div class="check-box checked"></div>
+                    <div class="check-box <?php echo $r['dft']?>"id="part<?php echo $r['g_id']?>"></div>
                     <div class="partDetail">
-                        <img src="../g_img/demo2.png"/>
+                        <img src="../<?php echo $r['url']?>"/>
                         <dl>
                             <dt>名称：</dt>
-                            <dd>刀组</dd>
+                            <dd><?php echo $r['name']?></dd>
                             <dt class="detail">产品详细：</dt>
-                            <dd>改款刀组采用双十字结构，很大程度上提高其性能</dd>
+                            <dd><?php echo $r['intro']?></dd>
                             <dt>价格：</dt>
-                            <dd class="price">￥60</dd>
+                            <dd class="price">￥<?php echo $r['sale']?></dd>
                         </dl>
                     </div>
                 </div>
+                <?php endforeach ?>
             </div>
-            <div class="evaluate module-box">
+            <div class="review module-box">
+                <div class="title">
+                    <p class="titleName">评价：</p>
+                    <p class="reviewCount">共<?php echo $review['num']?>条评价</p>
+                </div>
+                <div class="horizonborder"></div>
+                <div class="keyword-block">
+
+                </div>
+
+                <?php foreach($review['inf'] as $row):?>
+                <div class="review-content">
+                    <div class="nameblock">
+                        <p class="name"><?php echo $row['nickname']?></p>
+                        <?php for($i=0; $i<$row['score'];$i++):?>
+                            <div class="score"></div>
+                        <?php endfor?>
+                        <p class="time"><?php echo date('Y-m-d',strtotime($row['review_time']))?></p>
+                    </div>
+                    <div class="text">
+                        <?php echo $row['review']?>
+                    </div>
+                    <div class="imgbox">
+
+                    </div>
+                    <div class="cate">
+                        颜色：<?php echo $row['category']?>
+                    </div>
+
+
+                </div>
+                <?php endforeach?>
 
             </div>
             <div class="g-detail module-box">
@@ -157,6 +190,7 @@
     var d_id = $('.detail-selected').attr('id').slice(3);
     var realPrice =<?php echo (isset($default['price'])? $default['price'] : $default['sale'])?>;//保存在js中的价格
     var number = parseInt($('#number').val());
+    var parts=new Array();
 </script>
 <script src="../js/goods-inf.js"></script>
 <?php //include 'templates/jssdkIncluder.php'?>

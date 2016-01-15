@@ -32,6 +32,7 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
 
 
         <select id="g_name" name="g_name"></select>
+        <a href="index.php?goods-config=1&is_part=1">配件修改</a>
 
         <label id="changeCategory" style="display: none">更改分类为
             <select id="changeSc">
@@ -51,12 +52,12 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
             <form action="consle.php" method="post">
                 <div class="g-inf-name">
                     <label for="name">名称
-                        <input id="name" type="text" name="name" value=""/>
+                        <input id="name" type="text" name="name" />
                     </label>
                 </div>
                 <div clas="g-inf-produce-id">
                     <lable for="produce_id">型号
-                        <input type="text" id="produce_id"name="produce_id"value=""/>
+                        <input type="text" id="produce_id"name="produce_id"/>
                     </lable>
 
                 </div>
@@ -89,30 +90,15 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
                 <h4>参数设置</h4>
             </div>
         </div>
+        <div id="host_set">
+
+        </div>
         <div id="changeSituation">
         </div>
     </div>
 
 
 
-    <script>
-        $('#upbutton').click(function () {
-            $('#tmp').click();
-        })
-        $('#tmp').change(function () {
-            $.ajaxFileUpload({
-                url: 'upload.php?g_id=' + g_id,
-                secureuri: false,
-                fileElementId: 'tmp', //文件上传域的ID
-                dataType: 'json', //返回值类型 一般设置为json
-                success: function (data, status) {
-                }  //服务器成功响应处理函数
-
-
-            })
-        })
-
-    </script>
 </div>
 <script>
     var editWidth=$(document).width()*0.4;

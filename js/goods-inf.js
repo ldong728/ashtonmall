@@ -38,10 +38,12 @@
     $(document).on('change','#number',function(){
         number=$(this).val();
     });
+//立刻购买按钮
+    $(document).on('click','.buy-now',function(){
+        window.location.href='controller.php?settleAccounts=1&from=buy_now&d_id='+d_id+'&number='+number+'&rand='+antCacheRand();
+    })
     $(document).on('click', '.add-cart', function () {
         $.post('ajax.php', {addToCart: 1, g_id: g_id, d_id: d_id, number: number}, function (data) {
-            //$('#add-cart-sucessful').fadeIn('fast')
-            //var t = setTimeout('$("#add-cart-sucessful").fadeOut("slow")', 800);
             showToast('加入购物车成功');
         })
 
@@ -58,12 +60,22 @@
         });
         $('#goodsInf').fadeToggle('slow');
     });
+    $(document).on('click','.check-box',function(){
+        var id=$(this).attr('id').slice(4);
+        var selected=$(this).hasClass('checked')
+        if(selected){
+            $(this).removeClass('checked');
+        }else{
+            $(this).addClass('checked');
+        }
+        $.post('ajax.php',{changePart:1,g_id:g_id,part_id:id,mode:selected},function(data){
+
+        });
+    });
 /**
  * 商品信息-参数栏切换
  */
     $(document).on('click','.nav',function(){
-        //$('.nav').removeClass('nav-selected');
-        //$(this).addClass('nav-selected');
         var index=$(this).attr('id').slice(3);
         detailSwiper.slideTo(index);
 

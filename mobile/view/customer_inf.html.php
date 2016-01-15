@@ -4,25 +4,12 @@
 </head>
 <body>
 <div class="wrap">
-    <header class="header">
-        <a class="back" href="javascript:window.history.go(-1);"></a>
-        <p class="hd_tit">个人信息</p>
-        <a class="daohang"href="#"></a>
-        <nav class="head_nav">
-            <a class="hn_index"href="index.php">首页</a>
-            <a class="hn_sort"href="controller.php?getSort=1">分类查找</a>
-            <a class="hn_cart"href="controller.php?getCart=1">购物车</a>
-            <a class="hn_memb"href="controller.php?customerInf=1">个人中心</a>
-        </nav>
-        <script src="../js/head.js"></script>
-    </header>
     <div class="memberHome">
         <div class="user_info">
             <p class="username">
                 欢迎你，
                 <span><?php echo $_SESSION['userInf']['nickname']?></span>
             </p>
-            <a class="logout">更换帐号</a>
             <div class="memberRank mr1"></div>
         </div>
         <div class="myorder">
@@ -62,7 +49,7 @@
             </div>
         </div>
         <div class="mymanage">
-            <a class="myManage1"href="controller.php?getFav=1">我的收藏
+            <a class="myManage1"href="controller.php?getCart=1">我的购物车
                 <i class="iright"></i></a>
             <a class="myManage5">完善用户信息
                 </i></a>

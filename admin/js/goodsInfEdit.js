@@ -7,7 +7,7 @@ if (g_id != -1) {
     });
     getGInf();
 }
-$('input').attr('onkeypress',"if(event.keyCode == 13) return false;");//屏蔽回车键
+
 $("#g_name").change(function () {
     g_id = $("#g_name option:selected").val();
     getGInf();
@@ -15,7 +15,7 @@ $("#g_name").change(function () {
 $("#sc_id").change(function () {
     $("#g_name").load("ajax_request.php", {
         categoryCheck: $("#sc_id option:selected").val(),
-        country_id: $(".country option:selected").val()
+        situation:1
     }, $("#g_name").empty())
 });
 $('#changeSc').change(function(){
@@ -29,18 +29,30 @@ $(document).on('change', '.category', function () {
 
 })
 $(document).on('change', '.sale', function () {
-    $.post('ajax_request.php', {changeSale: 1, d_id: $(this).attr("id"), value: $(this).val()});
+    alert('change');
+    $.post('ajax_request.php', {changeSale: 1, d_id: $(this).attr("id"), value: $(this).val()},function(data){
+        showToast('修改成功');
+    });
+
 });
 $(document).on('change', '.wholesale', function () {
-    $.post('ajax_request.php', {changeWholesale: 1, d_id: $(this).attr("id"), value: $(this).val()});
+    $.post('ajax_request.php', {changeWholesale: 1, d_id: $(this).attr("id"), value: $(this).val()},function(data){
+        showToast('修改成功');
+    });
 });
 $(document).on('click', '#add_category', function () {
     $.post('ajax_request.php', {addNewCategory: 1, g_id: g_id}, function (data) {
-        $('#goods_detail').append(data);
+            $('#add-button').before( '<p>规格：<input class="detail-input category" type="text" id="' + data + '"value="规格' +data + '"/>' +
+            '售价：<input class="detail-input" type="text" class="sale" id="' +data + '"value="9999"/>' +
+            '<a class="detail-delete" href="consle.php?del_detail_id=' +data + '&g_id=' + g_id + '">删除此规格</a>' +
+            '</p>');
     });
 });
+
 $(document).on('click', '.is_cover', function () {
-    $.post('ajax_request.php', {set_cover_id: $(this).val(), g_id: g_id});
+    $.post('ajax_request.php', {set_cover_id: $(this).val(), g_id: g_id},function(data){
+        showToast('已设为封面图')
+    });
 });
 $(document).on('click','.img-upload',function(){
    $('#g-img-up').click();
@@ -52,15 +64,42 @@ $(document).on('change','#g-img-up',function(){
         fileElementId: $(this).attr('id'), //文件上传域的ID
         dataType: 'json', //返回值类型 一般设置为json
         success: function (v, status){
-            var isCheck = (1 == v.front_cover ? 'checked = true' : '');
-            var content = '<div class="demo-box"><input type="radio" name="is_cover"class="is_cover"value="' + v.id + '"' + isCheck + '/>'
-                + '<a href="delete.php?delimg=' + v.url + '&g_id=' + g_id + '"><img class="demo" src= "../' + v.url + '" alt = "error" /></a></div>';
+            if('SUCCESS'== v.state){
+                var isCheck = (1 == v.cover ? 'checked = true' : '');
+                var content = '<div class="demo-box"><input type="radio" name="is_cover"class="is_cover"value="' + v.id + '"' + isCheck + '/>作为缩略图'
+                    + '<a href="#"class="deleteImg"id="'+v.md5+'"><img class="demo" src= "../' + v.url + '" alt = "error" /></a></div>';
 
-            $('.img-upload').before(content);
+                $('.img-upload').before(content);
+            }else{
+                showToast(v.state);
+            }
+
 
         }  //服务器成功响应处理函数
     });
+
 });
+
+
+$(document).on('click','.deleteImg',function(){
+    var id=$(this).attr('id');
+    $.post('ajax_request.php',{del_g_img:1,md5:id,g_id:g_id},function(data){
+        $('#'+id).parent().remove();
+    });
+});
+$(document).on('click','.part_dft',function(){
+   var id=$(this).attr('id').slice(5);
+    var stu=true==$(this).prop('checked')?1:0;
+    $.post('ajax_request.php',{change_part_stu:1,id:id,value:stu},function(data){
+        if(data==1){
+            showToast('已设为默认配件')
+        }else{
+            showToast('已取消默认配件')
+        }
+    });
+
+});
+
 /**
  * 获取货品信息
  */
@@ -73,9 +112,10 @@ function getGInf() {
     $('#intro').empty();
     $('#changeSituation').empty();
     $('.parm-set').empty();
+    $('#host-set').empty();
     $('#changeCategory').css('display','none');
 
-    $.post("ajax_request.php", {g_id: g_id}, function (data) {
+    $.post("ajax_request.php", {get_g_inf:1,g_id: g_id}, function (data) {
         var inf = eval('(' + data + ')');
         if(0==inf.goodsInf.situation){
             var stub='<a href="consle.php?goodsSituation=1&g_id='+g_id+'">上架</a>'
@@ -95,20 +135,19 @@ function getGInf() {
         if(null!=inf.detail) {
             $.each(inf.detail, function (k, v) {
                 var content = '<p>规格：<input class="detail-input category" type="text" id="' + v.id + '"value="' + v.category + '"/>' +
-                    '售价：<input class="detail-input" type="text" class="sale" id="' + v.id + '"value="' + v.sale + '"/>' +
-                    //'批发价：<input class="detail-input" type="text" class="wholesale" id="' + v.id + '"value="' + v.wholesale + '"/>' +
+                    '售价：<input class="detail-input sale" type="text" class="sale" id="' + v.id + '"value="' + v.sale + '"/>' +
                     '<a class="detail-delete" href="consle.php?del_detail_id=' + v.id + '&g_id=' + g_id + '">删除此规格</a>' +
                     '</p>';
                 $('#goods_detail').append(content);
             });
-            $('#goods_detail').append('<div class="divButton"><p id="add_category">添加规格</p></div>');
+            $('#goods_detail').append('<div class="divButton"id="add-button"><p id="add_category">添加规格</p></div>');
         }
         if (null != inf.img) {
             $('#goods_image').append('<div class="module-title"><h4>图片展示</h4></div>');
             $.each(inf.img, function (k, v) {
                 var isCheck = (1 == v.front_cover ? 'checked = true' : '');
-                var content = '<div class="demo-box"><input type="radio" name="is_cover"class="is_cover"value="' + v.id + '"' + isCheck + '/>设为主图'
-                    + '<a href="delete.php?delimg=' + v.url + '&g_id=' + g_id + '"><img class="demo" src= "../' + v.url + '" alt = "error" /></a></div>'
+                var content = '<div class="demo-box"><input type="radio" name="is_cover"class="is_cover"value="' + v.id + '"' + isCheck + '/>作为缩略图'
+                    + '<a href="#"class="deleteImg"id="'+v.remark+'"><img class="demo" src= "../' + v.url + '" alt = "error" /></a></div>'
 
                 $('#goods_image').append(content);
             });
@@ -127,18 +166,23 @@ function getGInf() {
             });
             con+='</table>'
             precon+=con
-            //$('.parm-set').append(con);
         });
         $('.parm-set').append(precon+'<button>提交参数修改</button></form>');
+
+        $('#host_set').append('<div class="module-title"><h4>配件默认状态</h4></div>');
+        if(null!=inf.parts) {
+            $.each(inf.parts, function (k, v) {
+                alert('have parts');
+                var checked = 1 == v.dft_check ? 'checked=checked' : ''
+                var con = '<input type="checkbox"class="part_dft"' + checked +
+                    'id="parts' + v.id + '"/>' + v.part_name + ' ' + v.part_produce_id
+                $('#host_set').append(con);
+
+            });
+        }
 
 
         $('#g_inf').slideDown('fast');
         $('#changeCategory').css('display','block');
     });
-}
-function showToast(str){
-    $('.toast').empty();
-    $('.toast').append(str)
-    $('.toast').fadeIn('fast')
-    var t = setTimeout('$(".toast").fadeOut("slow")', 800);
 }

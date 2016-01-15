@@ -108,7 +108,7 @@ function getOauthToken($code){
 function getMediaList($type, $offset)
 {
     $request = array('type' => $type, 'offset' => $offset, 'count' => 20);
-    $json = $GLOBALS['mInterface']->postArrayAsJson('https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN', $request);
+    $json = $GLOBALS['mInterface']->postArrayByCurl('https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN', $request);
     return json_decode($json, true);
 }
 
@@ -145,6 +145,38 @@ function reflashAutoReply()
 
 
 }
+function requestTemplate($templateId){
+    $data=array('template_id_short'=>$templateId);
+    $data=json_encode($data);
+    $re=$GLOBALS['mInterface']->postJsonByCurl('https://api.weixin.qq.com/cgi-bin/template/api_add_template?access_token=ACCESS_TOKEN',$data);
+    $re=json_decode($re,true);
+    if($re['errcode']==0){
+        return $re['template_id'];
+    }else{
+        return false;
+    }
+}
+
+function sendTemplateManage($customerId,$templateId,$url,array $msg){
+    $fullMsg=array(
+        'touser'=>$customerId,
+        'template_id'=>$templateId,
+        'url'=>$url,
+        'data'=>$msg
+//            array(
+//            'first'=>array('value'=>'交易成功'),
+//            'product'=>array('value'=>'测试商品1'),
+//            'price'=>array('value'=>'1988.00'),
+//            'time'=>array('value'=>'1月9日16:00'),
+//            'remark'=>array('value'=>'欢迎再次选购'),
+//        )
+    );
+
+    $response=$GLOBALS['mInterface']->postArrayByCurl('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN',$fullMsg);
+    return $response;
+}
+
+
 
 function formatContent($type, $content)
 {

@@ -56,8 +56,7 @@ session_start();
 						$citylist[] = $city;
 					}				
 				}
-                mylog(json_encode($citylist));
-				echo_json($citylist);			
+				echo_json($citylist);
 			}
 		}		
 	}

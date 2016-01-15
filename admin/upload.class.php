@@ -187,6 +187,7 @@ class uploader
             "urlInDb"=>$this->fullName,
             "size" => $this->fileSize ,
             "type" => $this->fileType ,
+            'cover'=>false,
             "state" => $this->stateInfo
         );
     }

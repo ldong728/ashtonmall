@@ -105,6 +105,24 @@ h3.title{
 .orderComfirm .orderOther input::-moz-placeholder{color:#ddd;}
 .orderComfirm .orderOther input::-webkit-input-placeholder{color:#ddd;}
 .orderComfirm .orderOther input:-ms-input-placeholder{color:#ddd;}
+.orderOther .remark{
+    overflow: hidden;
+    zoom: 1;
+    /*float: left;*/
+}
+.remark .remark-title{
+    text-align: center;
+    float: left;
+    margin: auto 5px auto 3%;
+    width: 20%;
+}
+.remark textarea{
+    line-height: 18px;
+    margin: 1% 0;
+    float: left;
+    width: 55%;
+    height: 38px;
+}
 .orderComfirm .orderCoupon{border-bottom:1px solid #ccc; border-top:1px solid #ccc; margin-top:10px; background-color:#fff; position:relative;}
 .orderComfirm .orderCoupon h2{position:absolute; top:1px; left:4%; height:52px; line-height:52px; font-size:14px; color:#999;}
 .orderComfirm .orderCoupon .chosen{text-align:right; padding-left:60px; padding-right:30px; margin-right:3%; height:52px; line-height:52px; font-size:14px; color:#666; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
@@ -128,4 +146,8 @@ h3.title{
 .orderComfirm .orderScore_cls .getScore .cl_red{font-size:12px; color:#eb0b30;}
 .orderComfirm .orderSettle{display:block; width:94%; margin:0 3%; height:38px; line-height:38x; text-align:center; text-decoration:none; background-color:#eb0b30; margin-top:30px; border-radius:3px; line-height:40px; color:#fff; font-size:16px; font-weight:700;}
 .orderComfirm .orderSettle span{display:inline-block; padding:0 20px; line-height:38px; color:#fff; font-size:16px; font-weight:700;}
+.orderComfirm #alipay{
+    background-color: #007aff;
+}
+
 .orderComfirm .toast{padding:20px 30px; border-radius:5px; position:fixed; top:50%; left:50%;background-color:#333; opacity:0.8; display:none; color:#fff; font-size:16px; font-weight:700; line-height:24px; text-align:center; min-width:126px; max-width:196px;}

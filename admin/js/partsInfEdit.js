@@ -1,3 +1,4 @@
+//$('input').attr('onkeypress',"if(event.keyCode == 13) return false;");//屏蔽回车键
 if (g_id != -1) {
     $("#sc_id").val(sc_id);
     $("#made_in").val(mi);
@@ -13,9 +14,10 @@ $("#g_name").change(function () {
 });
 $("#sc_id").change(function () {
     //alert('change');
+    sc_id=$("#sc_id option:selected").val()
     $("#g_name").load("ajax_request.php", {
-        categoryCheck: $("#sc_id option:selected").val(),
-        country_id: $(".country option:selected").val()
+        categoryCheck: sc_id,
+        situation:9
     }, $("#g_name").empty())
 });
 $('#changeSc').change(function(){
@@ -23,6 +25,7 @@ $('#changeSc').change(function(){
 
     });
 });
+//detail 更改
 $(document).on('change', '.category', function () {
     $.post('ajax_request.php', {changeCategory: 1, d_id: $(this).attr('id'), value: $(this).val()});
 
@@ -42,22 +45,34 @@ $(document).on('click', '.is_cover', function () {
     $.post('ajax_request.php', {set_cover_id: $(this).val(), g_id: g_id});
 });
 $(document).on('click','.img-upload',function(){
-    $('#g-img-up').click();
+    $('#parts-img-up').click();
 });
-$(document).on('change','#g-img-up',function(){
+$(document).on('change','#parts-img-up',function(){
     $.ajaxFileUpload({
         url:'upload.php?g_id='+g_id,
         secureuri: false,
         fileElementId: $(this).attr('id'), //文件上传域的ID
         dataType: 'json', //返回值类型 一般设置为json
         success: function (v, status){
+            alert('OK');
+            //var random=parseInt((Math.random()*1000));
+            //alert(random);
+            var random=123;
             var isCheck = (1 == v.front_cover ? 'checked = true' : '');
-            var content = '<div class="demo-box"><input type="radio" name="is_cover"class="is_cover"value="' + v.id + '"' + isCheck + '/>'
-                + '<a href="delete.php?delimg=' + v.urlInDb + '&g_id=' + g_id + '"><img class="demo" src= "' + v.url + '" alt = "error" /></a></div>';
+            var content ='<img class="demo" src= "../' + v.url +'" alt = "error" />';
+            $('#goods_image').empty();
+            $('#goods_image').append('<a class="img-upload">'+content+'</a><input type="file"id="parts-img-up"name="parts-img-up"style="display: none">');;
 
-            $('.img-upload').before(content);
+        },  //服务器成功响应处理函数
+        error: function(data, status, e){
+            alert(e);
+        }
+    });
+});
+$(document).on('click','.hostset',function(){
+   var stu=$(this).prop('checked');
+    $.post('ajax_request.php',{hostGoodsSet:1,g_id:$(this).attr('id'),part_g_id:g_id,situation:stu},function(data){
 
-        }  //服务器成功响应处理函数
     });
 });
 /**
@@ -65,67 +80,43 @@ $(document).on('change','#g-img-up',function(){
  */
 
 function getGInf() {
-    $('#g_id_img').val(g_id);
+//alert('get')
     $('#hidden_g_id').val(g_id);
     $('#goods_detail').empty();
     $('#goods_image').empty();
     $('#intro').empty();
     $('#changeSituation').empty();
     $('.parm-set').empty();
+    $('#host_set').empty();
     $('#changeCategory').css('display','none');
-
-    $.post("ajax_request.php", {g_id: g_id}, function (data) {
+    $.post("ajax_request.php", {get_parts_inf:1,g_id: g_id}, function (data) {
         var inf = eval('(' + data + ')');
         if(0==inf.goodsInf.situation){
-            var stub='<a href="consle.php?goodsSituation=1&g_id='+g_id+'">上架</a>'
+            var stub='<a href="consle.php?goodsSituation=9&g_id='+g_id+'">上架</a>'
         }else{
             var stub='<a href="consle.php?goodsSituation=0&g_id='+g_id+'">下架</a>'
         }
         $('#intro').append(inf.goodsInf.intro);
         $('#changeSituation').append(stub);
         $('#name').val(inf.goodsInf.name);
-        if(null!=inf.goodsInf.inf) {
-            um.setContent(inf.goodsInf.inf);
-        }else{
-            um.setContent('');
-        }
+        $('#produce_id').val(inf.goodsInf.produce_id);
 
-        if(null!=inf.detail) {
-            $.each(inf.detail, function (k, v) {
-                var content = '<p>规格：<input type="text" class="category" id="' + v.id + '"value="' + v.category + '"/>' +
-                    '售价：<input type="text" class="sale" id="' + v.id + '"value="' + v.sale + '"/>' +
-                    '批发价：<input type="text" class="wholesale" id="' + v.id + '"value="' + v.wholesale + '"/>' +
-                    '<a href="consle.php?del_detail_id=' + v.id + '&g_id=' + g_id + '">删除此规格</a>' +
+                var detailContent = '<p>规格：<input type="text" class="category" id="' + inf.goodsInf.d_id + '"value="' + inf.goodsInf.d_name + '"/>' +
+                    '售价：<input type="text" class="sale" id="' +inf.goodsInf.d_id + '"value="' + inf.goodsInf.sale + '"/>' +
                     '</p>';
-                $('#goods_detail').append(content);
-            });
+                $('#goods_detail').append(detailContent);
+        if (null != inf.goodsInf.url) {
+                var content ='<img class="demo" src= "../' + inf.goodsInf.url + '" alt = "error" />'
+        }else{
+            var content='';
         }
-        if (null != inf.img) {
-            $.each(inf.img, function (k, v) {
-                var isCheck = (1 == v.front_cover ? 'checked = true' : '');
-                var content = '<div class="demo-box"><input type="radio" name="is_cover"class="is_cover"value="' + v.id + '"' + isCheck + '/>设为主图'
-                    + '<a href="delete.php?delimg=' + v.url + '&g_id=' + g_id + '"><img class="demo" src= "../' + v.url + '" alt = "error" /></a></div>'
-
-                $('#goods_image').append(content);
-            });
-
-        }
-        $('#goods_image').append('<a class="img-upload"></a><input type="file"id="g-img-up"name="g-img-up"style="display: none">');
-        var precon='<form id="updateParm"action="consle.php?updateParm=1&g_id='+g_id+'"method="post">';
-        $.each(inf.parm,function(k,v){
-            var cateName=k;
-            var con='<table class="parmInput"><tr>'+cateName+'</tr>'
-            $.each(v,function(subk,subv){
-                var scon='<tr><td>'+subv.name+'</td><td><input type="text" name="'+subv.col+'"value="'+subv.value+'"/></td></tr>'
-                con+=scon;
-            });
-            con+='</table>'
-            precon+=con
-            //$('.parm-set').append(con);
-        });
-        $('.parm-set').append(precon+'<input type="submit"value="修改参数"/></form>');
-
-
+        $('#goods_image').append('<div class="module-title"><h4>图片展示</h4></div><a class="img-upload">'+content+'</a><input type="file"id="parts-img-up"name="parts-img-up"style="display: none">');
+        $('#host_set').append('<div class="module-title"><h4>对应产品</h4></div>')
+        $.each(inf.hostGoods,function(k,v){
+            var check=v.checked!=null?'checked="true"':''
+            var con='<input type=checkbox class="hostset"id="'+ v.id+'"'+check+'/>'+ v.name
+            $('#host_set').append(con)
+        })
         $('#g_inf').slideDown('fast');
         $('#changeCategory').css('display','block');
     });

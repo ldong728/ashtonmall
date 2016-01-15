@@ -43,41 +43,33 @@ if(isset($_SESSION['login'])) {
     }
     if (isset($_POST['addNewCategory'])) {
         $d_id = pdoInsert('g_detail_tbl', array('g_id' => $_POST['g_id']));
-        $back = '<p>规格：<input type="text" class="category" id="' . $d_id . '"value="新规格"/>
-              售价：<input type="text" class="sale" id="' . $d_id . '"value="99999.99"/>
-              批发价：<input type="text" class="wholesale" id="' . $d_id . '"value="99999.99"/>
-              <a href="consle.php?del_detail_id=' . $d_id . '&g_id=' . $_POST['g_id'] . '">删除此规格</a>
-              </p>';
-        echo $back;
+        echo $d_id;
         exit;
 
     }
-    if (isset($_POST['countryCheck'])) {
-        if ($_POST['sc_id'] == 0) {
-            $query = 'SELECT id,name FROM g_inf_tbl WHERE made_in = :country';
-            $myquery = $pdo->prepare($query);
-            $myquery->bindValue(':country', $_POST['countryCheck']);
-            $myquery->execute();
-        } else {
-            $query = 'SELECT id,name FROM g_inf_tbl WHERE made_in = :country AND g_inf_tbl
-            .sc_id = :sc_id';
-            $myquery = $pdo->prepare($query);
-            $myquery->bindValue(':country', $_POST['countryCheck']);
-            $myquery->bindValue(':sc_id', $_POST['sc_id']);
-            $myquery->execute();
-        }
-        $back = '<option value = "0">请选择商品</option>';
-        foreach ($myquery as $row) {
-            $back = $back . '<option value = "' . $row['id'] . '">' . $row['name'] . '</option>';
-        }
-        echo $back;
-        exit;
-    }
+//    if (isset($_POST['countryCheck'])) {
+//        if ($_POST['sc_id'] == 0) {
+//            $query = 'SELECT id,name FROM g_inf_tbl WHERE made_in = :country';
+//            $myquery = $pdo->prepare($query);
+//            $myquery->bindValue(':country', $_POST['countryCheck']);
+//            $myquery->execute();
+//        } else {
+//            $query = 'SELECT id,name FROM g_inf_tbl WHERE made_in = :country AND g_inf_tbl
+//            .sc_id = :sc_id';
+//            $myquery = $pdo->prepare($query);
+//            $myquery->bindValue(':country', $_POST['countryCheck']);
+//            $myquery->bindValue(':sc_id', $_POST['sc_id']);
+//            $myquery->execute();
+//        }
+//        $back = '<option value = "0">请选择商品</option>';
+//        foreach ($myquery as $row) {
+//            $back = $back . '<option value = "' . $row['id'] . '">' . $row['name'] . '</option>';
+//        }
+//        echo $back;
+//        exit;
+//    }
     if (isset($_POST['categoryCheck'])) {
-        $where=array('sc_id'=>$_POST['categoryCheck']);
-        if (isset($_POST['country_id'])&&$_POST['country_id'] != 'none') {
-            $where['made_in']=$_POST['country_id'];
-        }
+        $where=array('sc_id'=>$_POST['categoryCheck'],'situation'=>$_POST['situation']);
         $myquery=pdoQuery('g_inf_tbl',array('id','name'),$where,null);
         $back = '<option value = "0">请选择商品</option>';
         foreach ($myquery as $row) {
@@ -124,7 +116,7 @@ if(isset($_SESSION['login'])) {
 
 
     }
-    if (isset($_POST["g_id"])) {
+    if (isset($_POST["get_g_inf"])) {
         $query = pdoQuery('g_inf_tbl', array('name', 'intro','inf','situation','sc_id','produce_id'), array('id' => $_POST['g_id']), ' limit 1');
         if ($goodsInf = $query->fetch()) {
             $back['goodsInf']=$goodsInf;
@@ -133,15 +125,39 @@ if(isset($_SESSION['login'])) {
             foreach ($query as $detailRow) {
                 $back['detail'][]=$detailRow;
             }
-            $img = pdoQuery('g_image_tbl', array('id', 'url', 'front_cover'), array('g_id' => $_POST['g_id']), null);
+            $img = pdoQuery('g_image_tbl', array('id', 'url', 'front_cover','remark'), array('g_id' => $_POST['g_id']), null);
             foreach($img as $imgrow){
                 $back['img'][]=$imgrow;
             }
+            $parts=pdoQuery('admin_parts_view',null,array('g_id'=>$_POST['g_id']),null);
+            foreach($parts as $partRow){
+                $back['parts'][]=$partRow;
+            }
             $back['parm']=getGoodsPar($_POST['g_id'],$sc_id);
             $jsonBack=json_encode($back,JSON_UNESCAPED_UNICODE);
+//            mylog($jsonBack);
             echo $jsonBack;
             exit;
         }
+    }
+    if(isset($_POST['get_parts_inf'])){
+        $query=pdoQuery('parts_view',null,array('g_id'=>$_POST['g_id']),' limit 1');
+        if($partsInf=$query->fetch()){
+            $back['goodsInf']=$partsInf;
+        }
+        $sc_id=$back['goodsInf']['sc_id'];
+        $query=pdoQuery('g_inf_tbl',array('id','name','produce_id'),array('sc_id'=>$sc_id,'situation'=>1),null);
+        foreach ($query as $row) {
+            $back['hostGoods'][$row['id']]=$row;
+        }
+        $Query=pdoQuery('part_tbl',array('g_id'),array('part_g_id'=>$_POST['g_id']),null);
+        foreach ($Query as $row) {
+            $back['hostGoods'][$row['g_id']]['checked']=1;
+        }
+
+        $jsonBack=json_encode($back,JSON_UNESCAPED_UNICODE);
+        echo $jsonBack;
+        exit;
     }
     if (isset($_POST['start_time_change'])) {
         pdoUpdate('promotions_tbl', array('start_time' => $_POST['value']), array('id' => $_POST['id']));
@@ -234,10 +250,10 @@ if(isset($_SESSION['login'])) {
         }
         $namePool=array_diff($colList,$colExist);
         $col_name=array_pop($namePool);
-        mylog($col_name);
-        pdoInsert('par_col_tbl',array('sc_id'=>$_POST['sc_id'],'col_name'=>$col_name,'name'=>$_POST['name'],
+//        mylog($col_name);
+        $id=pdoInsert('par_col_tbl',array('sc_id'=>$_POST['sc_id'],'col_name'=>$col_name,'name'=>$_POST['name'],
             'par_category'=>$_POST['par_category'],'dft_value'=>$_POST['dft_value']),'update');
-        echo $col_name;
+        echo $id;
         exit;
     }
     if(isset($_POST['get_sc_parm'])){
@@ -249,6 +265,48 @@ if(isset($_SESSION['login'])) {
         $data=json_encode($parList);
 
         echo $data;
+        exit;
+    }
+    if(isset($_POST['del_sc_parm'])){
+        pdoDelete('par_col_tbl',array('id'=>$_POST['id']));
+        echo 'ok';
+        exit;
+    }
+    if(isset($_POST['hostGoodsSet'])){
+//        mylog($_POST['situation']);
+
+        if($_POST['situation']=='true'){
+            pdoInsert('part_tbl',array('g_id'=>$_POST['g_id'],'part_g_id'=>$_POST['part_g_id']),'ignore');
+        }else{
+//            mylog('delete');
+            pdoDelete('part_tbl',array('g_id'=>$_POST['g_id'],'part_g_id'=>$_POST['part_g_id']));
+        }
+        echo 'ok';
+        exit;
+
+    }
+    if(isset($_POST['del_g_img'])){
+        $urlquery=pdoQuery('g_image_tbl',array('url'),array('g_id'=>$_POST['g_id'],'remark'=>$_POST['md5']),'limit 1');
+        $url=$urlquery->fetch();
+        pdoDelete('g_image_tbl',array('g_id'=>$_POST['g_id'],'remark'=>$_POST['md5']));
+        $query=pdoQuery('g_image_tbl',array('id'),array('remark'=>$_POST['md5']),' limit 1');
+        if(!$query->fetch()){
+            unlink('../'.$url['url']);
+        }
+        echo 'ok';
+        exit;
+    }
+    if(isset($_POST['del_front_img'])){
+        $query=pdoQuery('ad_tbl',array('img_url'),array('id'=>$_POST['id']),null);
+        $row=$query->fetch();
+        pdoDelete('ad_tbl',array('id'=>$_POST['id']));
+        unlink('../'.$row['img_url']);
+        echo 'ok';
+        exit;
+    }
+    if(isset($_POST['change_part_stu'])){
+        pdoUpdate('part_tbl',array('dft_check'=>$_POST['value']),array('id'=>$_POST['id']));
+        echo $_POST['value'];
         exit;
     }
 }

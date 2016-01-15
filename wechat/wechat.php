@@ -154,8 +154,8 @@ class wechat
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode($tmpArr);
         $tmpStr = sha1($tmpStr);
-
         if ($tmpStr == $signature) {
+
             return true;
         } else {
             return false;

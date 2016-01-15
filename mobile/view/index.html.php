@@ -31,10 +31,8 @@
 
     });
 </script>
-<script>
 
-
-</script>
+<?php //include_once 'templates/jssdkIncluder.php'?>
 
 </body>
 

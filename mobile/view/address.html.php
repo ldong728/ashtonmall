@@ -4,23 +4,11 @@
 </head>
 <body>
 <div class="wrap">
-    <header class="header">
-        <a class="back" href="javascript:window.history.go(-1);"></a>
-        <p class="hd_tit">地址管理</p>
-        <a class="daohang"href="#"></a>
-        <nav class="head_nav">
-            <a class="hn_index"href="index.php">首页</a>
-            <a class="hn_sort"href="controller.php?getSort=1">分类查找</a>
-            <a class="hn_cart"href="controller.php?getCart=1">购物车</a>
-            <a class="hn_memb"href="controller.php?customerInf=1">个人中心</a>
-        </nav>
-        <script src="../js/head.js"></script>
-    </header>
     <div class="editAddress">
         <ul class="addressList">
             <?php foreach($addrlist as $row):?>
             <li id="li<?php echo $row['id']?>">
-                <a class="address"href="controller.php?settleAccounts=1&addressId=<?php echo $row['id']?>">
+                <a class="address"href="controller.php?settleAccounts=1&addressId=<?php echo $row['id']?>&from=<?php echo $to?>">
                     <div class="address_hd">
                         <p>
                             <?php echo $row['name']?>
@@ -42,7 +30,7 @@
         </a>
     </div>
     <div class="add_Address"id="add_addr"style="display: none">
-        <form action="controller.php?alterAddress=1"method="post">
+        <form action="controller.php?alterAddress=1&from=<?php echo $to?>"method="post">
             <div class="inputBox">
                 <input type="hidden"name="address_id"id="address_id"value="-1">
                 <input type="text" id="name"name="name"placeholder="请输入姓名">

@@ -4,20 +4,9 @@
 </head>
 <body>
 <div class="wrap">
-    <header class="header">
-        <a class="back" href="javascript:window.history.go(-1);"></a>
-        <p class="hd_tit">订单确认</p>
-        <a class="daohang"href="#"></a>
-        <nav class="head_nav">
-            <a class="hn_index"href="index.php">首页</a>
-            <a class="hn_sort"href="controller.php?getSort=1">分类查找</a>
-            <a class="hn_cart"href="controller.php?getCart=1">购物车</a>
-            <a class="hn_memb"href="controller.php?customerInf=1">个人中心</a>
-        </nav>
-        <script src="../js/head.js"></script>
-    </header>
+
     <div class="orderComfirm">
-        <a class="address"href="controller.php?editAddress=1">
+        <a class="address"href="controller.php?editAddress=1&from=<?php echo $from?>">
             <i class="iCar"></i>
             <div class="adInfo">
                <p><?php echo $addr['province'].'  '.$addr['city'].'   '.$addr['area']?></p>
@@ -46,13 +35,17 @@
             <?php endforeach?>
         </ul>
         <div class="orderOther"style="margin-top: 10px">
-            <div class="orderMode">
-                <h3>配送方式：</h3>
-                <div class="chosen chooseOpen">默认快递</div>
-                <div class="chooseArea">
-
-
-                </div>
+<!--            <div class="orderMode">-->
+<!--                <h3>配送方式：</h3>-->
+<!--                <div class="chosen chooseOpen">默认快递</div>-->
+<!--                <div class="chooseArea">-->
+<!---->
+<!---->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="remark">
+                <div class="remark-title"><h3>用户留言：</h3></div>
+                <textarea rows="2"class="remark_field"></textarea>
             </div>
         </div>
         <div class="ordertotal">
@@ -61,7 +54,20 @@
                 <span class="cl_red">￥<?php echo $totalPrice?></span>
             </span>
         </div>
-        <a class="orderSettle" id="orderConfirm"href="controller.php?orderConfirm=1&addrId=<?php echo $addr['id']?>">订单确认</a>
+
+        <a class="orderSettle" id="orderConfirm"href="#">订单确认</a>
     </div>
 </div>
 </body>
+<script>
+    var from ='<?php echo $from?>';
+    var addrId = <?php echo $addr['id']?>
+</script>
+<script>
+    $('.ordersettle').click(function(){
+//        alert($('.remark_field').val())
+        $.post('ajax.php',{userRemark:1,remark:$('.remark_field').val()},function(data){
+            window.location.href='controller.php?orderConfirm=1&addrId='+addrId+'&from='+from;
+        })
+    });
+</script>

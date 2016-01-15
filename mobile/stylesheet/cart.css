@@ -35,7 +35,7 @@ span#totalPrice{
 .cart_list dd .pdChoose input{vertical-align:middle;}
 .cart_list dd .imgA{overflow:hidden; width:50px; height:50px; display:inline-block; margin:15px; margin-left:0; float:left;}
 .cart_list .cDetail{margin-top:12px; float:left; width:60%; }
-.cart_list .cDetail .cName{color:#333; text-decoration:none; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; display:block; font-size:14px;}
+.cart_list .cDetail .cName{line-height:1.6em;color:#333; text-decoration:none; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; display:block; font-size:14px;}
 .cart_list .cDetail .cStandard{color:#666; padding:10px 0;}
 .cart_list .cDetail .cCount{padding:10px 0;}
 .cart_list .cDetail .countBox{display:inline-block; line-height:30px; text-align:right; width:100px; color:#666;}
@@ -65,3 +65,13 @@ span#totalPrice{
 .cartNone .noneNotice span{padding:30px 0; display:block; color:#999;}
 .cartNone .noneNotice a{font-size:14px; padding:6px 50px; margin-bottom:10px; display:inline-block; color:#fff; background-color:#eb0b30; border-radius:3px; text-decoration:none;}
 .cartNone .buttoneComfirm{display:block; width:94%; margin:0 3%; height:38px; line-height:38x; text-align:center; text-decoration:none; background-color:#eb0b30; margin-top:30px; border-radius:3px; line-height:40px; color:#fff; font-size:16px; font-weight:700;}
+.delete {
+    padding: 6px;
+    float: right;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: url(images/icon-del.png) no-repeat;
+    background-size: 18px 18px;
+    background-position: center;
+}

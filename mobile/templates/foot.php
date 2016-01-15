@@ -7,11 +7,13 @@
         <?php endforeach ?>
     </div>
     <div class="con-nav">
+        <a href="controller.php?customerInf=1">
         <div class="icon-block">
             <div class="icon user-center">
             </div>
             <p class="icon-name">个人中心</p>
         </div>
+        </a>
 
         <div class="icon-block">
             <div class="icon kf"></div>

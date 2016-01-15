@@ -11,7 +11,7 @@ $signPackage = $jssdk->GetSignPackage();
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
     wx.config({
-        debug: false,
+        debug: true,
         appId: '<?php echo $signPackage["appId"];?>',
         timestamp: <?php echo $signPackage["timestamp"];?>,
         nonceStr: '<?php echo $signPackage["nonceStr"];?>',
@@ -19,12 +19,15 @@ $signPackage = $jssdk->GetSignPackage();
         jsApiList: [
             'hideOptionMenu',
             'scanQRCode',
-            'getLocation',
-            'openLocation',
-            'onMenuShareTimeline'
+//            'getLocation',
+//            'openLocation',
+//            'onMenuShareTimeline'
+            'chooseWXPay'
         ]
     });
 //    wx.ready(function(){
+
+//        alert()
 //        wx.hideOptionMenu();
 //        wx.scanQRCode({
 //            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，

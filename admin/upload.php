@@ -25,17 +25,74 @@ if(isset($_SESSION['login'])) {
         $inf=$uploader->getFileInfo();
         $jsonInf=json_encode($inf,JSON_UNESCAPED_UNICODE);
         echo $jsonInf;
-        pdoInsert('inf_image_tbl',array('url'=>$inf['urlInDb'],'remark'=>$inf['md5']),'ignore');
+        if('SUCCESS'==$inf['state']) {
+            pdoInsert('inf_image_tbl', array('url' => $inf['url'], 'remark' => $inf['md5']), 'ignore');
+        }
         exit;
     }
     if(isset($_FILES['g-img-up'])){
-        $file=$_FILES['g-img-up'];
         $uploader=new uploader('g-img-up');
-        $uploader->upFile(time().rand(1000,9999));
+        $uploader->upFile($_GET['g_id'].'_'.time().rand(1000,9999));
+        $inf=$uploader->getFileInfo();
+
+        if('SUCCESS'==$inf['state']) {
+            $query=pdoQuery('image_view',array('g_id'),array('g_id'=>$_GET['g_id']),null);
+            $is_cover='0';
+            if(!$query->fetch()){
+                $is_cover='1';
+                $inf['cover']=true;
+            }
+           $id= pdoInsert('g_image_tbl', array('g_id' => $_GET['g_id'], 'url' => $inf['url'], 'remark' => $inf['md5'],'front_cover'=>$is_cover), '');
+            $inf['id']=$id;
+        }
+        $jsonInf=json_encode($inf,JSON_UNESCAPED_UNICODE);
+        mylog($jsonInf);
+        echo $jsonInf;
+        exit;
+    }
+    if(isset($_FILES['front-img-up'])){
+        $uploader=new uploader('front-img-up');
+        $uploader->upFile('9999_'.time().rand(1000,9999));
+        mylog('frontUp');
+        $inf=$uploader->getFileInfo();
+        if('SUCCESS'==$inf['state']) {
+            $id= pdoInsert('ad_tbl', array('category'=>'banner', 'img_url' => $inf['url']), '');
+            $inf['id']=$id;
+        }
+//        header('contentType:application/json');
+        $jsonInf=json_encode($inf,JSON_UNESCAPED_UNICODE);
+        mylog('imgUploaded:'.$jsonInf);
+        echo $jsonInf;
+        exit;
+    }
+
+    if(isset($_FILES['parts-img-up'])){
+        $uploader=new uploader('parts-img-up');
+        $uploader->upFile($_GET['g_id'].'_'.time().rand(1000,9999));
         $inf=$uploader->getFileInfo();
         $jsonInf=json_encode($inf,JSON_UNESCAPED_UNICODE);
+
+        if('SUCCESS'==$inf['state']) {
+            mylog('success');
+            $temp=pdoQuery('g_image_tbl',null,array('g_id'=>$_GET['g_id']),'limit 1');
+            if(!$row=$temp->fetch()){
+                pdoInsert('g_image_tbl', array('g_id' => $_GET['g_id'], 'url' => $inf['url'], 'remark' => $inf['md5']), 'ignore');
+                mylog("create record");
+            }else{
+                pdoUpdate('g_image_tbl',array('remark'=>$inf['md5'],'url'=>$inf['url']),array('g_id'=>$_GET['g_id']));
+                $query=pdoQuery('image_view',null,array('remark'=>$row['remark']), ' limit 1');
+                if(!$t=$query->fetch()){
+                    unlink('../'.$row['url']);
+                    mylog('unlink"../'.$row['url']);
+                }else{
+                    mylog('not unlink');
+                }
+
+            }
+
+        }
+        mylog($jsonInf);
         echo $jsonInf;
-        pdoInsert('g_image_tbl',array('g_id'=>$_GET['g_id'],'url'=>$inf['urlInDb'],'remark'=>$inf['md5']),'ignore');
         exit;
     }
 //    if (isset($_GET['g_id'])){

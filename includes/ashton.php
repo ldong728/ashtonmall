@@ -34,7 +34,7 @@ function init()
     $_SESSION['smq'] = $smq;
 }
 function getOrderStu($index){
-    $list=array('待付款','已付款','已发货','已完成','异常','退款中','退货中','已取消','已过期');
+    $list=array('待付款','已付款','已发货','已完成','异常','退款中','退货中','已取消','已过期','处理中');
     return $list[$index];
 }
 function getProvince($pro){
@@ -87,6 +87,25 @@ function getArea($pro,$city,$area){
         }
     }
 }
+function getReview($g_id,$index=0,$limit=3){
+    $query=pdoQuery('user_output_review_view',null,array('g_id'=>$g_id,'public'=>'1','father_v_id'=>'-1'),
+        ' or (c_id="'.$_SESSION['customerId'].'" and g_id="'.$g_id.'" and father_v_id=-1) order by priority asc,review_time desc limit '.$index.','.$limit);
+    $numquery=pdoQuery('review_count_view',null,array('g_id'=>$g_id),null);
+    $count=$numquery->fetch();
+    foreach ($query as $row) {
+        if(!isset($review[$row['id']])){
+            $review[$row['id']]=$row;
+        }
+        $review[$row['id']]['img'][]=$row['url'];
+    }
+    if(!isset($review))$review=array();
+    if(!isset($count['num']))$count['num']=0;
+    $back['num']=$count['num'];
+    $back['inf']=$review;
+    return $back;
+
+}
+
 function getGoodsPar($g_id,$sc_id){
     $back=array();
     $parmKeyQuery=pdoQuery('par_col_tbl',null,array('sc_id'=>$sc_id),' limit 25');

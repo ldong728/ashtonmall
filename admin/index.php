@@ -15,7 +15,7 @@ if (isset($_SESSION['login'])) {
     }
     if (isset($_GET['goods-config'])) {
         if(isset($_GET['is_part'])){
-            printView('admin/view/part_edit.html.php', '货品修改');
+            printView('admin/view/parts_edit.html.php', '配件修改');
             exit;
         }
         printView('admin/view/goods_edit.html.php', '货品修改');
@@ -56,13 +56,14 @@ if (isset($_SESSION['login'])) {
         include 'view/login.html.php';
         exit;
     }
+    $frontImg=pdoQuery('ad_tbl',null,array('category'=>'banner'),null);
     printView('admin/view/admin_index.html.php');
     exit;
 } else {
     if (isset($_GET['login'])) {
-//        echo md5($_POST['adminName']).md5($_POST['password']);
         if (md5($_POST['adminName']) . md5($_POST['password']) == '9f6c470eab19fdca07401196068f78d554b51a86e539d9f8f711e67826ea60d5') {
             $_SESSION['login'] = 1;
+            $frontImg=pdoQuery('ad_tbl',null,array('category'=>'banner'),null);
             printView('admin/view/admin_index.html.php');
         }
         exit;
