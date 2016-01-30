@@ -62,7 +62,7 @@
             <div>支付方式：<span id="payType">在线支付</span></div>
             <div class="express noDisplay">配送方式：<span
                     id="deliveryCompany"><?php echo $order_inf['express_name'] ?></span></div>
-            <div class="express noDisplay">物流单号<span id="deliveryCompany"><?php echo $order_inf['express_order'] ?>
+            <div class="express noDisplay">物流单号：<span id="deliveryCompany"><?php echo $order_inf['express_order'] ?>
             </div>
         </div>
         <div class="order_ft">
@@ -92,10 +92,12 @@
                 评价
             </a>
         </div>
+        <div class="blank"></div>
 
 
 
     </div>
+    <?php include_once 'templates/foot.php'?>
 </div>
 <script>
     var orderId = '<?php echo $order_inf['id']?>';
@@ -109,6 +111,10 @@
             case 2:{
                 $('.express').css('display','block');
                 $('.review').css('display','block');
+                break;
+            }
+            case 3:{
+                $('.express').css('display','block');
                 break;
             }
         }

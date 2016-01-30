@@ -29,7 +29,7 @@ $(document).on('change', '.category', function () {
 
 })
 $(document).on('change', '.sale', function () {
-    alert('change');
+    //alert('change');
     $.post('ajax_request.php', {changeSale: 1, d_id: $(this).attr("id"), value: $(this).val()},function(data){
         showToast('修改成功');
     });
@@ -172,7 +172,7 @@ function getGInf() {
         $('#host_set').append('<div class="module-title"><h4>配件默认状态</h4></div>');
         if(null!=inf.parts) {
             $.each(inf.parts, function (k, v) {
-                alert('have parts');
+                //alert('have parts');
                 var checked = 1 == v.dft_check ? 'checked=checked' : ''
                 var con = '<input type="checkbox"class="part_dft"' + checked +
                     'id="parts' + v.id + '"/>' + v.part_name + ' ' + v.part_produce_id

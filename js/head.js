@@ -24,7 +24,17 @@ function showToast(str){
 function antCacheRand(){
     return Math.random().toString(36).substr(2);
 }
+function closeWindow(text){
+    if
+    (confirm(text)){
+        window.opener=null;
+        window.open('','_self');
+        window.close();
+    }
+    else{}
+}
 function selectCate(o){
-//        alert(o.id);
-    window.location.href='controller.php?getFcList=1&fc_id='+ o.id;
+        //alert(o.id);
+    var id= o.id.slice(4)
+    window.location.href='controller.php?getFcList=1&fc_id='+id;
 }

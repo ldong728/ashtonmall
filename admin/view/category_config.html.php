@@ -76,7 +76,31 @@ $smq = $_SESSION['smq'];
 
 
 </div>
+<div class="module-block remark-edit">
+    <div class="module-title"><h4>售后条例</h4></div>
+    <script type="text/plain" id="uInput" name="cate-remark" style="width:1000px;height:240px;">
+                <p>在这里编辑</p>
+                        </script>
 
+    <button class="remark-button">提交</button>
+
+</div>
+
+<script>
+//    var editWidth=$(document).width()*0.4;
+//    var editHeight=600;
+</script>
+<script>
+    var editWidth=$(document).width()*0.8;
+    var editHeight=300;
+</script>
+
+<script type="text/javascript" charset="utf-8" src="js/cate-remark-umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="../uedit/umeditor.min.js"></script>
+<script type="text/javascript">
+    var um = UM.getEditor('uInput');
+</script>
+<!--<script src="js/goodsInfEdit.js"></script>-->
 
 <script>
     var cateIndex = 0;
@@ -105,7 +129,7 @@ $smq = $_SESSION['smq'];
         var parent = $(this).parent();
         var cateName = $('#cate-name').val();
         var content = '';
-        var content = '<h3 class="par-cate">' + cateName + '</h3>';
+        var content = '<h3 class="par-cate"><a href="#"class="delCate">' + cateName + '</a></h3>';
         var parinput = '<table class="par-table">' + parInputBox +
             '<table>';
         content += parinput
@@ -126,33 +150,54 @@ $smq = $_SESSION['smq'];
             par_category: category,
             dft_value: dft
         }, function (data) {
-            pareTr.before('<tr><td>' + pmt + '</td><td>' + dft + '<div id="del'+data+'"class="delete"></td></tr>');
+            pareTr.before('<tr><td>' + pmt + '</td><td>' + dft + '<div id="del' + data + '"class="delete"></td></tr>');
         });
 //        alert(category);
 //        alert(pmt);
 //        alert(dft);
     });
-    $(document).on('click','.delete',function(){
-        var id=$(this).attr('id').slice(3);
+    $(document).on('click', '.delete', function () {
+        var id = $(this).attr('id').slice(3);
         $(this).parents('tr').remove();
-        $.post('ajax_request.php',{del_sc_parm:1,id:id},function(data){
+        $.post('ajax_request.php', {del_sc_parm: 1, id: id}, function (data) {
             $(this).parents('tr').remove();
+
         });
 
     });
+    $(document).on('click', '.delCate', function () {
+        var value = $(this).text();
+        if (confirm('删除'+value+'这一参数分类？')) {
+            $.post('ajax_request.php', {del_parm: 1,sc_id:sc_id,cate: value}, function (data) {
+                getParInf();
+            })
+
+
+        }
+
+    });
+    $(document).on('click','.remark-button',function(){
+        if(sc_id!=null){
+        var remark=$('#uInput').html();
+        $.post('ajax_request.php',{cateRemark:1,content:remark,sc_id:sc_id},function(data){
+           showToast('修改成功')
+        });
+        }
+    })
 
     function getParInf() {
         $('#parameter-edit').empty();
         $.post('ajax_request.php', {get_sc_parm: 1, sc_id: sc_id}, function (data) {
 //            alert(data);
             var value = eval('(' + data + ')');
-            $.each(value, function (k, v) {
-                var content = '<div class="par-category"><h3>' +
+            um.setContent(value.remark);
+            $.each(value.parm, function (k, v) {
+                var content = '<div class="par-category"><h3><a href="#"class="delCate">' +
                     k +
-                    '</h3><table class="par-table">' + '<tr><td>参数名</td><td>默认值</td></tr>';
+                    '</a></h3><table class="par-table">' + '<tr><td>参数名</td><td>默认值</td></tr>';
                 $.each(v, function (k2, v2) {
 
-                    var intab = '<tr><td>' + v2.name + '</td><td>' + v2.dft_value + '<div id="del'+v2.id+'" class="delete"></td></tr>';
+                    var intab = '<tr><td>' + v2.name + '</td><td>' + v2.dft_value + '<div id="del' + v2.id + '" class="delete"></td></tr>';
                     content += intab;
                 });
                 content += parInputBox;
@@ -164,7 +209,7 @@ $smq = $_SESSION['smq'];
 
     }
 
-    $('input').attr('onkeypress', "if(event.keyCode == 13) return false;");
+
 
 
 </script>

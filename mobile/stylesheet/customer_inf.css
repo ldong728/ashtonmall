@@ -3,7 +3,7 @@
 .memberHome .cl_grey{color:#999;}
 .memberHome .user_info{height:75px; width:100%; background:url(images/member_bg.jpg) no-repeat; background-size:cover; position:relative;}
 .memberHome .username{line-height:60px; padding-left:22px; color:#9bb0ff; font-size:14px;}
-.memberHome .username span{ color:#fff; max-width:148px; display:inline-block; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; margin-top:-3px; vertical-align:middle; font-size:14px;}
+.memberHome .username span{ line-height: 16px; color:#fff; max-width:148px; display:inline-block; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; margin-top:-3px; vertical-align:middle; font-size:14px;}
 .memberHome .logout{display:inline-block; color:#c7e2ff; line-height:18px; padding:0 5px; background-color:#2484e8; opacity:0.5; border:1px solid #1572d3; border-radius:3px; position:absolute; right:25px; top:23px; text-decoration:none;}
 .memberTab{width:100%; height:40px; background-color:#fff;}
 .memberTab .tab{text-align:center; line-height:40px; color:#636363; width:50%; float:left; box-sizing:border-box; -moz-box-sizing:border-box; -webkit-box-sizing:border-box; display:block; text-decoration:none;font-size:14px;}

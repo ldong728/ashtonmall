@@ -2,14 +2,15 @@
 <?php $express=$GLOBALS['expressQuery']?>
 
 <div>
- <input type="radio"name="orderFilter"class="orderFilter"value="0">未付款
-    <input type="radio"name="orderFilter"class="orderFilter"value="1">已付款
-    <input type="radio"name="orderFilter"class="orderFilter"value="2">已发货
-    <input type="radio"name="orderFilter"class="orderFilter"value="3">已成交
+ <input type="radio"name="orderFilter"class="orderFilter"id="chk0"value="0">未付款
+    <input type="radio"name="orderFilter"class="orderFilter"id="chk1"value="1">已付款
+    <input type="radio"name="orderFilter"class="orderFilter"id="chk2"value="2">已发货
+    <input type="radio"name="orderFilter"class="orderFilter"id="chk3"value="3">已成交
 
 </div>
 
-<div class="orderView">
+<div class="module-block orderView">
+    <div class="module-title"id="name">订单</div>
 <?php foreach ($orderList as $row):?>
     <div class="orderItem">
         <form action="consle.php"method="post">
@@ -35,9 +36,7 @@
                 <input type="hidden"name="filtOrder"value="<?php echo $row['id']?>">
                 <input name="expressNumber"type="text"placeholder="输入单号"<?php echo $row['express_order']!=0?'value="'.$row['express_order'].'"':''?>>
                 <input type="hidden" name="stu"value="2">
-                <input type="submit"value="发货/修改">
-
-
+                <input type="submit"id="submit<?php echo $row['id']?>"value="发货/修改">
             </div>
 
         </form>
@@ -49,6 +48,9 @@
 
 </div>
 <script>
+    var chkid=<?php echo $_GET['orders']?>;
+//    var id=chkid==null?chkid:1
+    $('#chk'+chkid).attr('checked','checked');
     $('.orderNumber').click(function(){
         var o_id=$(this).attr('id');
         $('.hiddenContent').slideUp('slow',function(){
@@ -59,6 +61,7 @@
                     $('#content'+o_id).append('<p>'+value.name+'  '+value.category+'   '+'数量：'+value.number+'</p>');
                 });
                 $('#hidden'+o_id).slideDown('slow');
+                if(chkid==3)$('#submit'+o_id).remove();
             });
         });
     });

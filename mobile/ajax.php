@@ -10,7 +10,14 @@ session_start();
 
 if(isset($_SESSION['customerId'])){
     if(isset($_POST['alterCart'])){
-        pdoUpdate('cart_tbl',array('number'=>$_POST['number']),array('c_id'=>$_SESSION['customerId'],'cart_id'=>$_POST['cart_id']));
+        pdoUpdate('cart_tbl',array('number'=>$_POST['number']),array('c_id'=>$_SESSION['customerId'],'id'=>$_POST['cart_id']));
+        echo 'ok';
+        exit;
+    }
+    if(isset($_POST['alterPartCart'])){
+        pdoUpdate('part_cart_tbl',array('part_number'=>$_POST['number']),array('part_id'=>$_POST['g_id'],'cart_id'=>$_POST['cart_id']));
+        echo 'ok';
+        exit;
     }
     if(isset($_POST['deleteCart'])){
         pdoDelete('cart_tbl',array('c_id'=>$_SESSION['customerId'],'id'=>$_POST['cart_id']));
@@ -76,9 +83,9 @@ if(isset($_SESSION['customerId'])){
         if($_POST['mode']=='true'){
             unset($_SESSION['buyNow']['partsList'][$_POST['part_id']]);
         }else{
-            $_SESSION['buyNow']['partsList'][$_POST['part_id']]=$_POST['part_id'];
+            $_SESSION['buyNow']['partsList'][$_POST['part_id']]=$_POST['number'];
         }
-//        mylog(getArrayInf($_SESSION));
+        mylog(getArrayInf($_SESSION['buyNow']['partsList']));
         echo 'ok';
         exit;
     }
@@ -116,6 +123,12 @@ if(isset($_SESSION['customerId'])){
             exit;
         }
         echo $id;
+        exit;
+    }
+    if(isset($_POST['linkKf'])){
+        include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
+        $response=linkKf($_SESSION['customerId']);
+        echo $response;
         exit;
     }
 
@@ -156,7 +169,7 @@ if(isset($_POST['addToCart'])){
                 'update');
             $value=array();
             foreach ($_SESSION['buyNow']['partsList'] as $k=>$v) {
-                $value[]=array('cart_id'=>$cartId,'part_id'=>$v,'part_number'=>$_POST['number']);
+                $value[]=array('cart_id'=>$cartId,'part_id'=>$k,'part_number'=>$v);
             }
             pdoBatchInsert('part_cart_tbl',$value);
 

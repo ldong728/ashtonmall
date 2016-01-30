@@ -200,7 +200,7 @@
 
         //如果自定义，最好给p标签如下的行高，要不输入中文时，会有跳动感
         //注意这里添加的样式，最好放在.edui-editor-body .edui-body-container这两个的下边，防止跟页面上css冲突
-        //,initialStyle:'.edui-editor-body .edui-body-container p{line-height:1em}'
+        ,initialStyle:'.edui-editor-body .edui-body-container p{line-height:1em} img{max-width:100%}'
 
         //,autoSyncData:true //自动同步编辑器要提交的数据
 

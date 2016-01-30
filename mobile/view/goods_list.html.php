@@ -20,11 +20,6 @@
                 <ul class="sub-category">
                     <?php foreach ($cateList as $row): ?>
                     <li class="cate-ul" id="<?php echo $row['sc_id'] ?>"><h5><?php echo $row['sc_name'] ?></h5>
-                        <ul class="sub-ul" id="sub<?php echo $row['sc_id'] ?>">
-                            <?php foreach ($produceList[$row['sc_id']] as $prow): ?>
-                                <li><?php echo $prow['name'] ?></li>
-                            <?php endforeach ?>
-                        </ul>
                         <?php endforeach ?>
 
                 </ul>
@@ -45,6 +40,9 @@
 
 
 <script>
+    var id=<?php echo $_GET['fc_id']?>;
+    var defaultv=<?php echo $default['id']?>;
+    $('#main'+id).addClass('selected');
     $(document).on('click', '.cate-ul', function () {
 
         var id = $(this).attr('id');
@@ -52,27 +50,35 @@
     })
 </script>
 <script>
-    getProduceList(1);
+    getProduceList(defaultv);
 
 
     function getProduceList(sc_id){
-        $('.main-right').empty();
-        $.post('ajax.php',{getProduceList:1,sc_id:sc_id},function(data){
-            var value=eval('('+data+')');
-            $.each(value,function(k,v){
-                var price= v.price? v.price: v.sale;
-                var content='<div class="produce-intro">'+
-                    '<div class="produce-img"><img src="../'+ v.url+'"/></div>'+
-                '<div class="produce-inf name"><h3>'+ v.name+'</h3></div>'+
-                '<div class="produce-inf discrib"><p>'+ v.intro+'</p></div>'+
-                '<div class="produce-inf price"><h3>RMB '+price+'</h3></div>'+
-                '<a href="controller.php?goodsdetail=1&g_id='+ v.g_id+'" class="produce-inf buy-button"></a>' +
-                    '</div>'+
-                '<div class="h-border"></div>';
-                $('.main-right').append(content);
+        var cateName='';
+
+        $('.main-right').fadeOut('fast',function(){
+            $('.main-right').empty();
+            $.post('ajax.php',{getProduceList:1,sc_id:sc_id},function(data){
+                var value=eval('('+data+')');
+                $.each(value,function(k,v){
+                    cateName= v.sc_name;
+                    var price= v.price? v.price: v.sale;
+                    var content='<div class="produce-intro">'+
+                        '<div class="produce-img"><img src="../'+ v.url+'"/></div>'+
+                        '<div class="produce-inf name"><h3>'+ v.name+'</h3></div>'+
+                        '<div class="produce-inf discrib"><p>'+ v.intro+'</p></div>'+
+                        '<div class="produce-inf price"><h3>RMB '+price+'</h3></div>'+
+                        '<a href="controller.php?goodsdetail=1&g_id='+ v.g_id+'" class="produce-inf buy-button"></a>' +
+                        '</div>'+
+                        '<div class="h-border"></div>';
+                    $('.main-right').append(content);
+
+                });
                 $('.main-right').fadeIn('slow');
+                $('.cate-name').text(cateName);
             });
         });
+
     }
 </script>
 </body>

@@ -110,6 +110,7 @@ iframe {
 }
 
 div.orderView {
+
     position: relative;
 
 }
@@ -218,11 +219,15 @@ div.orderItem {
 .sc-edit #parameter-edit{
     text-align: center;
 }
+.sc-edit .cate-button{
+    text-align: center;
+    margin: 0 auto;
+}
 #parameter-edit .par-category{
     text-align: center;
 }
 table{
-
+    margin: 0 auto;
     padding: 0;
     border-collapse:collapse;
     /*text-align: center;*/
@@ -262,6 +267,7 @@ table div.delete{
     background-size: 100% 100%;
     margin: 2px 0 auto 20px;
 }
+
 
 
 
@@ -394,6 +400,45 @@ a.img-upload{
     background-size: 50px 50px;
     background-position: 25px 25px;
     background-repeat: no-repeat;
+}
+/*评论管理界面*/
+
+.review-block{
+
+}
+.review-block .review-box{
+    overflow: hidden;
+    zoom:1;
+    border: solid 1px #ddd;
+}
+.review-box .reviews{
+    float: left;
+    width: 40%;
+    margin-right: 5%;
+    font-size: 14px;
+}
+.review-box .score{
+    float:left;
+    margin-right: 4%;
+}
+.review-box .priority{
+    width: 20%;
+    float:left;
+}
+.review-box input{
+    width: 5%;
+}
+.review-box button{
+    float: left;
+    padding: 0;
+    /*height: 16px;*/
+width: 8%;
+}
+
+/*微信控制界面*/
+
+.paychecked{
+    width: 18%;
 }
 
 

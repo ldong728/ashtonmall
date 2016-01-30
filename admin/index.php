@@ -47,6 +47,17 @@ if (isset($_SESSION['login'])) {
         printView('admin/view/orderManage.html.php','订单管理');
         exit;
     }
+    if(isset($_GET['review'])){
+        $limit=isset($_GET['index'])?' limit '.$_GET['index'].', 20':' limit 20';
+        $reviewQuery=pdoQuery('review_tbl',null,array('priority'=>'5','public'=>'0'),$limit);
+        foreach ($reviewQuery as $row) {
+           $review[]=$row;
+        };
+        if(null==$review)$review=array();
+
+        printView('admin/view/review.html.php','评价管理');
+        exit;
+    }
     if(isset($_GET['wechatConfig'])){
         printView('admin/view/wechatConfig.html.php','微信公众平台');
         exit;

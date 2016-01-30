@@ -62,12 +62,72 @@ function getKFinf(){
     $data=$GLOBALS['mInterface']->getByCurl('https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token=ACCESS_TOKEN');
     return $data;
 }
+function getOnlineKfList(){
+    $data=$GLOBALS['mInterface']->getByCurl('https://api.weixin.qq.com/cgi-bin/customservice/getonlinekflist?access_token=ACCESS_TOKEN');
+    return $data;
+}
+function chooseKF($kf='default'){
+    $inf=getOnlineKfList();
+//    mylog($inf);
+    $inf=json_decode($inf,true);
+    $return='ok';
+    if(count($inf['kf_online_list'])>0){
+        $linkNum=100;
+        $kfAc='';
+        foreach ($inf['kf_online_list'] as $row) {
+            if($linkNum>$row['accepted_case']){
+                $linkNum=$row['accepted_case'];
+                $kfAc=$row['kf_account'];
+            }
+        }
+        $kfAc=$kf=='default'? $kfAc:$kf;
+    }else{
+        $kfAc=false;
+    }
+    return $kfAc;
+}
+function connectKF($openId,$kfAc,$remark){
+    $linkinf=array(
+        'kf_account'=>$kfAc,
+        'openid'=>$openId,
+        'text'=>$remark
+    );
+    $request=$GLOBALS['mInterface']->postArrayByCurl('https://api.weixin.qq.com/customservice/kfsession/create?access_token=ACCESS_TOKEN',$linkinf);
+    return $request;
+}
+
+function linkKf($openId,$kf='default',$remark='用户从网页接入'){
+//    $inf=getOnlineKfList();
+//    $inf=json_decode($inf,true);
+    $return=0;
+    if($kfAc=chooseKF($kf)){
+        $request=connectKF($openId,$kfAc,$remark);
+        $request=json_decode($request,true);
+        if($request['errcode']==0){
+            sendKFMessage($openId,'已为您接入人工客服，请稍候');
+            $return=0;
+        }else{
+            sendKFMessage($openId,'客服不在线或者忙碌中，请稍候再试');
+            $return=1;
+        }
+
+    }else{
+        sendKFMessage($openId,'当前无在线客服，请稍候再试');
+        $return=2;
+    }
+    return $return;
+
+
+}
 
 function sendKFMessage($userId,$content){
     $formatedContent=array('touser'=>$userId,'msgtype'=>'text','text'=>array('content'=>$content));
+//    mylog(json_encode($formatedContent));
     $data=$GLOBALS['mInterface']->postArrayByCurl('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN',$formatedContent);
+//    mylog($data);
     return $data;
 }
+
 
 function uploadTempMedia($file, $type, $weixinId = 0)
 {
@@ -142,8 +202,6 @@ function reflashAutoReply()
 
         }
     }
-
-
 }
 function requestTemplate($templateId){
     $data=array('template_id_short'=>$templateId);
@@ -157,11 +215,12 @@ function requestTemplate($templateId){
     }
 }
 
-function sendTemplateManage($customerId,$templateId,$url,array $msg){
+function sendTemplateMsg($customerId,$templateId,$url,array $msg){
     $fullMsg=array(
         'touser'=>$customerId,
         'template_id'=>$templateId,
         'url'=>$url,
+
         'data'=>$msg
 //            array(
 //            'first'=>array('value'=>'交易成功'),
@@ -171,10 +230,15 @@ function sendTemplateManage($customerId,$templateId,$url,array $msg){
 //            'remark'=>array('value'=>'欢迎再次选购'),
 //        )
     );
-
+//    $response=json_encode(array($index=>$fullMsg),JSON_UNESCAPED_UNICODE);
     $response=$GLOBALS['mInterface']->postArrayByCurl('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN',$fullMsg);
     return $response;
 }
+//function sendTemplateMsgFrom($index){
+//
+////    $response=$GLOBALS['mInterface']->postArrayByCurl('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN'.$array);
+//    return $response;
+//}
 
 
 

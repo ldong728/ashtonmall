@@ -13,5 +13,5 @@
 <script src="../js/ap.js"></script>
 <script>
     var orderId='<?php echo $orderId ?>';
-    _AP.pay('../aliwappay/index.php?orderId='+orderId);
+    _AP.pay('../aliwappay/controller.php?createOrder=1&orderId='+orderId);
 </script>

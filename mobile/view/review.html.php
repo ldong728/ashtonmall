@@ -22,25 +22,62 @@
                 <?php endfor?>
                 <p class="avl">非常满意</p>
                 <input type="hidden"id="sval<?php echo $row['d_id']?>"value="5"/>
+
             </div>
             <div class="review_content">
                 <p class="title">评价：</p>
                 <textarea class="content"id="cont<?php echo $row['d_id']?>"></textarea>
             </div>
+            <div class="imgBlock"id="imgb<?php echo $row['d_id']?>">
+                <p>图片：</p>
+<!--                <img class="review-demo"src="../g_img/ad_img/6.jpg"/>-->
+                <div class="imginput"id="up<?php echo $row['d_id']?>"></div>
+            </div>
+            <input type="hidden"id="gid<?php echo $row['d_id']?>"value="<?php echo $row['g_id']?>"/>
             <a class="submit-review" id="subm<?php echo $row['d_id']?>">提交</a>
 
         </div>
 
         <?php endforeach?>
         <div class="toast"></div>
+        <?php include_once 'templates/foot.php'?>
     </div>
 
 
 
 </body>
 <script>
-    var g_id='<?php echo $row['g_id']?>';
+//    var g_id='<?php //echo $row['g_id']?>//';
     var orderId='<?php echo $_GET['order_id']?>'
+</script>
+<?php include 'templates/jssdkIncluder.php'?>
+<script>
+        wx.ready(function(){
+            $('.imginput').click(function(){
+                var d_id=$(this).attr('id').slice(2);
+                var g_id=$('#gid'+d_id).val();
+                wx.chooseImage({
+                    count: 1, // 默认9
+                    sizeType: [ 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                    success: function (res) {
+                        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                        var content='<img class="review-demo" src="'+localIds+'"/>'
+                        $('#up'+d_id).before(content);
+                        wx.uploadImage({
+                            localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
+                            isShowProgressTips: 1, // 默认为1，显示进度提示
+                            success: function (res) {
+                                var serverId = res.serverId;
+                                 alert('upload success');// 返回图片的服务器端ID
+                            }
+                        });
+                    }
+                });
+            })
+
+
+        })
 </script>
 
 <script>
@@ -56,6 +93,7 @@
     })
     $('.submit-review').click(function(){
         var id=$(this).attr('id').slice(4);
+        var g_id=$('#gid'+id).val();
         var content=$('#cont'+id).val();
         var score=$('#sval'+id).val();
         $.post('ajax.php',{submitReview:1,order_id:orderId,d_id:id,review:content,g_id:g_id,score:score},function(data){

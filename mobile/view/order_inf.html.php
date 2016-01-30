@@ -5,7 +5,6 @@
 <body>
 <div class="wrap">
 
-        <script src="../js/head.js"></script>
     </header>
     <div class="orderComfirm">
     <div>
@@ -18,7 +17,7 @@
     <a class="orderSettle" id="wxpay"href="#">微信支付</a>
         <a class="orderSettle" id="alipay"href="#">支付宝支付</a>
     </div>
-
+    <?php include_once 'templates/foot.php'?>
 </div>
 </body>
 

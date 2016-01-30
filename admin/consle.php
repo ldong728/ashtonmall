@@ -50,9 +50,29 @@ if(isset($_SESSION['login'])) {
         exit;
     }
     if (isset($_POST['filtOrder'])){
+//        mylog();
         pdoUpdate('order_tbl',array('stu'=>$_POST['stu'],'express_id'=>$_POST['express'],'express_order'=>$_POST['expressNumber']),
             array('id'=>$_POST['filtOrder']));
-        header('location:index.php?orders=1');
+//        mylog();
+        if($_POST['stu']=='2'){
+//            mylog();
+            include_once '../wechat/serveManager.php';
+            $query=pdoQuery('user_express_query_view',null,array('id'=>$_POST['filtOrder']),' limit 1');
+            $inf=$query->fetch();
+//            mylog();
+            $templateArray=array(
+                'first'=>array('value'=>'您在阿诗顿官方商城的网购订单已发货：'),
+                'keyword1'=>array('value'=>$inf['express_name'],'color'=>'#0000ff'),
+                'keyword2'=>array('value'=>$inf['express_order'],'color'=>'#0000ff'),
+                'remark'=>array('value'=>'请留意物流电话通知')
+            );
+//            mylog();
+
+            $request=sendTemplateMsg($inf['c_id'],$template_key_express,'http://m.kuaidi100.com/index_all.html?type='.$inf['express_id'].'&postid='.$inf['express_order'],$templateArray);
+            mylog($request);
+        }
+        mylog();
+        header('location: index.php?orders=1');
         exit;
     }
     if (isset($_GET['start_promotions'])) {
@@ -86,6 +106,8 @@ if(isset($_SESSION['login'])) {
             exit;
         }
         if(isset($_GET['sendTemplateMsg'])){
+
+//            mylog($re);
 
             exit;
         }

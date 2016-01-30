@@ -89,12 +89,15 @@ function getArea($pro,$city,$area){
 }
 function getReview($g_id,$index=0,$limit=3){
     $query=pdoQuery('user_output_review_view',null,array('g_id'=>$g_id,'father_v_id'=>'-1'),
-        ' and (c_id="'.$_SESSION['customerId'].'" or public=1) order by priority asc,review_time desc limit '.$index.','.$limit);
+        ' and (c_id="'.$_SESSION['customerId'].'" or public=1) order by priority asc,review_time desc limit '.$index.','.$limit*5);
     $numquery=pdoQuery('review_tbl',array('count(*) as num'),array('g_id'=>$g_id,'father_v_id'=>'-1'),' and (public=1 or c_id="'.$_SESSION['customerId'].'")');
     $count=$numquery->fetch();
+    $reviewcount=0;
     foreach ($query as $row) {
         if(!isset($review[$row['id']])){
             $review[$row['id']]=$row;
+            $reviewcount++;
+            if($reviewcount>$limit-1)break;
         }
         $review[$row['id']]['img'][]=$row['url'];
     }
@@ -120,6 +123,19 @@ function getGoodsPar($g_id,$sc_id){
         }
     }
     return $back;
+}
+function getWechatMode($customerId){
+    $query=pdoQuery('wechat_mode_tbl',null,array('c_id'=>$customerId),' limit 1');
+    if($row=$query->fetch()){
+        $mode=$row['mode'];
+    }else{
+        $mode='normal';
+        pdoInsert('wechat_mode_tbl',array('c_id'=>$customerId,'mode'=>$mode),'ignore');
+    }
+    return $mode;
+}
+function updateWechatMode($customerId,$mode){
+    pdoUpdate('wechat_mode_tbl',array('mode'=>$mode),array('c_id'=>$customerId));
 }
 function getConfig($path){
     $data=file_get_contents($path);

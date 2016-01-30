@@ -18,7 +18,9 @@ $signPackage = $jssdk->GetSignPackage();
         signature: '<?php echo $signPackage["signature"];?>',
         jsApiList: [
             'hideOptionMenu',
-            'scanQRCode',
+            'chooseImage',
+            'uploadImage',
+//            'scanQRCode',
 //            'getLocation',
 //            'openLocation',
 //            'onMenuShareTimeline'

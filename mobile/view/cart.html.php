@@ -18,90 +18,141 @@
                             <div class="cDetail">
                                 <a class="cName"href="controller.php?goodsdetail=1&g_id=<?php echo $row['g_id']?>&d_id=<?php echo $row['d_id']?>&number=<?php echo $row['number']?>"><?php echo $row['name']?></a>
                                 <p>规格：<span class="cl_grey"><?php echo $row['category']?></span></p>
-                                <div class="cCount">
+<!--                                <div class="cCount">-->
                                     <div class="countBox">
                                         <a class="minus change-number"id="mins<?php echo $row['cart_id']?>">
                                             -
                                         </a>
-                                        <input class="count"id="number<?php echo $row['cart_id']?>"value="<?php echo $row['number']?>"type="tel"maxlength="3">
+                                        <input readonly="1" class="count"id="number<?php echo $row['cart_id']?>"value="<?php echo $row['number']?>"type="tel"maxlength="3">
                                         <a class="plus change-number"id="plus<?php echo $row['cart_id']?>">
                                             +
                                         </a>
                                     </div>
-                                    <span class="cPrice">￥</span><span class="cPrice real-price"id="price<?php echo $row['d_id']?>"><?php echo $row['full_price']?></span>
+                                    <span class="cPrice">￥</span><span class="cPrice real-price"id="price<?php echo $row['cart_id']?>"><?php echo $row['price']?></span>
 
-                                </div>
+<!--                                </div>-->
                             </div>
                             <a class="delete"id="<?php echo $row['cart_id']?>"></a>
                         </dd>
 
+                            <?php foreach($row['parts'] as $prow):?>
+                                <dd>
+                                    <a class="imgA"href="#">
+                                        <img class="pro_img"src="../<?php echo $prow['part_url']?>"style="width: 48px; height: 48px; border: 1px solid rgb(204, 204, 204); display: block;">
+                                    </a>
+                                    <div class="cDetail">
+                                        <a class="cName"href="#"><?php echo $prow['part_name']?></a>
+                                        <p><span class="cl_grey"><?php echo $prow['part_produce_id']?></span></p>
+                                        <!--                                <div class="cCount">-->
+                                        <div class="countBox"id="count<?php echo $row['cart_id']?>">
+                                            <a class="minus part-change-number"id="mins<?php echo $prow['part_id']?>">
+                                                -
+                                            </a>
+                                            <input readonly="1" class="count"id="partnum<?php echo $prow['part_id']?>"value="<?php echo $prow['part_number']?>"type="tel"maxlength="3">
+                                            <a class="plus part-change-number"id="plus<?php echo $prow['part_id']?>">
+                                                +
+                                            </a>
+                                        </div>
+                                        <span class="cPrice">￥</span><span class="cPrice real-price"id="price<?php echo $prow['part_id']?>"><?php echo $prow['part_sale']?></span>
+
+                                        <!--                                </div>-->
+                                    </div>
+                                </dd>
+                            <?php endforeach?>
+
+
                     </dl>
                     <p class="cart_ft">
-                        总计：
-                        <span class="price sub-total-price" id="<?php echo $row['d_id']?>"></span>
+                        合计：￥
+                        <span class="price sub-total-price" id="sub-total<?php echo $row['cart_id']?>"><?php echo $row['total']?></span>
                     </p>
+
+
                 </li>
                 <?php endforeach?>
             </ul>
             <div class="fixedCartMenu">
                 <div class="settleBox">
-                    <p>合计：<span class="total"id="total-price"></span>
+                    <p>总计：￥<span class="total"id="total-price"><?php echo $list['totalPrice']?></span>
                     （未含邮费）</p>
                     <a class="settleBtn"id="buy-btn"href="controller.php?settleAccounts=1">结算</a>
                 </div>
             </div>
         </div>
+        <?php include_once 'templates/foot.php'?>
     </div>
 <script>
     $(document).ready(function(){
-        flushPrice();
+//        flushPrice();
         $(document).on('click','.change-number',function(){
            var id=$(this).attr('id');
             var button=id.slice(0,4);
             var cart_id=id.slice(4);
             var currentNum = parseInt($('#number'+cart_id).val());
+            var singlePrice=parseInt($('#price'+cart_id).text());
             if('mins'==button){
                 if(currentNum>1){
                     currentNum--;
+                    singlePrice=-singlePrice;
+                }
+            }else{
+                currentNum++;
+
+            }
+            $('#number'+cart_id).val(currentNum);
+            $.post('ajax.php', {alterCart: 1, cart_id: cart_id, number: currentNum},function(data){
+//                alert(data)
+                flushPrice(cart_id,singlePrice);
+            });
+        });
+//        $(document).on('change','.count',function(){
+//            var cart_id=$(this).attr('id').slice(6);
+//            $.post('ajax.php', {alterCart: 1, cart_id: cart_id, number: $(this).val},function(){
+////                flushPrice();
+//            });
+//        });
+        $(document).on('click','.part-change-number',function(){
+            var id=$(this).attr('id');
+            var button=id.slice(0,4);
+            var cart_id=$(this).parent().attr('id').slice(5);
+            var g_id=id.slice(4)
+//            alert(cart_id);
+            var currentNum = parseInt($('#partnum'+g_id).val());
+            var singlePrice=parseInt($('#price'+g_id).text());
+            if('mins'==button){
+                if(currentNum>1){
+                    currentNum--;
+                    singlePrice=-singlePrice;
                 }
             }else{
                 currentNum++;
             }
-            $('#number'+cart_id).val(currentNum);
-            $.post('ajax.php', {alterCart: 1, cart_id: cart_id, number: currentNum},function(){
-                flushPrice();
+            $('#partnum'+g_id).val(currentNum);
+            $.post('ajax.php', {alterPartCart: 1, cart_id:cart_id, g_id: g_id, number: currentNum},function(data){
+//                alert(data)
+                flushPrice(cart_id,singlePrice);
             });
         });
-        $(document).on('change','.count',function(){
-            var cart_id=$(this).attr('id').slice(6);
-            $.post('ajax.php', {alterCart: 1, cart_id: cart_id, number: $(this).val},function(){
-                flushPrice();
-            });
-        });
+
+
         $(document).on('click','.delete',function(){
             var cart_id=$(this).attr('id');
+            var price=-parseInt($('#sub-total'+cart_id).text());
             $.post('ajax.php',{deleteCart:1,cart_id:cart_id},function(data){
                 $('#list'+cart_id).fadeOut('slow',function(){
                     $('#list'+cart_id).remove();
-                    flushPrice();
+                    flushPrice(cart_id,price);
                 });
             });
         });
     });
-    var flushPrice=function(){
-        var price=0;
-        $('li').each(function(){
-            var subTotal=parseInt($(this).find('.real-price').text())*parseInt($(this).find('.count').val());
-            $(this).find('.sub-total-price').empty();
-            $(this).find('.sub-total-price').append('¥'+subTotal);
-            price+=subTotal;
-        });
-        $('#total-price').empty();
-        $('#total-price').append('¥'+price);
-        if(price==0){
-            $('#buy-btn').attr('onclick','return false');
-        }else{
-        }
+    var flushPrice=function(cart_id,price){
+        var sub =parseInt($('#sub-total'+cart_id).text())
+        sub+=price;
+        $('#sub-total'+cart_id).text(sub);
+        var total =parseInt($('#total-price').text());
+        total+=price;
+        $('#total-price').text(total);
 
     }
 

@@ -64,7 +64,7 @@
                     <dd>
                         <div class="countBox">
                             <a class="minus number-button" id="minus">-</a>
-                            <input class="count" id="number" value="<?php echo $number ?>" maxlength="3" type="tel"/>
+                            <input readonly="1" class="count" id="number" value="<?php echo $number ?>"maxlength="3" type="tel"/>
                             <a class="plus number-button" id="plus">+</a>
                         </div>
                     </dd>
@@ -96,8 +96,18 @@
                             <dd class="price">￥<?php echo $r['sale']?></dd>
                         </dl>
                     </div>
+                    <div class="countBox partcount">
+                        <a class="minus number-button partCountButton" id="minus">-</a>
+                        <input readonly="1" class="count partCountInput" id="num<?php echo $r['g_id']?>" value="1"maxlength="3" type="tel"/>
+                        <a class="plus number-button partCountButton" id="plus">+</a>
+                    </div>
                 </div>
                 <?php endforeach ?>
+                <div class="partBuy">
+                    <!--                    <dt style="visibility: hidden">数量：</dt>-->
+                    <button class="part-buy-now">立即购买</button>
+                    <button class="part-add-cart">加入购物车</button>
+                </div>
             </div>
             <div class="review module-box">
                 <div class="title">
@@ -132,6 +142,10 @@
                 </div>
                 <?php endforeach?>
 
+                <div class="more-review">
+                    查看全部评价
+                </div>
+
             </div>
             <div class="g-detail module-box">
                 <div class="detail-nav">
@@ -163,7 +177,7 @@
                         </div>
                         <div class="swiper-slide">
                             <div class="detail-after">
-
+                                <?php echo $remark['remark']?>
                             </div>
                         </div>
                     </div>

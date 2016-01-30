@@ -116,16 +116,19 @@ if (isset($_SESSION['customerId'])) {
                                 'o_id' => $orderId,
                                 'c_id' => $_SESSION['customerId'],
                                 'd_id' => $prow['part_d_id'],
-                                'number' => $row['number'],
+                                'number' => $prow['part_number'],
                                 'price' => $prow['part_sale'],
-                                'total' => $prow['part_sale'] * $row['number']
+                                'total' => $prow['part_sale'] * $prow['part_number']
                             );
                         } else {
                             $readyInsert[$prow['part_d_id']]['number'] += $row['number'];
                             $readyInsert[$prow['part_d_id']]['total'] = $readyInsert[$prow['part_d_id']]['number'] * $prow['part_sale'];
                         }
-                        $total_fee += $prow['part_sale'] * $row['number'];
+                        $total_fee += $prow['part_sale'] * $prow['part_number'];
                     }
+                }
+                if(0==$readyInsert[$row['d_id']]['number']){
+                    unset($readyInsert[$row['d_id']]);
                 }
             }
             if ($readyInsert == null) {
@@ -164,7 +167,8 @@ if (isset($_SESSION['customerId'])) {
             );
             $sign=makeSign($preSign,KEY);
             $preSign['paySign']=$sign;
-            mylog('jsAPiPry:'.toXml($preSign));
+//            mylog('jsAPiPry:'.toXml($preSign));
+            $orderId=
             include 'view/wxpay.html.php';
         }else{
             header('location:index.php');
@@ -208,6 +212,7 @@ if (isset($_SESSION['customerId'])) {
         include 'view/customer_inf.html.php';
         exit;
     }
+
     if (isset($_GET['getOrderDetail'])) {
         $orderQuery = pdoQuery('order_view', null, array("id" => $_GET['id']), ' limit 1');
         $order_inf = $orderQuery->fetch();
@@ -255,6 +260,7 @@ if (isset($_GET['oauth'])) {
     }
 
 
+
     exit;
 
 }
@@ -270,12 +276,15 @@ if (isset($_GET['getFcList'])) {
             $cateList[] = $caRow;
         }
     }
-    $produceQuery = pdoQuery('user_g_inf_view', null, array('father_id' => $father_id), null);
-    $produceList = array();
-    foreach ($produceQuery as $row) {
-//        mylog(getArrayInf($row));
-        $produceList[$row['sc_id']][] = $row;
-    }
+    $defaultQuery=pdoQuery('sub_category_tbl',null,array('father_id'=>$father_id),' limit 1');
+    if(!$default=$defaultQuery->fetch())$default['id']=1;
+
+//    $produceQuery = pdoQuery('user_g_inf_view', null, array('father_id' => $father_id), null);
+//    $produceList = array();
+//    foreach ($produceQuery as $row) {
+////        mylog(getArrayInf($row));
+//        $produceList[$row['sc_id']][] = $row;
+//    }
 
     include 'view/goods_list.html.php';
     exit;
@@ -326,7 +335,7 @@ if (isset($_GET['goodsdetail'])) {
     foreach ($partQuery as $row) {
         if (1 == $row['dft_check'] || isset($_SESSION['buyNow']['partsList'][$row['g_id']])) {
             $row['dft'] = 'checked';
-            $_SESSION['buyNow']['partsList'][$row['g_id']] = $row['g_id'];
+            $_SESSION['buyNow']['partsList'][$row['g_id']] = 1;
         } else {
             $row['dft'] = '';
         }
@@ -334,12 +343,19 @@ if (isset($_GET['goodsdetail'])) {
     }
 //    $reviewQuery=pdoQuery('review_tbl',null,array('g_id'=>$_GET['g_id']),' order')
 //    mylog(getArrayInf($_SESSION));
+    $reQuery=pdoQuery('sub_category_tbl',null,array('id'=>$inf['sc_id']),' limit 1');
+    $remark=$reQuery->fetch();
+
+
     $review=getReview($_GET['g_id']);
     $parm = getGoodsPar($_GET['g_id'], $inf['sc_id']);
+
 
     include 'view/goods_inf.html.php';
     exit;
 }
+
+
 if (isset($_GET['getCart'])) {
     if (isset($_SESSION['customerId'])) {
         $list = getCartDetail($_SESSION['customerId']);
@@ -366,6 +382,19 @@ if (isset($_GET['getSort'])) {
 if (isset($_GET['customerInf'])) {
 
 }
+if(isset($_GET['getMoreReview'])){
+    $start=isset($_GET['start'])?$_GET['start']:0;
+    $limit=isset($_GET['limit'])?$_GET['limit']:20;
+    $reviews=getReview($_GET['g_id'],$start,$limit);
+    $totalNumber=$reviews['num'];
+    $reviews=$reviews['inf'];
+    include'view/reviewdisplay.html.php';
+//    $query=pdoQuery('user_review_view',null,array('g_id'=>$_GET['g_id'],''))
+}
+if(isset($_GET['paySuccess'])){
+    $orderId=$_GET['orderId'];
+    include 'view/pay_success.html.php';
+}
 function getCartDetail($customerId)
 {
     $totalPrice = 0;
@@ -375,11 +404,9 @@ function getCartDetail($customerId)
     foreach ($goodsQuery as $row) {
         $part_price = $row['part_sale'];
         if (isset($goodsList[$row['cart_id']])) {
-            $goodsList[$row['cart_id']]['total'] += $row['number'] * $part_price;
+            $goodsList[$row['cart_id']]['total'] += $row['part_number'] * $part_price;
             $goodsList[$row['cart_id']]['full_price'] += $part_price;
-//            mylog();
         } else {
-//            mylog();
             if (isset($row['price'])) {
                 $price = $row['price'];
                 $totalSave += ($row['sale'] - $row['price']) * $row['number'];
@@ -398,7 +425,7 @@ function getCartDetail($customerId)
                 'price' => $price,//不带配件 单价
                 'full_price' => $price + $part_price,//单件+配件价格
                 'number' => $row['number'],
-                'total' => $row['number'] * ($price + $part_price),//总价
+                'total' => $row['number'] * $price + $row['part_number']*$part_price,//总价
                 'url' => $row['url'],
             );
         }
@@ -412,9 +439,10 @@ function getCartDetail($customerId)
                 'part_produce_id' => $row['part_produce_id'],
                 'part_d_id' => $row['part_d_id'],
                 'part_url' => $row['part_url'],
-                'part_sale' => $row['part_sale']
+                'part_sale' => $row['part_sale'],
+                'part_number'=>$row['part_number']
             );
-            $totalPrice += $row['part_sale'] * $row['number'];
+            $totalPrice += $row['part_sale'] * $row['part_number'];
 //            mylog(getArrayInf($goodsList[$row['cart_id']]['parts']));
         } else {
 //            $goodsList[$row['cart_id']]['parts']=array();
@@ -446,7 +474,11 @@ function getBuyNowDetail($d_id, $number, array $partsList)
         'total' => $number * ($price),
         'url' => $row['url'],
     );
-    $pquery = pdoQuery('parts_view', null, array('g_id' => $partsList), null);
+    foreach ($partsList as $k=>$v) {
+        $partsId[]=$k;
+    }
+    if(!isset($partsId))$partsId=array();
+    $pquery = pdoQuery('parts_view', null, array('g_id' => $partsId), null);
     foreach ($pquery as $prow) {
         $goodsList[0]['parts'][] = array(
             'part_id' => $prow['g_id'],
@@ -454,9 +486,10 @@ function getBuyNowDetail($d_id, $number, array $partsList)
             'part_produce_id' => $prow['produce_id'],
             'part_d_id' => $prow['d_id'],
             'part_url' => $prow['url'],
-            'part_sale' => $prow['sale']
+            'part_sale' => $prow['sale'],
+            'part_number'=>$partsList[$prow['g_id']]
         );
-        $goodsList[0]['total'] += $prow['sale'] * $_SESSION['buyNow']['number'];
+        $goodsList[0]['total'] += $prow['sale'] * $partsList[$prow['g_id']];
     }
     return array(
         'totalPrice' => $goodsList[0]['total'],

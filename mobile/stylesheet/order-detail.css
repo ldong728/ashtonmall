@@ -1,5 +1,5 @@
 /*订单详情*/
-.ordreDetail{width:94%; min-width:300px; max-width:1024px; margin:0 3%; margin-top:20px; overflow:hidden;}
+.ordreDetail{width:94%; min-width:300px; max-width:1024px; margin:0 3%; margin-top:20px; overflow:hidden;font-size: 14px;line-height: 16px}
 .ordreDetail .orderTransp{background-color:#fff; border:1px solid #e3e3e3;position:relative;}
 .ordreDetail .orderTransp .transp_hd{height:3px; background:url(images/icon-xin.png); background-size:66px 6px;}
 .ordreDetail .orderTransp .show_wuliu{position:absolute; bottom:0; left:0; display:none; height:32px; width:100%; background:url(images/icon-bottom.png) no-repeat; background-position:center center; background-color:#fff; background-size:14px 10px;}
@@ -80,5 +80,14 @@
     display:inline-block; width:70%; height:30px; line-height:30px; text-align:center; text-decoration:none; font-size:14px; box-shadow:1px 1px 1px #ccc;
     margin: 10px 15% 20px 15%;
     background-color:#ff6600; border:1px solid #aaaaaa; color:#fff;
+}
+.noDisplay{
+    height: 10vw;
+}
+.blank{
+    width: 100%;
+    height: 17vw;
+    /*position: fixed;*/
+    /*bottom: 17vw;*/
 }
 /*优惠券 红包页*/

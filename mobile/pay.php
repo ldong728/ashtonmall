@@ -31,16 +31,15 @@ if (isset($_POST['prePay'])) {
             $xml = toXml($date);
             $handler = new interfaceHandler(WEIXIN_ID);
             $data = $handler->postByCurl('https://api.mch.weixin.qq.com/pay/unifiedorder', $xml);
-            mylog('prePayInf:' . $data);
+//            mylog('prePayInf:' . $data);
             $dataArray = xmlToArray($data);
             $dataJson = json_encode($dataArray, JSON_UNESCAPED_UNICODE);
-            mylog('formated payInf' . getArrayInf($dataArray));
+//            mylog('formated payInf' . getArrayInf($dataArray));
         }
         if ('SUCCESS' == $dataArray['return_code']) {
             if ('SUCCESS' == $dataArray['result_code']) {
                 if (signVerify($dataArray)) {
                     $_SESSION['userKey']['package'] = 'prepay_id=' . $dataArray['prepay_id'];
-
                     echo 'ok';
                     exit;
                 }
@@ -75,14 +74,21 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 
     $error = array('return_code' => 'SUCCESS', 'return_msg' => 'OK');
     $responseData = xmlToArray($GLOBALS["HTTP_RAW_POST_DATA"]);
-    mylog(getArrayInf($responseData));
+//    mylog(getArrayInf($responseData));
     if ('SUCCESS' == $responseData['return_code']) {
         if ('SUCCESS' == $responseData['result_code']) {
-            include_once '../wechat/serveManager.php';
+
             if (signVerify($responseData)) {
+                include_once '../wechat/serveManager.php';
                 $orderId = $responseData['out_trade_no'];
                 pdoUpdate('order_tbl', array('stu' => "1"), array('id' => $orderId));
-                sendKFMessage($responseData['openid'], '支付成功了，么么哒');
+                $payChkArray=array(
+                    'first'=>array('value'=>'您在阿诗顿商城的网购订单已支付成功：'),
+                    'orderno'=>array('value'=>$orderId,'color'=>'#0000ff'),
+                    'amount'=>array('value'=>'￥'.$responseData['total_fee']/100,'color'=>'#0000ff'),
+                    'remark'=>array('value'=>'商城即将安排发货，请留意物流通知')
+                );
+                $re=sendTemplateMsg($responseData['openid'],$template_key_order,'',$payChkArray);
             } else {
 
             }

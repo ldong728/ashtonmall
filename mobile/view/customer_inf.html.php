@@ -56,7 +56,7 @@
         </div>
 
     </div>
-
+    <?php include_once 'templates/foot.php'?>
 </div>
 <script>
     $(document).on('click','#getOrderList',function(){

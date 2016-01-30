@@ -26,10 +26,20 @@
                                     </h3>
                                     <p>规格：<?php echo $row['category']?></p>
                                     <p>数量：<span class="cl_red"><?php echo $row['number']?></span></p>
-                                    <p>总价：<span class="cl_red">￥<?php echo $row['total']?></span></p>
+                                    <p>单价：<span class="cl_red">￥<?php echo $row['price']?></span></p>
                                 </div>
                             </dd>
                         </dl>
+                    </div>
+                    <div class="partBox">
+                    <?php foreach($row['parts'] as $prow):?>
+                        <div class="part-block">
+                        <p><?php echo $prow['part_name']?>:<?php echo $prow['part_produce_id']?></p>
+                            <p>数量：<span class="red"><?php echo $prow['part_number']?></span></p>
+                            <p>单价：<span class="red">￥<?php echo $prow['part_sale']?></span></p>
+                        </div>
+                        <div class="vslash"></div>
+                    <?php endforeach;?>
                     </div>
                 </li>
             <?php endforeach?>

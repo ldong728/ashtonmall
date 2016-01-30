@@ -11,14 +11,16 @@
     <div class="swiper-container" id="ad-swiper">
         <div class="swiper-wrapper" style="width: 4368px; height: 91vh">
             <?php foreach ($adList['banner'] as $row): ?>
-                <div class="swiper-slide"><a
-                        href="<?php echo isset($row['url']) ? $row['url'] : 'controller.php?goodsdetail=1&g_id=' . $row['g_id'] ?>">
-                        <img class="swiper-img swiper-lazy" data-src="../<?php echo $row['img_url'] ?>"/></a>
+                <div class="swiper-slide">
+<!--                    <a href="--><?php //echo isset($row['url']) ? $row['url'] : 'controller.php?goodsdetail=1&g_id=' . $row['g_id'] ?><!--">-->
+                        <img class="swiper-img swiper-lazy" data-src="../<?php echo $row['img_url'] ?>"/>
+<!--                    </a>-->
                 </div>
             <?php endforeach ?>
         </div>
         <div class="swiper-pagination" id="ad-pagination"></div>
     </div>
+    <div class="toast"></div>
     <?php include_once 'templates/foot.php'?>
 </div>
 <script>

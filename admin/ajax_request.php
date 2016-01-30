@@ -258,17 +258,31 @@ if(isset($_SESSION['login'])) {
     }
     if(isset($_POST['get_sc_parm'])){
         $query=pdoQuery('par_col_tbl',null,array('sc_id'=>$_POST['sc_id']),'');
+        $remark=pdoQuery('sub_category_tbl',null,array('id'=>$_POST['sc_id']),' limit 1');
+        $remark=$remark->fetch();
         $parList=array();
         foreach($query as $row){
             $parList[$row['par_category']][]=$row;
         }
-        $data=json_encode($parList);
+        $data=array('remark'=>$remark['remark'],'parm'=>$parList);
+        $data=json_encode($data);
 
         echo $data;
         exit;
     }
     if(isset($_POST['del_sc_parm'])){
         pdoDelete('par_col_tbl',array('id'=>$_POST['id']));
+        echo 'ok';
+        exit;
+    }
+    if(isset($_POST['del_parm'])){
+//        mylog($_POST['cate']);
+        pdoDelete('par_col_tbl',array('sc_id'=>$_POST['sc_id'],'par_category'=>$_POST['cate']));
+        echo 'ok';
+        exit;
+    }
+    if(isset($_POST['cateRemark'])){
+        pdoUpdate('sub_category_tbl',array('remark'=>$_POST['content']),array('id'=>$_POST['sc_id']));
         echo 'ok';
         exit;
     }
@@ -308,6 +322,10 @@ if(isset($_SESSION['login'])) {
         pdoUpdate('part_tbl',array('dft_check'=>$_POST['value']),array('id'=>$_POST['id']));
         echo $_POST['value'];
         exit;
+    }
+    if(isset($_POST['manageReview'])){
+        $id=pdoUpdate('review_tbl',array('priority'=>$_POST['priority'],'public'=>$_POST['public']),array('id'=>$_POST['id']));
+        echo $id;
     }
 }
 ?>

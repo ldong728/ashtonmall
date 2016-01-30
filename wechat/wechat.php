@@ -35,9 +35,9 @@ class wechat
             if (!empty($postStr)) {
                 libxml_disable_entity_loader(true);
                 $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-                $msg['from'] = $postObj->FromUserName;
-                $msg['me'] = $postObj->ToUserName;
-                $msg['content'] = trim($postObj->Content);
+                $msg['from'] = (string)$postObj->FromUserName;
+                $msg['me'] = (string)$postObj->ToUserName;
+                $msg['content'] = (string)trim($postObj->Content);
                 foreach ($postObj->children() as $child) {
                     $msg[$child->getName()] = (string)$child;
                 }
@@ -55,16 +55,19 @@ class wechat
         $resultStr=$this->prepareMsg($con);
         return $resultStr;
     }
-    public function prepareToKFMsg($kf_account=null){
+    public function toKFMsg($kf_account=null){
         $str =isset($kf_account)? array('MsgType'=>'transfer_customer_service','TransInfo'=>array('KfAccount'=>$kf_account))
             :array('MsgType'=>'transfer_customer_service');
         $resultStr=$this->prepareMsg($str);
+        mylog($resultStr);
+        echo $resultStr;
         return $resultStr;
     }
 
     public function replyMsg(array $content){
         if(!$this->isReplied) {
             $replyStr = $this->prepareMsg($content);
+//            mylog($replyStr);
             echo $replyStr;
             $this->isReplied=true;
         }
