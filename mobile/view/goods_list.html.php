@@ -9,12 +9,20 @@
     </div>
     <div class="h-slash"> </div>
     <div class="goods-list-container">
+        <?php foreach($list as $row):?>
         <div class="goods-list-box">
+            <img src="../<?php echo $row['url']?>"/>
+            <div class="name">
+                <?php echo $row['name']?>
+            </div>
+            <div class="intro">
+                <?php echo $row['intro']?>
+            </div>
+            <a class="buy">
 
+            </a>
         </div>
-        <div class="goods-list-box">
-
-        </div>
+        <?php endforeach?>
 
     </div>
     <div class="parts-list-container">

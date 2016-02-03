@@ -276,13 +276,11 @@ a.foot-cate-name {
     width: 90%;
     min-height: 280px;
     margin: 0 auto;
-    background-color: #111111;
 }
 .goods-list-container .goods-list-box {
     float: left;
     width: 50%;
     min-height: 270px;
-    background-color: #00a213;
 }
 .goods-list-container .goods-list-box img {
     display: block;
@@ -297,6 +295,33 @@ a.foot-cate-name {
     font-weight: 600;
     line-height: 16px;
 }
+.goods-list-container .goods-list-box .intro {
+    margin: 5px auto 5px auto;
+    width: 95%;
+    min-height: 16px;
+    max-height: 100px
+}
+.goods-list-container .goods-list-box .price {
+    margin: 5px auto 5px auto;
+    width: 95%;
+    font-weight: 600;
+    line-height: 16px;
+
+}
+.goods-list-container .goods-list-box a.buy {
+    display: block;
+    margin: 0px auto 5px 2.5%;
+    width: 45px;
+    height: 25px;
+    background-image: url(images/buy-button.png);
+    background-size: 45px 25px;
+    background-repeat: no-repeat;
+}
+
+.part-list-container {
+
+}
+
 
 
 
