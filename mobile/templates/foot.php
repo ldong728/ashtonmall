@@ -1,28 +1,28 @@
-<div class="foot-nav">
-    <div class="category-nav">
-<!--        <div class="space"></div>-->
-        <?php foreach ($_SESSION['maincate'] as $row): ?>
-            <div class="nave-block"id="main<?php echo $row['id'] ?>"onclick="selectCate(this)"><?php echo $row['name'] ?></div>
-            <div class="nave-slash"></div>
-        <?php endforeach ?>
-    </div>
-    <div class="con-nav">
-        <a href="controller.php?customerInf=1">
-        <div class="icon-block">
-            <div class="icon user-center">
-            </div>
-            <p class="icon-name">个人中心</p>
-        </div>
-        </a>
-        <a class="toKf" href="#">
-        <div class="icon-block">
-            <div class="icon kf"></div>
-            <p class="icon-name">在线客服</p>
-        </div>
-            </a>
+<div class="foot">
+    <a class="foot-nave no-sub"href="#"id="nave-home">
+        首页
+    </a>
+    <a class="foot-nave"id="nave-category">
+         商品分类
+    </a>
+    <a class="foot-nave no-sub"id="nave-cart">
+        购物车
+    </a>
+    <a class="foot-nave"id="nave-user">
+        个人中心
+    </a>
+</div>
+<div class="sub-menu foot-cate-sub"style="height: <?php echo $_SESSION['cate']['cateCount']*32?>px">
+    <?php foreach($_SESSION['cate']['cateName'] as $row):?>
+        <a href="controller.php?getList=1&c_id=<?php echo $row['id']?>"class="foot-cate-name"><?php echo $row['sub_name']?></a>
 
-    </div>
-
+    <?php endforeach?>
+</div>
+<div class="sub-menu foot-user-sub">
+    <a href="#"class="foot-cate-name">用户中心</a>
+    <a href="#"class="foot-cate-name">我的订单</a>
+    <a href="#"class="foot-cate-name">物流查询</a>
+    <a href="#"class="foot-cate-name">联系客服</a>
 </div>
 <script>
     $('.toKf').click(function(){
@@ -43,15 +43,16 @@
         })
 
     });
+    $('.no-sub').click(function() {
+        $('.sub-menu').fadeOut();
+    })
+    $('#nave-category').click(function(){
+       $('.foot-cate-sub').fadeToggle();
+    });
+    $('#nave-user').click(function(){
+        $('.foot-user-sub').fadeToggle();
+    })
 
 </script>
-<a class="toindex" href="index.php"><div class="foot">
-    <div class="logo-block">
-        <div class="logo flag"></div>
-        <div class="logo"></div>
-        <div class="name">美国阿诗顿商城</div>
 
-    </div>
-</a>
 
-</div>

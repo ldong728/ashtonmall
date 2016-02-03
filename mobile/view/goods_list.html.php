@@ -4,34 +4,23 @@
 
 <body>
 <div class="wrap">
-    <div class="header">
-        <div class="content">
-            <div class="left-icon"></div>
-            <h3 class="cate-name">厨师机</h3>
+    <div class="category-name">
+        <?php echo $cateName['sub_name']?>
+    </div>
+    <div class="h-slash"> </div>
+    <div class="goods-list-container">
+        <div class="goods-list-box">
+
+        </div>
+        <div class="goods-list-box">
+
         </div>
 
     </div>
-    <div class="content">
-        <div class="main-left">
-            <div class="title">
-                <h3>选购目录</h3>
-            </div>
-            <div class="produce-list">
-                <ul class="sub-category">
-                    <?php foreach ($cateList as $row): ?>
-                    <li class="cate-ul" id="<?php echo $row['sc_id'] ?>"><h5><?php echo $row['sc_name'] ?></h5>
-                        <?php endforeach ?>
+    <div class="parts-list-container">
 
-                </ul>
-
-            </div>
-        </div>
-        <div class="v-border"></div>
-
-        <div class="main-right">
-
-        </div>
     </div>
+
 <?php include_once 'templates/foot.php'?>
 
 

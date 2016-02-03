@@ -9,25 +9,30 @@ include_once '../includePackage.php';
 session_start();
 
 
-if (!isset($_SESSION['maincate'])) {
-    $cate = pdoQuery('category_view', null, null, '');
-    $maincate = array();
+if (!isset($_SESSION['cate'])) {
+    $cate = pdoQuery('category_overview_view', null, null, '');
+   $_SESSION['cate']['cateCount']=0;
     foreach ($cate as $caRow) {
-        $maincate[$caRow['father_id']] = array('name' => $caRow['father_name'], 'id' => $caRow['father_id']);
+        $_SESSION['cate']['cateCount']++;
+       $_SESSION['cate']['cateName'][]=$caRow;
     }
-    $_SESSION['maincate'] = $maincate;
 }
+    $query=pdoQuery('user_promotion_view',null,null,null);
+foreach ($query as $row) {
+    $promotion[]=$row;
+
+}
+//mylog(getArrayInf($inf));
+
 if (isset($_GET['c_id'])) {
     $_SESSION['customerId'] = $_GET['c_id'];
     $inf=pdoQuery('custom_inf_tbl',null,array('openid'=>$_SESSION['customerId']),' limit 1');
     $_SESSION['userInf']=$inf->fetch();
-//    mylog(getArrayInf($_SESSION['userInf']));
 }
 $config = getConfig('config/config.json');
 $adQuery = pdoQuery('ad_tbl', null, null, '');
 foreach ($adQuery as $adRow) {
     $adList[$adRow['category']][] = $adRow;
 }
-//mylog(getRandStr(32));
 
 include 'view/index.html.php';

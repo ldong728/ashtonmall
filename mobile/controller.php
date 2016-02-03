@@ -265,26 +265,14 @@ if (isset($_GET['oauth'])) {
 
 }
 //获取主分类
-if (isset($_GET['getFcList'])) {
-    $father_id = $_GET['fc_id'];
-    $cate = pdoQuery('category_view', null, null, '');
-    $maincate = array();
-    $cateList = array();
-    foreach ($cate as $caRow) {
-        $maincate[$caRow['father_id']] = array('name' => $caRow['father_name'], 'id' => $caRow['father_id']);
-        if ($father_id == $caRow['father_id']) {
-            $cateList[] = $caRow;
-        }
+if (isset($_GET['getList'])) {
+    $sc_id = $_GET['c_id'];
+    $query=pdoQuery('user_g_inf_view',null,array('sc_id'=>$sc_id),null);
+    foreach ($query as $row) {
+        $list[]=$row;
     }
-    $defaultQuery=pdoQuery('sub_category_tbl',null,array('father_id'=>$father_id),' limit 1');
-    if(!$default=$defaultQuery->fetch())$default['id']=1;
-
-//    $produceQuery = pdoQuery('user_g_inf_view', null, array('father_id' => $father_id), null);
-//    $produceList = array();
-//    foreach ($produceQuery as $row) {
-////        mylog(getArrayInf($row));
-//        $produceList[$row['sc_id']][] = $row;
-//    }
+    $cateName=pdoQuery('category_overview_view',null,array('id'=>$sc_id),' limit 1');
+    $cateName=$cateName->fetch();
 
     include 'view/goods_list.html.php';
     exit;
