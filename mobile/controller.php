@@ -273,24 +273,29 @@ if (isset($_GET['getList'])) {
     }
     $cateName=pdoQuery('category_overview_view',null,array('id'=>$sc_id),' limit 1');
     $cateName=$cateName->fetch();
+    $partQuery=pdoQuery('user_parts_view',null,array('sc_id'=>$sc_id),null);
+    foreach ($partQuery as $row) {
+        $partList[]=$row;
+    }
+
 
     include 'view/goods_list.html.php';
     exit;
 }
-if (isset($_GET['getList'])) {
-    $end = ' group by g_id';
-    $where = null;
-    if (isset($_GET['father_id'])) $where['father_id'] = $_GET['father_id'];
-    if (isset($_GET['sc_id'])) $where['sc_id'] = $_GET['sc_id'];
-    if (isset($_GET['made_in'])) $where['made_in'] = $_GET['made_in'];
-    if (isset($_GET['name'])) {
-        $end = (null != $where ? ' and name like "%' . $_GET['name'] . '%"' : ' where name like "%' . $_GET['name'] . '%"') . $end;
-    }
-    $query = pdoQuery('(select * from user_list_view order by price asc) p', null, $where, $end);
-    include 'view/list.html.php';
-
-
-}
+//if (isset($_GET['getList'])) {
+//    $end = ' group by g_id';
+//    $where = null;
+//    if (isset($_GET['father_id'])) $where['father_id'] = $_GET['father_id'];
+//    if (isset($_GET['sc_id'])) $where['sc_id'] = $_GET['sc_id'];
+//    if (isset($_GET['made_in'])) $where['made_in'] = $_GET['made_in'];
+//    if (isset($_GET['name'])) {
+//        $end = (null != $where ? ' and name like "%' . $_GET['name'] . '%"' : ' where name like "%' . $_GET['name'] . '%"') . $end;
+//    }
+//    $query = pdoQuery('(select * from user_list_view order by price asc) p', null, $where, $end);
+//    include 'view/list.html.php';
+//
+//
+//}
 if (isset($_GET['goodsdetail'])) {
     unset($_SESSION['buyNow']);
     if ($_GET['g_id'] == null) {

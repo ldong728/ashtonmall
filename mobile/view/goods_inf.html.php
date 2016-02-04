@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="stylesheet/goodinf-swiper.min.css"/>
     <link rel="stylesheet" href="stylesheet/myswiper.css"/>
     <script src="../js/swiper.min.js"></script>
-<!--    <link rel="stylesheet" href="stylesheet/goods_inf.css"/>-->
+    <link rel="stylesheet" href="stylesheet/goods_inf.css"/>
     <script src="../js/lazyload.js"></script>
 
 </head>
