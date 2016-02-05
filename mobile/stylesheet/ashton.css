@@ -388,130 +388,68 @@ a.foot-cate-name {
 }
 
 div .module-box {
+    position: relative;
     overflow: hidden;
     background-color: #fff;
     width: 100%;
-    margin-top: 1.5vh;
+    border-bottom: solid 1px #ccc;
+    /*margin-top: 1.5vh;*/
 }
 
 /*商品基本信息*/
 .pDetail .baseInfo {
     width: 100%;
     min-width: 320px;
-    max-width: 1024px;
+    max-width: 640px;
     position: relative;
     padding-bottom: 2px;
 }
 
 .pDetail .baseInfo .pd_info {
     overflow: hidden;
+    zoom:1;
     background-color: #fff;
     box-shadow: 0 1px 1px #dcdcdc;
-    border-bottom-style: solid
+    border-bottom: solid 1px #ccc;
 }
 
 .baseInfo .pd_info .pName {
     overflow: hidden;
     width: 90vw;
     margin: 1vh auto;
-    min-height: 5vh;
+    min-height: 18px;
 }
-
-.pName span.pro_Name {
-    font-size: 5vw;
-    display: block;
-    line-height: 5vh;
-    font-weight: 600
-}
-
-.baseInfo .pd_info h1 {
-    color: #333;
-    height: 44px;
-    overflow: hidden;
-}
-
-.baseInfo .pd_info h1 span {
-    font-size: 14px;
-    display: block;
-    height: 44px;
-    overflow: hidden;
-    line-height: 22px;
-}
-
-.baseInfo .pd_info h1 img {
-    width: 35.74px;
-    height: 18px;
-    vertical-align: middle;
-    padding-right: 5px;
-    float: left;
-    margin-top: 3px;
-}
-
-.baseInfo .pd_info .evaluate-count {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 30%;
-    height: 100%;
-    text-align: right
-}
-
-.baseInfo .pdDot {
-    position: absolute;
-    bottom: 30px;
-    left: 0;
-    width: 100%;
-    height: 8px;
-    text-align: center;
-    z-index: 10;
-    opacity: 0.9;
-}
-
-.baseInfo .pd_info dl .price {
-    font-size: 1.7em;
-    color: #333
-}
-
-.baseInfo .pd_info dl .cl_red {
+.baseInfo .pd_info .pName span.pro_name {
+    line-height: 20px;
     font-size: 18px;
-    line-height: 18px;
-    color: #eb0b30;
+    font-weight: 600;
 }
-
-.baseInfo .pd_info dl {
-    width: 90vw;
-    margin: 1vh auto 0 auto;
-    overflow: hidden;
-    position: relative;
+.baseInfo .pd_info .inf {
+    width:90%;
+    margin: 2px auto;
+    font-size:12px;
+    line-height: 14px;
 }
-
-.baseInfo .pd_info dl dt {
+.baseInfo .pd_info .p-remark {
+    width: 90%;
+    margin: 4px auto;
+    /*background-color: #007aff;*/
+    height: 25px;
+}
+.baseInfo .pd_info .p-remark .p-remark-content {
     float: left;
-    clear: left;
-    padding-bottom: 10px;
-    color: #999;
-    line-height: 18px;
-    margin-right: 5px;
+    height: 16px;
+    margin:9px 5px auto 0;
+    padding-right: 4px;
+    border-right: solid 1px #ccc;
 }
-
-.baseInfo .pd_info dl dd {
-    float: left;
-    color: #999;
-    line-height: 18px;
-}
-
-.baseInfo .pd_info dl dd a {
-    text-decoration: none;
-    color: #999;
-}
-
-.baseInfo .pd_info dl b {
-    display: inline-block;
-    width: 12px;
-}
-
-.pDetail .baseInfo .buy {
-    border-style: solid none
+.baseInfo .pd_info .p-remark .price{
+    margin-top: 5px;
+    float: right;
+    color:red;
+    font-size: 16px;
+    line-height: 20px;
+    ;
 }
 
 .buy dl {
@@ -669,121 +607,172 @@ div .module-box {
 
 /*配件选择*/
 .pDetail .baseInfo .part {
-    border-style: solid none;
-    min-height: 18vh;
-
+    /*border-style: solid none;*/
+    height: 130px;
+    /*overflow-x: scroll;*/
+    /*background-color: #007aff;*/
 }
 
-.part .title {
-    width: 90vw;
-    font-size: 4vw;
-    line-height: 5vw;
-    margin: 2vh auto;
-}
 
-.part .partInf {
+.module-box .title {
     position: relative;
+    /*padding-left:20px;*/
     width: 90vw;
-    min-height: 15vh;
-    margin: 1vh auto;
+    height: 20px;
+    font-size: 16px;
+    line-height: 18px;
+    margin: 4px auto;
+}
+.module-box .title .line-number {
+    margin-top: 2px;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    left:0;
+    border: solid 1px #ccc;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+}
+.module-box .title .title-name {
+    position: absolute;
+    left: 25px;
+    height: 20px;
+    font-size: 16px;
+    line-height: 20px;
+}
 
+.pDetail .baseInfo .part .scroll-box{
+    height: 100px;
+    overflow-x: scroll;
+}
+.pDetail .baseInfo .part .part-box{
+    width:200%;
+    margin-left: 5%;
+    height: 100px;
+    /*overflow-x: visible;*/
+    overflow-y: hidden;
+}
+.part .part-box .partInf {
+    position: relative;
+    float: left;
+    width:24vw;
+    height: 100px;
+
+}
+.part .part-box .partInf img.part-img{
+    display: block;
+    width: 85%;
+    height:auto;
+    margin: 0 auto;
 }
 
 .part .partInf .check-box {
-    cursor: pointer;
-    float: left;
-    height: 15vh;
-    width: 5vw;
-    background-image: url(images/icon-grey-tick.jpg);
-    background-size: 100% auto;
-    background-repeat: no-repeat;
-    background-position: 0 4vh;
-}
-
-.part .partInf .checked {
-    background-image: url(images/icon-tick.jpg);
-}
-
-.part .partDetail {
-    margin-left: 1vw;
-    float: left;
-    height: 15vh;
-    width: 81vw;
-}
-
-.part .partDetail img {
-    border: thin solid #939393;
-    float: left;
-    width: 25%;
-    height: auto;
-}
-
-.part .partDetail dl {
-    margin-left: 6vw;
-    position: relative;
-    width: 35vw;
-    height: 15vh;
-    float: left;
-}
-
-.partDetail dl dt {
-    margin: 0;
-    font-size: 3.5vw;
-    line-height: 4vw;
-    float: left;
-    clear: left;
-    padding-bottom: 1vh;
-    color: #999;;
-}
-
-.partDetail dl dd {
-    /*max-width: 35vw;*/
-    font-size: 3.5vw;
-    line-height: 4vw;
-    float: left;
-}
-
-.partDetail dl dt.detail {
-    margin: 0;
-    padding: 0;
-}
-
-.partDetail dl dd.price {
-    color: red;
-}
-.partCount{
-    width: 20vw;
     position: absolute;
-    right: 0;
-    top:0;
+    bottom: 0;
+    left: 5px;
+    cursor: pointer;
+    display: inline-block;
+    /*float: left;*/
+    height: 20px;
+    width: 20px;
+    background-image: url(images/check-empty.png);
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
 }
-.partCount .count{
-    width:5vw;
+.part .partInf .checked {
+    background-image: url(images/checked.png);
 }
-.partBuy{
-    overflow: hidden;
-    width: 90vw;
-    margin: 1vh auto;
-    min-height: 6vh;
-}
-.partBuy button {
-    font-size: 3.5vw;
-    float: left;
-    width: 25vw;
-    height: 5vh;
-    background-color: #fff;
-    border-color: red;
-    color: red;
-}
-
-.partBuy button.part-buy-now {
-    margin: 0 10vw 0 13vw;
+.part .partInf .part-name {
+    font-size: 16px;
+    line-height: 20px;
+    position: absolute;
+    bottom: 0;
+    left:25px;
 }
 
-.partBuy button.part-add-cart {
-    background-color: red;
-    color: #ffffff;
-}
+
+/*.part .partDetail {*/
+    /*margin-left: 1vw;*/
+    /*float: left;*/
+    /*height: 15vh;*/
+    /*width: 81vw;*/
+/*}*/
+
+/*.part .partDetail img {*/
+    /*border: thin solid #939393;*/
+    /*float: left;*/
+    /*width: 25%;*/
+    /*height: auto;*/
+/*}*/
+
+/*.part .partDetail dl {*/
+    /*margin-left: 6vw;*/
+    /*position: relative;*/
+    /*width: 35vw;*/
+    /*height: 15vh;*/
+    /*float: left;*/
+/*}*/
+
+/*.partDetail dl dt {*/
+    /*margin: 0;*/
+    /*font-size: 3.5vw;*/
+    /*line-height: 4vw;*/
+    /*float: left;*/
+    /*clear: left;*/
+    /*padding-bottom: 1vh;*/
+    /*color: #999;;*/
+/*}*/
+
+/*.partDetail dl dd {*/
+    /*max-width: 35vw;*/
+    /*font-size: 3.5vw;*/
+    /*line-height: 4vw;*/
+    /*float: left;*/
+/*}*/
+
+/*.partDetail dl dt.detail {*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+/*}*/
+
+/*.partDetail dl dd.price {*/
+    /*color: red;*/
+/*}*/
+/*.partCount{*/
+    /*width: 20vw;*/
+    /*position: absolute;*/
+    /*right: 0;*/
+    /*top:0;*/
+/*}*/
+/*.partCount .count{*/
+    /*width:5vw;*/
+/*}*/
+/*.partBuy{*/
+    /*overflow: hidden;*/
+    /*width: 90vw;*/
+    /*margin: 1vh auto;*/
+    /*min-height: 6vh;*/
+/*}*/
+/*.partBuy button {*/
+    /*font-size: 3.5vw;*/
+    /*float: left;*/
+    /*width: 25vw;*/
+    /*height: 5vh;*/
+    /*background-color: #fff;*/
+    /*border-color: red;*/
+    /*color: red;*/
+/*}*/
+
+/*.partBuy button.part-buy-now {*/
+    /*margin: 0 10vw 0 13vw;*/
+/*}*/
+
+/*.partBuy button.part-add-cart {*/
+    /*background-color: red;*/
+    /*color: #ffffff;*/
+/*}*/
 
 /*用户评价*/
 .pDetail .baseInfo .review {
