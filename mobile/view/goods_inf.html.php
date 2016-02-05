@@ -1,3 +1,4 @@
+<?php echo 'changetest'?>
 <head>
     <?php include 'templates/header.php' ?>
     <meta content="YES" name="apple-touch-fullscreen">
