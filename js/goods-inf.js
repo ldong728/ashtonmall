@@ -1,24 +1,42 @@
 //$(document).ready(function () {
+$(document).on('change', '#category-select', function () {
+    d_id = $('#category-select option:selected').val();
+    $('#select-display').empty();
+    $('#select-display').append($('#category-select option:selected').text());
 
-$(document).on('click', '.selectBox', function () {
-    d_id = $(this).attr('id').slice(3);
-    $('.selectBox').removeClass('detail-selected');
-    $(this).addClass('detail-selected')
-    $.post('ajax.php', {getdetailprice: 1, d_id: d_id}, function (data) {
+    $.post('ajax.php', {getdetailprice: 1, d_id: $('#category-select option:selected').val()}, function (data) {
         var inf = eval('(' + data + ')');
-        $('#price').empty();
-        $('#sale').empty();
+        $('.price').empty();
+        $('.sale').empty();
         if (inf.price == null) {
             realPrice = inf.sale;
         } else {
             realPrice = inf.price;
-            $('#sale').append('¥' + inf.sale);
+            $('.sale').append('RMB' + inf.sale);
         }
-        $('#price').append('¥' + realPrice);
-
+        $('.price').append('RMB' + realPrice);
     });
 
 });
+//$(document).on('click', '.selectBox', function () {
+//    d_id = $(this).attr('id').slice(3);
+//    $('.selectBox').removeClass('detail-selected');
+//    $(this).addClass('detail-selected')
+//    $.post('ajax.php', {getdetailprice: 1, d_id: d_id}, function (data) {
+//        var inf = eval('(' + data + ')');
+//        $('#price').empty();
+//        $('#sale').empty();
+//        if (inf.price == null) {
+//            realPrice = inf.sale;
+//        } else {
+//            realPrice = inf.price;
+//            $('#sale').append('¥' + inf.sale);
+//        }
+//        $('#price').append('¥' + realPrice);
+//
+//    });
+//
+//});
 
 $(document).on('click', '.number-button', function () {
     if ('plus' == $(this).attr('id')) {
@@ -53,16 +71,16 @@ $(document).on('click', '.add-cart', function () {
 
 });
 //配件立刻购买按钮
-$(document).on('click', '.part-buy-now', function () {
-    window.location.href = 'controller.php?settleAccounts=1&from=buy_now&d_id=' + d_id + '&number=0&rand=' + antCacheRand();
-})
-//配件加入购物车
-$(document).on('click', '.part-add-cart', function () {
-    $.post('ajax.php', {addToCart: 1, g_id: g_id, d_id: d_id, number: 0}, function (data) {
-        showToast('加入购物车成功');
-    })
-
-});
+//$(document).on('click', '.part-buy-now', function () {
+//    window.location.href = 'controller.php?settleAccounts=1&from=buy_now&d_id=' + d_id + '&number=0&rand=' + antCacheRand();
+//})
+////配件加入购物车
+//$(document).on('click', '.part-add-cart', function () {
+//    $.post('ajax.php', {addToCart: 1, g_id: g_id, d_id: d_id, number: 0}, function (data) {
+//        showToast('加入购物车成功');
+//    })
+//
+//});
 $(document).on('click', '#fav', function () {
     $.post('ajax.php', {addToFav: 1, g_id: g_id}, function (data) {
         showToast('收藏成功');
@@ -87,24 +105,24 @@ $(document).on('click', '.check-box', function () {
         $(this).addClass('checked');
         $('#num' + id).val(1)
     }
-    $.post('ajax.php', {changePart: 1, g_id: g_id, part_id: id, mode: selected, number: 1}, function (data) {
+    $.post('ajax.php', {changePart: 1, g_id: g_id, part_id: id, mode: selected, number: number}, function (data) {
 
     });
 });
-$(document).on('click', '.partCountButton', function () {
-
-    var temp = $(this).siblings('input')
-    var id = temp.attr('id').slice(3);
-    var number = temp.val();
-    $('#part' + id).addClass('checked');
-    $.post('ajax.php', {changePart: 1, g_id: g_id, part_id: id, mode: false, number: number}, function (data) {
-
-    });
-
-})
-$(document).on('change', '.partCountInput', function () {
-    alert($(this).val());
-});
+//$(document).on('click', '.partCountButton', function () {
+//
+//    var temp = $(this).siblings('input')
+//    var id = temp.attr('id').slice(3);
+//    var number = temp.val();
+//    $('#part' + id).addClass('checked');
+//    $.post('ajax.php', {changePart: 1, g_id: g_id, part_id: id, mode: false, number: number}, function (data) {
+//
+//    });
+//
+//})
+//$(document).on('change', '.partCountInput', function () {
+//    alert($(this).val());
+//});
 $(document).on('click', '.more-review', function () {
     alert('ok');
     window.location.href='controller.php?getMoreReview=1&g_id='+g_id;
@@ -117,6 +135,11 @@ $(document).on('click', '.nav', function () {
     detailSwiper.slideTo(index);
 
 })
+function flushPrice(p){
+    var price=parseFloat($('.total-price').text().slice(3));
+    price+=p;
+    $('.total-price').text('RMB'+price);
+}
 
 
 //});

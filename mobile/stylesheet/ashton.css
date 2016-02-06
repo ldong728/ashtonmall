@@ -500,21 +500,37 @@ div .module-box {
 }
 
 .module-box .select {
+    position: relative;
+    overflow:hidden;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 80px;
+    width: 60px;
     height: 20px;
     background: url(images/selectDown.png) no-repeat;
-    background-position: 98% 50%;
-    background-size: 12px 10px;
-    line-height: 34px;
+    background-position: 46px 3px;
+    background-size: 12px 12px;
+    line-height: 20px;
     text-decoration: none;
+    margin-left: 15px;
     padding-left: 5px;
     overflow: hidden;
-    padding-right: 15px;
+    /*padding-right: 15px;*/
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.module-box .select #select-display{
+    height: 20px;
+    line-height: 20px;
+}
+.module-box .select .background{
+    /*position: absolute;*/
+    /*right:px*/
+    float: right;
+    background-color: #ccc;
+    width: 18px;
+    height: 20px;
+
 }
 
 .module-box select {
@@ -524,9 +540,13 @@ div .module-box {
     border: 1px solid #ccc;
     cursor: pointer;
     -webkit-appearance: none;
-    height: 36px;
-    width: 170px;
+    height: 20px;
+    width: 60px;
     opacity: 0;
+}
+.module-box select option {
+    z-index: 200;
+    opacity: 1;
 }
 
 .module-box .title {
@@ -576,7 +596,6 @@ div .module-box {
     float: left;
     width: 24vw;
     height: 100px;
-
 }
 
 .part .part-box .partInf img.part-img {
@@ -665,6 +684,15 @@ div .module-box {
     text-align: center;
     display: inline-block;
     float: left;
+}
+div.total-price {
+    color:#ff0000;
+   position: absolute;
+    font-size: 16px;
+    line-height: 18px;
+    height: 18px;
+    right: 5%;
+    bottom: 10px;
 }
 
 /*用户评价*/
