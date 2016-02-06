@@ -103,7 +103,35 @@
         <div class="line-number">2</div>
         <div class="title-name">选择功能</div>
     </div>
+
     
+</div>
+
+<div class="detail module-box">
+    <div class="title"id="cate-title">
+        <div class="line-number">3</div>
+        <div class="title-name">选择颜色</div>
+        <div class="select">
+            <select>
+                <option id="<?php echo $default['d_id']?>"  value="<?php echo $default['d_id']?>"selected="selected">
+                    <?php echo $default['category']?></option>
+                <?php foreach($detailQuery as $default):?>
+                    <option id="<?php echo $default['d_id']?>" value="<?php echo $default['d_id']?>">
+                        <?php echo $default['category']?></option>
+                <?php endforeach?>
+            </select>
+        </div>
+    </div>
+    <div class="title"id="count-title">
+        <div class="line-number">4</div>
+        <div class="title-name">选择数量</div>
+        <div class="countBox">
+            <a class="minus number-button" id="minus">-</a>
+            <input readonly="1" class="count" id="number" value="<?php echo $number ?>" maxlength="3" type="tel"/>
+            <a class="plus number-button" id="plus">+</a>
+        </div>
+    </div>
+
 </div>
 <div class="buy module-box">
     <dl>
@@ -131,9 +159,6 @@
         <button class="add-cart">加入购物车</button>
     </div>
 </div>
-<!--            <div class="shelves_nav">-->
-<!--                <a class="shelvesNav"href="#"id="getGoodsInf">商品介绍</a>-->
-<!--            </div>-->
 
 <div class="review module-box">
     <div class="title">
