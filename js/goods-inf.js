@@ -39,18 +39,23 @@ $(document).on('change', '#category-select', function () {
 //});
 
 $(document).on('click', '.number-button', function () {
+
     if ('plus' == $(this).attr('id')) {
         var input = $(this).prev('input');
         var currentNum = parseInt(input.val());
+        var price=parseFloat($('.total-price').text().slice(3))/currentNum;
         input.val(currentNum + 1)
+
     } else if ('minus' == $(this).attr('id')) {
         var input = $(this).next('input');
         var currentNum = parseInt(input.val());
+        var price=-parseFloat($('.total-price').text().slice(3))/currentNum;
         if (currentNum > 1) {
             input.val(currentNum - 1)
         }
     }
     number = parseInt($('#number').val());
+    flushPrice(parseFloat(price));
     if (1 == $('#fromCart').val()) {
         $.post('ajax.php', {alterCart: 1, d_id: d_id, number: number});
     }
@@ -98,14 +103,19 @@ $(document).on('click', '#getGoodsInf', function () {
 $(document).on('click', '.check-box', function () {
     var id = $(this).attr('id').slice(4);
     var selected = $(this).hasClass('checked')
+    var price=$(this).prev('input').val();
     if (selected) {
         $(this).removeClass('checked');
-        $('#num' + id).val(0)
+        price=-price;
+        //$('#num' + id).val(0)
     } else {
         $(this).addClass('checked');
-        $('#num' + id).val(1)
+        //$('#num' + id).val(1)
     }
     $.post('ajax.php', {changePart: 1, g_id: g_id, part_id: id, mode: selected, number: number}, function (data) {
+        if(data=='ok'){
+            flushPrice(price*number);
+        }
 
     });
 });
@@ -136,9 +146,14 @@ $(document).on('click', '.nav', function () {
 
 })
 function flushPrice(p){
-    var price=parseFloat($('.total-price').text().slice(3));
+    //var ip=p*100;
+    var price=parseFloat($('.total-price').text().slice(4));
+    //price+=ip;
+    //var s=price.toString().slice(-2);
+    //price=parseInt(price/100);
     price+=p;
-    $('.total-price').text('RMB'+price);
+
+    $('.total-price').text('RMB '+price);
 }
 
 

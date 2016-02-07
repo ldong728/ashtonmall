@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="price">
-                        RMB <?php echo((isset($default['price'])) ? $default['price'] : $default['sale']) ?>
+                        RMB <?php echo $price=((isset($default['price'])) ? $default['price'] : $default['sale']) ?>
                     </div>
                 </div>
                 <!--                <dl>-->
@@ -84,12 +84,13 @@
                         <?php foreach ($parts as $r): ?>
                             <div class="partInf">
                                 <img class="part-img" src="../<?php echo $r['url'] ?>"/>
-
+                                <input type="hidden"value="<?php echo$r['sale']?>"/>
                                 <div class="check-box <?php echo $r['dft'] ?>" id="part<?php echo $r['g_id'] ?>"></div>
                                 <div class="part-name">
                                     <?php echo $r['name'] ?>
                                 </div>
                             </div>
+                            <?php if($r['dft']=='checked')$price+=$r['sale']?>
                         <?php endforeach ?>
                     </div>
                 </div>
@@ -136,7 +137,7 @@
                         <a class="plus number-button" id="plus">+</a>
                     </div>
                 </div>
-                <div class="total-price">RMB18.00</div>
+                <div class="total-price">RMB <?php echo ($price*$number)?></div>
 
             </div>
 
