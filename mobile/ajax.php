@@ -85,7 +85,7 @@ if(isset($_SESSION['customerId'])){
         }else{
             $_SESSION['buyNow']['partsList'][$_POST['part_id']]=$_POST['number'];
         }
-        mylog(getArrayInf($_SESSION['buyNow']['partsList']));
+//        mylog(getArrayInf($_SESSION['buyNow']['partsList']));
         echo 'ok';
         exit;
     }

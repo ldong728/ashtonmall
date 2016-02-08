@@ -47,10 +47,16 @@
         $('.sub-menu').fadeOut();
     })
     $('#nave-category').click(function(){
-       $('.foot-cate-sub').fadeToggle();
+        $('.sub-menu').fadeOut('fast',function(){
+            $('.foot-cate-sub').fadeIn();
+        });
+
     });
     $('#nave-user').click(function(){
-        $('.foot-user-sub').fadeToggle();
+        $('.sub-menu').fadeOut('fast',function(){
+            $('.foot-user-sub').fadeIn();
+        });
+
     })
 
 </script>
