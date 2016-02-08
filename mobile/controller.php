@@ -480,9 +480,10 @@ function getBuyNowDetail($d_id, $number, array $partsList)
             'part_d_id' => $prow['d_id'],
             'part_url' => $prow['url'],
             'part_sale' => $prow['sale'],
-            'part_number'=>$partsList[$prow['g_id']]
+//            'part_number'=>$partsList[$prow['g_id']]
+            'part_number'=>$number
         );
-        $goodsList[0]['total'] += $prow['sale'] * $partsList[$prow['g_id']];
+        $goodsList[0]['total'] += $prow['sale'] * $number;
     }
     return array(
         'totalPrice' => $goodsList[0]['total'],

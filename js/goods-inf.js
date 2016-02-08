@@ -146,11 +146,7 @@ $(document).on('click', '.nav', function () {
 
 })
 function flushPrice(p){
-    //var ip=p*100;
     var price=parseFloat($('.total-price').text().slice(4));
-    //price+=ip;
-    //var s=price.toString().slice(-2);
-    //price=parseInt(price/100);
     price+=p;
 
     $('.total-price').text('RMB '+price);

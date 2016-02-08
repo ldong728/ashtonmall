@@ -1,5 +1,5 @@
 <div class="foot">
-    <a class="foot-nave no-sub"href="#"id="nave-home">
+    <a class="foot-nave no-sub"href="index.php"id="nave-home">
         首页
     </a>
     <a class="foot-nave"id="nave-category">
