@@ -62,6 +62,10 @@ if (isset($_SESSION['login'])) {
         printView('admin/view/wechatConfig.html.php','微信公众平台');
         exit;
     }
+    if(isset($_GET['card'])){
+        printView('admin/view/cardManager.html.php','卡券管理');
+        exit;
+    }
     if (isset($_GET['logout'])) {//登出
         session_unset();
         include 'view/login.html.php';
