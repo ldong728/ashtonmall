@@ -76,14 +76,19 @@ if(isset($_SESSION['login'])) {
         exit;
     }
     if (isset($_GET['start_promotions'])) {
-        pdoInsert('promotions_tbl', array('g_id' => $_GET['g_id'], 'd_id' => $_GET['d_id']));
+        $id=pdoInsert('promotions_tbl', array('g_id' => $_GET['g_id'], 'd_id' => $_GET['d_id']));
+        pdoUpdate('promotions_tbl',array('img'=>'g_img/pro-img-up'.$id.'.jpg'),array('id'=>$id));
         header('location: index.php?promotions=1');
         exit;
 
     }
     if (isset($_GET['delete_promotions'])) {
-        $str = 'delete from promotions_tbl where d_id=' . $_GET['d_id'];
-        exeNew($str);
+        $query=pdoQuery('promotions_tbl',null,array('d_id'=>$_GET['d_id']),' limit 1');
+        $row=$query->fetch();
+        unlink('../'.$row['img']);
+//        $str = 'delete from promotions_tbl where d_id=' . $_GET['d_id'];
+//        exeNew($str);
+        pdoDelete('promotions_tbl',array('d_id'=>$_GET['d_id']));
         header('location: index.php?promotions=1');
         exit;
     }

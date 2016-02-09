@@ -46,7 +46,7 @@ if(isset($_SESSION['login'])) {
             $inf['id']=$id;
         }
         $jsonInf=json_encode($inf,JSON_UNESCAPED_UNICODE);
-        mylog($jsonInf);
+//        mylog($jsonInf);
         echo $jsonInf;
         exit;
     }
@@ -73,26 +73,39 @@ if(isset($_SESSION['login'])) {
         $jsonInf=json_encode($inf,JSON_UNESCAPED_UNICODE);
 
         if('SUCCESS'==$inf['state']) {
-            mylog('success');
+//            mylog('success');
             $temp=pdoQuery('g_image_tbl',null,array('g_id'=>$_GET['g_id']),'limit 1');
             if(!$row=$temp->fetch()){
                 pdoInsert('g_image_tbl', array('g_id' => $_GET['g_id'], 'url' => $inf['url'], 'remark' => $inf['md5']), 'ignore');
-                mylog("create record");
+//                mylog("create record");
             }else{
                 pdoUpdate('g_image_tbl',array('remark'=>$inf['md5'],'url'=>$inf['url']),array('g_id'=>$_GET['g_id']));
                 $query=pdoQuery('image_view',null,array('remark'=>$row['remark']), ' limit 1');
                 if(!$t=$query->fetch()){
                     unlink('../'.$row['url']);
-                    mylog('unlink"../'.$row['url']);
+//                    mylog('unlink"../'.$row['url']);
                 }else{
-                    mylog('not unlink');
+//                    mylog('not unlink');
                 }
 
             }
 
         }
-        mylog($jsonInf);
+//        mylog($jsonInf);
         echo $jsonInf;
+        exit;
+    }
+    if(isset($_GET['proImgUp'])){
+        foreach($_FILES as $k=>$v) {
+            $uploader = new uploader($k);
+            $uploader->upFile($k);
+            $inf = $uploader->getFileInfo();
+            $jsonInf = json_encode($inf, JSON_UNESCAPED_UNICODE);
+            if ('SUCCESS' == $inf['state']) {
+                pdoUpdate('promotions_tbl', array( 'img' => $inf['url']), array('id' => $_GET['proImgUp']));
+                echo $jsonInf;
+            }
+        }
         exit;
     }
 //    if (isset($_GET['g_id'])){

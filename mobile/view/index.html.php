@@ -31,7 +31,9 @@
     <div class="hot-sale-container">
         <?php foreach ($promotion as $row): ?>
         <div class="hot-sale-box">
+            <div class="hot-sale-blank"></div>
             <div class="hot-sale-content">
+                <div class="hot-sale-blank"></div>
                 <div class="hot-sale-name">
                     <?php echo $row['name'] ?>
                 </div>
@@ -52,10 +54,11 @@
                 <img src="../<?php echo $row['url'] ?>"/>
 
             </div>
-            <?php endforeach ?>
+
 
 
         </div>
+        <?php endforeach ?>
     </div>
 
     <div class="remark-container">

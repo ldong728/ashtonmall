@@ -206,6 +206,7 @@ if(isset($_SESSION['login'])) {
                 'price' => $row['price'],
                 'start_time' => date("Y-m-d\TH:i:s", strtotime($row['start_time'])),
                 'end_time' => date("Y-m-d\TH:i:s", strtotime($row['end_time'])),
+                'img'=>$row['img']
             );
 
         }

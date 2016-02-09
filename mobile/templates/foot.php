@@ -19,7 +19,7 @@
     <?php endforeach?>
 </div>
 <div class="sub-menu foot-user-sub">
-    <a href="#"class="foot-cate-name">用户中心</a>
+    <a href="controller.php?customerInf=1"class="foot-cate-name">用户中心</a>
     <a href="#"class="foot-cate-name">我的订单</a>
     <a href="#"class="foot-cate-name">物流查询</a>
     <a href="#"class="foot-cate-name">联系客服</a>

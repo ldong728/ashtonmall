@@ -192,12 +192,17 @@ a.foot-cate-name {
     /*background-color: #007aff;*/
 }
 
+
 .hot-sale-container .hot-sale-box .hot-sale-content {
 
     float: left;
     width: 45%;
     min-height: 100px;
     /*background-color: #00a213;*/
+}
+.hot-sale-container .hot-sale-box .hot-sale-content .hot-sale-blank {
+    width:100%;
+    height:20px;
 }
 
 .hot-sale-container .hot-sale-box .hot-sale-content .hot-sale-name {
