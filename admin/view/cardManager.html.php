@@ -13,6 +13,7 @@
         创建卡券
     </div>
     <form action="consle.php"method="post">
+        <input
 
 
     </form>
