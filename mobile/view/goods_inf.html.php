@@ -163,7 +163,7 @@
 
     <!--    --><?php //include_once 'templates/foot.php' ?>
     <div class="foot">
-        <a class="foot-goods-nave">
+        <a class="foot-goods-nave"href="index.php">
             首页
         </a>
         <a class="foot-goods-nave buy-now">

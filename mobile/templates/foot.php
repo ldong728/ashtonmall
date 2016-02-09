@@ -5,7 +5,7 @@
     <a class="foot-nave"id="nave-category">
          商品分类
     </a>
-    <a class="foot-nave no-sub"id="nave-cart">
+    <a class="foot-nave no-sub"href="controller.php?getCart=1$rand=<?php echo rand(1000,9999)?>"id="nave-cart">
         购物车
     </a>
     <a class="foot-nave"id="nave-user">

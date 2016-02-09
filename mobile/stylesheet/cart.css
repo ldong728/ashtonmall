@@ -92,7 +92,7 @@ span#totalPrice{
 .cart_list .comboPd .cl_grey{color:#999;}
 .cartList .cart_ft{height:35px; line-height:35px; background-color:#fff; text-align:right; border-bottom:1px solid #ccc; border-top:0; width:94%; padding:0 3%; font-size:16px;}
 .cart_ft .price{font-size:14px; line-height:35px; color:#eb0b30; margin-right:10px; vertical-align:top; font-size:14px;}
-.myCart .fixedCartMenu{position:fixed;  bottom:17vw; left:0; z-index:14; width:100%; height:42px; box-shadow:0px -1px 5px #dcdcdc;}
+.myCart .fixedCartMenu{position:fixed;  bottom:32px; left:0; z-index:14; width:100%; height:42px; box-shadow:0px -1px 5px #dcdcdc;}
 .myCart .fixedCartMenu .settleBox{margin:0 auto; width:100%; min-width:320px; max-width:1024px; height:42px; overflow:hidden; border:1px solid #ccc; background-color:#fff;}
 .myCart .fixedCartMenu .settleBox p{display:inline-block; height:42px; line-height:42px; font-size:15px; color:#666; float:left; padding-left:5px;}
 .myCart .fixedCartMenu .total{color:#eb0b30; font-size:15px; margin:0 3px;}
