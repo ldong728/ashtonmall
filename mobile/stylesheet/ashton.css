@@ -27,6 +27,7 @@ a:link {
 
 div {
     /*cursor: pointer;*/
+    box-sizing: border-box;
 }
 
 div .toast {
@@ -69,15 +70,17 @@ div.foot {
     width: 100%;
     height: 32px;
     bottom: 0;
+    /*overflow-x: visible;*/
 }
 
 .foot a.foot-nave {
+    box-sizing: border-box;
     color: #313131;
     float: left;
     font-size: 13px;
     font-weight: 600;
     text-align: center;
-    width: calc(25% - 1px);
+    width: 25%;
     height: 32px;
     line-height: 32px;
     border-left: solid 1px #D6D6D6;
@@ -89,10 +92,11 @@ div.foot {
     font-size: 13px;
     font-weight: 600;
     text-align: center;
-    width: calc(33.33% - 1px);
+    width: 33.33%;
     height: 32px;
     line-height: 32px;
     border-left: solid 1px #D6D6D6;
+    box-sizing: border-box;
 }
 
 div.foot-cate-sub {
@@ -162,13 +166,13 @@ a.foot-cate-name {
 
 .search-container div.icon-button {
     position: absolute;
-    top: 5px;
-    left: calc(75% - 22px);
+    top: 7px;
+    left: 70%;
     display: block;
-    width: 20px;
-    height: 20px;
+    width: 4vw;
+    height: 4vw;
     background-image: url(images/search.png);
-    background-size: 20px 20px;
+    background-size: 4vw 4vw;
     background-repeat: no-repeat;
 }
 
@@ -518,9 +522,9 @@ div .module-box {
     border-radius: 5px;
     width: 60px;
     height: 20px;
-    background: url(images/selectDown.png) no-repeat;
-    background-position: 46px 3px;
-    background-size: 12px 12px;
+    /*background: url(images/selectDown.png) no-repeat;*/
+    /*background-position: 46px 3px;*/
+    /*background-size: 12px 12px;*/
     line-height: 20px;
     text-decoration: none;
     margin-left: 15px;
@@ -538,6 +542,10 @@ div .module-box {
     /*position: absolute;*/
     /*right:px*/
     float: right;
+
+    background: url(images/selectDown.png) no-repeat;
+    background-position: 4px 5px;
+    background-size: 10px 10px;
     background-color: #ccc;
     width: 18px;
     height: 20px;
@@ -708,13 +716,20 @@ div.total-price {
 .param {
     min-height: 20px;
 }
+.param .param-container {
+    width: 90%;
+    margin: 5px auto;
+    min-height: 30px;
 
-.param .param-box {
+}
+
+.param .param-container .param-box {
     height: 20px;
     width: auto;
     float:left;
     font-size: 14px;
     line-height: 18px;
+    margin: 4px 20px 4px 0;
 }
 
 /*用户评价*/

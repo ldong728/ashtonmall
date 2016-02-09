@@ -92,11 +92,13 @@
                     <div class="line-number">2</div>
                     <div class="title-name">选择功能</div>
                 </div>
-                <?php foreach($parm as $row):?>
-                <div class="param-box">
-
+                <div class="param-container">
+                    <?php foreach ($parm[''] as $row): ?>
+                        <div class="param-box">
+                            <?php echo $row['name'] . ': ' . $row['value'] ?>
+                        </div>
+                    <?php endforeach ?>
                 </div>
-                <?php endforeach?>
 
 
             </div>
@@ -150,8 +152,8 @@
                 </div>
             </div>
             <div class="module-box mult-content">
-                <video controls="controls"width="100%"height="auto">
-<!--                    <source src="../g_img/video/tumblr_nz519al7m31ulnjkb.mp4">-->
+                <video controls="controls" width="100%" height="auto">
+                    <!--                    <source src="../g_img/video/tumblr_nz519al7m31ulnjkb.mp4">-->
                 </video>
             </div>
 
@@ -159,10 +161,9 @@
     </div>
 
 
-
-<!--    --><?php //include_once 'templates/foot.php' ?>
+    <!--    --><?php //include_once 'templates/foot.php' ?>
     <div class="foot">
-        <a class="foot-goods-nave">
+        <a class="foot-goods-nave"href="index.php">
             首页
         </a>
         <a class="foot-goods-nave buy-now">
