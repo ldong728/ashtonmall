@@ -525,7 +525,7 @@ div .module-box {
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 60px;
+    width: 80px;
     height: 20px;
     /*background: url(images/selectDown.png) no-repeat;*/
     /*background-position: 46px 3px;*/
@@ -565,7 +565,7 @@ div .module-box {
     cursor: pointer;
     -webkit-appearance: none;
     height: 20px;
-    width: 60px;
+    width: 80px;
     opacity: 0;
 }
 .module-box select option {
