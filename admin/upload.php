@@ -4,21 +4,21 @@ include_once 'upload.class.php';
 session_start();
 if(isset($_SESSION['login'])) {
     $uploader= new uploader();
-    if (isset($_POST['altAd'])) {
-
-        if (isset($_FILES['adPic'])) {
-            $file = $_FILES['adPic'];
-            if (fileFilter($file, array('image/gif', 'image/jpeg', 'image/pjpeg','image/png'), 500000)) {
-                $temp = move_uploaded_file($file['tmp_name'], $_POST['adImg']);
-                if (false == $temp) mylog('fileerrer');
-            }
-        }
-        if (isset($_POST['g_id'])) {
-            pdoUpdate('ad_tbl', array('g_id' => $_POST['g_id']), array('id' => $_POST['altAd']));
-        }
-        header('location:index.php?ad=1');
-        exit;
-    }
+//    if (isset($_POST['altAd'])) {
+//
+//        if (isset($_FILES['adPic'])) {
+//            $file = $_FILES['adPic'];
+//            if (fileFilter($file, array('image/gif', 'image/jpeg', 'image/pjpeg','image/png'), 500000)) {
+//                $temp = move_uploaded_file($file['tmp_name'], $_POST['adImg']);
+//                if (false == $temp) mylog('fileerrer');
+//            }
+//        }
+//        if (isset($_POST['g_id'])) {
+//            pdoUpdate('ad_tbl', array('g_id' => $_POST['g_id']), array('id' => $_POST['altAd']));
+//        }
+//        header('location:index.php?ad=1');
+//        exit;
+//    }
     if (isset($_GET['infImgUpload'])){
         $file=$_FILES['upfile'];
         $uploader->upFile(time().rand(1000,9999));
@@ -65,7 +65,6 @@ if(isset($_SESSION['login'])) {
         echo $jsonInf;
         exit;
     }
-
     if(isset($_FILES['parts-img-up'])){
         $uploader=new uploader('parts-img-up');
         $uploader->upFile($_GET['g_id'].'_'.time().rand(1000,9999));
@@ -108,45 +107,25 @@ if(isset($_SESSION['login'])) {
         }
         exit;
     }
-//    if (isset($_GET['g_id'])){
-//
-//    }
+    if(isset($_FILES['card-img-up'])){
+//        mylog('upload');
+        $uploader = new uploader('card-img-up');
+        $uploader->upFile('cardLogo');
+        $inf=$uploader->getFileInfo();
+        include_once '../wechat/cardManager.php';
+        mylog('include');
+        $inf=uploadLogo($GLOBALS['mypath'].'/'.$inf['url']);
+//        $inf=uploadTempMedia($GLOBALS['mypath'].'/'.$inf['url'],'image');
+        $infArray=json_decode($inf,true);
+        if(isset($infArray['url'])){
+            $infArray['displayImg']=$_FILES['card-img-up'];
+            $inf=json_encode($infArray);
+            echo $inf;
+        }else{
+            echo'{"error":"fail"}';
 
-//    if (isset($_POST['g_id']) && $_POST['g_id'] != '-1') {
-//        $file = $_FILES['spic'];
-//        $inf = '';
-//        for ($i = 0; $i < count($file['name']); $i++) {
-//            if ((($file["type"][$i] == "image/png")
-//                    || ($file["type"][$i] == "image/jpeg")
-//                    || ($file["type"][$i] == "image/pjpeg"))
-//                && ($file["size"][$i] < 500000)
-//            ) {
-//                if ($file["error"][$i] > 0) {
-//                    $inf = "Return Code: " . $file["error"][$i] . "<br />";
-//                    echo $inf;
-//                    exit;
-//                } else {
-//                    $img_name = $_POST['g_id'] . '_' . md5($file["name"][$i]) . '.jpg';
-//                    $img_md5=md5_file($file["tmp_name"][$i]);
-//                    if ($uploader->checkFileMd5($img_md5)) {
-//                        $url=$uploader->getUrl();
-//                    } else {
-//                        $url="g_img/" . $img_name;
-//                        move_uploaded_file($file["tmp_name"][$i],
-//                           '../'. $url);
-//                    }
-//                    $row=array('g_id'=>$_POST['g_id'],'url'=>$url,'remark'=>md5_file("../g_img/" . $img_name));
-//                    $insertArray[]=$row;
-//
-//                }
-//            }
-//
-//        }
-//        header("Content-Type:text/html;charset=utf-8");
-//        pdoBatchInsert('g_image_tbl',$insertArray);
-//    }
-    $g_id = $_POST['g_id'];
-    header('location:index.php?goods-config=1&g_id=' . $g_id);
+        }
+    }
     exit;
 }
 function fileFilter($file, array $type, $size)

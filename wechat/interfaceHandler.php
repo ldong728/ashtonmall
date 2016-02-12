@@ -120,14 +120,15 @@ class interfaceHandler {
         $data=$this->postJsonByCurl($remote_server,$jsonData);
         return $data;
     }
-    public function uploadFileByCurl($remote_server,$file,$exraInf=null){
+    public function uploadFileByCurl($remote_server,$file,$field='media',$exraInf=null){
+//        mylog($file);
         $remote_server=$this->replaceAccessToken($remote_server);
-        $fields['media'] = '@'.$file;
+        $fields[$field] = '@'.$file;
+        mylog(getArrayInf($fields));
         if($exraInf!=null){
             foreach ($exraInf as $k=>$v) {
                 $fields[$k]=$v;
             }
-
         }
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$remote_server);

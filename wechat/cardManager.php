@@ -10,3 +10,14 @@ function createCard(array $cardInf){
 
 
 }
+
+function uploadLogo($file)
+{
+//    mylog('function');
+    $sInterFace=new interfaceHandler(WEIXIN_ID);
+//    $back = $sInterFace->uploadFileByCurl('https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN', $file,'buffer');
+    $back = $sInterFace->uploadFileByCurl('https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=image', $file);
+
+    mylog($back);
+    return $back;;
+}

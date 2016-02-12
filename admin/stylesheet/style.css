@@ -475,6 +475,19 @@ width: 8%;
 .creater-box {
 
 }
+.card-img-upload{
+    float: left;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-width: thin;
+    border-style: dashed;
+    border-radius: 3px;
+    background-image: url(images/icon-add.jpg);
+    background-size: 10px 10px;
+    background-position: 5px 5px;
+    background-repeat: no-repeat;
+}
 
 
 

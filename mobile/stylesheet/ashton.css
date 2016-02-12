@@ -294,6 +294,10 @@ a.foot-cate-name {
 .remark-container .remark-box .remark-content .remark {
     font-size: 11px;
 }
+.foot-blank {
+    width: 100%;
+    height: 40px;
+}
 
 /*货品列表*/
 .category-name {

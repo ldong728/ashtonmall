@@ -112,6 +112,7 @@
         </div>
 
     </div>
+    <div class="foot-blank"></div>
 
     <div class="toast"></div>
 

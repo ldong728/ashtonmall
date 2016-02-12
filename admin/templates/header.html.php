@@ -20,7 +20,6 @@
         <li><a href="index.php">首页</a></li>
         <li><a href="index.php?add-goods=1">新商品登入</a></li>
         <li><a href="index.php?goods-config=1">商品修改</a> </li>
-<!--        <li><a href="index.php?img-config=1">图片管理</a></li>-->
         <li><a href="index.php?category-config=1">品种管理</a></li>
         <li><a href="index.php?promotions=1">促销管理</a></li>
         <li><a href="index.php?orders=1">订单管理</a></li>

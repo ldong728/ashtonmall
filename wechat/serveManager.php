@@ -129,19 +129,22 @@ function sendKFMessage($userId,$content){
 }
 
 
-function uploadTempMedia($file, $type, $weixinId = 0)
+function uploadTempMedia($file, $type)
 {
     $localSavePath = $GLOBALS['mypath'] . '/tmpmedia/' . $file['name'];
     move_uploaded_file($file['tmp_name'], $localSavePath);
     $back = $GLOBALS['mInterface']->uploadFileByCurl('https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=' . $type, $localSavePath);
     $upInf = json_decode($back, true);
+    mylog($back);
     if (isset($upInf['media_id'])) {
-        pdoInsert('up_temp_tbl', array('local_name' => $localSavePath, 'media_id' => $upInf['media_id'], 'expires_time' => $upInf['created_at'] + 259200, 'media_type' => $type));
+//        pdoInsert('up_temp_tbl', array('local_name' => $localSavePath, 'media_id' => $upInf['media_id'], 'expires_time' => $upInf['created_at'] + 259200, 'media_type' => $type));
         return '上传成功';
     } else {
         output('上传错误，错误代码：' . $upInf['errcode']);
     }
 }
+
+
 
 function downloadImgToHost($media_id, $weixinId = 0)
 {
