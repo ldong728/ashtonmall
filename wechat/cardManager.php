@@ -21,5 +21,33 @@ function uploadLogo($file)
     }else{
         return 'error';
     }
+}
+function encodeCard($encryptCode){
+    $encryptCode=array('encrypt_code'=>$encryptCode);
+    $sInterFace=new interfaceHandler(WEIXIN_ID);
+    $data=$sInterFace->postArrayByCurl('https://api.weixin.qq.com/card/code/decrypt?access_token=ACCESS_TOKEN',$encryptCode);
+    return $data;
 
+}
+function getCardCode($encryptCode){
+    $code=array('code'=>$encryptCode);
+    $sInterFace=new interfaceHandler(WEIXIN_ID);
+    $return=$sInterFace->postArrayByCurl('https://api.weixin.qq.com/card/code/decrypt?access_token=ACCESS_TOKEN',$code);
+    $return=json_decode($return,true);
+    if($return['errcode']==0){
+        $code=$return['code'];
+        $data=$sInterFace->postArrayByCurl('https://api.weixin.qq.com/card/code/consume?access_token=ACCESS_TOKEN',$code);
+        $dataArray=json_decode($data,true);
+        return $dataArray;
+    }else{
+        return false;
+    }
+
+
+}
+function getCardDetail($card_id){
+    $sInterFace=new interfaceHandler(WEIXIN_ID);
+    $inf=array('card_id'=>$card_id);
+    $data=$sInterFace->postArrayByCurl('https://api.weixin.qq.com/card/get?access_token=ACCESS_TOKEN',$inf);
+    return $data;
 }

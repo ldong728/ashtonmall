@@ -136,7 +136,23 @@ if(isset($_SESSION['login'])) {
         $g_id=$_GET['g_id'];
         header('location:index.php?goods-config=1&g_id=' . $g_id);
         exit;
+    }
+    if(isset($_POST['importCard'])){
+        $card_id=trim($_POST['card_id']);
+        include_once '../wechat/cardManager.php';
+        $data=getCardDetail($card_id);
+        $dataArray=json_decode($data,true);
+        $cardType=$dataArray['card']['card_type'];
+        if($cardType='CASH'){
+            $leastCost=$dataArray['card']['cash']['least_cost'];
+            $reduceCost=$dataArray['card']['cash']['reduce_cost'];
 
+        }
+//        $card
+
+        echo $data;
+
+        exit;
 
     }
 }

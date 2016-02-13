@@ -159,6 +159,10 @@ function getUnionId($openId)
 {
     $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=' . $openId . '&lang=zh_CN';
     $jsonData = $GLOBALS['mInterface']->getByCurl($url);
+    $inf=json_decode($jsonData,true);
+    if(!isset($inf['nickname'])){
+        $inf['nickname']='游客';
+    }
     return json_decode($jsonData, true);
 }
 function getOauthToken($code){

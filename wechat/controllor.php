@@ -18,13 +18,13 @@ $eventList=array
     'VIEW',
     'kf_create_session',
     'kf_close_session',
-    'user_get_card'
+    'user_get_card',
+    'user_del_card'
+
 );
-//mylog(getArrayInf($msg));
+mylog(getArrayInf($msg));
 if(in_array($msg['MsgType'],array('text','voice','img'))){
-//    mylog('inarray');
     $mode=getWechatMode($msg['from']);
-//    mylog($mode);
     switch($mode){
         case 'normal':{
             normalReply($weixin,$msg);

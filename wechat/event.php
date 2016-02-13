@@ -12,5 +12,8 @@ function kf_close_session($msg){
 }
 
 function user_get_card($msg){
-
+    pdoInsert('card_repository_tbl',array('card_id'=>$msg['CardId'],''=>$msg['UserCardCode'],'customer_id'=>$msg['from']),'update');
+}
+function user_del_card($msg){
+    return;
 }
