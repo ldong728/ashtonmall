@@ -108,22 +108,18 @@ if(isset($_SESSION['login'])) {
         exit;
     }
     if(isset($_FILES['card-img-up'])){
-//        mylog('upload');
         $uploader = new uploader('card-img-up');
         $uploader->upFile('cardLogo');
         $inf=$uploader->getFileInfo();
         include_once '../wechat/cardManager.php';
-        mylog('include');
-        $inf=uploadLogo($GLOBALS['mypath'].'/'.$inf['url']);
-//        $inf=uploadTempMedia($GLOBALS['mypath'].'/'.$inf['url'],'image');
-        $infArray=json_decode($inf,true);
-        if(isset($infArray['url'])){
-            $infArray['displayImg']=$_FILES['card-img-up'];
-            $inf=json_encode($infArray);
-            echo $inf;
-        }else{
-            echo'{"error":"fail"}';
+        $logo=uploadLogo($GLOBALS['mypath'].'/'.$inf['url']);
+        if($logo!='error'){
+            $inf['logo']=$logo;
 
+            echo json_encode($inf);
+        }else{
+            $inf['state']='logo Error';
+            echo json_encode($inf);
         }
     }
     exit;

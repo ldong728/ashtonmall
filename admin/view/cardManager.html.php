@@ -14,7 +14,11 @@
         <h4>创建卡券</h4>
     </div>
     <form action="consle.php"method="post">
-        <a class="card-img-upload"></a><input type="file"id="card-img-up"name="card-img-up"style="display: none">
+        <div class="card-logo">
+            <a class="card-img-upload"><img class="card-logo-img"/></a><input type="file"id="card-img-up"name="card-img-up"style="display: none">
+            <input type="hidden" name="logoUrl"id="logoUrl">
+        </div>
+
 
 
 
@@ -33,13 +37,13 @@
             fileElementId: $(this).attr('id'), //文件上传域的ID
             dataType: 'json', //返回值类型 一般设置为json
             success: function (v, status){
-//                if('SUCCESS'== v.state){
-                    alert(v.url)
-//                    var content = '<a href="#"class="delete-front-img"id="'+ v.id+'"><img src="../'+ v.url+'"/></a>';
-//                    $('.front-img-upload').before(content);
-//                }else{
-////                    showToast(v.state);
-//                }
+//                alert(v.logo);
+                if('SUCCESS'== v.state){
+                    $('#logoUrl').val(v.logo);
+                    $('.card-logo-img').attr('src','../'+ v.url);
+                }else{
+                    showToast(v.state);
+                }
             },//服务器成功响应处理函数
             error:function(d){
                 alert('error');

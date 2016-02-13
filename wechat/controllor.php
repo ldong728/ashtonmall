@@ -6,12 +6,20 @@ include_once $GLOBALS['mypath'].'/wechat/wechat.php';
 include_once $GLOBALS['mypath'].'/wechat/serveManager.php';
 include_once 'reply.php';
 
+
 //mylog('reach');
 $weixin=new wechat(WEIXIN_ID);
 $myHandler=new interfaceHandler(WEIXIN_ID);
 $weixin->valid();
 $msg=$weixin->receiverFilter();
 $random=rand(1000,9999);
+$eventList=array
+(
+    'VIEW',
+    'kf_create_session',
+    'kf_close_session',
+    'user_get_card'
+);
 //mylog(getArrayInf($msg));
 if(in_array($msg['MsgType'],array('text','voice','img'))){
 //    mylog('inarray');
@@ -33,7 +41,7 @@ if(in_array($msg['MsgType'],array('text','voice','img'))){
 
 if($msg['MsgType']=='event'){
     include_once 'event.php';
-    if(in_array($msg['Event'],array('VIEW','kf_create_session','kf_close_session'))){
+    if(in_array($msg['Event'],$eventList)){
         $msg['Event']($msg);
     }
 
