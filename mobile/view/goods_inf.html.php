@@ -87,7 +87,7 @@
                 <!--                    <button class="part-add-cart">加入购物车</button>-->
                 <!--                </div>-->
             </div>
-            <div class="param module-box">
+            <div class="param module-box"style="height: 200px">
                 <div class="title">
                     <div class="line-number">2</div>
                     <div class="title-name">选择功能</div>

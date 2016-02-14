@@ -44,18 +44,15 @@
                 </li>
             <?php endforeach?>
         </ul>
-        <div class="orderOther"style="margin-top: 10px">
-<!--            <div class="orderMode">-->
-<!--                <h3>配送方式：</h3>-->
-<!--                <div class="chosen chooseOpen">默认快递</div>-->
-<!--                <div class="chooseArea">-->
-<!---->
-<!---->
-<!--                </div>-->
-<!--            </div>-->
+        <div class="orderOther"style="margin: 10px auto 0 auto">
             <div class="remark">
                 <div class="remark-title"><h3>用户留言：</h3></div>
                 <textarea rows="2"class="remark_field"></textarea>
+            </div>
+        </div>
+        <div class="orderOther"style="margin: 10px auto 0 auto">
+            <div class="card">
+
             </div>
         </div>
         <div class="ordertotal">

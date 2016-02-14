@@ -445,6 +445,7 @@ div .module-box {
     background-color: #fff;
     width: 100%;
     border-bottom: solid 1px #ccc;
+    max-height: 300px;
     /*margin-top: 1.5vh;*/
 }
 
@@ -726,6 +727,7 @@ div.total-price {
 }
 .param {
     min-height: 20px;
+    max-height: 270px;
 }
 .param .param-container {
     width: 90%;
