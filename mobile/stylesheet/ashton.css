@@ -107,6 +107,7 @@ div.foot-cate-sub {
     left: 25%;
     width: 25%;
     height: 200px;
+    z-index: 1200;
 }
 
 div.foot-user-sub {
@@ -117,6 +118,7 @@ div.foot-user-sub {
     left: 75%;
     width: 25%;
     height: 128px;
+    z-index: 1200;
 }
 
 a.foot-cate-name {

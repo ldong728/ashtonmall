@@ -42,7 +42,7 @@
                 </div>
                 <div class="hot-sale-price">
                     RMB:<?php echo $row['price'] ?>
-                    <a href="#" class="hot-sale-buy">
+                    <a href="controller.php?goodsdetail=1&g_id=<?php echo $row['id'] ?>" class="hot-sale-buy">
 
 
                     </a>

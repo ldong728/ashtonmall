@@ -20,7 +20,7 @@
                     <div class="intro">
                         <?php echo $row['intro'] ?>
                     </div>
-                    <a class="buy">
+                    <a class="buy"href="controller.php?goodsdetail=1&g_id=<?php echo $row['g_id'] ?>">
                     </a>
                 </div>
             </a>

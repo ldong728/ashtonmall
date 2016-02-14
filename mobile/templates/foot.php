@@ -53,7 +53,7 @@
 
     });
     $('#nave-user').click(function(){
-        $('.sub-menu').fadeOut('fast',function(){
+        $('.foot-cate-sub').fadeOut('fast',function(){
             $('.foot-user-sub').fadeIn();
         });
 
