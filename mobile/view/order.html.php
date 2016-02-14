@@ -65,14 +65,41 @@
         <a class="orderSettle" id="orderConfirm"href="#">订单确认</a>
     </div>
 </div>
+<?php include_once 'templates/jssdkIncluder.php'?>
 </body>
+
+<?php
+include_once '../wechat/interfaceHandler.php';
+include_once '../wechat/card.php';
+$card=new card();
+$sign=$card->getSignPackage("CASH");
+?>
+<script>
+        wx.ready(function(){
+            wx.chooseCard({
+//                shopId: '', // 门店Id
+                cardType: '<?php echo $sign['cardType']?>', // 卡券类型
+//                cardId: '', // 卡券Id
+                timestamp: <?php echo $sign['timestamp']?>, // 卡券签名时间戳
+                nonceStr: '<?php echo $sign['nonceStr']?>', // 卡券签名随机串
+                signType: 'SHA1', // 签名方式，默认'SHA1'
+                cardSign: '<?php echo $sign['cardSign']?>', // 卡券签名
+                success: function (res) {
+                    alert(res.cardList);
+                    var cardList= res.cardList; // 用户选中的卡券列表信息
+                }
+            });
+
+        })
+
+</script>
+
 <script>
     var from ='<?php echo $from?>';
     var addrId = <?php echo $addr['id']?>
 </script>
 <script>
     $('.ordersettle').click(function(){
-//        alert($('.remark_field').val())
         $.post('ajax.php',{userRemark:1,remark:$('.remark_field').val()},function(data){
             window.location.href='controller.php?orderConfirm=1&addrId='+addrId+'&from='+from;
         })

@@ -24,7 +24,8 @@ $signPackage = $jssdk->GetSignPackage();
 //            'getLocation',
 //            'openLocation',
 //            'onMenuShareTimeline'
-            'chooseWXPay'
+            'chooseWXPay',
+            'chooseCard'
         ]
     });
 //    wx.ready(function(){
