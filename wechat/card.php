@@ -50,7 +50,7 @@ class card{
         $nonceStr = $this->createNonceStr();
 //        $appId= $this->appId;
         $list=array($cardapiTicket,$timestamp,$nonceStr,$this->appId,$cardType);
-        sort($list);
+        sort($list,SORT_STRING);
         $str='';
         foreach ($list as $value) {
             $str.=$value;

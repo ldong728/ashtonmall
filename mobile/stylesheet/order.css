@@ -127,7 +127,8 @@ h3.title{
     width: 55%;
     height: 38px;
 }
-.orderOther .card {
+.orderOther .card-button {
+    height: 35px;
     overflow: hidden;
     zoom: 1;
 }

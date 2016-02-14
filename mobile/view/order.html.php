@@ -51,8 +51,8 @@
             </div>
         </div>
         <div class="orderOther"style="margin: 10px auto 0 auto">
-            <div class="card">
-
+            <div class="card-button">
+                优惠券
             </div>
         </div>
         <div class="ordertotal">
@@ -72,24 +72,25 @@
 include_once '../wechat/interfaceHandler.php';
 include_once '../wechat/card.php';
 $card=new card();
-$sign=$card->getSignPackage("CASH");
+$sign=$card->getSignPackage("DISCOUNT");
 ?>
 <script>
         wx.ready(function(){
-            wx.chooseCard({
+            $('.card-button').click(function(){
+                wx.chooseCard({
 //                shopId: '', // 门店Id
-                cardType: '<?php echo $sign['cardType']?>', // 卡券类型
+                    cardType: '<?php echo $sign['cardType']?>', // 卡券类型
 //                cardId: '', // 卡券Id
-                timestamp: <?php echo $sign['timestamp']?>, // 卡券签名时间戳
-                nonceStr: '<?php echo $sign['nonceStr']?>', // 卡券签名随机串
-                signType: 'SHA1', // 签名方式，默认'SHA1'
-                cardSign: '<?php echo $sign['cardSign']?>', // 卡券签名
-                success: function (res) {
-                    alert(res.cardList);
-                    var cardList= res.cardList; // 用户选中的卡券列表信息
-                }
+                    timestamp: <?php echo $sign['timestamp']?>, // 卡券签名时间戳
+                    nonceStr: '<?php echo $sign['nonceStr']?>', // 卡券签名随机串
+                    signType: 'SHA1', // 签名方式，默认'SHA1'
+                    cardSign: '<?php echo $sign['cardSign']?>', // 卡券签名
+                    success: function (res) {
+                        alert(res.cardList);
+                        var cardList= res.cardList; // 用户选中的卡券列表信息
+                    }
+                });
             });
-
         })
 
 </script>
