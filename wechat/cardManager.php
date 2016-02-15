@@ -44,9 +44,8 @@ function getCardCode($encryptCode,$check_consume=false){
     }else{
         return false;
     }
-
-
 }
+
 function getCardDetail($card_id){
     $sInterFace=new interfaceHandler(WEIXIN_ID);
     $inf=array('card_id'=>$card_id);

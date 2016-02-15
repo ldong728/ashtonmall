@@ -93,7 +93,8 @@ $sign=$card->getSignPackage("DISCOUNT CASH");
                     success: function (res) {
                         var cardList= res.cardList; // 用户选中的卡券列表信息
                         var cardInf=eval('('+cardList+')');
-                        $.post('ajax.php?chooseCard=1',cardInf[0],function(){
+                        $.post('ajax.php?chooseCard=1',cardInf[0],function(data){
+
 
                         });
                     }
