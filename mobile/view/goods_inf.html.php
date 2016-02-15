@@ -16,7 +16,9 @@
             <?php echo $cate['name'].' '.$cate['e_name']?>
         </div>
         </a>
-        <div class="h-slash"></div>
+        <div class="h-slash">
+
+        </div>
         <div class="baseInfo">
             <div class="pd_info">
                 <div class="swiper-container" id="cover_swiper">
