@@ -27,17 +27,19 @@ function encodeCard($encryptCode){
     $sInterFace=new interfaceHandler(WEIXIN_ID);
     $data=$sInterFace->postArrayByCurl('https://api.weixin.qq.com/card/code/decrypt?access_token=ACCESS_TOKEN',$encryptCode);
     return $data;
-
 }
-function getCardCode($encryptCode){
-    $code=array('code'=>$encryptCode);
+function getCardCode($encryptCode,$check_consume=false){
+    $code=array('encrypt_code'=>$encryptCode);
+
     $sInterFace=new interfaceHandler(WEIXIN_ID);
     $return=$sInterFace->postArrayByCurl('https://api.weixin.qq.com/card/code/decrypt?access_token=ACCESS_TOKEN',$code);
     $return=json_decode($return,true);
     if($return['errcode']==0){
-        $code=$return['code'];
-        $data=$sInterFace->postArrayByCurl('https://api.weixin.qq.com/card/code/consume?access_token=ACCESS_TOKEN',$code);
+        $code=array('code'=>$return['code']);
+        $code['check_consume']=$check_consume;
+        $data=$sInterFace->postArrayByCurl('https://api.weixin.qq.com/card/code/get?access_token=ACCESS_TOKEN',$code);
         $dataArray=json_decode($data,true);
+        $dataArray['card']['card_code']=$return['code'];
         return $dataArray;
     }else{
         return false;

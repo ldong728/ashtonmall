@@ -44,8 +44,8 @@ class card{
     }
     public function getSignPackage($cardType) {
         $cardapiTicket = $this->getCardApiTicket();
-        mylog('ticket: '.$cardapiTicket);
-        mylog('appid: '.$this->appId);
+//        mylog('ticket: '.$cardapiTicket);
+//        mylog('appid: '.$this->appId);
         $timestamp = time();
         $nonceStr = $this->createNonceStr();
 //        $appId= $this->appId;
@@ -55,7 +55,7 @@ class card{
         foreach ($list as $value) {
             $str.=$value;
         }
-        mylog($str);
+//        mylog($str);
         $cardSign=sha1($str);
 
         $signPackage = array(
@@ -64,7 +64,7 @@ class card{
             "cardSign"=>$cardSign,
             "cardType"=>$cardType
         );
-        mylog(getArrayInf($signPackage));
+//        mylog(getArrayInf($signPackage));
         return $signPackage;
     }
 

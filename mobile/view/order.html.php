@@ -50,7 +50,12 @@
                 <textarea rows="2"class="remark_field"></textarea>
             </div>
         </div>
-        <div class="orderOther"style="margin: 10px auto 0 auto">
+        <div class="orderOther">
+            <div class="card-detail">
+
+            </div>
+        </div>
+        <div class="orderOther card-button-container"style="margin: 10px auto 0 auto">
             <div class="card-button">
                 优惠券
             </div>
@@ -70,9 +75,9 @@
 
 <?php
 include_once '../wechat/interfaceHandler.php';
-include_once '../wechat/card.php';
+include_once '../wechat/cardsdk.php';
 $card=new card();
-$sign=$card->getSignPackage("DISCOUNT");
+$sign=$card->getSignPackage("DISCOUNT CASH");
 ?>
 <script>
         wx.ready(function(){
@@ -86,8 +91,11 @@ $sign=$card->getSignPackage("DISCOUNT");
                     signType: 'SHA1', // 签名方式，默认'SHA1'
                     cardSign: '<?php echo $sign['cardSign']?>', // 卡券签名
                     success: function (res) {
-                        alert(res.cardList);
                         var cardList= res.cardList; // 用户选中的卡券列表信息
+                        var cardInf=eval('('+cardList+')');
+                        $.post('ajax.php?chooseCard=1',cardInf[0],function(){
+
+                        });
                     }
                 });
             });

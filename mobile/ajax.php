@@ -194,3 +194,12 @@ if(isset($_POST['adFilter'])){
     echo json_encode($inf);
     exit;
 }
+if(isset($_GET['chooseCard'])){
+    mylog(getArrayInf($_POST));
+    $card_id=$_POST['card_id'];
+    $encrypt_code=$_POST['encrypt_code'];
+    include_once '../wechat/cardManager.php';
+
+
+    exit;
+}
