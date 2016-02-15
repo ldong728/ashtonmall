@@ -50,25 +50,24 @@
                 <textarea rows="2"class="remark_field"></textarea>
             </div>
         </div>
-        <div class="orderOther">
-            <div class="card-detail">
 
-            </div>
-        </div>
         <div class="orderOther card-button-container"style="margin: 10px auto 0 auto">
             <div class="card-button">
                 优惠券
+            </div>
+            <div class="card-content">
             </div>
         </div>
         <div class="ordertotal">
             <span class="realPay">实付款（含运费）：</span>
             <span class="payTotal">
-                <span class="cl_red">￥<?php echo $totalPrice?></span>
+                <span class="cl_red"id="totolfee">￥<?php echo $totalPrice?></span>
             </span>
         </div>
 
         <a class="orderSettle" id="orderConfirm"href="#">订单确认</a>
     </div>
+    <div class="toast"></div>
 </div>
 <?php include_once 'templates/jssdkIncluder.php'?>
 </body>
@@ -79,6 +78,11 @@ include_once '../wechat/cardsdk.php';
 $card=new card();
 $sign=$card->getSignPackage("DISCOUNT CASH");
 ?>
+<script>
+    var from ='<?php echo $from?>';
+    var addrId = <?php echo $addr['id']?>;
+    var totalPrice =<?php echo $totalPrice ?>;
+</script>
 <script>
         wx.ready(function(){
             $('.card-button').click(function(){
@@ -93,8 +97,14 @@ $sign=$card->getSignPackage("DISCOUNT CASH");
                     success: function (res) {
                         var cardList= res.cardList; // 用户选中的卡券列表信息
                         var cardInf=eval('('+cardList+')');
-                        $.post('ajax.php?chooseCard=1',cardInf[0],function(data){
-
+                        $.post('ajax.php?chooseCard=1',{card_id:cardInf[0].card_id,encrypt_code:cardInf[0].encrypt_code,totalPrice:totalPrice},function(data){
+                            $('.card_detail').empty();
+                            if(data<0){
+                                showToast('此券无法使用')
+                            }else{
+                                $('.card-detail').append('节省￥'+data);
+                                $('#totolfee').text('￥'+(totalPrice-data));
+                            }
 
                         });
                     }
@@ -104,10 +114,6 @@ $sign=$card->getSignPackage("DISCOUNT CASH");
 
 </script>
 
-<script>
-    var from ='<?php echo $from?>';
-    var addrId = <?php echo $addr['id']?>
-</script>
 <script>
     $('.ordersettle').click(function(){
         $.post('ajax.php',{userRemark:1,remark:$('.remark_field').val()},function(data){

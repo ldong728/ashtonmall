@@ -64,6 +64,7 @@
                     id="deliveryCompany"><?php echo $order_inf['express_name'] ?></span></div>
             <div class="express noDisplay">物流单号：<span id="deliveryCompany"><?php echo $order_inf['express_order'] ?>
             </div>
+            <div class="express noDisplay"><a href="http://m.kuaidi100.com/index_all.html?type=<?php echo $order_inf['express_id']?>&postid=<?php echo $inf['express_order']?>">点击查询物流</a></div>
         </div>
         <div class="order_ft">
                 <span class="order_amount">

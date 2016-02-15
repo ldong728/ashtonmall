@@ -45,6 +45,23 @@ function getCardCode($encryptCode,$check_consume=false){
         return false;
     }
 }
+function consumeCard($cardCode){
+    $sInterFace=new interfaceHandler(WEIXIN_ID);
+    $code=array('code'=>$cardCode);
+    $data=$sInterFace->postArrayByCurl('https://api.weixin.qq.com/card/code/get?access_token=ACCESS_TOKEN',$code);
+    $data=json_decode($data,true);
+    if($data['can_consume']==1){
+        $return=$sInterFace->postArrayByCurl('https://api.weixin.qq.com/card/code/consume?access_token=ACCESS_TOKEN',$code);
+        $return=json_decode($return,true);
+        if($return['errcode']==0){
+            return $return;
+        }else{
+            return false;
+        }
+    }else{
+        return false;
+    }
+}
 
 function getCardDetail($card_id){
     $sInterFace=new interfaceHandler(WEIXIN_ID);

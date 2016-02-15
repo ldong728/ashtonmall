@@ -5,13 +5,18 @@
     <link rel="stylesheet" href="stylesheet/goodinf-swiper.min.css"/>
     <link rel="stylesheet" href="stylesheet/myswiper.css"/>
     <script src="../js/swiper.min.js"></script>
-    <link rel="stylesheet" href="stylesheet/goods_inf.css"/>
+<!--    <link rel="stylesheet" href="stylesheet/goods_inf.css"/>-->
     <script src="../js/lazyload.js"></script>
 
 </head>
 <body>
 <div class="wrap">
     <div class="pDetail">
+        <a href="controller.php?getList=1&c_id=<?php echo $cate['id']?>"><div class="cate-name">
+            <?php echo $cate['name'].' '.$cate['e_name']?>
+        </div>
+        </a>
+        <div class="h-slash"></div>
         <div class="baseInfo">
             <div class="pd_info">
                 <div class="swiper-container" id="cover_swiper">
@@ -87,16 +92,25 @@
                 <!--                    <button class="part-add-cart">加入购物车</button>-->
                 <!--                </div>-->
             </div>
-            <div class="param module-box"style="height: 200px">
+            <div class="param module-box">
                 <div class="title">
                     <div class="line-number">2</div>
                     <div class="title-name">选择功能</div>
                 </div>
                 <div class="param-container">
+                    <dl>
+                        <dt>名称：</dt>
+                        <dd><?php echo $inf['name'] ?></dd>
+                    </dl>
+                    <dl>
+                        <dt>品牌：</dt>
+                        <dd>ashton/阿诗顿</dd>
+                    </dl>
                     <?php foreach ($parm[''] as $row): ?>
-                        <div class="param-box">
-                            <?php echo $row['name'] . ': ' . $row['value'] ?>
-                        </div>
+                        <dl style="float: left">
+                            <dt><?php echo $row['name']?>：</dt>
+                            <dd><?php echo $row['value']?></dd>
+                        </dl>
                     <?php endforeach ?>
                 </div>
 
@@ -153,7 +167,7 @@
             </div>
             <div class="module-box mult-content">
                 <video controls="controls" width="100%" height="auto">
-                    <!--                    <source src="../g_img/video/tumblr_nz519al7m31ulnjkb.mp4">-->
+                                        <source src="../g_img/video/<?php echo $inf['produce_id']?>.mp4">
                 </video>
             </div>
 

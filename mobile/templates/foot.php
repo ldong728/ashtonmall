@@ -22,7 +22,7 @@
     <a href="controller.php?customerInf=1"class="foot-cate-name">用户中心</a>
     <a href="#"class="foot-cate-name">我的订单</a>
     <a href="#"class="foot-cate-name">物流查询</a>
-    <a href="#"class="foot-cate-name">联系客服</a>
+    <a href="#"class="foot-cate-name .toKf">联系客服</a>
 </div>
 <script>
     $('.toKf').click(function(){

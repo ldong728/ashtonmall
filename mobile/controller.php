@@ -79,6 +79,7 @@ if (isset($_SESSION['customerId'])) {
     if (isset($_GET['orderConfirm'])) {
         $to = $_GET['from'];
         if (-1 != $_GET['addrId']) {
+
             $orderId = 'dy' . time() . rand(100, 999);  //订单号生成，低并发情况下适用
             if ('buy_now' == $to) {
                 if(isset($_SESSION['buyNow'])){
@@ -273,7 +274,7 @@ if (isset($_GET['getList'])) {
     }
     $cateName=pdoQuery('category_overview_view',null,array('id'=>$sc_id),' limit 1');
     $cateName=$cateName->fetch();
-    $partQuery=pdoQuery('user_parts_view',null,array('sc_id'=>$sc_id),null);
+    $partQuery=pdoQuery('user_parts_view',null,array('sc_id'=>$sc_id),'group by g_id');
     foreach ($partQuery as $row) {
         $partList[]=$row;
     }
@@ -334,12 +335,10 @@ if (isset($_GET['goodsdetail'])) {
         }
         $parts[] = $row;
     }
-//    $reviewQuery=pdoQuery('review_tbl',null,array('g_id'=>$_GET['g_id']),' order')
-//    mylog(getArrayInf($_SESSION));
+    $cate=pdoQuery('sub_category_tbl',null,array('id'=>$inf['sc_id']),' limit 1');
+    $cate=$cate->fetch();
     $reQuery=pdoQuery('sub_category_tbl',null,array('id'=>$inf['sc_id']),' limit 1');
     $remark=$reQuery->fetch();
-
-
     $review=getReview($_GET['g_id']);
     $parm = getGoodsPar($_GET['g_id'], $inf['sc_id']);
 

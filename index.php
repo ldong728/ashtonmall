@@ -7,7 +7,7 @@ session_start();
 
 if(isset($_GET['encrypt_code'])){
     $inf=getCardCode($_GET['encrypt_code']);
-    mylog(getArrayInf($inf));
+//    mylog(getArrayInf($inf));
     if($inf['can_consume']==1){
         $_SESSION['customerId']=$inf['openid'];
         $_SESSION['userInf'] = getUnionId($inf['openid']);

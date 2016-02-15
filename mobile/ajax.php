@@ -198,8 +198,38 @@ if(isset($_GET['chooseCard'])){
     mylog(getArrayInf($_POST));
     $card_id=$_POST['card_id'];
     $encrypt_code=$_POST['encrypt_code'];
+    $total_price=$_POST['totalPrice'];
     include_once '../wechat/cardManager.php';
+    $cardinf=getCardCode($encrypt_code);
+    $save=-1000;
+    if($cardinf['can_consume']==1) {
+        $data = getCardDetail($card_id);
+        $dataArray = json_decode($data, true);
+        $cardType = $dataArray['card']['card_type'];
 
+        switch ($cardType) {
+            case 'CASH': {
+                $least_cost = $dataArray['card']['cash']['least_cost'] / 100;
+                $reduce_cost = $dataArray['card']['cash']['reduce_cost'] / 100;
+                if ($total_price > $least_cost) {
+                    $save = $reduce_cost;
+//                    $price=$total_price-$reduce_cost;
+                } else {
+                    $save = -1000;
+                }
+                break;
+            }
+            case 'DISCOUNT': {
+                $discount = $dataArray['card']['discount']['discount'] / 100;
+                $save = $total_price * $discount;
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+    echo $save;
 
     exit;
 }
