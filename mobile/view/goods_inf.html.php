@@ -142,17 +142,17 @@
                         </select>
                     </div>
                 </div>
-                <div class="title" id="count-title">
-                    <div class="line-number">4</div>
-                    <div class="title-name">选择数量</div>
-                    <div class="countBox">
-                        <a class="minus number-button" id="minus">-</a>
-                        <input readonly="1" class="count" id="number" value="<?php echo $number ?>" maxlength="3"
-                               type="tel"/>
-                        <a class="plus number-button" id="plus">+</a>
-                    </div>
-                </div>
-                <div class="total-price">RMB <?php echo($price * $number) ?></div>
+<!--                <div class="title" id="count-title">-->
+<!--                    <div class="line-number">4</div>-->
+<!--                    <div class="title-name">选择数量</div>-->
+<!--                    <div class="countBox">-->
+<!--                        <a class="minus number-button" id="minus">-</a>-->
+<!--                        <input readonly="1" class="count" id="number" value="--><?php //echo $number ?><!--" maxlength="3"-->
+<!--                               type="tel"/>-->
+<!--                        <a class="plus number-button" id="plus">+</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="total-price">RMB --><?php //echo($price * $number) ?><!--</div>-->
 
             </div>
             <div class="module-box others">

@@ -12,7 +12,7 @@
         个人中心
     </a>
 </div>
-<div class="sub-menu foot-cate-sub"style="height: <?php echo $_SESSION['cate']['cateCount']*32?>px">
+<div class="sub-menu foot-cate-sub"style="height: <?php echo $_SESSION['cate']['cateCount']*45?>px">
     <?php foreach($_SESSION['cate']['cateName'] as $row):?>
         <a href="controller.php?getList=1&c_id=<?php echo $row['id']?>"class="foot-cate-name"><?php echo $row['sub_name']?></a>
 

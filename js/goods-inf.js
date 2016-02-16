@@ -106,10 +106,13 @@ $(document).on('click', '.check-box', function () {
     var price=$(this).prev('input').val();
     if (selected) {
         $(this).removeClass('checked');
+
+        showToast('-￥'+price);
         price=-price;
         //$('#num' + id).val(0)
     } else {
         $(this).addClass('checked');
+        showToast('+￥'+price);
         //$('#num' + id).val(1)
     }
     $.post('ajax.php', {changePart: 1, g_id: g_id, part_id: id, mode: selected, number: number}, function (data) {
