@@ -114,6 +114,10 @@
                             <dd><?php echo $row['value']?></dd>
                         </dl>
                     <?php endforeach ?>
+<!--                    <dl style="float: left">-->
+<!--                        <dt>a</dt>-->
+<!--                        <dd>b</dd>-->
+<!--                    </dl>-->
                 </div>
 
 

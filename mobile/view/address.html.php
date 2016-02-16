@@ -50,6 +50,7 @@
     </div>
     <div class="toast"></div>
     </div>
+<?php include_once 'templates/foot.php' ?>
 <?php include_once 'templates/foot.php'?>
 <script src="../js/ajaxcity.jquery.js"></script>
 <script>

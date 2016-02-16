@@ -58,6 +58,9 @@
         });
 
     })
+    $(document).scroll(function(){
+        $('.sub-menu').fadeOut('fast')
+    })
 
 </script>
 

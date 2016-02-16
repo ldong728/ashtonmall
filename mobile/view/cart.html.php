@@ -79,8 +79,9 @@
                 </div>
             </div>
         </div>
-        <?php include_once 'templates/foot.php'?>
+
     </div>
+    <?php include_once 'templates/foot.php'?>
 <script>
     $(document).ready(function(){
 //        flushPrice();
