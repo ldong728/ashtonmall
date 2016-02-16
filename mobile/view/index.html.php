@@ -116,8 +116,9 @@
 
     <div class="toast"></div>
 
-    <?php include_once 'templates/foot.php' ?>
+
 </div>
+<?php include_once 'templates/foot.php' ?>
 <script>
     var swiper = new Swiper('#ad-swiper', {
         pagination: '#ad-pagination',
