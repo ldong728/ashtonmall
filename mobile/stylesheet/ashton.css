@@ -118,7 +118,7 @@ div.foot-user-sub {
     bottom: 50px;
     left: 75%;
     width: 25%;
-    height: 128px;
+    height: 170px;
     z-index: 1200;
 }
 
@@ -153,17 +153,23 @@ a.foot-cate-name {
     left: 4px;
     top: 3px;
 }
-
-.search-container a.search-button {
-    font-family: "microsoft yahei";
+.search-container .button-container {
+    width: 24%;
+    height:30px;
     position: absolute;
-    top: 6px;
-    right: 12px;
+    right: 0;
+    top:6px;
+}
+.search-container .button-container a.search-button {
+    display: block;
+    text-align: center;
+    font-family: "microsoft yahei";
+    margin: 0 auto 0 auto;
     display: block;
     font-size: 16px;
     font-weight: 500;
     line-height: 18px;
-    height: 100%;
+    height: 24px;
 
 }
 

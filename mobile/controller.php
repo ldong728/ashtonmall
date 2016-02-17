@@ -335,15 +335,34 @@ if (isset($_GET['goodsdetail'])) {
         }
         $parts[] = $row;
     }
-    $cate=pdoQuery('sub_category_tbl',null,array('id'=>$inf['sc_id']),' limit 1');
-    $cate=$cate->fetch();
+//    $cate=pdoQuery('sub_category_tbl',null,array('id'=>$inf['sc_id']),' limit 1');
+//    $cate=$cate->fetch();
     $reQuery=pdoQuery('sub_category_tbl',null,array('id'=>$inf['sc_id']),' limit 1');
     $remark=$reQuery->fetch();
+    $cate=$remark;
     $review=getReview($_GET['g_id']);
     $parm = getGoodsPar($_GET['g_id'], $inf['sc_id']);
 
 
     include 'view/goods_inf.html.php';
+    exit;
+}
+if (isset($_GET['partsdetail'])) {
+    unset($_SESSION['buyNow']);
+    if ($_GET['g_id'] == null) {
+        header('location:index.php');
+        exit;
+    }
+    $query = pdoQuery('user_parts_view', null, array('g_id' => $_GET['g_id']), ' limit 1');
+    $inf = $query->fetch();
+    $imgQuery[] = $inf;
+    $_SESSION['buyNow']['partsList'] = array();
+    $reQuery=pdoQuery('sub_category_tbl',null,array('id'=>$inf['sc_id']),' limit 1');
+    $remark=$reQuery->fetch();
+    $cate=$remark;
+    $number=1;
+    $review=getReview($_GET['g_id']);
+    include 'view/part_inf.html.php';
     exit;
 }
 

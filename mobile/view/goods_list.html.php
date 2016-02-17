@@ -31,6 +31,7 @@
     </div>
     <div class="part-list-container">
         <?php foreach ($partList as $row): ?>
+        <a class="buy"href="controller.php?partsdetail=1&g_id=<?php echo $row['g_id'] ?>">
             <div class="part-list-box">
                 <img class="part-img" src="../<?php echo $row['url'] ?>"/>
 
@@ -41,6 +42,7 @@
                 </div>
 
             </div>
+            </a>
         <?php endforeach ?>
 
     </div>

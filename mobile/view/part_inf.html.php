@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="stylesheet/goodinf-swiper.min.css"/>
     <link rel="stylesheet" href="stylesheet/myswiper.css"/>
     <script src="../js/swiper.min.js"></script>
-<!--    <link rel="stylesheet" href="stylesheet/goods_inf.css"/>-->
+    <!--    <link rel="stylesheet" href="stylesheet/goods_inf.css"/>-->
     <script src="../js/lazyload.js"></script>
 
 </head>
@@ -13,8 +13,8 @@
 <div class="wrap">
     <div class="pDetail">
         <a href="controller.php?getList=1&c_id=<?php echo $cate['id']?>"><div class="cate-name">
-            <?php echo $cate['name'].' '.$cate['e_name']?>
-        </div>
+                <?php echo $cate['name'].' '.$cate['e_name']?>
+            </div>
         </a>
         <div class="h-slash">
 
@@ -39,7 +39,6 @@
                         autoplay: 5000,
                         lazyLoading: true,
                         loop: true
-
                     });
                 </script>
                 <div class="pName">
@@ -63,21 +62,21 @@
                     </div>
 
                     <div class="price">
-                        RMB <?php echo $price = ((isset($default['price'])) ? $default['price'] : $default['sale']) ?>
+                        RMB <?php echo $inf['sale'] ?>
                     </div>
                 </div>
             </div>
             <div class="part module-box">
                 <div class="title">
                     <div class="line-number"> 1</div>
-                    <div class="title-name">选择套餐:</div>
+                    <div class="title-name">适用机型:</div>
 
                 </div>
                 <div class="scroll-box">
                     <div class="part-box">
                         <?php foreach ($parts as $r): ?>
                             <div class="partInf">
-                                <img class="part-img" src="../<?php echo $r['url'] ?>"/>
+                                <img class="part-img" src="..8/<?php echo $r['url'] ?>"/>
                                 <input type="hidden" value="<?php echo $r['sale'] ?>"/>
 
                                 <div class="check-box <?php echo $r['dft'] ?>" id="part<?php echo $r['g_id'] ?>"></div>
@@ -108,51 +107,23 @@
                         <dt>品牌：</dt>
                         <dd>ashton/阿诗顿</dd>
                     </dl>
-                    <?php foreach ($parm[''] as $row): ?>
-                        <dl style="float: left">
-                            <dt><?php echo $row['name']?>：</dt>
-                            <dd><?php echo $row['value']?></dd>
-                        </dl>
-                    <?php endforeach ?>
-<!--                    <dl style="float: left">-->
-<!--                        <dt>a</dt>-->
-<!--                        <dd>b</dd>-->
-<!--                    </dl>-->
                 </div>
 
 
             </div>
 
             <div class="detail module-box">
-                <div class="title" id="cate-title">
-                    <div class="line-number">3</div>
-                    <div class="title-name">选择颜色</div>
-                    <div class="select">
-                        <div class="background"></div>
 
-                        <div id="select-display"><?php echo $default['category'] ?></div>
-                        <select id="category-select">
-                            <option id="<?php echo $default['d_id'] ?>" value="<?php echo $default['d_id'] ?>"
-                                    selected="selected">
-                                <?php echo $default['category'] ?></option>
-                            <?php foreach ($detailQuery as $default): ?>
-                                <option id="<?php echo $default['d_id'] ?>" value="<?php echo $default['d_id'] ?>">
-                                    <?php echo $default['category'] ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="title" id="count-title">
-                    <div class="line-number">4</div>
-                    <div class="title-name">选择数量</div>
-                    <div class="countBox">
-                        <a class="minus number-button" id="minus">-</a>
-                        <input readonly="1" class="count" id="number" value="<?php echo $number ?>" maxlength="3"
-                               type="tel"/>
-                        <a class="plus number-button" id="plus">+</a>
-                    </div>
-                </div>
-<!--                <div class="total-price">RMB --><?php //echo($price * $number) ?><!--</div>-->
+                                <div class="title" id="count-title">
+                                    <div class="line-number">4</div>
+                                    <div class="title-name">选择数量</div>
+                                    <div class="countBox">
+                                        <a class="minus number-button" id="minus">-</a>
+                                        <input readonly="1" class="count" id="number" value="<?php echo $number ?>" maxlength="3"
+                                               type="tel"/>
+                                        <a class="plus number-button" id="plus">+</a>
+                                    </div>
+                                </div>
 
             </div>
             <div class="module-box others">
@@ -173,7 +144,7 @@
             </div>
             <div class="module-box mult-content">
                 <video controls="controls" width="100%" height="auto">
-                                        <source src="../g_img/video/<?php echo $inf['produce_id']?>.mp4">
+                    <source src="../g_img/video/<?php echo $inf['produce_id']?>.mp4">
                 </video>
             </div>
 
@@ -199,8 +170,8 @@
 </div>
 <script>
     var g_id =<?php echo $inf['g_id']?>;
-    var d_id = $('#category-select option:selected').val();
-    var realPrice =<?php echo (isset($default['price'])? $default['price'] : $default['sale'])?>;//保存在js中的价格
+    var d_id = <?php echo $inf['d_id']?>;
+    var realPrice =<?php echo $inf['sale']?>;//保存在js中的价格
     var number = parseInt($('#number').val());
     var parts = new Array();
 </script>

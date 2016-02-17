@@ -11,8 +11,9 @@
         <input type="text" class="search-box"/>
 
         <div type="button" class="icon-button"></div>
-
-        <a class="search-button">搜索商品</a>
+        <div class="button-container">
+            <a class="search-button">搜索商品</a>
+        </div>
     </div>
 
     <div class="swiper-container" id="ad-swiper">
@@ -30,34 +31,33 @@
     </div>
     <div class="hot-sale-container">
         <?php foreach ($promotion as $row): ?>
-        <div class="hot-sale-box">
-            <div class="hot-sale-blank"></div>
-            <div class="hot-sale-content">
+            <div class="hot-sale-box">
                 <div class="hot-sale-blank"></div>
-                <div class="hot-sale-name">
-                    <?php echo $row['name'] ?>
-                </div>
-                <div class="hot-sale-intro">
-                    <?php echo $row['intro'] ?>
-                </div>
-                <div class="hot-sale-price">
-                    RMB:<?php echo $row['price'] ?>
-                    <a href="controller.php?goodsdetail=1&g_id=<?php echo $row['id'] ?>" class="hot-sale-buy">
+                <div class="hot-sale-content">
+                    <div class="hot-sale-blank"></div>
+                    <div class="hot-sale-name">
+                        <?php echo $row['name'] ?>
+                    </div>
+                    <div class="hot-sale-intro">
+                        <?php echo $row['intro'] ?>
+                    </div>
+                    <div class="hot-sale-price">
+                        RMB:<?php echo $row['price'] ?>
+                        <a href="controller.php?goodsdetail=1&g_id=<?php echo $row['id'] ?>" class="hot-sale-buy">
 
 
-                    </a>
+                        </a>
+
+                    </div>
 
                 </div>
+                <div class="hot-sale-image">
+                    <img src="../<?php echo $row['url'] ?>"/>
+
+                </div>
+
 
             </div>
-            <div class="hot-sale-image">
-                <img src="../<?php echo $row['url'] ?>"/>
-
-            </div>
-
-
-
-        </div>
         <?php endforeach ?>
     </div>
 
@@ -81,7 +81,7 @@
                     快递包邮
                 </div>
                 <div class="remark">
-                   本店所有快递均由快递进行配送（特殊活动商品除外）。港澳台及海外地区不支持配送
+                    本店所有快递均由快递进行配送（特殊活动商品除外）。港澳台及海外地区不支持配送
                 </div>
             </div>
 
@@ -93,7 +93,7 @@
                     无忧售后
                 </div>
                 <div class="remark">
-                   产品一年保修，7天无理由退货，30天质量问题无忧换货
+                    产品一年保修，7天无理由退货，30天质量问题无忧换货
                 </div>
             </div>
 
