@@ -105,7 +105,6 @@ $sign=$card->getSignPackage("DISCOUNT CASH");
                                 $('.card-detail').append('节省￥'+data);
                                 $('#totolfee').text('￥'+(totalPrice-data));
                             }
-
                         });
                     }
                 });

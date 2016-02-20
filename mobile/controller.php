@@ -268,7 +268,7 @@ if (isset($_GET['oauth'])) {
 //获取主分类
 if (isset($_GET['getList'])) {
     $sc_id = $_GET['c_id'];
-    $query=pdoQuery('user_g_inf_view',null,array('sc_id'=>$sc_id),null);
+    $query=pdoQuery('user_g_inf_view',null,array('sc_id'=>$sc_id,'situation'=>'1'),null);
     foreach ($query as $row) {
         $list[]=$row;
     }
@@ -358,6 +358,12 @@ if (isset($_GET['partsdetail'])) {
     $imgQuery[] = $inf;
     $_SESSION['buyNow']['partsList'] = array();
     $reQuery=pdoQuery('sub_category_tbl',null,array('id'=>$inf['sc_id']),' limit 1');
+    $hostQuery=pdoQuery('part_tbl',array('g_id'),array('part_g_id'=>$inf['g_id']),' limit 10');
+    foreach ($hostQuery as $row) {
+        $host[]=$row['g_id'];
+    }
+    $hostlist=pdoQuery('user_g_inf_view',null,array('g_id'=>$host),null);
+
     $remark=$reQuery->fetch();
     $cate=$remark;
     $number=1;
@@ -456,7 +462,7 @@ function getCartDetail($customerId)
             $totalPrice += $row['part_sale'] * $row['part_number'];
 //            mylog(getArrayInf($goodsList[$row['cart_id']]['parts']));
         } else {
-//            $goodsList[$row['cart_id']]['parts']=array();
+            $goodsList[$row['cart_id']]['parts']=array();
         }
 
     }
@@ -503,6 +509,7 @@ function getBuyNowDetail($d_id, $number, array $partsList)
         );
         $goodsList[0]['total'] += $prow['sale'] * $number;
     }
+    if(!isset($goodsList[0]['parts']))$goodsList[0]['parts']=array();
     return array(
         'totalPrice' => $goodsList[0]['total'],
         'totalSave' => 0,

@@ -1,6 +1,5 @@
 <script>
     $(document).ready(function () {
-//        $('#temp').append('hahahaha');
         reflashPromotion('all');
         $(".filter").change(function () {
 //            $('#temp').append('hahahaha');
@@ -79,7 +78,6 @@
                     +'<a href="consle.php?delete_promotions=1&d_id='+value['d_id']+'">删除促销</a></div><div class="css_td">'
                     +'<a class="pro-img-upload"id="img'+value.id+'"><img class="pro-img" src="../'+ value.img+'"alt="点击添加图片"></a><input type="file"class="pro-img-up"id="pro-img-up'+value.id+'"name="pro-img-up'+value.id+'"style="display: none"></div></div>'
                 );
-
             });
         });
 

@@ -27,6 +27,7 @@ if (isset($_SESSION['login'])) {
         exit;
     }
     if (isset($_GET['promotions'])) {
+
         printView('admin/view/promotions.html.php', '促销设置');
         exit;
     }

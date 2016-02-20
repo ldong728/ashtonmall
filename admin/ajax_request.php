@@ -208,7 +208,6 @@ if(isset($_SESSION['login'])) {
                 'end_time' => date("Y-m-d\TH:i:s", strtotime($row['end_time'])),
                 'img'=>$row['img']
             );
-
         }
         $json = json_encode($date);
 //    mylog($json);

@@ -84,8 +84,6 @@ if (isset($_SESSION['login'])) {
         $query = pdoQuery('promotions_tbl', null, array('d_id' => $_GET['d_id']), ' limit 1');
         $row = $query->fetch();
         unlink('../' . $row['img']);
-//        $str = 'delete from promotions_tbl where d_id=' . $_GET['d_id'];
-//        exeNew($str);
         pdoDelete('promotions_tbl', array('d_id' => $_GET['d_id']));
         header('location: index.php?promotions=1');
         exit;

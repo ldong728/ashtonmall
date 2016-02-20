@@ -13,7 +13,7 @@
 <div class="wrap">
     <div class="pDetail">
         <a href="controller.php?getList=1&c_id=<?php echo $cate['id']?>"><div class="cate-name">
-                <?php echo $cate['name'].' '.$cate['e_name']?>
+                <?php echo $cate['name'].' '.$cate['e_name']?> 配件
             </div>
         </a>
         <div class="h-slash">
@@ -48,18 +48,18 @@
                     立即订购并获得免费送货服务，订购数量有限
                 </div>
                 <div class="p-remark">
-                    <div class="p-remark-content">
-                        认证企业
-                    </div>
-                    <div class="p-remark-content">
-                        免运费
-                    </div>
-                    <div class="p-remark-content">
-                        销量18件
-                    </div>
-                    <div class="p-remark-content">
-                        库存96件
-                    </div>
+<!--                    <div class="p-remark-content">-->
+<!--                        认证企业-->
+<!--                    </div>-->
+<!--                    <div class="p-remark-content">-->
+<!--                        免运费-->
+<!--                    </div>-->
+<!--                    <div class="p-remark-content">-->
+<!--                        销量18件-->
+<!--                    </div>-->
+<!--                    <div class="p-remark-content">-->
+<!--                        库存96件-->
+<!--                    </div>-->
 
                     <div class="price">
                         RMB <?php echo $inf['sale'] ?>
@@ -74,17 +74,17 @@
                 </div>
                 <div class="scroll-box">
                     <div class="part-box">
-                        <?php foreach ($parts as $r): ?>
+                        <?php foreach ($hostlist as $r): ?>
+                        <a href="controller.php?goodsdetail=1&g_id=<?php echo $r['g_id'] ?>" >
                             <div class="partInf">
-                                <img class="part-img" src="..8/<?php echo $r['url'] ?>"/>
+                                <img class="part-img" src="../<?php echo $r['url'] ?>"/>
                                 <input type="hidden" value="<?php echo $r['sale'] ?>"/>
 
-                                <div class="check-box <?php echo $r['dft'] ?>" id="part<?php echo $r['g_id'] ?>"></div>
                                 <div class="part-name">
-                                    <?php echo $r['name'] ?>
+                                    <?php echo $r['produce_id'] ?>
                                 </div>
                             </div>
-                            <?php if ($r['dft'] == 'checked')$price += $r['sale'] ?>
+                            </a>
                         <?php endforeach ?>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
             <div class="param module-box">
                 <div class="title">
                     <div class="line-number">2</div>
-                    <div class="title-name">选择功能</div>
+                    <div class="title-name">参数</div>
                 </div>
                 <div class="param-container">
                     <dl>
@@ -115,7 +115,7 @@
             <div class="detail module-box">
 
                                 <div class="title" id="count-title">
-                                    <div class="line-number">4</div>
+                                        <div class="line-number">3</div>
                                     <div class="title-name">选择数量</div>
                                     <div class="countBox">
                                         <a class="minus number-button" id="minus">-</a>
@@ -125,27 +125,6 @@
                                     </div>
                                 </div>
 
-            </div>
-            <div class="module-box others">
-                <div class="others-nav">
-                    <div class="others-content">
-                        <a href="#">看详情</a>
-                    </div>
-                    <div class="others-content">
-                        <a href="#">看评价</a></div>
-                    <div class="others-content">
-                        <a href="#">拼价格</a></div>
-                    <div class="others-content">
-                        <a href="#">晒颜值</a></div>
-
-                    <div class="others-content">
-                        <a href="#">分销加盟</a></div>
-                </div>
-            </div>
-            <div class="module-box mult-content">
-                <video controls="controls" width="100%" height="auto">
-                    <source src="../g_img/video/<?php echo $inf['produce_id']?>.mp4">
-                </video>
             </div>
 
         </div>

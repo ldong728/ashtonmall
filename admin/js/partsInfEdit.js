@@ -54,9 +54,6 @@ $(document).on('change','#parts-img-up',function(){
         fileElementId: $(this).attr('id'), //文件上传域的ID
         dataType: 'json', //返回值类型 一般设置为json
         success: function (v, status){
-            alert('OK');
-            //var random=parseInt((Math.random()*1000));
-            //alert(random);
             var random=123;
             var isCheck = (1 == v.front_cover ? 'checked = true' : '');
             var content ='<img class="demo" src= "../' + v.url +'" alt = "error" />';

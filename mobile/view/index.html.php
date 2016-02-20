@@ -43,12 +43,13 @@
                     </div>
                     <div class="hot-sale-price">
                         RMB:<?php echo $row['price'] ?>
-                        <a href="controller.php?goodsdetail=1&g_id=<?php echo $row['id'] ?>" class="hot-sale-buy">
 
-
-                        </a>
 
                     </div>
+                    <a href="controller.php?goodsdetail=1&g_id=<?php echo $row['id'] ?>" class="hot-sale-buy">
+
+
+                    </a>
 
                 </div>
                 <div class="hot-sale-image">

@@ -58,9 +58,6 @@
                     <div class="p-remark-content">
                         销量18件
                     </div>
-                    <div class="p-remark-content">
-                        库存96件
-                    </div>
 
                     <div class="price">
                         RMB <?php echo $price = ((isset($default['price'])) ? $default['price'] : $default['sale']) ?>
@@ -119,8 +116,6 @@
 <!--                        <dd>b</dd>-->
 <!--                    </dl>-->
                 </div>
-
-
             </div>
 
             <div class="detail module-box">

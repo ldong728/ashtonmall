@@ -75,10 +75,10 @@ if(isset($_SESSION['login'])) {
 //            mylog('success');
             $temp=pdoQuery('g_image_tbl',null,array('g_id'=>$_GET['g_id']),'limit 1');
             if(!$row=$temp->fetch()){
-                pdoInsert('g_image_tbl', array('g_id' => $_GET['g_id'], 'url' => $inf['url'], 'remark' => $inf['md5']), 'ignore');
+                pdoInsert('g_image_tbl', array('g_id' => $_GET['g_id'], 'url' => $inf['url'], 'remark' => $inf['md5'],'front_cover'=>'1'), 'ignore');
 //                mylog("create record");
             }else{
-                pdoUpdate('g_image_tbl',array('remark'=>$inf['md5'],'url'=>$inf['url']),array('g_id'=>$_GET['g_id']));
+                pdoUpdate('g_image_tbl',array('remark'=>$inf['md5'],'url'=>$inf['url'],'front_cover'=>'1'),array('g_id'=>$_GET['g_id']));
                 $query=pdoQuery('image_view',null,array('remark'=>$row['remark']), ' limit 1');
                 if(!$t=$query->fetch()){
                     unlink('../'.$row['url']);

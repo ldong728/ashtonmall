@@ -169,6 +169,7 @@ if(isset($_POST['addToCart'])){
                 'update');
             $value=array();
             foreach ($_SESSION['buyNow']['partsList'] as $k=>$v) {
+                mylog($k.' :'.$v);
                 $value[]=array('cart_id'=>$cartId,'part_id'=>$k,'part_number'=>$_POST['number']);
             }
             pdoBatchInsert('part_cart_tbl',$value);

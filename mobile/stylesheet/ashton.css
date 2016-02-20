@@ -198,6 +198,7 @@ a.foot-cate-name {
     min-height: 100px;
     max-height: 200px;
     border-bottom: solid 1px #ccc;
+    padding-bottom: 20px;
     /*background-color: #007aff;*/
 }
 
@@ -218,8 +219,8 @@ a.foot-cate-name {
     margin: 5px auto 5px auto;
     width: 95%;
     min-height: 16px;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     line-height: 16px;
     /*background-color: #00415e;*/
 }
@@ -231,7 +232,7 @@ a.foot-cate-name {
 }
 
 .hot-sale-container .hot-sale-box .hot-sale-content .hot-sale-price {
-    margin: 5px auto 5px auto;
+    margin: 5px auto 10px auto;
     width: 95%;
     font-weight: 600;
     line-height: 16px;
@@ -240,10 +241,10 @@ a.foot-cate-name {
 .hot-sale-container .hot-sale-box .hot-sale-content a.hot-sale-buy {
     display: block;
     margin: 0px auto 5px 2.5%;
-    width: 45px;
-    height: 25px;
+    width: 60px;
+    height: 28px;
     background-image: url(images/buy-button.png);
-    background-size: 45px 25px;
+    background-size: 60px 28px;
     background-repeat: no-repeat;
 }
 
@@ -265,6 +266,7 @@ a.foot-cate-name {
 }
 
 .remark-container {
+    margin: 20px 0 50px 0;
     width: 100%;
     height: 200px;
     /*background-color: #00415e;*/
@@ -301,7 +303,7 @@ a.foot-cate-name {
 }
 
 .remark-container .remark-box .remark-content .remark {
-    font-size: 11px;
+    font-size: 2.5vw;
 }
 
 .foot-blank {
@@ -462,6 +464,7 @@ div .module-box {
     width: 100%;
     border-bottom: solid 1px #ccc;
     max-height: 300px;
+    padding: 6px 0 10px 0;
     /*margin-top: 1.5vh;*/
 }
 
@@ -480,6 +483,7 @@ div .module-box {
     background-color: #fff;
     box-shadow: 0 1px 1px #dcdcdc;
     border-bottom: solid 1px #ccc;
+    padding-bottom: 10px;
 }
 
 .baseInfo .pd_info .pName {
@@ -538,23 +542,23 @@ div .module-box {
 }
 
 .module-box #count-title {
-    margin: 15px auto;
+    margin: 25px auto;
 }
 
 .module-box #cate-title {
-    margin: 15px auto;
+    margin: 8px auto 25px auto;
 }
 
 .module-box .select {
     position: relative;
-    top:-4px;
+    top:-2px;
     overflow: hidden;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 80px;
-    height: 28px;
-    line-height: 28px;
+    height: 24px;
+    line-height: 24px;
     text-decoration: none;
     margin-left: 20px;
     padding-left: 5px;
@@ -565,21 +569,20 @@ div .module-box {
 }
 
 .module-box .select #select-display {
-    height: 28px;
-    line-height: 28px;
+    height: 24px;
+    line-height: 24px;
 }
 
 .module-box .select .background {
     /*position: absolute;*/
     /*right:px*/
     float: right;
-
     background: url(images/selectDown.png) no-repeat;
     background-position: 5px 7px;
-    background-size: 10px 10px;
+    background-size: 8px 8px;
     background-color: #ccc;
     width: 20px;
-    height: 28px;
+    height: 24px;
 
 }
 
@@ -607,36 +610,37 @@ div .module-box {
     height: 20px;
     font-size: 16px;
     line-height: 18px;
-    margin: 8px auto 5px auto;
+    margin: 8px auto 0 auto;
 }
 
 .module-box .title .line-number {
     float: left;
     margin: 1px 6px 6px 0;
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     border: solid 1px #ccc;
-    border-radius: 10px;
-    font-size: 12px;
-    line-height: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 15px;
     text-align: center;
 }
 
 .module-box .title .title-name {
     float: left;
     height: 20px;
-    font-size: 16px;
+    font-size: 17px;
     line-height: 20px;
 }
 
 .pDetail .baseInfo .part .scroll-box {
+    /*float: left;*/
     height: 110px;
     overflow-x: scroll;
 }
 
 .pDetail .baseInfo .part .part-box {
     width: 200%;
-    margin-left: 5%;
+    /*margin-left: 5%;*/
     height: 110px;
     /*padding-bottom: 8px;*/
     /*overflow-x: visible;*/
@@ -685,10 +689,12 @@ div .module-box {
 }
 
 .countBox {
+    position: relative;
+    top:-2px;
     margin-left: 20px;
     float: left;
     display: inline-block;
-    line-height: 28px;
+    line-height: 24px;
     text-align: right;
     width: 80px;
     color: #999;
@@ -696,13 +702,14 @@ div .module-box {
 }
 
 .countBox .minus {
+    box-sizing: border-box;
     background-color: #e1e1e1;
     text-decoration: none;
     border: 1px solid #e3e3e3;
     font-size: 20px;
-    line-height: 28px;
+    line-height: 22px;
     width: 25px;
-    height: 28px;
+    height: 24px;
     text-align: center;
     display: inline-block;
     float: left;
@@ -712,13 +719,14 @@ div .module-box {
 }
 
 .countBox .plus {
+    box-sizing: border-box;
     background-color: #e1e1e1;
     text-decoration: none;
     border: 1px solid #e3e3e3;
     font-size: 20px;
-    line-height: 28px;
+    line-height: 22px;
     width: 25px;
-    height: 28px;
+    height: 24px;
     text-align: center;
     display: inline-block;
     float: left;
@@ -731,9 +739,9 @@ div .module-box {
     border: none;
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
-    line-height: 28px;
-    height: 28px;
-    width: 25px;
+    line-height: 24px;
+    height: 24px;
+    width: 30px;
     text-align: center;
     display: inline-block;
     float: left;
@@ -757,11 +765,11 @@ div.total-price {
 }
 
 .param .param-container {
-    /*overflow: hidden;*/
-    /*zoom:1;*/
+    /*box-sizing: content-box;*/
+    font-size: 15px;
     float: left;
-    width: 90%;
-    margin: 5px 5%;
+    width: 90vw;
+    margin:0 auto 5px 22px;
     min-height: 30px;
 }
 
@@ -786,7 +794,7 @@ div.total-price {
     float: left;
     color: #999;
     line-height: 18px;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .pDetail dl dd a {
@@ -909,7 +917,7 @@ div.total-price {
 
 /*详情*/
 .others {
-    height: 30px;
+    height:40px;
 }
 
 .others .others-nav {
