@@ -12,6 +12,7 @@
     </div>
     <div>
         <h5>订单号：<?php echo $orderId?></h5>
+        <h5>总金额：￥<?php $total_fee ?></h5>
         <h6>订单状态：<?php echo getOrderStu($orderStu)?></h6>
     </div>
     <a class="orderSettle" id="wxpay"href="#">微信支付</a>
@@ -24,18 +25,14 @@
 <script>
     var order_id='<?php echo $orderId?>';
     $('#wxpay').click(function(){
-//        alert('send pre pay')
         $.post('pay.php',{prePay:1,order_id:order_id},function(data){
             if('ok'==data){
                 window.location.href='controller.php?preOrderOK=1';
             }
 
         });
-//        alert('please wait');
     });
-
     $('#alipay').click(function(){
-//        alert('jump');
         window.location.href='controller.php?toalipay=1&orderId='+order_id
     });
 </script>

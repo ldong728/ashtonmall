@@ -136,6 +136,17 @@ if (isset($_SESSION['customerId'])) {
                 header('location:index.php');
                 exit;
             }
+            if($_GET['card']!='none'){
+                $savefeeQuery=pdoQuery('card_record_tbl',null,array('card_code'=>$_GET['card'],'consumed'=>'0'),' limi 1');
+                if($save=$savefeeQuery->fetch()){
+                    include_once '../wechat/cardManager.php';
+                    if(consumeCard($_GET['card'])!=false){
+                        $total_fee-=$save['fee'];
+                        pdoUpdate('card_record_tbl',array('order_id'=>$orderId,'consumed'=>'1'),array('card_code'=>$_GET['card']));
+                    }
+                }
+            }
+
             pdoInsert('order_tbl', array('id' => $orderId, 'c_id' => $_SESSION['customerId'], 'a_id' => $_GET['addrId'], 'total_fee' => $total_fee,'customer_remark'=>$_SESSION['customer_remark']));
             pdoBatchInsert('order_detail_tbl', $readyInsert);
             if ('buy_now' == $to) {
@@ -153,6 +164,7 @@ if (isset($_SESSION['customerId'])) {
     if(isset($_GET['pay_order'])){
         $orderId=$_GET['order_id'];
         $orderStu=$_GET['order_stu'];
+        $total_fee=$_GET['total_fee'];
         include 'view/order_inf.html.php';
         exit;
     }

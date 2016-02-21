@@ -84,6 +84,9 @@ $sign=$card->getSignPackage("DISCOUNT CASH");
     var totalPrice =<?php echo $totalPrice ?>;
 </script>
 <script>
+    var cardId=null;
+    var cardCode='none';
+    var save=0;
         wx.ready(function(){
             $('.card-button').click(function(){
                 wx.chooseCard({
@@ -98,12 +101,17 @@ $sign=$card->getSignPackage("DISCOUNT CASH");
                         var cardList= res.cardList; // 用户选中的卡券列表信息
                         var cardInf=eval('('+cardList+')');
                         $.post('ajax.php?chooseCard=1',{card_id:cardInf[0].card_id,encrypt_code:cardInf[0].encrypt_code,totalPrice:totalPrice},function(data){
+                            data=eval('('+data+')');
                             $('.card_detail').empty();
-                            if(data<0){
+                            if(data.save.save<0){
                                 showToast('此券无法使用')
                             }else{
-                                $('.card-detail').append('节省￥'+data);
-                                $('#totolfee').text('￥'+(totalPrice-data));
+                                $('.card-detail').append('节省￥'+data.save);
+                                showToast('已为您节省'+data.save+'元')
+                                $('#totolfee').text('￥'+(totalPrice-data.save));
+//                                var cardId=null
+                                cardId=data.cardId;
+                                cardCode=data.cardCode;
                             }
                         });
                     }
@@ -116,7 +124,7 @@ $sign=$card->getSignPackage("DISCOUNT CASH");
 <script>
     $('.ordersettle').click(function(){
         $.post('ajax.php',{userRemark:1,remark:$('.remark_field').val()},function(data){
-            window.location.href='controller.php?orderConfirm=1&addrId='+addrId+'&from='+from;
+            window.location.href='controller.php?orderConfirm=1&addrId='+addrId+'&from='+from+'&card='+cardCode;
         })
     });
 </script>

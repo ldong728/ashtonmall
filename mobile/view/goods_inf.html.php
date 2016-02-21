@@ -56,7 +56,7 @@
                         免运费
                     </div>
                     <div class="p-remark-content">
-                        销量18件
+                        销量<?php echo $review['num']?>件
                     </div>
 
                     <div class="price">

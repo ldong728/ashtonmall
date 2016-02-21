@@ -22,7 +22,7 @@
     wx.ready(function(){
         wx.hideOptionMenu();
         wx.chooseWXPay({
-            timestamp: <?php echo $preSign['timeStamp']?>,//这里是timestamp 要小写，妈的
+            timestamp: <?php echo $preSign['timeStamp']?>,//这里是timestamp 键中的字母s要小写，妈的
             nonceStr: '<?php echo $preSign['nonceStr']?>',
             package: '<?php echo $preSign['package']?>',
             signType: '<?php echo $preSign['signType']?>',
@@ -34,8 +34,9 @@
                     $('.stu').append('支付成功');
                     $('.orderSettle').show();
                 }else{
-                    alert('false:'+res.err_msg);
+//                    alert('false:'+res.err_msg);
                 }
+                window.location.href='controller.php?customerInf=1';
                 // 支付成功后的回调函数
             }
         });

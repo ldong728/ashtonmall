@@ -103,6 +103,7 @@
 <script>
     var orderId = '<?php echo $order_inf['id']?>';
     var orderstu =<?php echo $order_inf['stu']?>;
+    var totalFee=<?php echo $total ?>;
         $('.noDisplay').css('display','none');
         switch (orderstu){
             case 0:{
@@ -121,7 +122,7 @@
         }
 
     $('#pay_now').click(function () {
-        window.location.href = 'controller.php?pay_order=1&order_id=' + orderId + '&order_stu=' + orderstu;
+        window.location.href = 'controller.php?pay_order=1&order_id=' + orderId + '&order_stu=' + orderstu + '&total_fee='+totalFee;
     });
     $('.review_button').click(function(){
         window.location.href='controller.php?review=1&order_id='+orderId;
