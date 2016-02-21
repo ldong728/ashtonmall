@@ -137,7 +137,7 @@ if (isset($_SESSION['customerId'])) {
                 exit;
             }
             if($_GET['card']!='none'){
-                $savefeeQuery=pdoQuery('card_record_tbl',null,array('card_code'=>$_GET['card'],'consumed'=>'0'),' limi 1');
+                $savefeeQuery=pdoQuery('card_record_tbl',null,array('card_code'=>$_GET['card'],'consumed'=>'0'),' limit 1');
                 if($save=$savefeeQuery->fetch()){
                     include_once '../wechat/cardManager.php';
                     if(consumeCard($_GET['card'])!=false){

@@ -137,6 +137,7 @@ if(isset($_SESSION['customerId'])){
         $total_price=$_POST['totalPrice'];
         include_once '../wechat/cardManager.php';
         $cardinf=getCardCode($encrypt_code);
+//        mylog(getArrayInf($cardinf));
         $save=-1000;
         $cardCode=$cardinf['card']['card_code'];
         if($cardinf['can_consume']==1) {

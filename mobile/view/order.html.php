@@ -101,9 +101,10 @@ $sign=$card->getSignPackage("DISCOUNT CASH");
                         var cardList= res.cardList; // 用户选中的卡券列表信息
                         var cardInf=eval('('+cardList+')');
                         $.post('ajax.php?chooseCard=1',{card_id:cardInf[0].card_id,encrypt_code:cardInf[0].encrypt_code,totalPrice:totalPrice},function(data){
+                            alert(data);
                             data=eval('('+data+')');
                             $('.card_detail').empty();
-                            if(data.save.save<0){
+                            if(data.save<0){
                                 showToast('此券无法使用')
                             }else{
                                 $('.card-detail').append('节省￥'+data.save);
@@ -123,7 +124,9 @@ $sign=$card->getSignPackage("DISCOUNT CASH");
 
 <script>
     $('.ordersettle').click(function(){
+//        alert('controller.php?orderConfirm=1&addrId='+addrId+'&from='+from+'&card='+cardCode);
         $.post('ajax.php',{userRemark:1,remark:$('.remark_field').val()},function(data){
+
             window.location.href='controller.php?orderConfirm=1&addrId='+addrId+'&from='+from+'&card='+cardCode;
         })
     });
