@@ -236,7 +236,7 @@ div.total-price {
 }
 
 .hot-sale-container {
-    width: 95%;
+    width: 100%;
     margin: 0 auto;
     height: auto;
 }
@@ -247,6 +247,7 @@ div.total-price {
     width: 100%;
     min-height: 100px;
     max-height: 200px;
+    padding: 0 10px;
     border-bottom: solid 1px #ccc;
     padding-bottom: 20px;
     /*background-color: #007aff;*/
@@ -384,13 +385,16 @@ div.total-price {
 }
 
 .goods-list-container {
-    width: 90%;
+    width: 100%;
     min-height: 280px;
-    margin: 0 auto;
+    margin: 20px auto 20px auto;
+    padding: 0 0 0 20px;
 }
 
 .goods-list-container .goods-list-box {
+    box-sizing: border-box;
     float: left;
+    padding: 0 20px 0 0px;
     width: 50%;
     min-height: 270px;
 }
@@ -905,37 +909,37 @@ div .module-box {
 .horizonborder {
     height: 1px;
     width: 100%;
-    border-bottom: solid thin #ddd;
+    border-bottom: solid thin #ccc;
 }
 
 .review .review-content {
     width: 90%;
     margin: 0 auto;
-    min-height: 15vw;
-    max-height: 50vw;
+    min-height: 40px;
+    max-height: 90px;
     border-bottom: solid thin #ddd;
 }
 
 .review .review-content .nameblock {
-    height: 6vw;
+    height: 18px;
 }
 
 .review-content .nameblock p.name {
     float: left;
-    line-height: 6vw;
-    font-size: 3.5vw;
-    margin-right: 2vw;
+    line-height: 18px;
+    font-size: 14px;
+    margin-right: 8px;
 }
 
 .review-content .nameblock .score {
     float: left;
-    width: 3vw;
-    height: 3vw;
+    width: 14px;
+    height: 14px;
     margin-top: 1vw;
     margin-left: 1vw;
     background-image: url('images/star-light.png');
     background-repeat: no-repeat;
-    background-size: 3vw 3vw;
+    background-size: 14px 14px;
 }
 
 .review-content .nameblock p.time {

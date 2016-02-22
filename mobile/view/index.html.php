@@ -57,9 +57,8 @@
                     <img src="../<?php echo $row['url'] ?>"/>
 
                 </div>
-
-
             </div>
+<!--            <div class="horizonborder"></div>-->
         <?php endforeach ?>
     </div>
 

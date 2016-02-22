@@ -175,8 +175,27 @@
                 <div class="hidden-content detail"id="detail-content">
                     <?php echo $inf['inf']?>
                 </div>
-                <div class="hidden-content remark"id="detail-remark">
+                <div class="hidden-content review"id="detail-review">
+                    <?php foreach($review['inf'] as $row):?>
+                        <div class="review-content">
+                            <div class="nameblock">
+                                <p class="name"><?php echo $row['nickname']?></p>
+                                <?php for($i=0; $i<$row['score'];$i++):?>
+                                    <div class="score"></div>
+                                <?php endfor?>
+                                <p class="time"><?php echo date('Y-m-d',strtotime($row['review_time']))?></p>
+                            </div>
+                            <div class="text">
+                                <?php echo $row['review']?>
+                            </div>
+                            <div class="imgbox">
 
+                            </div>
+                            <div class="cate">
+                                颜色：<?php echo $row['category']?>
+                            </div>
+                        </div>
+                    <?php endforeach?>
 
                 </div>
 
