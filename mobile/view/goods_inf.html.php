@@ -76,7 +76,6 @@
                             <div class="partInf">
                                 <img class="part-img" src="../<?php echo $r['url'] ?>"/>
                                 <input type="hidden" value="<?php echo $r['sale'] ?>"/>
-
                                 <div class="check-box <?php echo $r['dft'] ?>" id="part<?php echo $r['g_id'] ?>"></div>
                                 <div class="part-name">
                                     <?php echo $r['name'] ?>
@@ -153,10 +152,10 @@
             <div class="module-box others">
                 <div class="others-nav">
                     <div class="others-content" id="detail">
-                        <a class="detail-select">看详情</a>
+                        <a class="detail-select"href="#detail-content">看详情</a>
                     </div>
                     <div class="others-content"id="remark">
-                        <a class="detail-select">看评价</a></div>
+                        <a class="detail-select"href="#detail-review">看评价</a></div>
                     <div class="others-content">
                         <a class="detail-select"id="compare">拼价格</a></div>
 <!--                    <div class="others-content">-->
@@ -189,13 +188,15 @@
                                 <?php echo $row['review']?>
                             </div>
                             <div class="imgbox">
-
                             </div>
                             <div class="cate">
                                 颜色：<?php echo $row['category']?>
                             </div>
                         </div>
                     <?php endforeach?>
+                </div>
+                <div class="hidden-content compare"id="detail-compare">
+
 
                 </div>
 

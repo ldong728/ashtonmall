@@ -48,6 +48,8 @@
 
     </div>
 
+    <div class="foot-blank"></div>
+
     <?php include_once 'templates/foot.php' ?>
 
 
