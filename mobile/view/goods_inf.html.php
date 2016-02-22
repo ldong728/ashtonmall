@@ -194,6 +194,9 @@
                             </div>
                         </div>
                     <?php endforeach?>
+                    <div class="more-review">
+                        查看全部评价
+                    </div>
                 </div>
                 <div class="hidden-content compare"id="detail-compare">
 
