@@ -12,7 +12,7 @@
 <body>
 <div class="wrap">
     <div class="pDetail">
-        <a href="controller.php?getList=1&c_id=<?php echo $cate['id']?>"><div class="cate-name">
+        <a href="controller.php?getList=1&c_id=<?php echo $cate['id']?>"><div class="category-name">
             <?php echo $cate['name'].' '.$cate['e_name']?>
         </div>
         </a>
@@ -97,7 +97,7 @@
                     <div class="title-name">选择功能</div>
                 </div>
                 <div class="param-container">
-                    <dl>
+                    <dl class="clearfix">
                         <dt>名称：</dt>
                         <dd><?php echo $inf['name'] ?></dd>
                     </dl>
@@ -147,29 +147,39 @@
                         <a class="plus number-button" id="plus">+</a>
                     </div>
                 </div>
-<!--                <div class="total-price">RMB --><?php //echo($price * $number) ?><!--</div>-->
+
 
             </div>
             <div class="module-box others">
                 <div class="others-nav">
-                    <div class="others-content">
-                        <a href="#">看详情</a>
+                    <div class="others-content" id="detail">
+                        <a class="detail-select">看详情</a>
                     </div>
+                    <div class="others-content"id="remark">
+                        <a class="detail-select">看评价</a></div>
                     <div class="others-content">
-                        <a href="#">看评价</a></div>
-                    <div class="others-content">
-                        <a href="#">拼价格</a></div>
-                    <div class="others-content">
-                        <a href="#">晒颜值</a></div>
+                        <a class="detail-select"id="compare">拼价格</a></div>
+<!--                    <div class="others-content">-->
+<!--                        <a class="detail-select">晒颜值</a></div>-->
 
-                    <div class="others-content">
-                        <a href="#">分销加盟</a></div>
+<!--                    <div class="others-content">-->
+<!--                        <a class="detail-select">分销加盟</a></div>-->
                 </div>
             </div>
             <div class="module-box mult-content">
-                <video controls="controls" width="100%" height="auto">
-                                        <source src="../g_img/video/<?php echo $inf['produce_id']?>.mp4">
-                </video>
+                <div class="default-content video-container"id="video-content">
+                    <video controls="controls" src="../g_img/video/<?php echo $inf['produce_id']?>.mp4" width="90%" height="auto">
+<!--                        <source src="../g_img/video/--><?php //echo $inf['produce_id']?><!--.mp4">-->
+                    </video>
+                </div>
+                <div class="hidden-content detail"id="detail-content">
+                    <?php echo $inf['inf']?>
+                </div>
+                <div class="hidden-content remark"id="detail-remark">
+
+
+                </div>
+
             </div>
 
         </div>
@@ -178,15 +188,19 @@
 
     <!--    --><?php //include_once 'templates/foot.php' ?>
     <div class="foot">
-        <a class="foot-goods-nave"href="index.php">
-            首页
-        </a>
-        <a class="foot-goods-nave buy-now">
+        <div class="total-price">合计￥<?php echo($price * $number) ?></div>
+        <a class="cart"href="controller.php?getCart=1$rand=<?php echo rand(1000,9999)?>"></a>
+<!--        <a class="foot-goods-nave"href="index.php">-->
+<!--            首页-->
+<!--        </a>-->
+        <div class="button-box">
+        <a class="buttons buy-now">
             立即购买
         </a>
-        <a class="foot-goods-nave add-cart">
+        <a class="buttons add-cart">
             加入购物车
         </a>
+        </div>
 
     </div>
     <div class="toast"></div>
@@ -200,6 +214,12 @@
     var parts = new Array();
 </script>
 <script src="../js/goods-inf.js"></script>
-<?php //include 'templates/jssdkIncluder.php'?>
+<script>
+    $('.detail-select').click(function(){
+       var id=$(this).attr('id');
+        $('default-content').css('display','none');
+        $('#'+id+'-content').css('display','block');
+    });
+</script>
 </body>
 

@@ -49,9 +49,12 @@ $(document).on('click', '.number-button', function () {
     } else if ('minus' == $(this).attr('id')) {
         var input = $(this).next('input');
         var currentNum = parseInt(input.val());
-        var price=-parseFloat($('.total-price').text().slice(3))/currentNum;
+
         if (currentNum > 1) {
-            input.val(currentNum - 1)
+            input.val(currentNum - 1);
+            var price=-parseFloat($('.total-price').text().slice(3))/currentNum;
+        }else{
+            var price=0;
         }
     }
     number = parseInt($('#number').val());
@@ -149,10 +152,10 @@ $(document).on('click', '.nav', function () {
 
 })
 function flushPrice(p){
-    var price=parseFloat($('.total-price').text().slice(4));
+    var price=parseFloat($('.total-price').text().slice(3));
     price+=p;
 
-    $('.total-price').text('RMB '+price);
+    $('.total-price').text('合计￥'+price);
 }
 
 

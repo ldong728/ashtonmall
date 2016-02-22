@@ -101,7 +101,6 @@ $sign=$card->getSignPackage("DISCOUNT CASH");
                         var cardList= res.cardList; // 用户选中的卡券列表信息
                         var cardInf=eval('('+cardList+')');
                         $.post('ajax.php?chooseCard=1',{card_id:cardInf[0].card_id,encrypt_code:cardInf[0].encrypt_code,totalPrice:totalPrice},function(data){
-                            alert(data);
                             data=eval('('+data+')');
                             $('.card_detail').empty();
                             if(data.save<0){

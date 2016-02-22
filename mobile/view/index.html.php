@@ -15,6 +15,7 @@
             <a class="search-button">搜索商品</a>
         </div>
     </div>
+    <div style="width: 100%;height: 40px;z-index: 0"></div>
 
     <div class="swiper-container" id="ad-swiper">
         <div class="swiper-wrapper" style="width: 4368px; height: 240px">
@@ -47,7 +48,7 @@
 
                     </div>
                     <a href="controller.php?goodsdetail=1&g_id=<?php echo $row['id'] ?>" class="hot-sale-buy">
-
+                    选购
 
                     </a>
 
