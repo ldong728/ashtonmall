@@ -198,9 +198,9 @@ div.total-price {
     border-style: none;
     border-radius: 4px;
     position: absolute;
-    width: 75%;
+    width: 70%;
     height: 26px;
-    left: 4px;
+    left: 10px;
     top: 7px;
 }
 .search-container .button-container {
@@ -226,12 +226,12 @@ div.total-price {
 .search-container div.icon-button {
     position: absolute;
     top: 11px;
-    left: 70%;
+    left: 67%;
     display: block;
-    width: 4vw;
-    height: 4vw;
+    width: 4.2vw;
+    height: 4.2vw;
     background-image: url(images/search.png);
-    background-size: 4vw 4vw;
+    background-size: 4.2vw 4.2vw;
     background-repeat: no-repeat;
 }
 
@@ -248,7 +248,7 @@ div.total-price {
     min-height: 100px;
     max-height: 200px;
     padding: 0 10px;
-    border-bottom: solid 1px #ccc;
+    /*border-bottom: solid 1px #ccc;*/
     padding-bottom: 20px;
     /*background-color: #007aff;*/
 }
@@ -270,21 +270,31 @@ div.total-price {
     margin: 5px auto 5px auto;
     width: 95%;
     min-height: 16px;
+
+    /*background-color: #00415e;*/
+}
+.hot-sale-container .hot-sale-box .hot-sale-content .hot-sale-name span.cate-name {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+}
+.hot-sale-container .hot-sale-box .hot-sale-content .hot-sale-name span.cate-pid {
     font-size: 16px;
     font-weight: 700;
     line-height: 16px;
-    /*background-color: #00415e;*/
 }
 
 .hot-sale-container .hot-sale-box .hot-sale-content .hot-sale-intro {
     margin: 5px auto 5px auto;
     width: 95%;
-    min-height: 16px;
+    min-height: 32px;
+    font-size: 12px;
+    line-height: 14px;
 }
 
 .hot-sale-container .hot-sale-box .hot-sale-content .hot-sale-price {
     color:red;
-    margin: 5px auto 10px auto;
+    margin: 12px auto 3px auto;
     width: 95%;
     font-weight: 600;
     line-height: 16px;
@@ -293,7 +303,7 @@ div.total-price {
 .hot-sale-container .hot-sale-box .hot-sale-content a.hot-sale-buy {
     display: block;
     margin: 0px auto 5px 2.5%;
-    width: 60px;
+    width: 70px;
     height: 28px;
     line-height: 30px;
     font-size: 14px;
@@ -302,7 +312,7 @@ div.total-price {
     color: #ffffff;
     text-align: center;
     background-image: url(images/button-background.png);
-    background-size: 60px 28px;
+    background-size: 70px 28px;
     background-repeat: no-repeat;
 }
 
@@ -368,7 +378,9 @@ div.total-price {
 }
 
 .remark-container .remark-box .remark-content .remark {
+    margin-top: 4px;
     font-size: 2.5vw;
+    line-height: 2.7vw;
 }
 
 .foot-blank {
@@ -380,7 +392,7 @@ div.total-price {
 .category-name {
     width: 90%;
     height: 28px;
-    margin: 0 auto;
+    margin: 5px auto 5px auto;
     line-height: 28px;
     font-size: 18px;
     font-weight: 600;
@@ -413,7 +425,7 @@ div.total-price {
 }
 
 .goods-list-container .goods-list-box .name {
-    margin: 5px auto 5px auto;
+    margin: 10px auto 5px auto;
     width: 95%;
     min-height: 16px;
     font-size: 16px;
@@ -572,7 +584,7 @@ div .module-box {
 .baseInfo .pd_info .pName {
     overflow: hidden;
     width: 90vw;
-    margin: 1vh auto;
+    margin: 10px auto 5px auto;
     min-height: 18px;
 }
 
@@ -584,7 +596,7 @@ div .module-box {
 
 .baseInfo .pd_info .inf {
     width: 90%;
-    margin: 2px auto;
+    margin: 2px auto 10px auto;
     font-size: 12px;
     line-height: 14px;
 
@@ -607,7 +619,7 @@ div .module-box {
 }
 
 .baseInfo .pd_info .p-remark .price {
-    margin-top: 5px;
+    margin-top: 6px;
     float: right;
     color: red;
     font-size: 16px;
@@ -1002,19 +1014,20 @@ div .module-box {
 }
 
 .others .others-nav {
-
+    overflow-x: hidden;
     width: 90%;
     margin: 4px auto;
     height: 25px;
+    line-height: 25px;
 }
 
 .others .others-nav .others-content {
     color: #999;
     float: left;
     height: 16px;
-    margin: 9px 5px auto 0;
-    padding-right: 4px;
-    border-right: solid 1px #ccc;
+    margin: 4px 5px auto -1px;
+    padding-left: 4px;
+    border-left: solid 1px #ccc;
 }
 .others .others-nav .others-content a {
     color: #999;
@@ -1034,6 +1047,21 @@ div .module-box {
 .mult-content .hidden-content {
     width: 100%;
     /*display: none;*/
+}
+.mult-content .compare {
+
+}
+.mult-content .compare a{
+    float: left;
+    box-sizing: border-box;
+    display: block;
+    width: 30%;
+    height: auto;
+    margin: 20px 0 0 3%;
+}
+.mult-content .compare a img{
+    width: 100%;
+    height: auto;
 }
 .mult-content #detail-content img {
     width: 100%;

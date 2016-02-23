@@ -30,20 +30,27 @@
         </div>
         <div class="swiper-pagination" id="ad-pagination"></div>
     </div>
+    <?php foreach ($promotion as $promotionRow):?>
+
     <div class="hot-sale-container">
-        <?php foreach ($promotion as $row): ?>
+        <div class="category-name">
+            <?php echo $promotionRow[0]['sc_name'].' '.$promotionRow[0]['e_name']?>
+        </div>
+        <div  class="h-slash"></div>
+        <?php foreach ($promotionRow as $row): ?>
             <div class="hot-sale-box">
                 <div class="hot-sale-blank"></div>
                 <div class="hot-sale-content">
                     <div class="hot-sale-blank"></div>
                     <div class="hot-sale-name">
-                        <?php echo $row['name'] ?>
+                        <span class="cate-name"><?php echo $row['e_name'].' '?></span>
+                        <span class="cate-pid"> <?php echo $row['produce_id'] ?> </span>
                     </div>
                     <div class="hot-sale-intro">
                         <?php echo $row['intro'] ?>
                     </div>
                     <div class="hot-sale-price">
-                        RMB:<?php echo $row['price'] ?>
+                        RMB <?php echo $row['price'] ?>
 
 
                     </div>
@@ -61,6 +68,7 @@
 <!--            <div class="horizonborder"></div>-->
         <?php endforeach ?>
     </div>
+    <?php endforeach?>
 
     <div class="remark-container">
         <div class="remark-box">

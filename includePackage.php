@@ -31,6 +31,8 @@
 
 
 //以下为承天科技支付测试专用
+define('ADMIN','hll');
+define('PASSWORD','admin');
 define('APP_ID','wxe351f7bfd5b5e2a6');
 define('APP_SECRET','1eb1e0701b845f183ff2843fcddb4b7e');
 define('WEIXIN_ID','gh_bc1d700f0582');

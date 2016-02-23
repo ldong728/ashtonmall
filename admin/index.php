@@ -77,13 +77,15 @@ if (isset($_SESSION['login'])) {
     exit;
 } else {
     if (isset($_GET['login'])) {
-        if (md5($_POST['adminName']) . md5($_POST['password']) == '9f6c470eab19fdca07401196068f78d554b51a86e539d9f8f711e67826ea60d5') {
+        if ($_POST['adminName'] . $_POST['password'] == ADMIN.PASSWORD) {
             $_SESSION['login'] = 1;
             $frontImg=pdoQuery('ad_tbl',null,array('category'=>'banner'),null);
             printView('admin/view/admin_index.html.php');
+        }else{
+            include 'view/login.html.php';
         }
         exit;
     }
-    include 'view/login.html.php';
+
     exit;
 }

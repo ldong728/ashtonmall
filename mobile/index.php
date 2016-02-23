@@ -19,7 +19,7 @@ if (!isset($_SESSION['cate'])) {
 }
     $query=pdoQuery('user_promotion_view',null,null,null);
 foreach ($query as $row) {
-    $promotion[]=$row;
+    $promotion[$row['sc_id']][]=$row;
 
 }
 //mylog(getArrayInf($inf));
@@ -27,6 +27,7 @@ foreach ($query as $row) {
 if (isset($_GET['c_id'])) {
     $_SESSION['customerId'] = $_GET['c_id'];
     $inf=pdoQuery('custom_inf_tbl',null,array('openid'=>$_SESSION['customerId']),' limit 1');
+
     $_SESSION['userInf']=$inf->fetch();
 }
 $config = getConfig('config/config.json');

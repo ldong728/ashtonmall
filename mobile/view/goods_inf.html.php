@@ -157,7 +157,7 @@
                     <div class="others-content"id="remark">
                         <a class="detail-select"href="#detail-review">看评价</a></div>
                     <div class="others-content">
-                        <a class="detail-select"id="compare">拼价格</a></div>
+                        <a class="detail-select"id="compare"href="#detail-compare">拼价格</a></div>
 <!--                    <div class="others-content">-->
 <!--                        <a class="detail-select">晒颜值</a></div>-->
 
@@ -199,6 +199,8 @@
                     </div>
                 </div>
                 <div class="hidden-content compare"id="detail-compare">
+                    <a href="#"> <img src="../img/tb.jpg"/></a>
+                    <a href="#"><img src="../img/jd.jpg"/> </a>
 
 
                 </div>
