@@ -134,6 +134,7 @@ if(isset($_SESSION['login'])) {
                 $back['parts'][]=$partRow;
             }
             $back['parm']=getGoodsPar($_POST['g_id'],$sc_id);
+//            mylog(getArrayInf($back));
             $jsonBack=json_encode($back,JSON_UNESCAPED_UNICODE);
 //            mylog($jsonBack);
             echo $jsonBack;

@@ -1,10 +1,8 @@
 <?php
-
 include_once 'includePackage.php';
 include_once 'wechat/serveManager.php';
 include_once 'wechat/cardManager.php';
 session_start();
-
 if(isset($_GET['encrypt_code'])){
     $inf=getCardCode($_GET['encrypt_code']);
 //    mylog(getArrayInf($inf));
