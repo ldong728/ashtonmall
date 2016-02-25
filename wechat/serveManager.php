@@ -22,28 +22,13 @@ function createButtonTemp()
 //    $button2 = array('name' => '链接跳转', 'sub_button' => array($serchSubButton, $videoSubButton, $praiseSubButton));
 //    $button3 = array('type' => 'view', 'name' => '照片墙', 'url' => 'http://115.29.202.69/wechat/gallery');
 //    $mainButton = array('button' => array($button1, $button2, $button3));
-//    $url='https://open.weixin.qq.com/connect/oauth2/authorize?'
-//    .'appid='.APP_ID
-//    .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/mobile/controller.php?oauth=1')
-//    .'&response_type=code&scope=snsapi_base'
-//    .'&state=123#wechat_redirect';
     $url='https://open.weixin.qq.com/connect/oauth2/authorize?'
-        .'appid='.APP_ID
-        .'&redirect_uri='.urlencode('http://web.gooduo.net/ashton/mobile/controller.php?oauth=1')
-        .'&response_type=code&scope=snsapi_base'
-        .'&state=123#wechat_redirect';
-    $button1sub1=array('type'=>'view','name'=>'关于品牌','url'=>'http://www.rabbitpre.com/m/fybUReEnj');
-    $button1sub2=array('type'=>'view','name'=>'企业简介','url'=>'http://www.rabbitpre.com/m/ei7YZfiNi');
-    $button1sub3=array('type'=>'view','name'=>'了解产品','url'=>'http://www.rabbitpre.com/m/yQbiqi7');
-    $button1=array('name'=>'关于品牌','sub_button'=>array($button1sub1,$button1sub2,$button1sub3));
-//    $button2sub1=array('type'=>'click','name'=>'微信下单减5元','key'=>'wxpromotion');
-//    $button2sub2=array('type'=>'click','name'=>'新年抢红包','key'=>'hongbao');
-    $button2=array('type'=>'view','name'=>'微商城','url'=>$url);
-    $button3sub1=array('type'=>'click','name'=>'在线客服','key'=>'kf');
-    $button3sub2=array('type'=>'click','name'=>'个人中心','key'=>'user');
-    $button3sub3=array('type'=>'click','name'=>'会员优惠','key'=>'artical');
-    $button3=array('name'=>'咨询专区','sub_button'=>array($button3sub1,$button3sub2,$button3sub3));
-    $mainButton=array('button'=>array($button1,$button2,$button3));
+    .'appid='.APP_ID
+    .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/mobile/controller.php?oauth=1')
+    .'&response_type=code&scope=snsapi_base'
+    .'&state=123#wechat_redirect';
+    $button1=array('type'=>'view','name'=>'网上商城','url'=>$url);
+    $mainButton=array('button'=>array($button1));
     $jsondata = json_encode($mainButton,JSON_UNESCAPED_UNICODE);
 //    mylog($jsondata);
     $response = $GLOBALS['mInterface']->postJsonByCurl('https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN', $jsondata);

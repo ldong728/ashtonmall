@@ -107,10 +107,10 @@ if (isset($_SESSION['login'])) {
             exit;
         }
         if (isset($_GET['sendTemplateMsg'])) {
+
+//            mylog($re);
+
             exit;
-        }
-        if (isset($_GET['getMenu'])) {
-            echo getMenuInf();
         }
 
     }

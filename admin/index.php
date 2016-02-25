@@ -86,7 +86,6 @@ if (isset($_SESSION['login'])) {
         }
         exit;
     }
-    include 'view/login.html.php';
 
     exit;
 }
