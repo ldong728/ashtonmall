@@ -84,7 +84,7 @@
             <a class="btn_orange payOrder  payButton" href="#" id="pay_now">
                 立即付款
             </a>
-            <a class="btn_white cansel_btn payButton" id="cancel_oder" href="#">
+            <a class="btn_white cansel_btn payButton" id="cancel_oder">
                 取消订单
             </a>
         </div>
@@ -94,10 +94,8 @@
             </a>
         </div>
         <div class="blank"></div>
-
-
-
     </div>
+    <div class="toast"></div>
     <?php include_once 'templates/foot.php'?>
 </div>
 <script>

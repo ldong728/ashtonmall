@@ -18,7 +18,7 @@
     <div style="width: 100%;height: 40px;z-index: 0"></div>
 
     <div class="swiper-container" id="ad-swiper">
-        <div class="swiper-wrapper" style="width: 4368px; height: 240px">
+        <div class="swiper-wrapper" style="width: 4368px; height: 60vw">
             <?php foreach ($adList['banner'] as $row): ?>
                 <div class="swiper-slide">
                     <!--                    <a href="-->

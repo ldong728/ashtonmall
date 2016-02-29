@@ -10,7 +10,7 @@
 //wxlog('include uploadClass ok');
 include_once '../includePackage.php';
 define('imgPath','g_img');
-define('maxSize',500);
+define('maxSize',200);
 define('FILE_FIELD','upfile');
 class uploader
 {

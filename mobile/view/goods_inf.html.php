@@ -246,5 +246,9 @@
         $('#'+id+'-content').css('display','block');
     });
 </script>
+<?php include_once 'templates/jssdkIncluder.php'?>
+<script>
+
+</script>
 </body>
 

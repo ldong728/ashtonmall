@@ -2,7 +2,7 @@
 <script src="js/ajaxfileupload.js"></script>
 <div class="module-block front_img_block">
     <div class="module-title">
-        <h4>首页图片管理</h4>
+        <h4>首页图片</h4>
     </div>
     <?php foreach($frontImg as $row):?>
 
@@ -19,6 +19,50 @@
             $('#front-img-up').click();
         });
         $(document).on('change','#front-img-up',function(){
+            $.ajaxFileUpload({
+                url:'upload.php',
+                secureuri: false,
+                fileElementId: $(this).attr('id'), //文件上传域的ID
+                dataType: 'json', //返回值类型 一般设置为json
+                success: function (v, status){
+                    if('SUCCESS'== v.state){
+                        var content = '<a href="#"class="delete-front-img"id="'+ v.id+'"><img src="../'+ v.url+'"/></a>';
+                        $('.front-img-upload').before(content);
+                    }else{
+                        showToast(v.state);
+                    }
+                },//服务器成功响应处理函数
+                error:function(d){
+                    alert('error');
+                }
+            });
+        });
+    </script>
+
+</div>
+<div class="module-block index-remark">
+    <div class="module-title"><h4>首页文字</h4></div>
+    <?php foreach($remarkQuery as $row):?>
+        <div class="remark-box">
+            <div class="img-box"id="">
+                <a href="#"class="index-remark-img-upload"id="<?php echo $row['id']?>">
+                    <img src="../<?php echo $row['img_url']?>"/><input type="file"id="index-remark-img-up"name="index-remark-img-up"style="display: none">
+                </a>
+            </div>
+
+        </div>
+
+
+
+    <?php endforeach?>
+
+    <a class="index-remark-img-upload"></a><input type="file"id="index-remark-img-up"name="front-img-up"style="display: none">
+
+    <script>
+        $(document).on('click','.index-remark-img-upload',function(){
+            $('#index-remark-img-up').click();
+        });
+        $(document).on('change','#index-remark-img-up',function(){
             $.ajaxFileUpload({
                 url:'upload.php',
                 secureuri: false,

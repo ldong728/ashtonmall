@@ -38,13 +38,13 @@ if (isset($_SESSION['login'])) {
     }
     if(isset($_GET['orders'])){
 
-        $db=new DB(DB_NAME,DB_USER,DB_PSW);
-        $query=$db->pdoQuery('express_tbl',null,null,'');
+//        $db=new DB(DB_NAME,DB_USER,DB_PSW);
+        $query=pdoQuery('express_tbl',null,null,'');
         foreach ($query as $row) {
             $expressQuery[]=$row;
         }
 
-        $orderQuery=$db->pdoQuery('order_view',null,array('stu'=>$_GET['orders']),'');
+        $orderQuery=pdoQuery('order_view',null,array('stu'=>$_GET['orders']),'');
         printView('admin/view/orderManage.html.php','订单管理');
         exit;
     }
@@ -72,6 +72,7 @@ if (isset($_SESSION['login'])) {
         include 'view/login.html.php';
         exit;
     }
+    $remarkQuery=pdoQuery('index_remark_tbl',null,null,null);
     $frontImg=pdoQuery('ad_tbl',null,array('category'=>'banner'),null);
     printView('admin/view/admin_index.html.php');
     exit;
@@ -86,6 +87,6 @@ if (isset($_SESSION['login'])) {
         }
         exit;
     }
-
+    include 'view/login.html.php';
     exit;
 }

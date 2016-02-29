@@ -62,7 +62,7 @@
 <!--                    </div>-->
 
                     <div class="price">
-                        RMB <?php echo $inf['sale'] ?>
+                        RMB <?php echo $price= $inf['sale'] ?>
                     </div>
                 </div>
             </div>
@@ -133,15 +133,16 @@
 
     <!--    --><?php //include_once 'templates/foot.php' ?>
     <div class="foot">
-        <a class="foot-goods-nave"href="index.php">
-            首页
-        </a>
-        <a class="foot-goods-nave buy-now">
-            立即购买
-        </a>
-        <a class="foot-goods-nave add-cart">
-            加入购物车
-        </a>
+        <div class="total-price">合计￥<?php echo($price * $number) ?></div>
+        <a class="cart"href="controller.php?getCart=1$rand=<?php echo rand(1000,9999)?>"></a>
+        <div class="button-box">
+            <a class="buttons buy-now">
+                立即购买
+            </a>
+            <a class="buttons add-cart">
+                加入购物车
+            </a>
+        </div>
 
     </div>
     <div class="toast"></div>
