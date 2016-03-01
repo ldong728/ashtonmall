@@ -175,6 +175,11 @@ if(isset($_SESSION['customerId'])){
 
         exit;
     }
+    if(isset($_POST['getMedia'])){
+        $mediaId=$_POST['mediaId'];
+        include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
+
+    }
 
 }
 

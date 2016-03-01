@@ -101,6 +101,7 @@ class interfaceHandler {
 }
     public function postJsonByCurl($remote_server,$json_string){
         $remote_server=$this->replaceAccessToken($remote_server);
+//        mylog($remote_server);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $remote_server);
         curl_setopt($ch,CURLOPT_POST,true);

@@ -103,12 +103,13 @@ if (isset($_SESSION['login'])) {
     if (isset($_GET['wechat'])) {
         include_once '../wechat/serveManager.php';
         if (isset($_GET['createButton'])) {
+//            echo 'ok';
             createButtonTemp();
             exit;
         }
-        if (isset($_GET['sendTemplateMsg'])) {
+        if (isset($_GET['getMenuInf'])) {
 
-//            mylog($re);
+            echo getMenuInf();
 
             exit;
         }

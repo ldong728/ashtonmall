@@ -21,8 +21,13 @@ class wechat
     {
 //        wxlog('valid start');
         if (isset($_GET['echostr'])) {
+//            mylog($_GET['signature']);
+//            mylog($_GET['timestamp']);
+//            mylog($_GET['nonce']);
+//            mylog($_GET['echostr']);
             $echoStr = $_GET["echostr"];
             if ($this->checkSignature()) {
+//                mylog($echoStr);
                 echo $echoStr;
                 exit;
             }
@@ -152,13 +157,13 @@ class wechat
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];
-
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode($tmpArr);
+//        mylog($tmpStr);
         $tmpStr = sha1($tmpStr);
+//        mylog($tmpStr);
         if ($tmpStr == $signature) {
-
             return true;
         } else {
             return false;

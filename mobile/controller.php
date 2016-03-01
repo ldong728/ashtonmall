@@ -284,17 +284,35 @@ if (isset($_GET['getList'])) {
     foreach ($query as $row) {
         $list[]=$row;
     }
+    if(!isset($list))$list=array();
     $cateName=pdoQuery('category_overview_view',null,array('id'=>$sc_id),' limit 1');
     $cateName=$cateName->fetch();
     $partQuery=pdoQuery('user_parts_view',null,array('sc_id'=>$sc_id),'group by g_id');
     foreach ($partQuery as $row) {
         $partList[]=$row;
     }
-
-
+    if(!isset($partList))$partList=array();
     include 'view/goods_list.html.php';
     exit;
 }
+//获取搜索结果
+if(isset($_GET['search'])){
+    $cateName=array();
+    $partList=array();
+    $key='%'.$_GET['search'].'%';
+    $query=pdoQuery('user_g_inf_view',null,array('situation'=>'1'),' and (name like "'.$key.'" or intro like "'.$key.'")');
+    foreach ($query as $row) {
+        $list[]=$row;
+    }
+    if(!isset($list)){
+        $list=array();
+        $cateName=array('sub_name'=>'无符合条件的搜索结果');
+    }
+    include 'view/goods_list.html.php';
+    exit;
+
+}
+
 //if (isset($_GET['getList'])) {
 //    $end = ' group by g_id';
 //    $where = null;

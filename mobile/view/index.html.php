@@ -140,6 +140,12 @@
 </script>
 
 <?php //include_once 'templates/jssdkIncluder.php'?>
+<script>
+    $('.search-button').click(function(){
+        var key=$('.search-box').val()
+        window.location.href='controller.php?search='+key;
+    });
+</script>
 
 </body>
 

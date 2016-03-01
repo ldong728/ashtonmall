@@ -28,7 +28,7 @@
         <?php endforeach ?>
     </div>
     <div class="part-list-title">
-        <?php echo $cateName['sub_name'] ?>配件
+        <?php if(count($partList)>0) echo $cateName['sub_name'].'配件' ?>
     </div>
     <div class="part-list-container">
         <?php foreach ($partList as $row): ?>

@@ -199,10 +199,7 @@
                     </div>
                 </div>
                 <div class="hidden-content compare"id="detail-compare">
-                    <a href="#"> <img src="../img/tb.jpg"/></a>
-                    <a href="#"><img src="../img/jd.jpg"/> </a>
-
-
+                    <a href="http://search.jd.com/Search?keyword=阿诗顿%20<?php echo $inf['produce_id']?>&enc=utf-8&wq=%E9%98%BF%E8%AF%97%E9%A1%BF%20<?php echo $inf['produce_id']?>"><img src="../img/jd.jpg"/> </a>
                 </div>
 
             </div>

@@ -392,8 +392,8 @@ div.total-price {
 .category-name {
     width: 90%;
     height: 28px;
-    margin: 5px auto 5px auto;
-    line-height: 28px;
+    margin: 6px auto 4px auto;
+    line-height: 30px;
     font-size: 18px;
     font-weight: 600;
 }
@@ -746,9 +746,9 @@ div .module-box {
 .part .part-box .partInf {
     position: relative;
     float: left;
-    width: 24vw;
+    width: 23vw;
     height: 100px;
-    margin: 0 5px 0 5px;
+    margin: 0 1vw 0 1vw;
 }
 
 .part .part-box .partInf img.part-img {
@@ -778,7 +778,7 @@ div .module-box {
 }
 
 .part .partInf .part-name {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 20px;
     position: absolute;
     bottom: 0;
@@ -1036,7 +1036,7 @@ div .module-box {
 .pDetail .baseInfo .mult-content {
     min-height: 80px;
     padding-top: 8px;
-    max-height: 1600px;
+    max-height: 3500px;
 }
 .mult-content .default-content {
     width: 100%;

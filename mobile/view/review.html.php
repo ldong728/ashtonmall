@@ -62,14 +62,17 @@
                     sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                     success: function (res) {
                         var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-                        var content='<img class="review-demo" src="'+localIds+'"/>'
+                        var content='<img class="review-demo"style="width:10vw;height:10vw" src="'+localIds+'"/>'
                         $('#up'+d_id).before(content);
                         wx.uploadImage({
                             localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
                             isShowProgressTips: 1, // 默认为1，显示进度提示
                             success: function (res) {
                                 var serverId = res.serverId;
-                                 alert('upload success');// 返回图片的服务器端ID
+//                                 alert('upload success:'+serverId);// 返回图片的服务器端ID
+                                $.post('ajax.php',{getMedia:1,mediaId:serverId},function(data){
+
+                                });
                             }
                         });
                     }

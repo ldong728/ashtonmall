@@ -122,6 +122,7 @@ function getGoodsPar($g_id,$sc_id){
             $back[$parRow['par_category']][]=array('col'=>$parRow['col_name'],'name'=>$parRow['name'],'value'=>$parRow['dft_value']);
         }
     }
+    if(!isset($back))$back['']=array();
     return $back;
 }
 function getWechatMode($customerId){

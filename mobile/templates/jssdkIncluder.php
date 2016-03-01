@@ -23,7 +23,7 @@ $signPackage = $jssdk->GetSignPackage();
 //            'scanQRCode',
 //            'getLocation',
 //            'openLocation',
-//            'onMenuShareTimeline'
+            'onMenuShareTimeline',
             'chooseWXPay',
             'chooseCard'
         ]

@@ -53,7 +53,7 @@ if(isset($_SESSION['login'])) {
     if(isset($_FILES['front-img-up'])){
         $uploader=new uploader('front-img-up');
         $uploader->upFile('9999_'.time().rand(1000,9999));
-        mylog('frontUp');
+//        mylog('frontUp');
         $inf=$uploader->getFileInfo();
         if('SUCCESS'==$inf['state']) {
             $id= pdoInsert('ad_tbl', array('category'=>'banner', 'img_url' => $inf['url']), '');
@@ -61,7 +61,7 @@ if(isset($_SESSION['login'])) {
         }
 //        header('contentType:application/json');
         $jsonInf=json_encode($inf,JSON_UNESCAPED_UNICODE);
-        mylog('imgUploaded:'.$jsonInf);
+//        mylog('imgUploaded:'.$jsonInf);
         echo $jsonInf;
         exit;
     }
