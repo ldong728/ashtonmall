@@ -44,8 +44,8 @@ $smq = $_SESSION['smq'];
             </label>
         </div>
         <div>
-            <label for="sub_remark">备注：
-                <input type="text" name="sub_remark">
+            <label for="e_name">英文名：
+                <input type="text" name="e_name">
             </label>
         </div>
         <div>

@@ -34,7 +34,7 @@ if (isset($_SESSION['login'])) {
         exit;
     }
     if (isset($_POST['sub_category']) && $_POST['father_cg_id'] != '0') {
-        pdoInsert('sub_category_tbl', array('name' => $_POST['sub_category'], 'father_id' => $_POST['father_cg_id'], 'remark' => $_POST['sub_remark']));
+        pdoInsert('sub_category_tbl', array('name' => $_POST['sub_category'], 'father_id' => $_POST['father_cg_id'], 'e_name' => $_POST['e_name']));
         init();
         header('location:index.php?category-config=1');
         exit;

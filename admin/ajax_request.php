@@ -303,8 +303,9 @@ if(isset($_SESSION['login'])) {
         $urlquery=pdoQuery('g_image_tbl',array('url'),array('g_id'=>$_POST['g_id'],'remark'=>$_POST['md5']),'limit 1');
         $url=$urlquery->fetch();
         pdoDelete('g_image_tbl',array('g_id'=>$_POST['g_id'],'remark'=>$_POST['md5']));
-        $query=pdoQuery('g_image_tbl',array('id'),array('remark'=>$_POST['md5']),' limit 1');
-        if(!$query->fetch()){
+        $query=pdoQuery('image_view',array('id'),array('remark'=>$_POST['md5']),' limit 1');
+        $query=pdoQuery('ad_tbl',array('id'),array('img_url'=>$url['url']),' limit 1');
+        if(!$query->fetch()&&!$query->fetch()){
             unlink('../'.$url['url']);
         }
         echo 'ok';
@@ -314,7 +315,10 @@ if(isset($_SESSION['login'])) {
         $query=pdoQuery('ad_tbl',array('img_url'),array('id'=>$_POST['id']),null);
         $row=$query->fetch();
         pdoDelete('ad_tbl',array('id'=>$_POST['id']));
-        unlink('../'.$row['img_url']);
+        $tquery=pdoQuery('image_view',null,array('url'=>$row['img_url']),' limit 1');
+        if(!$tquery->fetch()){
+            unlink('../'.$row['img_url']);
+        }
         echo 'ok';
         exit;
     }

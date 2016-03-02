@@ -151,13 +151,13 @@ function uploadTempMedia($file, $type)
 
 
 
-function downloadImgToHost($media_id, $weixinId = 0)
+function downloadImgToHost($media_id,$filePath)
 {
     $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=';
     $imgData = $GLOBALS['mInterface']->getByCurl($url . $media_id);
-    $filePath = 'tmpmedia/' . $media_id . '.jpg';
+
     file_put_contents($filePath, $imgData);
-    return $filePath;
+    return 'ok';
 }
 
 function getUnionId($openId)

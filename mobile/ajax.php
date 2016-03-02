@@ -178,6 +178,11 @@ if(isset($_SESSION['customerId'])){
     if(isset($_POST['getMedia'])){
         $mediaId=$_POST['mediaId'];
         include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
+        $imgPath='g_img/review_img/'.$_POST['mediaId'].'.jpg';
+        downloadImgToHost($mediaId,$imgPath);
+        $response=array('url'=>$imgPath);
+        $response=json_encode($response,JSON_UNESCAPED_UNICODE);
+        echo $imgPath;
 
     }
 
