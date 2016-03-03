@@ -113,6 +113,7 @@ if(isset($_SESSION['customerId'])){
             $insert['review']=html(trim($_POST['review']));
         }
         $id=pdoInsert('review_tbl',$insert,'ignore');
+
         $v1q=pdoQuery('review_tbl',array('count(*) as num'),array('order_id'=>$_POST['order_id']),null);
         $reviewed=$v1q->fetch();
         $v2q=pdoQuery('user_input_review_view',array('count(*) as num'),array('order_id'=>$_POST['order_id']),null);
@@ -120,9 +121,16 @@ if(isset($_SESSION['customerId'])){
         if($reviewed['num']==$unreview['num']){
             pdoUpdate('order_tbl',array('stu'=>'3'),array('id'=>$_POST['order_id']));
             echo'done';
-            exit;
+        }else{
+            echo $id;
         }
-        echo $id;
+        foreach ($_POST['image'] as $row) {
+            include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
+            $imgPath='g_img/'.$row.'.jpg';
+            downloadImgToHost($row,$mypath.'/'.$imgPath);
+
+            pdoInsert('review_img_tbl',array('review_id'=>$id,'url'=>$imgPath,'remark'=>md5_file($imgPath)));
+        }
         exit;
     }
     if(isset($_POST['linkKf'])){
@@ -180,6 +188,7 @@ if(isset($_SESSION['customerId'])){
         include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
         $imgPath='g_img/review_img/'.$_POST['mediaId'].'.jpg';
         downloadImgToHost($mediaId,$imgPath);
+//        pdoInsert('review_img_tbl')
         $response=array('url'=>$imgPath);
         $response=json_encode($response,JSON_UNESCAPED_UNICODE);
         echo $imgPath;
@@ -223,7 +232,7 @@ if(isset($_POST['addToCart'])){
                 'update');
             $value=array();
             foreach ($_SESSION['buyNow']['partsList'] as $k=>$v) {
-                mylog($k.' :'.$v);
+//                mylog($k.' :'.$v);
                 $value[]=array('cart_id'=>$cartId,'part_id'=>$k,'part_number'=>$_POST['number']);
             }
             pdoBatchInsert('part_cart_tbl',$value);

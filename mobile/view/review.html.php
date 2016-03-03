@@ -49,37 +49,37 @@
 <script>
 //    var g_id='<?php //echo $row['g_id']?>//';
     var orderId='<?php echo $_GET['order_id']?>'
+    var images=new Array();
 </script>
 <?php include 'templates/jssdkIncluder.php'?>
 <script>
         wx.ready(function(){
             $('.imginput').click(function(){
+                images=new Array();
                 var d_id=$(this).attr('id').slice(2);
                 var g_id=$('#gid'+d_id).val();
                 wx.chooseImage({
-                    count: 1, // 默认9
+                    count: 4, // 默认9
                     sizeType: [ 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
                     sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                     success: function (res) {
                         var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-                        var content='<img class="review-demo"style="width:10vw;height:10vw" src="'+localIds+'"/>'
-                        $('#up'+d_id).before(content);
-                        wx.uploadImage({
-                            localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
-                            isShowProgressTips: 1, // 默认为1，显示进度提示
-                            success: function (res) {
-                                var serverId = res.serverId;
-//                                 alert('upload success:'+serverId);// 返回图片的服务器端ID
-                                $.post('ajax.php',{getMedia:1,mediaId:serverId},function(data){
-
-                                });
-                            }
+                        $.each(localIds,function(k,v){
+                            var content='<img class="review-demo" src="'+v+'"/>'
+                            $('#up'+d_id).before(content);
+                            wx.uploadImage({
+                                localId: v.toString(), // 需要上传的图片的本地ID，由chooseImage接口获得
+                                isShowProgressTips: 1, // 默认为1，显示进度提示
+                                success: function (res) {
+                                    var serverId = res.serverId;
+                                    images.push(serverId);
+                                }
+                            });
                         });
+
                     }
                 });
             })
-
-
         })
 </script>
 
@@ -99,7 +99,7 @@
         var g_id=$('#gid'+id).val();
         var content=$('#cont'+id).val();
         var score=$('#sval'+id).val();
-        $.post('ajax.php',{submitReview:1,order_id:orderId,d_id:id,review:content,g_id:g_id,score:score},function(data){
+        $.post('ajax.php',{submitReview:1,order_id:orderId,d_id:id,review:content,g_id:g_id,score:score,image:images},function(data){
             showToast('评价成功')
             $('#block'+id).remove();
             if(data=='done'){

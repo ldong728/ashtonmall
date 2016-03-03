@@ -125,7 +125,6 @@ $sign=$card->getSignPackage("DISCOUNT CASH");
     $('.ordersettle').click(function(){
 //        alert('controller.php?orderConfirm=1&addrId='+addrId+'&from='+from+'&card='+cardCode);
         $.post('ajax.php',{userRemark:1,remark:$('.remark_field').val()},function(data){
-
             window.location.href='controller.php?orderConfirm=1&addrId='+addrId+'&from='+from+'&card='+cardCode;
         })
     });

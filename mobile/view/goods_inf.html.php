@@ -97,10 +97,6 @@
                 </div>
                 <div class="param-container">
                     <dl class="clearfix">
-                        <dt>名称：</dt>
-                        <dd><?php echo $inf['name'] ?></dd>
-                    </dl>
-                    <dl>
                         <dt>品牌：</dt>
                         <dd>ashton/阿诗顿</dd>
                     </dl>
@@ -171,7 +167,7 @@
 <!--                        <source src="../g_img/video/--><?php //echo $inf['produce_id']?><!--.mp4">-->
                     </video>
                 </div>
-                <div class="hidden-content detail"id="detail-content">
+                <div class="hidden-content detail"id="detail-content"style="max-height: 15000px">
                     <?php echo $inf['inf']?>
                 </div>
                 <div class="hidden-content review"id="detail-review">

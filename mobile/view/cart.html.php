@@ -90,47 +90,49 @@
             var button=id.slice(0,4);
             var cart_id=id.slice(4);
             var currentNum = parseInt($('#number'+cart_id).val());
-            var singlePrice=parseInt($('#price'+cart_id).text());
+            var singlePrice=parseFloat($('#price'+cart_id).text());
+//            alert(button);
             if('mins'==button){
                 if(currentNum>1){
+//                    alert('minus')
                     currentNum--;
                     singlePrice=-singlePrice;
+                }else{
+                    singlePrice=0;
                 }
             }else{
+//                alert('plus');
                 currentNum++;
 
             }
             $('#number'+cart_id).val(currentNum);
+//            alert('currentNum:'+currentNum)
             $.post('ajax.php', {alterCart: 1, cart_id: cart_id, number: currentNum},function(data){
 //                alert(data)
                 flushPrice(cart_id,singlePrice);
             });
         });
-//        $(document).on('change','.count',function(){
-//            var cart_id=$(this).attr('id').slice(6);
-//            $.post('ajax.php', {alterCart: 1, cart_id: cart_id, number: $(this).val},function(){
-////                flushPrice();
-//            });
-//        });
         $(document).on('click','.part-change-number',function(){
             var id=$(this).attr('id');
             var button=id.slice(0,4);
             var cart_id=$(this).parent().attr('id').slice(5);
             var g_id=id.slice(4)
-//            alert(cart_id);
             var currentNum = parseInt($('#partnum'+g_id).val());
-            var singlePrice=parseInt($('#price'+g_id).text());
+            var singlePrice=parseFloat($('#price'+g_id).text());
+//            alert(currentNum);
+//            alert(singlePrice);
             if('mins'==button){
                 if(currentNum>1){
                     currentNum--;
                     singlePrice=-singlePrice;
-                }
+                }else{
+                singlePrice=0;
+            }
             }else{
                 currentNum++;
             }
             $('#partnum'+g_id).val(currentNum);
             $.post('ajax.php', {alterPartCart: 1, cart_id:cart_id, g_id: g_id, number: currentNum},function(data){
-//                alert(data)
                 flushPrice(cart_id,singlePrice);
             });
         });
@@ -138,7 +140,7 @@
 
         $(document).on('click','.delete',function(){
             var cart_id=$(this).attr('id');
-            var price=-parseInt($('#sub-total'+cart_id).text());
+            var price=-parseFloat($('#sub-total'+cart_id).text());
             $.post('ajax.php',{deleteCart:1,cart_id:cart_id},function(data){
                 $('#list'+cart_id).fadeOut('slow',function(){
                     $('#list'+cart_id).remove();
@@ -148,10 +150,10 @@
         });
     });
     var flushPrice=function(cart_id,price){
-        var sub =parseInt($('#sub-total'+cart_id).text())
+        var sub =parseFloat($('#sub-total'+cart_id).text())
         sub+=price;
         $('#sub-total'+cart_id).text(sub);
-        var total =parseInt($('#total-price').text());
+        var total =parseFloat($('#total-price').text());
         total+=price;
         $('#total-price').text(total);
 

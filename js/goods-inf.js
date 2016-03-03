@@ -125,22 +125,7 @@ $(document).on('click', '.check-box', function () {
 
     });
 });
-//$(document).on('click', '.partCountButton', function () {
-//
-//    var temp = $(this).siblings('input')
-//    var id = temp.attr('id').slice(3);
-//    var number = temp.val();
-//    $('#part' + id).addClass('checked');
-//    $.post('ajax.php', {changePart: 1, g_id: g_id, part_id: id, mode: false, number: number}, function (data) {
-//
-//    });
-//
-//})
-//$(document).on('change', '.partCountInput', function () {
-//    alert($(this).val());
-//});
 $(document).on('click', '.more-review', function () {
-    alert('ok');
     window.location.href='controller.php?getMoreReview=1&g_id='+g_id;
 });
 /**
