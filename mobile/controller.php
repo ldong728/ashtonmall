@@ -260,6 +260,10 @@ if (isset($_GET['oauth'])) {
     }
     $rand = rand(1000, 9999);
     $_SESSION['rand'] = $rand;
+    if(isset($_GET['share'])){
+        header('location:controller.php?goodsdetail=1&g_id='.$_GET['share']);
+        exit;
+    }
     header('location:index.php?rand=' . $rand);
     if (isset($_SESSION['userInf'])) {
         foreach ($_SESSION['userInf'] as $k => $v) {

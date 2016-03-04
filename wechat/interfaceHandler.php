@@ -76,7 +76,6 @@ class interfaceHandler {
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_URL, $str);
-
         $res = curl_exec($curl);
         curl_close($curl);
 
@@ -101,7 +100,6 @@ class interfaceHandler {
 }
     public function postJsonByCurl($remote_server,$json_string){
         $remote_server=$this->replaceAccessToken($remote_server);
-//        mylog($remote_server);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $remote_server);
         curl_setopt($ch,CURLOPT_POST,true);

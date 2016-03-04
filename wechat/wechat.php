@@ -64,7 +64,7 @@ class wechat
         $str =isset($kf_account)? array('MsgType'=>'transfer_customer_service','TransInfo'=>array('KfAccount'=>$kf_account))
             :array('MsgType'=>'transfer_customer_service');
         $resultStr=$this->prepareMsg($str);
-        mylog($resultStr);
+//        mylog($resultStr);
         echo $resultStr;
         return $resultStr;
     }

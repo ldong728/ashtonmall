@@ -3,21 +3,18 @@
 //session_start();
 include_once  $GLOBALS['mypath']. '/wechat/interfaceHandler.php';
 $mInterface=new interfaceHandler(WEIXIN_ID);
-
-
 function deleteButton()
 {
     $data = $GLOBALS['mInterface']->sendGet('https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN');
     echo $data;
     echo 'delete ok';
 }
-
 function createButtonTemp()
 {
 
     $url='https://open.weixin.qq.com/connect/oauth2/authorize?'
         .'appid='.APP_ID
-        .'&redirect_uri='.urlencode('http://web.gooduo.net/ashton/mobile/controller.php?oauth=1')
+        .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/mobile/controller.php?oauth=1')
         .'&response_type=code&scope=snsapi_base'
         .'&state=123#wechat_redirect';
     $button1sub1=array('type'=>'view','name'=>'关于品牌','url'=>'http://www.rabbitpre.com/m/fybUReEnj');
@@ -45,14 +42,11 @@ function createButton($buttonInf){
 
     return $responInf;
 }
-
 function getMenuInf()
 {
     $json = $GLOBALS['mInterface']->getByCurl('https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN');
     return $json;
 }
-
-
 function createNewKF($account_name, $name, $psw)
 {
     $password = md5($psw);
@@ -100,7 +94,6 @@ function connectKF($openId,$kfAc,$remark){
     $request=$GLOBALS['mInterface']->postArrayByCurl('https://api.weixin.qq.com/customservice/kfsession/create?access_token=ACCESS_TOKEN',$linkinf);
     return $request;
 }
-
 function linkKf($openId,$kf='default',$remark='用户从网页接入'){
 //    $inf=getOnlineKfList();
 //    $inf=json_decode($inf,true);
@@ -124,16 +117,13 @@ function linkKf($openId,$kf='default',$remark='用户从网页接入'){
 
 
 }
-
 function sendKFMessage($userId,$content){
     $formatedContent=array('touser'=>$userId,'msgtype'=>'text','text'=>array('content'=>$content));
-//    mylog(json_encode($formatedContent));
     $data=$GLOBALS['mInterface']->postArrayByCurl('https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN',$formatedContent);
-//    mylog($data);
+//    $data=$GLOBALS['mInterface']->postArrayByCurl('http://www.anmiee.com/ashtonmall/test.php?access_token=ACCESS_TOKEN',$formatedContent);
+    mylog('sendKfinfo:'.$data);
     return $data;
 }
-
-
 function uploadTempMedia($file, $type)
 {
     $localSavePath = $GLOBALS['mypath'] . '/tmpmedia/' . $file['name'];
@@ -148,9 +138,6 @@ function uploadTempMedia($file, $type)
         output('上传错误，错误代码：' . $upInf['errcode']);
     }
 }
-
-
-
 function downloadImgToHost($media_id,$filePath)
 {
     $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=';
@@ -158,7 +145,6 @@ function downloadImgToHost($media_id,$filePath)
     file_put_contents($filePath, $imgData);
     return 'ok';
 }
-
 function getUnionId($openId)
 {
     $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=' . $openId . '&lang=zh_CN';
@@ -174,22 +160,18 @@ function getOauthToken($code){
     $jsonData=$GLOBALS['mInterface']->getByCurl($url);
     return json_decode($jsonData,true);
 }
-
-
 function getMediaList($type, $offset)
 {
     $request = array('type' => $type, 'offset' => $offset, 'count' => 20);
     $json = $GLOBALS['mInterface']->postArrayByCurl('https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN', $request);
     return json_decode($json, true);
 }
-
 function getMedia($jsonMediaId)
 {
 //    $GLOBALS['mInterface']=($GLOBALS['ready']?$GLOBALS['mInterface']:new interfaceHandler($weixinId) );
     $json = $GLOBALS['mInterface']->postJsonByCurl('https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=ACCESS_TOKEN', $jsonMediaId);
     return $json;
 }
-
 function reflashAutoReply()
 {
     $replyinf = $GLOBALS['mInterface']->getByCurl('https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info?access_token=ACCESS_TOKEN');
@@ -225,7 +207,6 @@ function requestTemplate($templateId){
         return false;
     }
 }
-
 function sendTemplateMsg($customerId,$templateId,$url,array $msg){
     $fullMsg=array(
         'touser'=>$customerId,
@@ -245,14 +226,6 @@ function sendTemplateMsg($customerId,$templateId,$url,array $msg){
     $response=$GLOBALS['mInterface']->postArrayByCurl('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN',$fullMsg);
     return $response;
 }
-//function sendTemplateMsgFrom($index){
-//
-////    $response=$GLOBALS['mInterface']->postArrayByCurl('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN'.$array);
-//    return $response;
-//}
-
-
-
 function formatContent($type, $content)
 {
     $insertArray['reply_type']=$type;
@@ -276,10 +249,15 @@ function formatContent($type, $content)
     return $insertArray;
 
 }
-
 function formatNewsContent(array $contentArray)
 {
     $content = json_encode(array('news_item' => $contentArray),JSON_UNESCAPED_UNICODE);
     $content = addslashes($content);
     return $content;
+}
+function curlTest(){
+    $data=array('text'=>"testok");
+//    $data=$GLOBALS['mInterface']->postArrayByCurl('http://www.anmiee.com/ashtonmall/test.php',$data);
+    $data=$GLOBALS['mInterface']->postArrayByCurl('http://web.gooduo.net/ashton/test.php',$data);
+    return $data;
 }

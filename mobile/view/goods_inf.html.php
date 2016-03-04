@@ -96,10 +96,10 @@
                     <div class="title-name">选择功能</div>
                 </div>
                 <div class="param-container">
-                    <dl class="clearfix">
-                        <dt>品牌：</dt>
-                        <dd>ashton/阿诗顿</dd>
-                    </dl>
+<!--                    <dl class="clearfix">-->
+<!--                        <dt>品牌：</dt>-->
+<!--                        <dd>ashton/阿诗顿</dd>-->
+<!--                    </dl>-->
                     <?php foreach ($parm[''] as $row): ?>
                         <dl style="float: left">
                             <dt><?php echo $row['name']?>：</dt>

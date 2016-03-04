@@ -53,8 +53,23 @@ $smq = $_SESSION['smq'];
         </div>
     </form>
 </div>
-<div id="temp">
+<div class="module-block">
+    <div class="module-title">
+        <h4>分类管理</h4>
+    </div>
+    <select id="manage_sc_id">
+        <option value="-1">选择分类</option>
+        <?php foreach ($smq as $r): ?>
+            <option value="<?php echo $r['id'] ?>"><?php htmlout($r['name']) ?></option>
+        <?php endforeach; ?>
 
+    </select>
+    <div class="cate_config"style="display: none">
+        名称：<input type="text"id="config-cate-name"placeholder="类型名">
+        英文名：<input type="text"id="config-cate-e-name"placeholder="english-name">
+        <button id="alter_cate">修改</button>
+        <button id="delete_cate">删除</button>
+    </div>
 </div>
 
 <div class="module-block sc-edit">
@@ -114,6 +129,30 @@ $smq = $_SESSION['smq'];
         sc_id = $("#sc_id option:selected").val();
         getParInf();
         $('.cate-button').css('display', 'block');
+    });
+    $('#manage_sc_id').change(function(){
+        var config_id = $("#manage_sc_id option:selected").val();
+        $.post('ajax_request.php',{getConfigCate:1,sc_id:config_id},function(data){
+            var inf=eval('('+data+')');
+            $('#config-cate-name').val(inf.name);
+            $('#config-cate-e-name').val(inf.e_name);
+            $('.cate_config').show();
+        });
+    });
+    $('#alter_cate').click(function(){
+        var alter_id = $("#manage_sc_id option:selected").val();
+        var name=$('#config-cate-name').val();
+        var e_name=$('#config-cate-e-name').val();
+        $.post('ajax_request.php',{configCate:1,sc_id:alter_id,name:name,e_name:e_name},function(data){
+//            var inf=eval('('+data+')');
+            showToast('修改完成')
+        })
+    });
+    $('#delete_cate').click(function(){
+        var del_id= $("#manage_sc_id option:selected").val();
+            $.post('ajax_request.php',{delCate:1,sc_id:del_id},function(data){
+                window.location='index.php?category-config=1';
+            })
     });
 
     $('.add-par-cate').click(function () {

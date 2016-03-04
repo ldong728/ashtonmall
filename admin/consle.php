@@ -108,9 +108,13 @@ if (isset($_SESSION['login'])) {
             exit;
         }
         if (isset($_GET['getMenuInf'])) {
-
             echo getMenuInf();
-
+            exit;
+        }
+        if (isset($_GET['test'])){
+//            $data=curlTest();
+            $data=sendKFMessage('o_Luwt9OgYENChNK0bBZ4b1tl5hc','你好');
+            echo $data;
             exit;
         }
 

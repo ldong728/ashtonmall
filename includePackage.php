@@ -39,7 +39,7 @@ define('WEIXIN_ID','gh_bc1d700f0582');
 define('MCH_ID','1285420201');
 define('KEY','Hlb2005booth20160101hlbbooth0625');
 define("TOKEN", "godlee");
-define('DOMAIN',"ashtonmall");
+define('DOMAIN',"ashton");
 define('NOTIFY_URL',"now is null");
 define('DB_IP','localhost');
 define("DB_NAME","ashton_db");

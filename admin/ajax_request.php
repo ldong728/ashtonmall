@@ -47,6 +47,25 @@ if(isset($_SESSION['login'])) {
         exit;
 
     }
+    if(isset($_POST['getConfigCate'])){
+        $query=pdoQuery('sub_category_tbl',null,array('id'=>$_POST['sc_id']),' limit 1');
+        $inf=$query->fetch();
+        $inf=json_encode($inf,JSON_UNESCAPED_UNICODE);
+        echo $inf;
+        exit;
+    }
+    if(isset($_POST['configCate'])){
+        pdoUpdate('sub_category_tbl',array('name'=>$_POST['name'],'e_name'=>$_POST['e_name']),array('id'=>$_POST['sc_id']));
+        echo 'ok';
+        exit;
+    }
+    if(isset($_POST['delCate'])){
+        pdoDelete('sub_category_tbl',array('id'=>$_POST['sc_id']));
+        pdoUpdate('g_inf_tbl',array('sc_id'=>'-1'),array('sc_id'=>$_POST['sc_id']));
+        init();
+        echo 'ok';
+        exit;
+    }
 //    if (isset($_POST['countryCheck'])) {
 //        if ($_POST['sc_id'] == 0) {
 //            $query = 'SELECT id,name FROM g_inf_tbl WHERE made_in = :country';
