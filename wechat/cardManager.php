@@ -11,17 +11,17 @@ function createCard(array $cardInf){
 
 }
 
-function uploadLogo($file)
-{
-    $sInterFace=new interfaceHandler(WEIXIN_ID);
-    $back = $sInterFace->uploadFileByCurl('https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN', $file,'buffer');
-    $backArray=json_decode($back,true);
-    if(isset($backArray['url'])){
-        return $backArray['url'];
-    }else{
-        return 'error';
-    }
-}
+//function uploadLogo($file)
+//{
+//    $sInterFace=new interfaceHandler(WEIXIN_ID);
+//    $back = $sInterFace->uploadFileByCurl('https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN', $file,'buffer');
+//    $backArray=json_decode($back,true);
+//    if(isset($backArray['url'])){
+//        return $backArray['url'];
+//    }else{
+//        return 'error';
+//    }
+//}
 function encodeCard($encryptCode){
     $encryptCode=array('encrypt_code'=>$encryptCode);
     $sInterFace=new interfaceHandler(WEIXIN_ID);

@@ -69,7 +69,6 @@ class interfaceHandler {
     }
     public function getByCurl($url) {
         $str=$this->replaceAccessToken($url);
-//        wxlog($url);
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_TIMEOUT, 500);
@@ -78,7 +77,6 @@ class interfaceHandler {
         curl_setopt($curl, CURLOPT_URL, $str);
         $res = curl_exec($curl);
         curl_close($curl);
-
         return $res;
     }
     private function replaceAccessToken($url){
@@ -86,37 +84,97 @@ class interfaceHandler {
         $result= preg_replace('/ACCESS_TOKEN/',$this->currentToken,$url);
         return $result;
     }
+    //标准版
+//    public function postByCurl($remote_server, $post_string) {
+//        $remote_server=$this->replaceAccessToken($remote_server);
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_URL, $remote_server);
+//        curl_setopt($ch,CURLOPT_POST,true);
+//        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+//        $data = curl_exec($ch);
+//        curl_close($ch);
+//        return $data;
+//}
+//代理版
     public function postByCurl($remote_server, $post_string) {
         $remote_server=$this->replaceAccessToken($remote_server);
+        $proxy='http://211.149.154.190/proxy/handle.php?postByCurl=1';
+        $data=array('url'=>$remote_server,'string'=>$post_string);
+        $dataJson=json_encode($data,JSON_UNESCAPED_UNICODE);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $remote_server);
+        curl_setopt($ch, CURLOPT_URL, $proxy);
         curl_setopt($ch,CURLOPT_POST,true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-        $data = curl_exec($ch);
-        curl_close($ch);
-        return $data;
-}
-    public function postJsonByCurl($remote_server,$json_string){
-        $remote_server=$this->replaceAccessToken($remote_server);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $remote_server);
-        curl_setopt($ch,CURLOPT_POST,true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_string);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataJson);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Content-Type: application/json',
-                'Content-Length: ' . strlen($json_string))
+                'Content-Length: ' . strlen($dataJson))
         );
         $data = curl_exec($ch);
         curl_close($ch);
         return $data;
     }
+    //标准版
+//    public function postJsonByCurl($remote_server,$json_string){
+//        $remote_server=$this->replaceAccessToken($remote_server);
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_URL, $remote_server);
+//        curl_setopt($ch,CURLOPT_POST,true);
+//        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_string);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+//                'Content-Type: application/json',
+//                'Content-Length: ' . strlen($json_string))
+//        );
+//        $data = curl_exec($ch);
+//        curl_close($ch);
+//        return $data;
+//    }
+//代理版
+    public function postJsonByCurl($remote_server,$json_string){
+        $proxy='http://211.149.154.190/proxy/handle.php?postJsonByCurl=1';
+        $post_string=json_decode($json_string,true);
+        $data=array('url'=>$remote_server,'string'=>$post_string);
+        $dataJson=json_encode($data,JSON_UNESCAPED_UNICODE);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $proxy);
+        curl_setopt($ch,CURLOPT_POST,true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataJson);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($dataJson))
+        );
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
+    }
+    //标准版
+//    public function postArrayByCurl($remote_server,$sArray){
+//        $remote_server=$this->replaceAccessToken($remote_server);
+//        $jsonData=json_encode($sArray,JSON_UNESCAPED_UNICODE);
+//        $data=$this->postJsonByCurl($remote_server,$jsonData);
+//        return $data;
+//    }
+//代理版
     public function postArrayByCurl($remote_server,$sArray){
         $remote_server=$this->replaceAccessToken($remote_server);
-        $jsonData=json_encode($sArray,JSON_UNESCAPED_UNICODE);
-        $data=$this->postJsonByCurl($remote_server,$jsonData);
+        $proxy='http://www.anmiee.com/proxy/handle.php?postJsonByCurl=1';
+        $data=array('url'=>$remote_server,'string'=>$sArray);
+        $dataJson=json_encode($data,JSON_UNESCAPED_UNICODE);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $proxy);
+        curl_setopt($ch,CURLOPT_POST,true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataJson);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($dataJson))
+        );
+        $data = curl_exec($ch);
+        curl_close($ch);
         return $data;
     }
     public function uploadFileByCurl($remote_server,$file,$field='media',$exraInf=null){
