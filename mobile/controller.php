@@ -14,7 +14,6 @@ if (isset($_SESSION['customerId'])) {
             if (isset($_GET['d_id']) && isset($_GET['number'])) {
                 $_SESSION['buyNow']['d_id'] = $_GET['d_id'];
                 $_SESSION['buyNow']['number'] = $_GET['number'];
-
             }
 //            mylog('sessionFull:'.getArrayInf($_SESSION));
 //            mylog('buyNowsession:'.getArrayInf($_SESSION['buyNow']));

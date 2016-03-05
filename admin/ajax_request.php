@@ -66,6 +66,11 @@ if(isset($_SESSION['login'])) {
         echo 'ok';
         exit;
     }
+    if(isset($_POST['remarkAlter'])){
+        pdoUpdate('index_remark_tbl',array('title'=>$_POST['title'],'remark'=>$_POST['remark']),array('id'=>$_POST['id']));
+        echo 'ok';
+        exit;
+    }
 //    if (isset($_POST['countryCheck'])) {
 //        if ($_POST['sc_id'] == 0) {
 //            $query = 'SELECT id,name FROM g_inf_tbl WHERE made_in = :country';

@@ -35,5 +35,6 @@ $adQuery = pdoQuery('ad_tbl', null, null, '');
 foreach ($adQuery as $adRow) {
     $adList[$adRow['category']][] = $adRow;
 }
+$indexRmark=pdoQuery('index_remark_tbl',null,null,null);
 
 include 'view/index.html.php';

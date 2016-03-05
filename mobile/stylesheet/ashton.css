@@ -361,6 +361,10 @@ div.total-price {
     /*margin: 10px 3% 10px 12%;*/
     border: solid 1px #ccc;
 }
+.remark-container .remark-box .imgbox .remark-img {
+    width: 100%;
+    height: 100%;
+}
 
 .remark-container .remark-box .remark-content {
 

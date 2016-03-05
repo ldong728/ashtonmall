@@ -128,7 +128,6 @@ if(isset($_SESSION['customerId'])){
             include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
             $imgPath='g_img/'.$row.'.jpg';
             downloadImgToHost($row,$mypath.'/'.$imgPath);
-
             pdoInsert('review_img_tbl',array('review_id'=>$id,'url'=>$imgPath,'remark'=>md5_file($imgPath)));
         }
         exit;

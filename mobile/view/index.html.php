@@ -71,54 +71,56 @@
     <?php endforeach?>
 
     <div class="remark-container">
+        <?php foreach($indexRmark as $remark):?>
         <div class="remark-box">
-            <div class="imgbox"></div>
+            <div class="imgbox"><img class="remark-img" src="../<?php echo $remark['img']?>"/></div>
             <div class="remark-content">
                 <div class="remark-title">
-                    官方正品
+                    <?php echo $remark['title']?>
                 </div>
                 <div class="remark">
-                    阿诗顿官方微商城，不经过任何中间环节，100%原装厂家发货，正品保证
+                    <?php echo $remark['remark']?>
                 </div>
             </div>
 
         </div>
-        <div class="remark-box">
-            <div class="imgbox"></div>
-            <div class="remark-content">
-                <div class="remark-title">
-                    快递包邮
-                </div>
-                <div class="remark">
-                    本店所有快递均由快递进行配送（特殊活动商品除外）。港澳台及海外地区不支持配送
-                </div>
-            </div>
-
-        </div>
-        <div class="remark-box">
-            <div class="imgbox"></div>
-            <div class="remark-content">
-                <div class="remark-title">
-                    无忧售后
-                </div>
-                <div class="remark">
-                    产品一年保修，7天无理由退货，30天质量问题无忧换货
-                </div>
-            </div>
-
-        </div>
-        <div class="remark-box">
-            <div class="imgbox"></div>
-            <div class="remark-content">
-                <div class="remark-title">
-                    全国联保
-                </div>
-                <div class="remark">
-                    29000家维修网点，基本覆盖县级以上城市，全国联保，免费服务热线：400-8890-240
-                </div>
-            </div>
-
-        </div>
+        <?php endforeach ?>
+<!--        <div class="remark-box">-->
+<!--            <div class="imgbox"></div>-->
+<!--            <div class="remark-content">-->
+<!--                <div class="remark-title">-->
+<!--                    快递包邮-->
+<!--                </div>-->
+<!--                <div class="remark">-->
+<!--                    本店所有快递均由快递进行配送（特殊活动商品除外）。港澳台及海外地区不支持配送-->
+<!--                </div>-->
+<!--            </div>-->
+<!---->
+<!--        </div>-->
+<!--        <div class="remark-box">-->
+<!--            <div class="imgbox"></div>-->
+<!--            <div class="remark-content">-->
+<!--                <div class="remark-title">-->
+<!--                    无忧售后-->
+<!--                </div>-->
+<!--                <div class="remark">-->
+<!--                    产品一年保修，7天无理由退货，30天质量问题无忧换货-->
+<!--                </div>-->
+<!--            </div>-->
+<!---->
+<!--        </div>-->
+<!--        <div class="remark-box">-->
+<!--            <div class="imgbox"></div>-->
+<!--            <div class="remark-content">-->
+<!--                <div class="remark-title">-->
+<!--                    全国联保-->
+<!--                </div>-->
+<!--                <div class="remark">-->
+<!--                    29000家维修网点，基本覆盖县级以上城市，全国联保，免费服务热线：400-8890-240-->
+<!--                </div>-->
+<!--            </div>-->
+<!---->
+<!--        </div>-->
 
     </div>
     <div class="foot-blank"></div>

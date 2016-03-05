@@ -1,4 +1,5 @@
 <?php $frontImg=$GLOBALS['frontImg']?>
+<?php $remarkQuery=$GLOBALS['remarkQuery']?>
 <script src="js/ajaxfileupload.js"></script>
 <div class="module-block front_img_block">
     <div class="module-title">
@@ -45,33 +46,39 @@
     <?php foreach($remarkQuery as $row):?>
         <div class="remark-box">
             <div class="img-box"id="">
-                <a href="#"class="index-remark-img-upload"id="<?php echo $row['id']?>">
-                    <img src="../<?php echo $row['img_url']?>"/><input type="file"id="index-remark-img-up"name="index-remark-img-up"style="display: none">
-                </a>
+                <a href="#"class="index-remark-img-upload"id="upbtn<?php echo $row['id']?>">
+                    <img id="img<?php echo $row['id']?>" src="../<?php echo $row['img']?>"/></a>
+                <input type="file"class="index-remark-img-up"id="img-up<?php echo $row['id']?>"name="index-remark-img-up"style="display: none">
+            </div>
+            <input class="title-input" type="text"id="title<?php echo $row['id']?>"value="<?php echo $row['title']?>"/>
+            <textarea class="remark-input" id="remark<?php echo $row['id']?>"rows="5"cols="20"><?php echo $row['remark']?></textarea>
+            <div class="remark-button-area">
+                <button class="remark-alter" id="alter<?php echo $row['id']?>">修改</button>
+                <button class="remark-del" id="del<?php echo $row['id']?>">删除</button>
             </div>
 
         </div>
 
-
-
     <?php endforeach?>
 
-    <a class="index-remark-img-upload"></a><input type="file"id="index-remark-img-up"name="front-img-up"style="display: none">
+<!--    <a class="index-remark-img-upload"></a><input type="file"id="index-remark-img-up"name="front-img-up"style="display: none">-->
 
     <script>
         $(document).on('click','.index-remark-img-upload',function(){
-            $('#index-remark-img-up').click();
+            var id=$(this).attr('id').slice(5);
+            $('#img-up'+id).click();
         });
-        $(document).on('change','#index-remark-img-up',function(){
+        $(document).on('change','.index-remark-img-up',function(){
+            var  id=$(this).attr('id').slice(6);
             $.ajaxFileUpload({
-                url:'upload.php',
+                url:'upload.php?index_remark_img=1',
                 secureuri: false,
                 fileElementId: $(this).attr('id'), //文件上传域的ID
                 dataType: 'json', //返回值类型 一般设置为json
                 success: function (v, status){
                     if('SUCCESS'== v.state){
-                        var content = '<a href="#"class="delete-front-img"id="'+ v.id+'"><img src="../'+ v.url+'"/></a>';
-                        $('.front-img-upload').before(content);
+                        window.location='index.php';
+
                     }else{
                         showToast(v.state);
                     }
@@ -80,6 +87,20 @@
                     alert('error');
                 }
             });
+        });
+        $(document).on('click','.remark-alter',function(){
+            var id=$(this).attr('id').slice(5);
+            var title=$('#title'+id).val();
+            var remark=$('#remark'+id).val();
+            $.post('ajax_request.php',{remarkAlter:1,id:id,title:title,remark:remark},function(data){
+                window.location='index.php';
+
+            });
+
+        });
+        $(document).on('click','.remark-del',function(){
+            var id=$(this).attr('id').slice(3);
+
         });
     </script>
 

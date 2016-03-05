@@ -171,18 +171,31 @@ div.orderItem {
     background-repeat: no-repeat;
 }
 .index-remark {
-
+    float:left;
 }
 
 .index-remark .remark-box {
-    width: 200px;
-    height: 160px;
+    border: solid 1px #ccc;
+    overflow: hidden;
+    zoom:1;
+    width: 400px;
+    min-height: 160px;
+    margin: 15px;
 }
 
 .index-remark .remark-box .img-box{
     width: 80px;
     height:130px;
     float: left;
+    margin: 0 10px 0 5px;
+}
+.index-remark .remark-box .title-input {
+    float: left;
+    margin: 5px 0 10px 5px;
+}
+.index-remark .remark-box .remark-input {
+    float: left;
+    margin: 5px 0 10px 5px;
 }
 .index-remark .remark-box .img-box img {
     width:80px;

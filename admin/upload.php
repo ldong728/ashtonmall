@@ -107,6 +107,19 @@ if(isset($_SESSION['login'])) {
         }
         exit;
     }
+    if(isset($_GET['index_remark_img'])){
+        foreach($_FILES as $k=>$v) {
+            $uploader = new uploader($k);
+            $uploader->upFile($k);
+            $inf = $uploader->getFileInfo();
+            $jsonInf = json_encode($inf, JSON_UNESCAPED_UNICODE);
+            if ('SUCCESS' == $inf['state']) {
+                pdoUpdate('index_remark_tbl', array( 'img' => $inf['url']), array('id' => $_GET['index_remark_img']));
+                echo $jsonInf;
+            }
+        }
+        exit;
+    }
     if(isset($_FILES['card-img-up'])){
         $uploader = new uploader('card-img-up');
         $uploader->upFile('cardLogo');

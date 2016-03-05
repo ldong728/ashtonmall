@@ -80,6 +80,7 @@ if (isset($_SESSION['login'])) {
     if (isset($_GET['login'])) {
         if ($_POST['adminName'] . $_POST['password'] == ADMIN.PASSWORD) {
             $_SESSION['login'] = 1;
+            $remarkQuery=pdoQuery('index_remark_tbl',null,null,null);
             $frontImg=pdoQuery('ad_tbl',null,array('category'=>'banner'),null);
             printView('admin/view/admin_index.html.php');
         }else{
