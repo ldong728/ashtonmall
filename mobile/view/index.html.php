@@ -34,7 +34,8 @@
 
     <div class="hot-sale-container">
         <div class="category-name">
-            <?php echo $promotionRow[0]['sc_name'].' '.$promotionRow[0]['e_name']?>
+<!--            --><?php //echo $promotionRow[0]['sc_name'].' '.$promotionRow[0]['e_name']?>
+            <?php echo $promotionRow[0]['sc_name']?>
         </div>
         <div  class="h-slash"></div>
         <?php foreach ($promotionRow as $row): ?>
@@ -43,7 +44,7 @@
                 <div class="hot-sale-content">
                     <div class="hot-sale-blank"></div>
                     <div class="hot-sale-name">
-                        <span class="cate-name"><?php echo $row['e_name'].' '?></span><br/>
+                        <span class="cate-name"><?php echo $row['p_name'].' '?></span><br/>
                         <span class="cate-pid"> <?php echo $row['produce_id'] ?> </span>
                     </div>
                     <div class="hot-sale-intro">

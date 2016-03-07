@@ -13,7 +13,6 @@
             <a href="controller.php?goodsdetail=1&g_id=<?php echo $row['g_id'] ?>">
                 <div class="goods-list-box">
                     <img src="../<?php echo $row['url'] ?>"/>
-
                     <div class="name">
                         <?php echo $row['name'] ?>
                     </div>
@@ -35,7 +34,6 @@
         <a class="buy"href="controller.php?partsdetail=1&g_id=<?php echo $row['g_id'] ?>">
             <div class="part-list-box">
                 <img class="part-img" src="../<?php echo $row['url'] ?>"/>
-
                 <div class="box-slash"></div>
                 <div class="part-intro">
                     <?php echo $row['intro'] ?>

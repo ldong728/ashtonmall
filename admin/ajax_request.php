@@ -210,6 +210,11 @@ if(isset($_SESSION['login'])) {
         echo $_POST['value'];
         exit;
     }
+    if (isset($_POST['p_name_change'])){
+        pdoUpdate('promotions_tbl', array('p_name' => $_POST['value']), array('id' => $_POST['id']));
+        echo $_POST['value'];
+        exit;
+    }
     if (isset($_POST['time_filter'])) {
         $preWhere = '';
         switch ($_POST['time_filter']) {
@@ -242,7 +247,8 @@ if(isset($_SESSION['login'])) {
                 'price' => $row['price'],
                 'start_time' => date("Y-m-d\TH:i:s", strtotime($row['start_time'])),
                 'end_time' => date("Y-m-d\TH:i:s", strtotime($row['end_time'])),
-                'img'=>$row['img']
+                'img'=>$row['img'],
+                'p_name'=>$row['p_name']
             );
         }
         $json = json_encode($date);

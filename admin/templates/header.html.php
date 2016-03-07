@@ -20,8 +20,8 @@
         <li><a href="index.php">首页</a></li>
         <li><a href="index.php?add-goods=1">新增商品</a></li>
         <li><a href="index.php?goods-config=1">商品修改</a> </li>
-        <li><a href="index.php?category-config=1">品种管理</a></li>
-        <li><a href="index.php?promotions=1">促销管理</a></li>
+        <li><a href="index.php?category-config=1">分类管理</a></li>
+        <li><a href="index.php?promotions=1">首页展示</a></li>
         <li><a href="index.php?orders=1">订单管理</a></li>
         <li><a href="index.php?review=1">评价管理</a></li>
         <li><a href="index.php?card=1">优惠券</a></li>

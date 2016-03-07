@@ -254,7 +254,6 @@
                 <script>
                     var detailSwiper = new Swiper('#detail_swiper', {
                         onSlideChangeEnd: function(a){
-
                             $('.nav').removeClass('nav-selected');
                             $('#nav'+a.activeIndex).addClass('nav-selected');
                         }
