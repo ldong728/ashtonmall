@@ -99,6 +99,18 @@ $(document).on('click','.part_dft',function(){
     });
 
 });
+$(document).on('click','.coop_dft',function(){
+    var id=$(this).attr('id').slice(4);
+    var stu=true==$(this).prop('checked')?1:0;
+    $.post('ajax_request.php',{change_coop_stu:1,part_id:id,g_id:g_id,value:stu},function(data){
+        if(data==1){
+            showToast('已设定')
+        }else{
+            showToast('已取消')
+        }
+    });
+
+});
 
 /**
  * 获取货品信息
@@ -112,7 +124,8 @@ function getGInf() {
     $('#intro').empty();
     $('#changeSituation').empty();
     $('.parm-set').empty();
-    $('#host-set').empty();
+    $('#host_set').empty();
+    $('#coop_set').empty();
     $('#changeCategory').css('display','none');
 
     $.post("ajax_request.php", {get_g_inf:1,g_id: g_id}, function (data) {
@@ -174,14 +187,22 @@ function getGInf() {
             $.each(inf.parts, function (k, v) {
                 //alert('have parts');
                 var checked = 1 == v.dft_check ? 'checked=checked' : ''
-                var con = '<input type="checkbox"class="part_dft"' + checked +
-                    'id="parts' + v.id + '"/>' + v.part_name + ' ' + v.part_produce_id
+                var con = '<div class="option_block"><input type="checkbox"class="part_dft"' + checked +
+                    'id="parts' + v.id + '"/>' + v.part_name + ' ' + v.part_produce_id +'</div>'
                 $('#host_set').append(con);
 
             });
         }
-
-
+        $('#coop_set').append('<div class="module-title"><h4>搭配产品</h4></div>');
+        if(null!=inf.coop) {
+            $.each(inf.coop, function (k, v) {
+                //alert('have parts');
+                var checked = 1 == v.checked==1 ? 'checked=checked' : ''
+                var con = '<div class="option_block"><input type="checkbox"class="coop_dft"' + checked +
+                    'id="coop' + v.id + '"/>' + v.name + ' ' + v.produce_id +'</div>'
+                $('#coop_set').append(con);
+            });
+        }
         $('#g_inf').slideDown('fast');
         $('#changeCategory').css('display','block');
     });

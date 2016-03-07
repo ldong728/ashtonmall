@@ -118,7 +118,15 @@
                 break;
             }
         }
-
+    $('#cancel_oder').click(function(){
+        $.post('ajax.php',{cancel_order:1,order_id:orderId},function(data){
+            if(data==0){
+                window.location.href = 'controller.php?customerInf=1';
+            }else{
+                alert('此订单暂时无法删除，请联系客服处理')
+            }
+        });
+    });
     $('#pay_now').click(function () {
         window.location.href = 'controller.php?pay_order=1&order_id=' + orderId + '&order_stu=' + orderstu + '&total_fee='+totalFee;
     });

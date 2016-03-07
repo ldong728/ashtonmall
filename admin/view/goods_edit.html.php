@@ -93,6 +93,9 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
         <div id="host_set">
 
         </div>
+        <div id="coop_set">
+
+        </div>
         <div id="changeSituation">
         </div>
     </div>

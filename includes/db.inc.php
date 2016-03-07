@@ -107,10 +107,10 @@ function pdoInsert($tableName,$value,$str=''){
         if ($j < $valueCount - 1) $data = $data . ',';
         $j++;
     }
-    if($str=='ignore'){
+    if(trim($str)=='ignore'){
         $sql=preg_replace('/INTO/',$str,$sql);
         $sql.=$data;
-    }elseif($str=='update'){
+    }elseif(trim($str)=='update'){
         $sql.=$data.' on DUPLICATE KEY update '.$data;
     }else{
         $sql=$sql.$data.$str;

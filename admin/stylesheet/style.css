@@ -370,6 +370,7 @@ div#g_inf{
 div#g_inf .main-inf{
     float: left;
     width: 49%;
+    min-height: 1000px;
     margin: 4% 2px 0 2px;
     border-width: thin;
     border-right-style: solid;
@@ -437,11 +438,27 @@ div#g_inf .main-inf{
     min-width:30%;
 
 }
+.option_block{
+    float: left;
+    height: 18px;
+    margin: 5px;
+
+}
 #g_inf #host_set{
     position: relative;
     border: solid thin;
     margin-top:3%;
-    padding-top:5px;
+    padding-top:10px;
+    float:left;
+    width:45%;
+    min-height:120px;
+    text-align: center;
+}
+#g_inf #coop_set{
+    position: relative;
+    border: solid thin;
+    margin-top:3%;
+    padding-top:10px;
     float:left;
     width:45%;
     min-height:120px;

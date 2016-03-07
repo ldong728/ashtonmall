@@ -72,7 +72,7 @@
                 </div>
                 <div class="scroll-box">
                     <div class="part-box">
-                        <?php foreach ($parts as $r): ?>
+                        <?php if(count($parts)>0)foreach ($parts as $r): ?>
                             <div class="partInf">
                                 <img class="part-img" src="../<?php echo $r['url'] ?>"/>
                                 <input type="hidden" value="<?php echo $r['sale'] ?>"/>
@@ -82,6 +82,17 @@
                                 </div>
                             </div>
                             <?php if ($r['dft'] == 'checked')$price += $r['sale'] ?>
+                        <?php endforeach ?>
+                        <?php if(isset($coop))foreach ($coop as $r): ?>
+                            <a href="controller.php?goodsdetail=1&g_id=<?php echo $r['g_id'] ?>" >
+                                <div class="partInf">
+                                    <img class="part-img" src="../<?php echo $r['url'] ?>"/>
+
+                                    <div class="part-name">
+                                        <?php echo $r['produce_id'] ?>
+                                    </div>
+                                </div>
+                            </a>
                         <?php endforeach ?>
                     </div>
                 </div>
@@ -100,6 +111,12 @@
 <!--                        <dt>品牌：</dt>-->
 <!--                        <dd>ashton/阿诗顿</dd>-->
 <!--                    </dl>-->
+                    <?php if(isset($parm['概况']))foreach ($parm['概况'] as $row): ?>
+                        <dl style="float: left">
+                            <dt><?php echo $row['name']?>：</dt>
+                            <dd><?php echo $row['value']?></dd>
+                        </dl>
+                    <?php endforeach ?>
                     <?php foreach ($parm[''] as $row): ?>
                         <dl style="float: left">
                             <dt><?php echo $row['name']?>：</dt>

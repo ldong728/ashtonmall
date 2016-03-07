@@ -74,7 +74,7 @@ if (isset($_SESSION['login'])) {
     }
     $remarkQuery=pdoQuery('index_remark_tbl',null,null,null);
     $frontImg=pdoQuery('ad_tbl',null,array('category'=>'banner'),null);
-    printView('admin/view/admin_index.html.php');
+    printView('admin/view/admin_index.html.php','阿诗顿官方商城控制台');
     exit;
 } else {
     if (isset($_GET['login'])) {
@@ -82,7 +82,7 @@ if (isset($_SESSION['login'])) {
             $_SESSION['login'] = 1;
             $remarkQuery=pdoQuery('index_remark_tbl',null,null,null);
             $frontImg=pdoQuery('ad_tbl',null,array('category'=>'banner'),null);
-            printView('admin/view/admin_index.html.php');
+            printView('admin/view/admin_index.html.php','阿诗顿官方商城控制台');
         }else{
             include 'view/login.html.php';
         }

@@ -260,7 +260,12 @@ if (isset($_GET['oauth'])) {
     $rand = rand(1000, 9999);
     $_SESSION['rand'] = $rand;
     if(isset($_GET['share'])){
-        header('location:controller.php?goodsdetail=1&g_id='.$_GET['share']);
+        if($_GET['part']==1){
+            header('location:controller.php?goodsdetail=1&g_id='.$_GET['share']);
+        }else{
+            header('location:controller.php?partsdetail=1&g_id='.$_GET['share']);
+        }
+
         exit;
     }
     header('location:index.php?rand=' . $rand);
@@ -367,6 +372,15 @@ if (isset($_GET['goodsdetail'])) {
             $row['dft'] = '';
         }
         $parts[] = $row;
+    }
+    if(count($parts)==0){
+        $coopquery = pdoQuery('user_coop_view', null, array('host_id' => $_GET['g_id']), null);
+        foreach ($coopquery as $cooprow) {
+            $coop[$cooprow['g_id']]=$cooprow;
+        }
+
+//        $coopration=pdoQuery('coop_tbl')
+//        mylog('noparts');
     }
 //    $cate=pdoQuery('sub_category_tbl',null,array('id'=>$inf['sc_id']),' limit 1');
 //    $cate=$cate->fetch();

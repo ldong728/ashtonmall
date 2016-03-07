@@ -134,7 +134,8 @@ if(isset($_SESSION['customerId'])){
     }
     if(isset($_POST['linkKf'])){
         include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
-        $response=linkKf($_SESSION['customerId']);
+
+        $response=linkKf($_SESSION['customerId'],'default');
         echo $response;
         exit;
     }
@@ -191,7 +192,25 @@ if(isset($_SESSION['customerId'])){
         $response=array('url'=>$imgPath);
         $response=json_encode($response,JSON_UNESCAPED_UNICODE);
         echo $imgPath;
+    }
+    if(isset($_POST['cancel_order'])){
+        $orderstu=pdoQuery('order_tbl',array('stu'),array('id'=>$_POST['order_id']),' limit 1');
+        $stu=$orderstu->fetch();
+        if(isset($stu['stu'])){
+            if($stu['stu']==0){
+                pdoDelete('order_tbl',array('id'=>$_POST['order_id']));
+                pdoDelete('order_detail_tbl',array('o_id'=>$_POST['order_id']));
+                echo 0;
+                exit;
+            }
+            if($stu['stu']==1){
+                echo 1;
+                exit;
+            }
 
+        }
+        echo -1;
+        exit;
     }
 
 }

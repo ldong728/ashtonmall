@@ -1,0 +1,36 @@
+div.wrap{
+    width: 420px;
+
+}
+.wrap .url-block{
+    /*overflow: hidden;*/
+    /*zoom:1;*/
+    float: left;
+    width: 100%;
+    min-height: 250px;
+    margin: 5px;
+    padding: 5px;
+}
+.wrap .url-block .inf-block{
+    float: left;
+    box-sizing: border-box;
+    width: 70px;
+    height: 100px;
+    padding: 5px;
+    text-align: center;
+}
+.wrap .url-block .inf-block img{
+
+    width: 100%;
+    height: auto;
+    max-height: 75px;
+}
+.wrap .url-block .url-content{
+    word-wrap: break-word;
+    word-break: normal;
+    float: left;
+    width: 250px;
+    min-height: 200px;
+    padding: 5px;
+
+}

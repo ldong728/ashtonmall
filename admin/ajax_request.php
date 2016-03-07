@@ -157,6 +157,18 @@ if(isset($_SESSION['login'])) {
             foreach($parts as $partRow){
                 $back['parts'][]=$partRow;
             }
+            if(!isset($back['parts'])){
+                $cooplist=pdoQuery('g_inf_tbl',array('id','name','produce_id'),array('situation'=>'1'),null);
+                foreach ($cooplist as $cooprow) {
+                    $coops[$cooprow['id']]=$cooprow;
+                }
+                $coopChoosen=pdoQuery('coop_tbl',null,array('g_id'=>$_POST['g_id']),null);
+                foreach ($coopChoosen as $ccrow) {
+                    $coops[$ccrow['part_g_id']]['checked']=1;
+                }
+                $back['coop']=$coops;
+//                mylog(getArrayInf($back['coop']));
+            }
             $back['parm']=getGoodsPar($_POST['g_id'],$sc_id);
             $jsonBack=json_encode($back,JSON_UNESCAPED_UNICODE);
 //            mylog($jsonBack);
@@ -349,6 +361,17 @@ if(isset($_SESSION['login'])) {
     if(isset($_POST['change_part_stu'])){
         pdoUpdate('part_tbl',array('dft_check'=>$_POST['value']),array('id'=>$_POST['id']));
         echo $_POST['value'];
+        exit;
+    }
+    if(isset($_POST['change_coop_stu'])){
+        if($_POST['value']==0){
+            pdoDelete('coop_tbl',array('part_g_id'=>$_POST['part_id'],'g_id'=>$_POST['g_id']));
+            $data=0;
+        }else if($_POST['value']==1){
+            pdoInsert('coop_tbl',array('part_g_id'=>$_POST['part_id'],'g_id'=>$_POST['g_id']),'ignore');
+            $data=1;
+        }
+        echo $data;
         exit;
     }
     if(isset($_POST['manageReview'])){
