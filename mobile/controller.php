@@ -265,7 +265,6 @@ if (isset($_GET['oauth'])) {
         }else{
             header('location:controller.php?partsdetail=1&g_id='.$_GET['share']);
         }
-
         exit;
     }
     header('location:index.php?rand=' . $rand);
