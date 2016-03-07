@@ -13,7 +13,7 @@
 <div class="wrap">
     <div class="pDetail">
         <a href="controller.php?getList=1&c_id=<?php echo $cate['id']?>"><div class="category-name">
-            <?php echo $cate['name'].' '.$cate['e_name']?>
+            <?php echo $cate['e_name']?>
         </div>
         </a>
         <div class="h-slash">
@@ -216,51 +216,51 @@
                 </div>
 
             </div>
-            <div class="g-detail module-box">
-                <div class="detail-nav">
-                    <div class="nav nav-selected"id="nav0">商品介绍</div>
-                    <div class="slash"></div>
-                    <div class="nav"id="nav1">参数规格</div>
-                    <div class="slash"></div>
-                    <div class="nav"id="nav2">售后保障</div>
-                </div>
-                <div class="swiper-container" id="detail_swiper">
-                    <div class="swiper-wrapper" style="width: 4368px; height: auto">
-                        <div class="swiper-slide">
-                            <div class="detail-info">
-                                <?php echo $inf['inf']?>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="detail-par">
-                                <table>
-                                    <?php foreach($parm as $k=>$v):?>
-                                        <tr><td colspan="2"><?php echo $k?></td></tr>
-                                        <?php foreach($v as $row):?>
-                                            <tr><td><?php echo $row['name']?></td><td><?php echo $row['value']?></td></tr>
-                                        <?php endforeach?>
-
-                                    <?php endforeach ?>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="detail-after">
-                                <?php echo $remark['remark']?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <script>
-                    var detailSwiper = new Swiper('#detail_swiper', {
-                        onSlideChangeEnd: function(a){
-                            $('.nav').removeClass('nav-selected');
-                            $('#nav'+a.activeIndex).addClass('nav-selected');
-                        }
-                    });
-                </script>
-            </div>
-        </div>
+<!--            <div class="g-detail module-box">-->
+<!--                <div class="detail-nav">-->
+<!--                    <div class="nav nav-selected"id="nav0">商品介绍</div>-->
+<!--                    <div class="slash"></div>-->
+<!--                    <div class="nav"id="nav1">参数规格</div>-->
+<!--                    <div class="slash"></div>-->
+<!--                    <div class="nav"id="nav2">售后保障</div>-->
+<!--                </div>-->
+<!--                <div class="swiper-container" id="detail_swiper">-->
+<!--                    <div class="swiper-wrapper" style="width: 4368px; height: auto">-->
+<!--                        <div class="swiper-slide">-->
+<!--                            <div class="detail-info">-->
+<!--                                --><?php //echo $inf['inf']?>
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="swiper-slide">-->
+<!--                            <div class="detail-par">-->
+<!--                                <table>-->
+<!--                                    --><?php //foreach($parm as $k=>$v):?>
+<!--                                        <tr><td colspan="2">--><?php //echo $k?><!--</td></tr>-->
+<!--                                        --><?php //foreach($v as $row):?>
+<!--                                            <tr><td>--><?php //echo $row['name']?><!--</td><td>--><?php //echo $row['value']?><!--</td></tr>-->
+<!--                                        --><?php //endforeach?>
+<!---->
+<!--                                    --><?php //endforeach ?>
+<!--                                </table>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="swiper-slide">-->
+<!--                            <div class="detail-after">-->
+<!--                                --><?php //echo $remark['remark']?>
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <script>-->
+<!--                    var detailSwiper = new Swiper('#detail_swiper', {-->
+<!--                        onSlideChangeEnd: function(a){-->
+<!--                            $('.nav').removeClass('nav-selected');-->
+<!--                            $('#nav'+a.activeIndex).addClass('nav-selected');-->
+<!--                        }-->
+<!--                    });-->
+<!--                </script>-->
+<!--            </div>-->
+<!--        </div>-->
 
         </div>
     </div>

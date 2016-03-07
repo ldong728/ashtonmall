@@ -75,9 +75,9 @@ if (isset($_SESSION['login'])) {
     }
     if (isset($_GET['start_promotions'])) {
         $id = pdoInsert('promotions_tbl', array('g_id' => $_GET['g_id'], 'd_id' => $_GET['d_id']));
-        $dquery=pdoQuery('g_detail_tbl',null,array('id'=>$_GET['d_id']),' limit 1');
+        $dquery=pdoQuery('g_detail_view',null,array('d_id'=>$_GET['d_id']),' limit 1');
         $g_inf=$dquery->fetch();
-        pdoUpdate('promotions_tbl', array('img' => 'g_img/pro-img-up' . $id . '.jpg','price'=>$g_inf['sale']), array('id' => $id));
+        pdoUpdate('promotions_tbl', array('img' => 'g_img/pro-img-up' . $id . '.jpg','price'=>$g_inf['sale'],'p_name'=>$g_inf['name']), array('id' => $id));
         header('location: index.php?promotions=1');
         exit;
 

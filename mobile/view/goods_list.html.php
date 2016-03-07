@@ -5,7 +5,7 @@
 <body>
 <div class="wrap">
     <div class="category-name">
-        <?php echo $cateName['sub_name'].' '.$cateName['e_name']?>
+        <?php echo $cateName['e_name']?>
     </div>
     <div class="h-slash"></div>
     <div class="goods-list-container">

@@ -66,7 +66,7 @@ $smq = $_SESSION['smq'];
     </select>
     <div class="cate_config"style="display: none">
         名称：<input type="text"id="config-cate-name"placeholder="类型名">
-        英文名：<input type="text"id="config-cate-e-name"placeholder="english-name">
+        详细名称：<input type="text"id="config-cate-e-name"placeholder="详细名称">
         <button id="alter_cate">修改</button>
         <button id="delete_cate">删除</button>
     </div>

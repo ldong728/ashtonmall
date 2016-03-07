@@ -48,7 +48,7 @@
             <div class="img-box"id="">
                 <a href="#"class="index-remark-img-upload"id="upbtn<?php echo $row['id']?>">
                     <img id="img<?php echo $row['id']?>" src="../<?php echo $row['img']?>"/></a>
-                <input type="file"class="index-remark-img-up"id="img-up<?php echo $row['id']?>"name="index-remark-img-up"style="display: none">
+                <input type="file"class="index-remark-img-up"id="img-up<?php echo $row['id']?>"name="img-up<?php echo $row['id']?>"style="display: none">
             </div>
             <input class="title-input" type="text"id="title<?php echo $row['id']?>"value="<?php echo $row['title']?>"/>
             <textarea class="remark-input" id="remark<?php echo $row['id']?>"rows="5"cols="20"><?php echo $row['remark']?></textarea>
@@ -70,8 +70,9 @@
         });
         $(document).on('change','.index-remark-img-up',function(){
             var  id=$(this).attr('id').slice(6);
+//            alert(id);
             $.ajaxFileUpload({
-                url:'upload.php?index_remark_img=1',
+                url:'upload.php?index_remark_img='+id,
                 secureuri: false,
                 fileElementId: $(this).attr('id'), //文件上传域的ID
                 dataType: 'json', //返回值类型 一般设置为json

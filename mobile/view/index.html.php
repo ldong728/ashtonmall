@@ -33,16 +33,17 @@
     <?php foreach ($promotion as $promotionRow):?>
 
     <div class="hot-sale-container">
-        <div class="category-name">
+        <a href="controller.php?getList=1&c_id=<?php echo $promotionRow[0]['sc_id']?>"><div class="category-name">
 <!--            --><?php //echo $promotionRow[0]['sc_name'].' '.$promotionRow[0]['e_name']?>
-            <?php echo $promotionRow[0]['sc_name']?>
-        </div>
+            <?php echo $promotionRow[0]['e_name']?>
+        </div></a>
         <div  class="h-slash"></div>
         <?php foreach ($promotionRow as $row): ?>
+
             <div class="hot-sale-box">
                 <div class="hot-sale-blank"></div>
                 <div class="hot-sale-content">
-                    <div class="hot-sale-blank"></div>
+<!--                    <div class="hot-sale-blank"></div>-->
                     <div class="hot-sale-name">
                         <span class="cate-name"><?php echo $row['p_name'].' '?></span><br/>
                         <span class="cate-pid"> <?php echo $row['produce_id'] ?> </span>
@@ -52,20 +53,18 @@
                     </div>
                     <div class="hot-sale-price">
                         RMB <?php echo $row['price'] ?>
-
-
                     </div>
                     <a href="controller.php?goodsdetail=1&g_id=<?php echo $row['id'] ?>" class="hot-sale-buy">
                     选购
-
                     </a>
-
                 </div>
+                <a href="controller.php?goodsdetail=1&g_id=<?php echo $row['id'] ?>">
                 <div class="hot-sale-image">
                     <img src="../<?php echo $row['url'] ?>"/>
-
                 </div>
+                    </a>
             </div>
+
 <!--            <div class="horizonborder"></div>-->
         <?php endforeach ?>
     </div>
