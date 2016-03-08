@@ -71,7 +71,7 @@
                     共计：
 
                 <span class="cl_red">
-                    ￥<?php echo $total ?>
+                    ￥<?php echo $order_inf['total_fee'] ?>
                 </span>
                 <span class="transp">
                     含运费￥<?php echo $order_inf['express_price'] ?>

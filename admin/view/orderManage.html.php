@@ -35,6 +35,7 @@
                 </select>
                 <input type="hidden"name="filtOrder"value="<?php echo $row['id']?>">
                 <input name="expressNumber"type="text"placeholder="输入单号"<?php echo $row['express_order']!=0?'value="'.$row['express_order'].'"':''?>>
+                价格：<input name="total_fee"type="text"value="<?php echo $row['total_fee']?>">
                 <input type="hidden" name="stu"value="2">
                 <input type="submit"id="submit<?php echo $row['id']?>"value="发货/修改">
             </div>
