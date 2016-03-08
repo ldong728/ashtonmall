@@ -19,7 +19,7 @@ if (isset($_POST['prePay'])) {
             $date['appid'] = APP_ID;
             $date['mch_id'] = MCH_ID;
             $date['nonce_str'] = getRandStr(32);
-            $date['body'] = 'gshopPay';
+            $date['body'] = '阿诗顿官方商城订单';
             $date['spbill_create_ip'] = $_SERVER['REMOTE_ADDR'];
             $date['out_trade_no'] = $_POST['order_id'];
             $date['total_fee'] = $inf['total_fee'] * 100;

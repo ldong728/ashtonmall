@@ -101,7 +101,7 @@
 <script>
     var orderId = '<?php echo $order_inf['id']?>';
     var orderstu =<?php echo $order_inf['stu']?>;
-    var totalFee=<?php echo $total ?>;
+    var totalFee=<?php echo $order_inf['total_fee'] ?>;
         $('.noDisplay').css('display','none');
         switch (orderstu){
             case 0:{

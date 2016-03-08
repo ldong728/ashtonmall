@@ -101,38 +101,30 @@
                 <!--                    <button class="part-add-cart">加入购物车</button>-->
                 <!--                </div>-->
             </div>
-            <div class="param module-box">
-                <div class="title">
-                    <div class="line-number">2</div>
-                    <div class="title-name">选择功能</div>
-                </div>
-                <div class="param-container">
-<!--                    <dl class="clearfix">-->
-<!--                        <dt>品牌：</dt>-->
-<!--                        <dd>ashton/阿诗顿</dd>-->
-<!--                    </dl>-->
-                    <?php if(isset($parm['概况']))foreach ($parm['概况'] as $row): ?>
-                        <dl style="float: left">
-                            <dt><?php echo $row['name']?>：</dt>
-                            <dd><?php echo $row['value']?></dd>
-                        </dl>
-                    <?php endforeach ?>
-                    <?php foreach ($parm[''] as $row): ?>
-                        <dl style="float: left">
-                            <dt><?php echo $row['name']?>：</dt>
-                            <dd><?php echo $row['value']?></dd>
-                        </dl>
-                    <?php endforeach ?>
-<!--                    <dl style="float: left">-->
-<!--                        <dt>a</dt>-->
-<!--                        <dd>b</dd>-->
-<!--                    </dl>-->
-                </div>
-            </div>
+<!--            <div class="param module-box">-->
+<!--                <div class="title">-->
+<!--                    <div class="line-number">2</div>-->
+<!--                    <div class="title-name">选择功能</div>-->
+<!--                </div>-->
+<!--                <div class="param-container">-->
+<!--                    --><?php //if(isset($parm['概况']))foreach ($parm['概况'] as $row): ?>
+<!--                        <dl style="float: left">-->
+<!--                            <dt>--><?php //echo $row['name']?><!--：</dt>-->
+<!--                            <dd>--><?php //echo $row['value']?><!--</dd>-->
+<!--                        </dl>-->
+<!--                    --><?php //endforeach ?>
+<!--                    --><?php //foreach ($parm[''] as $row): ?>
+<!--                        <dl style="float: left">-->
+<!--                            <dt>--><?php //echo $row['name']?><!--：</dt>-->
+<!--                            <dd>--><?php //echo $row['value']?><!--</dd>-->
+<!--                        </dl>-->
+<!--                    --><?php //endforeach ?>
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="detail module-box">
-                <div class="title" id="cate-title">
-                    <div class="line-number">3</div>
+                <div class="title" id="count-title">
+                    <div class="line-number">2</div>
                     <div class="title-name">选择颜色</div>
                     <div class="select">
                         <div class="background"></div>
@@ -149,8 +141,10 @@
                         </select>
                     </div>
                 </div>
+            </div>
+            <div class="detail module-box">
                 <div class="title" id="count-title">
-                    <div class="line-number">4</div>
+                    <div class="line-number">3</div>
                     <div class="title-name">选择数量</div>
                     <div class="countBox">
                         <a class="minus number-button" id="minus">-</a>
@@ -159,63 +153,72 @@
                         <a class="plus number-button" id="plus">+</a>
                     </div>
                 </div>
-
-
             </div>
-            <div class="module-box others">
-                <div class="others-nav">
-                    <div class="others-content" id="detail">
-                        <a class="detail-select"href="#detail-content">看详情</a>
-                    </div>
-                    <div class="others-content"id="remark">
-                        <a class="detail-select"href="#detail-review">看评价</a></div>
-                    <div class="others-content">
-                        <a class="detail-select"id="compare"href="#detail-compare">拼价格</a></div>
+            <div class="detail module-box">
+                <div class="title" id="count-title">
+                    <div class="line-number">4</div>
+                    <div class="title-name">主要功能</div>
+                </div>
+            </div>
+            <div class="detail module-box">
+                <div class="title" id="count-title">
+                    <div class="line-number">5</div>
+                    <div class="title-name">查看评价</div>
+                </div>
+            </div>
+
+
+
+
+<!--            <div class="module-box others">-->
+<!--                <div class="others-nav">-->
+<!--                    <div class="others-content" id="detail">-->
+<!--                        <a class="detail-select"href="#detail-content">看详情</a>-->
+<!--                    </div>-->
+<!--                    <div class="others-content"id="remark">-->
+<!--                        <a class="detail-select"href="#detail-review">看评价</a></div>-->
 <!--                    <div class="others-content">-->
-<!--                        <a class="detail-select">晒颜值</a></div>-->
+<!--                        <a class="detail-select"id="compare"href="#detail-compare">拼价格</a></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="module-box mult-content">-->
+<!--                <div class="default-content video-container"id="video-content">-->
+<!--                    <video controls="controls" src="../g_img/video/--><?php //echo $inf['produce_id']?><!--.mp4" width="90%" height="auto">-->
+<!--<!--                        <source src="../g_img/video/-->--><?php ////echo $inf['produce_id']?><!--<!--.mp4">-->-->
+<!--                    </video>-->
+<!--                </div>-->
+<!--                <div class="hidden-content detail"id="detail-content"style="max-height: 15000px">-->
+<!--                    --><?php //echo $inf['inf']?>
+<!--                </div>-->
+<!--                <div class="hidden-content review"id="detail-review">-->
+<!--                    --><?php //foreach($review['inf'] as $row):?>
+<!--                        <div class="review-content">-->
+<!--                            <div class="nameblock">-->
+<!--                                <p class="name">--><?php //echo $row['nickname']?><!--</p>-->
+<!--                                --><?php //for($i=0; $i<$row['score'];$i++):?>
+<!--                                    <div class="score"></div>-->
+<!--                                --><?php //endfor?>
+<!--                                <p class="time">--><?php //echo date('Y-m-d',strtotime($row['review_time']))?><!--</p>-->
+<!--                            </div>-->
+<!--                            <div class="text">-->
+<!--                                --><?php //echo $row['review']?>
+<!--                            </div>-->
+<!--                            <div class="imgbox">-->
+<!--                            </div>-->
+<!--                            <div class="cate">-->
+<!--                                颜色：--><?php //echo $row['category']?>
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    --><?php //endforeach?>
+<!--                    <div class="more-review">-->
+<!--                        查看全部评价-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="hidden-content compare"id="detail-compare">-->
+<!--                    <a href="http://search.jd.com/Search?keyword=阿诗顿%20--><?php //echo $inf['produce_id']?><!--&enc=utf-8&wq=%E9%98%BF%E8%AF%97%E9%A1%BF%20--><?php //echo $inf['produce_id']?><!--"><img src="../img/jd.jpg"/> </a>-->
+<!--                </div>-->
 
-<!--                    <div class="others-content">-->
-<!--                        <a class="detail-select">分销加盟</a></div>-->
-                </div>
-            </div>
-            <div class="module-box mult-content">
-                <div class="default-content video-container"id="video-content">
-                    <video controls="controls" src="../g_img/video/<?php echo $inf['produce_id']?>.mp4" width="90%" height="auto">
-<!--                        <source src="../g_img/video/--><?php //echo $inf['produce_id']?><!--.mp4">-->
-                    </video>
-                </div>
-                <div class="hidden-content detail"id="detail-content"style="max-height: 15000px">
-                    <?php echo $inf['inf']?>
-                </div>
-                <div class="hidden-content review"id="detail-review">
-                    <?php foreach($review['inf'] as $row):?>
-                        <div class="review-content">
-                            <div class="nameblock">
-                                <p class="name"><?php echo $row['nickname']?></p>
-                                <?php for($i=0; $i<$row['score'];$i++):?>
-                                    <div class="score"></div>
-                                <?php endfor?>
-                                <p class="time"><?php echo date('Y-m-d',strtotime($row['review_time']))?></p>
-                            </div>
-                            <div class="text">
-                                <?php echo $row['review']?>
-                            </div>
-                            <div class="imgbox">
-                            </div>
-                            <div class="cate">
-                                颜色：<?php echo $row['category']?>
-                            </div>
-                        </div>
-                    <?php endforeach?>
-                    <div class="more-review">
-                        查看全部评价
-                    </div>
-                </div>
-                <div class="hidden-content compare"id="detail-compare">
-                    <a href="http://search.jd.com/Search?keyword=阿诗顿%20<?php echo $inf['produce_id']?>&enc=utf-8&wq=%E9%98%BF%E8%AF%97%E9%A1%BF%20<?php echo $inf['produce_id']?>"><img src="../img/jd.jpg"/> </a>
-                </div>
-
-            </div>
+<!--            </div>-->
 <!--            <div class="g-detail module-box">-->
 <!--                <div class="detail-nav">-->
 <!--                    <div class="nav nav-selected"id="nav0">商品介绍</div>-->

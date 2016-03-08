@@ -198,7 +198,7 @@ function getGInf() {
         if(null!=inf.coop) {
             $.each(inf.coop, function (k, v) {
                 //alert('have parts');
-                var checked = 1 == v.checked==1 ? 'checked=checked' : ''
+                var checked = 1 == v.checked ? 'checked="checked"' : ''
                 var con = '<div class="option_block"><input type="checkbox"class="coop_dft"' + checked +
                     'id="coop' + v.id + '"/>' + v.name + ' ' + v.produce_id +'</div>'
                 $('#coop_set').append(con);
