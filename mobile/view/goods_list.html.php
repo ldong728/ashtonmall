@@ -14,10 +14,14 @@
                 <div class="goods-list-box">
                     <img src="../<?php echo $row['url'] ?>"/>
                     <div class="name">
-                        <?php echo $row['name'] ?>
+                        <span class="goods-list-name"><?php echo $row['made_in'] ?></span></br>
+                        <span class="goods-list-cid"><?php echo $row['produce_id']?></span>
                     </div>
-                    <div class="intro">
-                        <?php echo $row['intro'] ?>
+<!--                    <div class="intro">-->
+<!--                        --><?php //echo $row['intro'] ?>
+<!--                    </div>-->
+                    <div class="price">
+                        <?php echo 'RMB '.$row['sale']?>
                     </div>
                     <a class="buy"href="controller.php?goodsdetail=1&g_id=<?php echo $row['g_id'] ?>">
                         选购

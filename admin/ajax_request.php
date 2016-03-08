@@ -141,7 +141,7 @@ if(isset($_SESSION['login'])) {
 
     }
     if (isset($_POST["get_g_inf"])) {
-        $query = pdoQuery('g_inf_tbl', array('name', 'intro','inf','situation','sc_id','produce_id'), array('id' => $_POST['g_id']), ' limit 1');
+        $query = pdoQuery('g_inf_tbl', array('name', 'intro','inf','situation','sc_id','produce_id','made_in'), array('id' => $_POST['g_id']), ' limit 1');
         if ($goodsInf = $query->fetch()) {
             $back['goodsInf']=$goodsInf;
             $sc_id=$back['goodsInf']['sc_id'];

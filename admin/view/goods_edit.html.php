@@ -55,6 +55,11 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
                         <input id="name" type="text" name="name" />
                     </label>
                 </div>
+                <div class="g-inf-name">
+                    <label for="s_name">短名称
+                        <input id="s_name" type="text" name="s_name" />
+                    </label>
+                </div>
                 <div clas="g-inf-produce-id">
                     <lable for="produce_id">型号
                         <input type="text" id="produce_id"name="produce_id"/>

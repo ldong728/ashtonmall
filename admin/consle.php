@@ -41,7 +41,7 @@ if (isset($_SESSION['login'])) {
 
     }
     if (isset($_POST['alter'])) {
-        pdoUpdate('g_inf_tbl', array('name' => $_POST['name'], 'intro' => addslashes($_POST['intro']), 'inf' => addslashes($_POST['g_inf']), 'produce_id' => $_POST['produce_id']), array('id' => $_POST['g_id']));
+        pdoUpdate('g_inf_tbl', array('name' => $_POST['name'],'made_in'=>$_POST['s_name'], 'intro' => addslashes($_POST['intro']), 'inf' => addslashes($_POST['g_inf']), 'produce_id' => $_POST['produce_id']), array('id' => $_POST['g_id']));
         $g_id = $_POST['g_id'];
         $is_part = isset($_POST['is_part']) ? '&is_part=1' : '';
         header('location:index.php?goods-config=1&g_id=' . $g_id . $is_part);

@@ -376,12 +376,18 @@ div#g_inf .main-inf{
     border-right-style: solid;
 }
 .main-inf .g-inf-name{
+    clear: left;
+    margin: 5px;
     float:left;
 }
 .main-inf .g-inf-produce-id{
+    clear: left;
+    margin: 5px;
     float:left;
 }
 .main-inf .g-inf-intro{
+    clear: left;
+    margin: 5px;
     float:left;
     margin: 2%;
 }

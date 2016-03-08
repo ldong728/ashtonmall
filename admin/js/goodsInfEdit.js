@@ -138,6 +138,7 @@ function getGInf() {
         $('#intro').append(inf.goodsInf.intro);
         $('#changeSituation').append(stub);
         $('#name').val(inf.goodsInf.name);
+        $('#s_name').val(inf.goodsInf.made_in);
         $('#produce_id').val(inf.goodsInf.produce_id);
         if(null!=inf.goodsInf.inf) {
             um.setContent(inf.goodsInf.inf);

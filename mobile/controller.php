@@ -287,7 +287,7 @@ if (isset($_GET['oauth'])) {
 //获取主分类
 if (isset($_GET['getList'])) {
     $sc_id = $_GET['c_id'];
-    $query=pdoQuery('user_g_inf_view',null,array('sc_id'=>$sc_id,'situation'=>'1'),null);
+    $query=pdoQuery('user_tmp_list_view',null,array('sc_id'=>$sc_id,'situation'=>'1'),' group by g_id');
     foreach ($query as $row) {
         $list[]=$row;
     }

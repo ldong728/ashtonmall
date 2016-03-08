@@ -450,12 +450,23 @@ div.total-price {
     font-weight: 700;
     line-height: 16px;
 }
+.goods-list-container .goods-list-box .name span.goods-list-name {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+}
+.goods-list-container .goods-list-box .name span.goods-list-cid {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 25px;
+}
 
-.goods-list-container .goods-list-box .intro {
-    margin: 5px auto 5px auto;
+.goods-list-container .goods-list-box .price {
+    color:red;
+    margin: 12px auto 3px auto;
     width: 95%;
-    min-height: 16px;
-    max-height: 100px
+    font-weight: 600;
+    line-height: 16px;
 }
 
 .goods-list-container .goods-list-box .price {
