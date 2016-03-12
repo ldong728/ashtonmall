@@ -134,8 +134,15 @@ if(isset($_SESSION['customerId'])){
     }
     if(isset($_POST['linkKf'])){
         include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
+        if($_POST['gid']!=-1){
+            $inf=pdoQuery('user_g_inf_view',null,array('g_id'=>$_POST['gid']),' limit 1');
+            $ginf=$inf->fetch();
+            $string='当前商品：'.$ginf['produce_id'];
+            $response=linkKf($_SESSION['customerId'],'default',$string);
+        }else{
+            $response=linkKf($_SESSION['customerId'],'default');
+        }
 
-        $response=linkKf($_SESSION['customerId'],'default');
         echo $response;
         exit;
     }

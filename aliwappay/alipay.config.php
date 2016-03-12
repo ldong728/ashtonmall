@@ -25,6 +25,8 @@ $alipay_config['partner']		= '';
 //收款支付宝账号，一般情况下收款账号就是签约账号
 $alipay_config['seller_id']	= $alipay_config['partner'];
 
+$alipay_config['key'] = '';
+
 //商户的私钥（后缀是.pen）文件相对路径
 $alipay_config['private_key_path']	= 'key/rsa_private_key.pem';
 

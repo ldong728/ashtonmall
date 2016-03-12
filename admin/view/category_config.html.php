@@ -91,7 +91,7 @@ $smq = $_SESSION['smq'];
 
 
 </div>
-<div class="module-block remark-edit">
+<div class="module-block remark-edit" style="display: none">
     <div class="module-title"><h4>售后条例</h4></div>
     <script type="text/plain" id="uInput" name="cate-remark" style="width:1000px;height:240px;">
                 <p>在这里编辑</p>
@@ -129,6 +129,7 @@ $smq = $_SESSION['smq'];
         sc_id = $("#sc_id option:selected").val();
         getParInf();
         $('.cate-button').css('display', 'block');
+        $('.remark-edit').css('display','block');
     });
     $('#manage_sc_id').change(function(){
         var config_id = $("#manage_sc_id option:selected").val();

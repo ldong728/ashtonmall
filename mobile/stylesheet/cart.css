@@ -75,7 +75,7 @@ span#totalPrice{
     display: block;
     max-width: 35%;
 }
-.cart_list .cDetail .cName{display:block; font-size:3.7vw;line-height: 4.2vw;max-width: 35%}
+.cart_list .cDetail .cName{display:block; font-size:15px;line-height: 16px;max-width: 35%}
 .cart_list .cDetail .cStandard{color:#666; padding:10px 0;}
 /*.cart_list .cDetail .cCount{padding:10px 0;}*/
 .cart_list .cDetail .countBox{position:absolute;top:0;right: 0; display:block; line-height:30px; text-align:right; width:100px; color:#666;}

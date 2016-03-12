@@ -41,6 +41,9 @@ class AlipaySubmit {
 			case "RSA" :
 				$mysign = rsaSign($prestr, $this->alipay_config['private_key_path']);
 				break;
+            case "MD5" :
+                $mysign=md5($prestr.$this->alipay_config['key']);
+                break;
 			default :
 				$mysign = "";
 		}

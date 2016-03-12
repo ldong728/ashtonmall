@@ -38,3 +38,20 @@ function selectCate(o){
     var id= o.id.slice(4)
     window.location.href='controller.php?getFcList=1&fc_id='+id;
 }
+
+function linkKf(g_id){
+    var gid=g_id||'-1';
+    $.post('ajax.php',{linkKf:1,gid:gid},function(data){
+
+        if(0==data){
+            alert('客服已接通，请关闭当前页面以便与客服交流');
+        }
+        if(1==data){
+            alert('客服不在线或者忙碌中，请稍候再试');
+        }
+        if(2==data){
+            alert('当前无在线客服，请稍候再试');
+        }
+
+    })
+}

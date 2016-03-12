@@ -16,7 +16,7 @@
                                 <img class="pro_img"src="../<?php echo $row['url']?>"style="width: 48px; height: 48px; border: 1px solid rgb(204, 204, 204); display: block;">
                             </a>
                             <div class="cDetail">
-                                <a class="cName"href="controller.php?goodsdetail=1&g_id=<?php echo $row['g_id']?>&d_id=<?php echo $row['d_id']?>&number=<?php echo $row['number']?>"><?php echo $row['name']?></a>
+                                <a class="cName"href="controller.php?goodsdetail=1&g_id=<?php echo $row['g_id']?>&d_id=<?php echo $row['d_id']?>&number=<?php echo $row['number']?>"><?php echo $row['made_in'].$row['produce_id']?></a>
                                 <p>规格：<span class="cl_grey"><?php echo $row['category']?></span></p>
 <!--                                <div class="cCount">-->
                                     <div class="countBox">

@@ -388,6 +388,12 @@ if (isset($_GET['goodsdetail'])) {
     $cate=$remark;
     $review=getReview($_GET['g_id']);
     $parm = getGoodsPar($_GET['g_id'], $inf['sc_id']);
+    $paramvalue='';
+    foreach ($parm[''] as $t) {
+        if($t['name']=='功能'){
+            $paramvalue=$t['value'];
+        }
+    }
 
 
     include 'view/goods_inf.html.php';
@@ -483,6 +489,7 @@ function getCartDetail($customerId)
                 'g_id' => $row['g_id'],
                 'd_id' => $row['d_id'],
                 'name' => $row['name'],
+                'made_in'=>$row['made_in'],
                 'produce_id' => $row['produce_id'],
                 'category' => $row['category'],
                 'price' => $price,//不带配件 单价

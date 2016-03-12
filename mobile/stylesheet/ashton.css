@@ -14,7 +14,10 @@ body, div, dl, dt, dd, ul, ol, li, pre, code, form, fieldset, legend, input, tex
     border-width: thin;
 
 }
-
+body {
+    min-width: 320px;
+    max-width: 640px;
+}
 a {
     color: #313131;
     cursor: pointer;
@@ -70,6 +73,7 @@ div.foot {
     width: 100%;
     height: 50px;
     bottom: 0;
+    z-index: 999;
     /*overflow-x: visible;*/
 }
 
@@ -188,6 +192,7 @@ div.total-price {
 /*首页样式*/
 .search-container {
     position: fixed;
+    left:0;
     width: 100%;
     height: 40px;
     background-color: #B6B6B6;
@@ -363,7 +368,7 @@ div.total-price {
     min-height: 25px;
     max-height: 60px;
     /*margin: 10px 3% 10px 12%;*/
-    border: solid 1px #ccc;
+    /*border: solid 1px #ccc;*/
 }
 .remark-container .remark-box .imgbox .remark-img {
     width: 100%;
@@ -643,7 +648,7 @@ div .module-box {
 }
 
 .baseInfo .pd_info .p-remark .p-remark-content {
-    float: left;
+    float: right;
     height: 16px;
     margin: 9px 5px auto 0;
     padding-right: 4px;
@@ -652,10 +657,11 @@ div .module-box {
 
 .baseInfo .pd_info .p-remark .price {
     margin-top: 6px;
-    float: right;
+    float: left;
     color: red;
     font-size: 16px;
     line-height: 20px;
+    font-weight: 600;
 }
 
 /*配件选择*/
@@ -885,13 +891,16 @@ div .module-box {
     min-height: 20px;
     max-height: 270px;
 }
+#param-title {
+    background: url("images/icon-right1.png") no-repeat;
+    background-size: 16px 16px;
+    background-position: 98% 0;
+}
 
 .param .param-container {
-    /*box-sizing: content-box;*/
     font-size: 15px;
     overflow: hidden;
     zoom:1;
-    /*float: left;*/
     width: 90vw;
     margin:0 auto 5px auto;
     min-height: 30px;
@@ -936,8 +945,17 @@ div .module-box {
 }
 
 /*用户评价*/
-.pDetail .baseInfo .review {
 
+
+.pDetail .baseInfo .review-module {
+    height: auto;
+    /*height: 200px;*/
+    /*min-height: ;*/
+}
+#review-title {
+    background: url("images/icon-right1.png") no-repeat;
+    background-size: 16px 16px;
+    background-position: 98% 0;
 }
 
 .review .title {
@@ -973,6 +991,7 @@ div .module-box {
 }
 
 .review .review-content {
+    clear: left;
     width: 90%;
     margin: 0 auto;
     min-height: 40px;
@@ -1040,68 +1059,109 @@ div .module-box {
 }
 
 /*详情*/
-
-.others {
-    /*max-height: 1800px;*/
-    /*margin: 0;*/
-    padding: 5px 0 11px 0;
-    height:40px;
-}
-
-.others .others-nav {
+.pDetail .baseInfo .g-detail {
+    min-height: 82vh;
     overflow-x: hidden;
-    width: 90%;
-    margin: 4px auto;
-    height: 25px;
-    line-height: 25px;
+    padding: 0;
 }
 
-.others .others-nav .others-content {
-    color: #999;
-    float: left;
-    height: 16px;
-    margin: 4px 5px auto -1px;
-    padding-left: 4px;
-    border-left: solid 1px #ccc;
-}
-.others .others-nav .others-content a {
-    color: #999;
-    font-size: 16px;
-}
-.pDetail .baseInfo .mult-content {
-    min-height: 80px;
-    padding-top: 8px;
-    max-height: 15000px;
-}
-.mult-content .default-content {
-    width: 100%;
-}
-.mult-content .video-container {
+.g-detail .detail-nav {
     text-align: center;
+    margin: 0 auto;
+    padding: 20px 0 18px 0;
+    height: 59px;
+    background: #36363A;
+    color:#A0A0A0;
+
+    /*border-style: solid none;*/
 }
-.mult-content .hidden-content {
+
+.detail-nav .slash {
+    float: left;
+    width: 1px;
+    height: 6vh;
+    border-left-style: solid;
+}
+
+.g-detail .detail-nav .nav {
+    box-sizing: border-box;
+    float: left;
+    /*margin: 0 6vw;*/
+    cursor: pointer;
+    width: 33.3333%;
+    line-height: 20px;
+    font-size: 17px;
+    display: inline;
+}
+
+.nav-selected {
+    color: #2AA5CF;
+}
+
+.g-detail .detail-info {
     width: 100%;
-    /*display: none;*/
+    height: 1000px;
+    overflow-y: scroll;
 }
-.mult-content .compare {
+
+.detail-info img {
+    max-width: 100%;
+}
+
+.g-detail .detail-par {
+    text-align: center;
+    width: 100%;
+    height: 1000px;
+    overflow-y: scroll;
+    /*background-color: #ef0808;*/
+}
+
+.detail-par table {
+    margin: 2vw auto;
+    width: 90%;
+    border-collapse: collapse;
+    /*text-align: center;*/
+    border-width: thin;
+    border-style: solid;
+}
+
+.detail-par table td {
+    width: auto;
+    padding: 1vw;
+    /*font-size: 0.7em;*/
+    font-size: 4vw;
+    line-height: 5vw;
+    height: 7vw;
+    padding: 0;
+    text-align: center;
+    border-width: thin;
+    border-style: solid;
+}
+
+.g-detail .detail-after {
+    text-align: left;
+    width: 100%;
+    height: 1000px;
+    overflow-y: scroll;
+    /*background-color: #00a213;*/
+}
+.kf-icon {
+    opacity: 0.5;
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    bottom: 80px;
+    right: 20px;
+    border-radius: 25px;
+    /*background: #000000;*/
+    z-index: 10;
+    background:#000000 url(images/kf.png) no-repeat;
+    background-position: 10px 10px;
+    background-size: 30px 30px;
+
 
 }
-.mult-content .compare a{
-    float: left;
-    box-sizing: border-box;
-    display: block;
-    width: 30%;
-    height: auto;
-    margin: 20px 0 0 3%;
-}
-.mult-content .compare a img{
-    width: 100%;
-    height: auto;
-}
-.mult-content #detail-content img {
-    width: 100%;
-    height: auto;
-}
+
 
 /*评价页面*/
 

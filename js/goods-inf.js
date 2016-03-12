@@ -37,6 +37,12 @@ $(document).on('change', '#category-select', function () {
 //    });
 //
 //});
+$(document).on('click','#review-title',function(){
+    $('#detail-review').fadeToggle('fast');
+});
+$(document).on('click','#param-title',function(){
+    $('.param-container').fadeToggle('fast');
+})
 
 $(document).on('click', '.number-button', function () {
 
@@ -78,17 +84,6 @@ $(document).on('click', '.add-cart', function () {
     })
 
 });
-//配件立刻购买按钮
-//$(document).on('click', '.part-buy-now', function () {
-//    window.location.href = 'controller.php?settleAccounts=1&from=buy_now&d_id=' + d_id + '&number=0&rand=' + antCacheRand();
-//})
-////配件加入购物车
-//$(document).on('click', '.part-add-cart', function () {
-//    $.post('ajax.php', {addToCart: 1, g_id: g_id, d_id: d_id, number: 0}, function (data) {
-//        showToast('加入购物车成功');
-//    })
-//
-//});
 $(document).on('click', '#fav', function () {
     $.post('ajax.php', {addToFav: 1, g_id: g_id}, function (data) {
         showToast('收藏成功');
@@ -100,6 +95,9 @@ $(document).on('click', '#getGoodsInf', function () {
         $('#goodsInf').append(data)
     });
     $('#goodsInf').fadeToggle('slow');
+});
+$(document).on('click','.kf-icon',function(){
+   linkKf(g_id);
 });
 
 //配件栏

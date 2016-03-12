@@ -47,15 +47,15 @@
         $('.sub-menu').fadeOut();
     })
     $('#nave-category').click(function(){
-        $('.sub-menu').fadeOut('fast',function(){
-            $('.foot-cate-sub').fadeIn();
-        });
+        $('.foot-user-sub').fadeOut('fast')
+            $('.foot-cate-sub').fadeToggle();
+
 
     });
     $('#nave-user').click(function(){
-        $('.foot-cate-sub').fadeOut('fast',function(){
-            $('.foot-user-sub').fadeIn();
-        });
+        $('.foot-cate-sub').fadeOut('fast')
+            $('.foot-user-sub').fadeToggle();
+
 
     })
     $(document).scroll(function(){

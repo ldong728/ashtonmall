@@ -30,12 +30,12 @@ require_once("lib/alipay_submit.class.php");
         $payment_type = "1";
         //必填，不能修改
         //服务器异步通知页面路径
-        $notify_url = "http://" . $_SERVER['HTTP_HOST'].'/'.DOMAIN."/aliwebpay/notify_url.php";
+        $notify_url = "http://" . $_SERVER['HTTP_HOST'].'/'.DOMAIN."/aliwappay/notify_url.php";
 //        mylog('notify_url:'.$notify_url);
         //需http://格式的完整路径，不能加?id=123这类自定义参数
 
         //页面跳转同步通知页面路径
-        $return_url = "http://" . $_SERVER['HTTP_HOST'].'/'.DOMAIN."/aliwebpay/return_url.php";
+        $return_url = "http://" . $_SERVER['HTTP_HOST'].'/'.DOMAIN."/aliwappay/return_url.php";
 
 //        mylog('return_url:'.$return_url);
 
