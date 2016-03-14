@@ -69,7 +69,7 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
 
                 <div class="g-inf-intro">
                     <label for="intro">简介
-                        <textarea id="intro" name="intro"></textarea>
+                        <textarea id="intro" name="intro"cols="50"rows="6"></textarea>
                     </label>
                 </div>
                 <div class="g-inf-detail">

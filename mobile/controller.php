@@ -342,7 +342,7 @@ if (isset($_GET['goodsdetail'])) {
     }
     $query = pdoQuery('user_g_inf_view', null, array('g_id' => $_GET['g_id']), ' limit 1');
     $inf = $query->fetch();
-    $imgQuery = pdoQuery('g_image_tbl', null, array('g_id' => $_GET['g_id'], 'front_cover' => '0'), null);
+    $imgQuery = pdoQuery('g_image_tbl', null, array('g_id' => $_GET['g_id'], 'front_cover' => '0'), 'order by id asc');
     if (isset($_GET['d_id'])) {
         if (isset($_GET['number'])) {
             $number = $_GET['number'];
@@ -389,11 +389,19 @@ if (isset($_GET['goodsdetail'])) {
     $review=getReview($_GET['g_id']);
     $parm = getGoodsPar($_GET['g_id'], $inf['sc_id']);
     $paramvalue='';
-    foreach ($parm[''] as $t) {
-        if($t['name']=='功能'){
-            $paramvalue=$t['value'];
-        }
+    if(!isset($parm['技术参数'])){
+        $parm['技术参数']=array();
     }
+    if(isset($parm[''])){
+        foreach ($parm[''] as $t) {
+            if($t['name']=='功能'){
+                $paramvalue=$t['value'];
+            }
+        }
+    }else{
+        $paramvalue='';
+    }
+
 
 
     include 'view/goods_inf.html.php';

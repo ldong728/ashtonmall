@@ -149,7 +149,7 @@ if(isset($_SESSION['login'])) {
             foreach ($query as $detailRow) {
                 $back['detail'][]=$detailRow;
             }
-            $img = pdoQuery('g_image_tbl', array('id', 'url', 'front_cover','remark'), array('g_id' => $_POST['g_id']), null);
+            $img = pdoQuery('g_image_tbl', array('id', 'url', 'front_cover','remark'), array('g_id' => $_POST['g_id']), ' order by id asc');
             foreach($img as $imgrow){
                 $back['img'][]=$imgrow;
             }
@@ -324,7 +324,13 @@ if(isset($_SESSION['login'])) {
         exit;
     }
     if(isset($_POST['cateRemark'])){
-        pdoUpdate('sub_category_tbl',array('remark'=>$_POST['content']),array('id'=>$_POST['sc_id']));
+        $content=addslashes($_POST['content']);
+        pdoUpdate('sub_category_tbl',array('remark'=>$content),array('id'=>$_POST['sc_id']));
+        echo 'ok';
+        exit;
+    }
+    if(isset($_POST['p_alt_key'])){
+        pdoUpdate('par_col_tbl',array('name'=>$_POST['value']),array('id'=>$_POST['p_alt_key']));
         echo 'ok';
         exit;
     }
@@ -345,9 +351,9 @@ if(isset($_SESSION['login'])) {
         $urlquery=pdoQuery('g_image_tbl',array('url'),array('g_id'=>$_POST['g_id'],'remark'=>$_POST['md5']),'limit 1');
         $url=$urlquery->fetch();
         pdoDelete('g_image_tbl',array('g_id'=>$_POST['g_id'],'remark'=>$_POST['md5']));
-        $query=pdoQuery('image_view',array('id'),array('remark'=>$_POST['md5']),' limit 1');
-        $query=pdoQuery('ad_tbl',array('id'),array('img_url'=>$url['url']),' limit 1');
-        if(!$query->fetch()&&!$query->fetch()){
+        $query1=pdoQuery('image_view',array('id'),array('remark'=>$_POST['md5']),' limit 1');
+        $query2=pdoQuery('ad_tbl',array('id'),array('img_url'=>$url['url']),' limit 1');
+        if(!$query1->fetch()&&!$query2->fetch()){
             unlink('../'.$url['url']);
         }
         echo 'ok';

@@ -38,9 +38,11 @@ $(document).on('change', '#category-select', function () {
 //
 //});
 $(document).on('click','#review-title',function(){
+    $(this).toggleClass('con-dis');
     $('#detail-review').fadeToggle('fast');
 });
 $(document).on('click','#param-title',function(){
+    $(this).toggleClass('con-dis');
     $('.param-container').fadeToggle('fast');
 })
 
@@ -99,6 +101,12 @@ $(document).on('click', '#getGoodsInf', function () {
 $(document).on('click','.kf-icon',function(){
    linkKf(g_id);
 });
+
+$(document).on('click','.title-kf',function(){
+    linkKf(g_id);
+});
+
+
 
 //配件栏
 $(document).on('click', '.check-box', function () {

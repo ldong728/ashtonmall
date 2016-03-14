@@ -74,7 +74,7 @@
             <div class="fixedCartMenu">
                 <div class="settleBox">
                     <p>总计：￥<span class="total"id="total-price"><?php echo $list['totalPrice']?></span>
-                    （未含邮费）</p>
+                    </p>
                     <a class="settleBtn"id="buy-btn"href="controller.php?settleAccounts=1">结算</a>
                 </div>
             </div>

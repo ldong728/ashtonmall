@@ -79,6 +79,33 @@ $(document).on('change','#g-img-up',function(){
     });
 
 });
+$(document).on('click','.alt_img',function(){
+    var id=$(this).attr('id').slice(3)
+    $('#alt_img'+id).click();
+})
+$(document).on('change','.alt_input',function(){
+   var id=$(this).attr('id').slice(7);
+    $.ajaxFileUpload({
+        url:'upload.php?alt_img='+id,
+        secureuri: false,
+        fileElementId: 'alt_img'+id, //文件上传域的ID
+        dataType: 'json', //返回值类型 一般设置为json
+        success: function (v, status){
+            if('SUCCESS'== v.state){
+                $('#img'+id).attr('src','../'+ v.url);
+                //var isCheck = (1 == v.cover ? 'checked = true' : '');
+                //var content = '<div class="demo-box"><input type="radio" name="is_cover"class="is_cover"value="' + v.id + '"' + isCheck + '/>作为缩略图'
+                //    + '<a href="#"class="deleteImg"id="'+v.md5+'"><img class="demo" src= "../' + v.url + '" alt = "error" /></a></div>';
+                //
+                //$('.img-upload').before(content);
+            }else{
+                showToast(v.state);
+            }
+
+
+        }  //服务器成功响应处理函数
+    });
+});
 
 
 $(document).on('click','.deleteImg',function(){
@@ -161,8 +188,8 @@ function getGInf() {
             $.each(inf.img, function (k, v) {
                 var isCheck = (1 == v.front_cover ? 'checked = true' : '');
                 var content = '<div class="demo-box"><input type="radio" name="is_cover"class="is_cover"value="' + v.id + '"' + isCheck + '/>作为缩略图'
-                    + '<a href="#"class="deleteImg"id="'+v.remark+'"><img class="demo" src= "../' + v.url + '" alt = "error" /></a></div>'
-
+                    + '<a class="alt_img"id="alt'+v.id+'"><img class="demo"id="img'+ v.id+'" src= "../' + v.url + '" alt = "error" /></a><input type="file"class="alt_input"id="alt_img'+ v.id+'"name="alt_img'+ v.id+'"style="display: none">'
+                    +'<a href="#"class="deleteImg"id="'+v.remark+'">删除</a></div>'
                 $('#goods_image').append(content);
             });
 
@@ -187,7 +214,7 @@ function getGInf() {
         if(null!=inf.parts) {
             $.each(inf.parts, function (k, v) {
                 //alert('have parts');
-                var checked = 1 == v.dft_check ? 'checked=checked' : ''
+                var checked = 1 == v.dft_check ? 'checked="checked"' : ''
                 var con = '<div class="option_block"><input type="checkbox"class="part_dft"' + checked +
                     'id="parts' + v.id + '"/>' + v.part_name + ' ' + v.part_produce_id +'</div>'
                 $('#host_set').append(con);

@@ -7,6 +7,10 @@
  */
 include_once '../includePackage.php';
 
+if(isset($_GET['price_manage'])){
+
+    exit;
+}
 
 $query=pdoQuery('user_g_inf_view',array('g_id','produce_id','url','situation'),null,null);
 foreach ($query as $row) {

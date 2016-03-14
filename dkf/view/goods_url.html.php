@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="n">
+<html lang="cn">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <title>插件页</title>

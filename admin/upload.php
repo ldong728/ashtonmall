@@ -50,6 +50,24 @@ if(isset($_SESSION['login'])) {
         echo $jsonInf;
         exit;
     }
+    if(isset($_GET['alt_img'])){
+        $query=pdoQuery('g_image_tbl',null,array('id'=>$_GET['alt_img']),' limit 1');
+        $old_img=$query->fetch();
+        $uploader=new uploader('alt_img'.$_GET['alt_img']);
+        $uploader->upFile($_GET['g_id'].'_'.time().rand(1000,9999));
+        $inf=$uploader->getFileInfo();
+        $id=pdoUpdate('g_image_tbl',array('url'=>$inf['url'],'remark'=>$inf['md5']),array('id'=>$_GET['alt_img']));
+
+        $query1=pdoQuery('image_view',array('id'),array('remark'=>$old_img['md5']),' limit 1');
+        $query2=pdoQuery('ad_tbl',array('id'),array('img_url'=>$old_img['url']),' limit 1');
+        if(!$query1->fetch()&&!$query2->fetch()){
+            unlink('../'.$url['url']);
+        }
+        $jsonInf=json_encode($inf,JSON_UNESCAPED_UNICODE);
+        echo $jsonInf;
+
+        exit;
+    }
     if(isset($_FILES['front-img-up'])){
         $uploader=new uploader('front-img-up');
         $uploader->upFile('9999_'.time().rand(1000,9999));

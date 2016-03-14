@@ -214,8 +214,16 @@ $smq = $_SESSION['smq'];
 
 
         }
-
     });
+    $(document).on('change','.p_alt',function(){
+        var id=$(this).attr('id').slice(5);
+        var value=$(this).val();
+        $.post('ajax_request.php',{p_alt_key:id,value:value},function(data){
+            if(data=='ok'){
+                showToast('已修改')
+            }
+        })
+    })
     $(document).on('click','.remark-button',function(){
         if(sc_id!=null){
         var remark=$('#uInput').html();
@@ -237,7 +245,7 @@ $smq = $_SESSION['smq'];
                     '</a></h3><table class="par-table">' + '<tr><td>参数名</td><td>默认值</td></tr>';
                 $.each(v, function (k2, v2) {
 
-                    var intab = '<tr><td>' + v2.name + '</td><td>' + v2.dft_value + '<div id="del' + v2.id + '" class="delete"></td></tr>';
+                    var intab = '<tr><td><input class="p_alt"id="p_alt'+v2.id+'"value="' + v2.name + '"></td><td>' + v2.dft_value + '<div id="del' + v2.id + '" class="delete"></td></tr>';
                     content += intab;
                 });
                 content += parInputBox;
