@@ -172,6 +172,11 @@ function getGInf() {
         }else{
             um.setContent('');
         }
+        if(null!=inf.afterInf) {
+            afterEdit.setContent(inf.afterInf);
+        }else{
+            afterEdit.setContent('');
+        }
 
         if(null!=inf.detail) {
             $.each(inf.detail, function (k, v) {

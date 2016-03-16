@@ -170,6 +170,9 @@ if(isset($_SESSION['login'])) {
 //                mylog(getArrayInf($back['coop']));
             }
             $back['parm']=getGoodsPar($_POST['g_id'],$sc_id);
+            $afterQuery=pdoQuery('after_inf_tbl',null,array('g_id'=>$_POST['g_id']),' limit 1');
+            $after=$afterQuery->fetch();
+            $back['afterInf']=$after['after_inf'];
             $jsonBack=json_encode($back,JSON_UNESCAPED_UNICODE);
 //            mylog($jsonBack);
             echo $jsonBack;

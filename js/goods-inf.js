@@ -145,6 +145,7 @@ $(document).on('click', '.nav', function () {
 function flushPrice(p){
     var price=parseFloat($('.total-price').text().slice(3));
     price+=p;
+    price=price.toFixed(2)
 
     $('.total-price').text('合计￥'+price);
 }

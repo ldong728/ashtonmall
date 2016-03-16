@@ -64,7 +64,7 @@
                     </dl>
                     <p class="cart_ft">
                         合计：￥
-                        <span class="price sub-total-price" id="sub-total<?php echo $row['cart_id']?>"><?php echo $row['total']?></span>
+                        <span class="price sub-total-price" id="sub-total<?php echo $row['cart_id']?>"><?php echo number_format($row['total'],2,'.','')?></span>
                     </p>
 
 
@@ -152,9 +152,11 @@
     var flushPrice=function(cart_id,price){
         var sub =parseFloat($('#sub-total'+cart_id).text())
         sub+=price;
+        sub=sub.toFixed(2);
         $('#sub-total'+cart_id).text(sub);
         var total =parseFloat($('#total-price').text());
         total+=price;
+        total=total.toFixed(2);
         $('#total-price').text(total);
 
     }

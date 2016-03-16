@@ -19,7 +19,6 @@
 </div>
 <div class="pDetail">
 <div class="category-name">
-    <?php echo $cate['e_name'] ?>
 </div>
 <div class="h-slash">
 
@@ -204,7 +203,9 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="detail-after">
-                        <?php echo $remark['remark'] ?>
+                        <iframe width="100%"height="100%" src="controller.php?after_inf=<?php echo $_GET['g_id']?>"frameborder="no">
+                        </iframe>
+
                     </div>
                 </div>
             </div>
@@ -227,7 +228,7 @@
 <!--    --><?php //include_once 'templates/foot.php' ?>
 <div class="foot">
     <div class="price-box">
-        <div class="total-price">合计_<?php echo($price * $number) ?></div>
+        <div class="total-price">合计_<?php echo number_format($price * $number,2,'.','') ?></div>
     </div>
 
 <!--        <a class="cart" href="controller.php?getCart=1$rand=--><?php //echo rand(1000, 9999) ?><!--"></a>-->

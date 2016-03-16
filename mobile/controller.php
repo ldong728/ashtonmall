@@ -342,7 +342,8 @@ if (isset($_GET['goodsdetail'])) {
     }
     $query = pdoQuery('user_g_inf_view', null, array('g_id' => $_GET['g_id']), ' limit 1');
     $inf = $query->fetch();
-    $imgQuery = pdoQuery('g_image_tbl', null, array('g_id' => $_GET['g_id'], 'front_cover' => '0'), 'order by id asc');
+//    $imgQuery = pdoQuery('g_image_tbl', null, array('g_id' => $_GET['g_id'], 'front_cover' => '0'), 'order by id asc');
+    $imgQuery = pdoQuery('g_image_tbl', null, array('g_id' => $_GET['g_id']), 'order by id asc');
     if (isset($_GET['d_id'])) {
         if (isset($_GET['number'])) {
             $number = $_GET['number'];
@@ -383,9 +384,7 @@ if (isset($_GET['goodsdetail'])) {
     }
 //    $cate=pdoQuery('sub_category_tbl',null,array('id'=>$inf['sc_id']),' limit 1');
 //    $cate=$cate->fetch();
-    $reQuery=pdoQuery('sub_category_tbl',null,array('id'=>$inf['sc_id']),' limit 1');
-    $remark=$reQuery->fetch();
-    $cate=$remark;
+
     $review=getReview($_GET['g_id']);
     $parm = getGoodsPar($_GET['g_id'], $inf['sc_id']);
     $paramvalue='';
@@ -407,6 +406,13 @@ if (isset($_GET['goodsdetail'])) {
     include 'view/goods_inf.html.php';
     exit;
 }
+if(isset($_GET['after_inf'])){
+    $reQuery=pdoQuery('after_inf_tbl',null,array('g_id'=>$_GET['after_inf']),' limit 1');
+    $remark=$reQuery->fetch();
+    echo $remark['after_inf'];
+    exit;
+}
+
 if (isset($_GET['partsdetail'])) {
     unset($_SESSION['buyNow']);
     if ($_GET['g_id'] == null) {

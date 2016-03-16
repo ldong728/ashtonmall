@@ -70,7 +70,7 @@ div.wrap {
 
 div.foot {
     background-color: #EFEFEF;
-    left:0
+    left:0;
     position: fixed;
     width: 100%;
     height: 50px;
@@ -608,9 +608,9 @@ a.foot-cate-name {
     width: 100%;
     height: 45px;
     background-color: #E3413E;
-    padding-left: 10px;
 }
 .inf-header .button-block {
+    text-align: center;
     box-sizing: border-box;
     width: 25%;
     height: 45px;
@@ -618,9 +618,9 @@ a.foot-cate-name {
 }
 .inf-header .button-block .inf-block {
     /*float: left;*/
+    display: inline-block;
     box-sizing: border-box;
     margin: 0 auto;
-    width: 85%;
     height: 45px;
     line-height: 48px;
     font-size: 15px;
@@ -1219,21 +1219,25 @@ div .module-box {
     border-bottom: solid 1px #ddd;
 }
 .g-detail .detail-par .param-block .param-key {
+    text-align: right;
     box-sizing: border-box;
     float: left;
     width: 40%;
     height: 19px;
     color: #999;
     line-height: 30px;
-    font-size: 16px;
+    font-size: 14px;
+    padding-right: 20px;
 }
 .g-detail .detail-par .param-block .param-value {
+    text-align: left;
     box-sizing: border-box;
     float:left;
     width: 60%;
     height: 19px;
     line-height: 30px;
-    font-size: 16px;
+    font-size: 14px;
+    padding-left: 10px;
 }
 
 /*.detail-par table {*/

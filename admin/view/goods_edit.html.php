@@ -79,8 +79,16 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
                         </script>
                     </label>
                 </div>
+                <div class="g-inf-detail">
+                    <label for="inf">售后条款：
+                        <script type="text/plain" id="afterInfInput" name="after_inf">
+                <p>在这里编辑售后条款</p>
+                        </script>
+                    </label>
+                </div>
+
                 <input type="hidden" name="alter" value="1"/>
-                <input type="hidden" name="g_id" id="hidden_g_id" value="' . $_POST['g_id'] . '"/>
+                <input type="hidden" name="g_id" id="hidden_g_id" value="<?php echo $_POST['g_id']?>"/>
                 <button>提交商品信息修改</button>
             </form>
         </div>
@@ -116,6 +124,15 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
 <script type="text/javascript" charset="utf-8" src="../uedit/umeditor.min.js"></script>
 <script type="text/javascript">
     var um = UM.getEditor('uInput');
+    var afterEdit=UM.getEditor('afterInfInput',{
+        toolbar:[
+            'source | undo redo | bold italic underline strikethrough | superscript subscript | forecolor backcolor | removeformat |',
+            'insertorderedlist insertunorderedlist | selectall cleardoc paragraph | fontfamily fontsize' ,
+            '| justifyleft justifycenter justifyright justifyjustify |',
+            'link unlink ',
+            '| horizontal '
+        ]
+    })
 </script>
 <script src="js/goodsInfEdit.js"></script>
 

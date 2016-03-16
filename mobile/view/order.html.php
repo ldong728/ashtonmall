@@ -61,7 +61,7 @@
         <div class="ordertotal">
             <span class="realPay">实付款（含运费）：</span>
             <span class="payTotal">
-                <span class="cl_red"id="totolfee">￥<?php echo $totalPrice?></span>
+                <span class="cl_red"id="totolfee">￥<?php echo number_format($totalPrice,2,'.','')?></span>
             </span>
         </div>
 

@@ -175,7 +175,7 @@ $smq = $_SESSION['smq'];
         content += parinput
         parent.empty();
         parent.append(content);
-    })
+    });
     $(document).on('click', '.set-par-name', function () {
         var pmt = $(this).parents('.input-tr').find('.par-name').val();
         if ('' == pmt)return;
@@ -231,7 +231,7 @@ $smq = $_SESSION['smq'];
            showToast('修改成功')
         });
         }
-    })
+    });
 
     function getParInf() {
         $('#parameter-edit').empty();
