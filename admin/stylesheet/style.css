@@ -559,6 +559,32 @@ width: 8%;
     height: 40px;
 }
 
+/*操作员界面*/
+
+.op-container {
+    width: 90%;
+    margin: 0 auto;
+
+}
+.op-container .op-block {
+    width: 100%;
+    height: 70px;
+
+}
+.op-block .op-name {
+    float: left;
+
+}
+.op-block .op-psw {
+    float: left;
+}
+.op-block .op-pms {
+    float: left
+}
+.op-pms .op-pms-block {
+    float: left
+}
+
 
 
 
