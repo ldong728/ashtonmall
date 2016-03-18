@@ -133,14 +133,15 @@
 
     <!--    --><?php //include_once 'templates/foot.php' ?>
     <div class="foot">
-        <div class="total-price">合计￥<?php echo($price * $number) ?></div>
-        <a class="cart"href="controller.php?getCart=1$rand=<?php echo rand(1000,9999)?>"></a>
+        <div class="price-box">
+            <div class="total-price">合计_<?php echo number_format($price * $number,2,'.','') ?></div>
+        </div>
         <div class="button-box">
-            <a class="buttons buy-now">
-                立即购买
-            </a>
             <a class="buttons add-cart">
                 加入购物车
+            </a>
+            <a class="buttons buy-now">
+                立即购买
             </a>
         </div>
 

@@ -18,25 +18,6 @@ $(document).on('change', '#category-select', function () {
     });
 
 });
-//$(document).on('click', '.selectBox', function () {
-//    d_id = $(this).attr('id').slice(3);
-//    $('.selectBox').removeClass('detail-selected');
-//    $(this).addClass('detail-selected')
-//    $.post('ajax.php', {getdetailprice: 1, d_id: d_id}, function (data) {
-//        var inf = eval('(' + data + ')');
-//        $('#price').empty();
-//        $('#sale').empty();
-//        if (inf.price == null) {
-//            realPrice = inf.sale;
-//        } else {
-//            realPrice = inf.price;
-//            $('#sale').append('¥' + inf.sale);
-//        }
-//        $('#price').append('¥' + realPrice);
-//
-//    });
-//
-//});
 $(document).on('click','#review-title',function(){
     $(this).toggleClass('con-dis');
     $('#detail-review').fadeToggle('fast');
@@ -44,6 +25,10 @@ $(document).on('click','#review-title',function(){
 $(document).on('click','#param-title',function(){
     $(this).toggleClass('con-dis');
     $('.param-container').fadeToggle('fast');
+})
+$(document).on('click','#part-title',function(){
+    $(this).toggleClass('con-dis');
+    $('.scroll-box').fadeToggle('fast');
 })
 
 $(document).on('click', '.number-button', function () {

@@ -68,11 +68,11 @@
         </div>
     </div>
     <div class="part module-box">
-        <div class="title">
+        <div class="title con-hid <?php echo count($parts)>0||isset($coop)? 'con-dis':'' ?>"id="part-title">
             <div class="line-number"> 1</div>
-            <div class="title-name">选择套餐:</div>
+            <div class="title-name">选择套餐</div>
         </div>
-        <div class="scroll-box">
+        <div class="scroll-box"style="display: <?php echo count($parts)>0||isset($coop)? 'block':'none' ?>">
             <div class="part-box">
                 <?php if (count($parts) > 0) foreach ($parts as $r): ?>
                     <div class="partInf">
@@ -181,10 +181,11 @@
             <div class="nav" id="nav2">售后保障</div>
         </div>
         <div class="swiper-container" id="detail_swiper">
-            <div class="swiper-wrapper" style="width: 4368px; height: auto">
-                <div class="swiper-slide">
+            <div class="swiper-wrapper" style="width: 4368px; height: 90vh">
+                <div class="swiper-slide"style="height: 90vh">
                     <div class="detail-info">
                         <?php echo $inf['inf'] ?>
+                        <div class="blank"></div>
                     </div>
                 </div>
                 <div class="swiper-slide">
@@ -230,11 +231,7 @@
     <div class="price-box">
         <div class="total-price">合计_<?php echo number_format($price * $number,2,'.','') ?></div>
     </div>
-
-<!--        <a class="cart" href="controller.php?getCart=1$rand=--><?php //echo rand(1000, 9999) ?><!--"></a>-->
-
     <div class="button-box">
-
         <a class="buttons add-cart">
             加入购物车
         </a>
