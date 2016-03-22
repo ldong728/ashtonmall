@@ -267,10 +267,18 @@ if(isset($_SESSION['login'])) {
         exit;
     }
     if(isset($_POST['getOrderDetail'])){
-        $query=pdoQuery('user_order_view',null,array('o_id'=>$_POST['o_id']),'');
-        foreach ($query as $row) {
-            $detail[]=$row;
+        $query=pdoQuery('user_order_view',null,array('o_id'=>$_POST['o_id']),null);
+        $recordQuery=pdoQuery('order_record_tbl',null,array('order_id'=>$_POST['o_id']),null);
+        foreach ($recordQuery as $row) {
+            $record[]=$row;
         }
+        if(!isset($record))$record=array();
+
+        foreach ($query as $row) {
+            $detail['orderInf'][]=$row;
+        }
+        $detail['record']=$record;
+        mylog(getArrayInf($record));
         echo json_encode($detail);
     }
     if(isset($_POST['changeCateHome'])){
@@ -392,6 +400,34 @@ if(isset($_SESSION['login'])) {
     if(isset($_POST['manageReview'])){
         $id=pdoUpdate('review_tbl',array('priority'=>$_POST['priority'],'public'=>$_POST['public']),array('id'=>$_POST['id']));
         echo $id;
+    }
+    if(isset($_POST['operator'])){
+        if($_POST['altPms']){
+            if($_POST['stu']=='true'){
+                pdoInsert('op_pms_tbl',array('o_id'=>$_POST['id'],'pms'=>$_POST['altPms']),'ignore');
+                echo 'ok';
+            }else{
+                pdoDelete('op_pms_tbl',array('o_id'=>$_POST['id'],'pms'=>$_POST['altPms']));
+                echo 'ok';
+            }
+            exit;
+        }
+        if(isset($_POST['altName'])){
+            pdoUpdate('operator_tbl',array('name'=>$_POST['altName']),array('id'=>$_POST['id']));
+            echo 'ok';
+            exit;
+        }
+        if(isset($_POST['altPwd'])){
+            pdoUpdate('operator_tbl',array('pwd'=>$_POST['altPwd'],'md5'=>md5($_POST['altPwd'])),array('id'=>$_POST['id']));
+            echo 'ok';
+            exit;
+        }
+        if(isset($_POST['new'])){
+            pdoInsert('operator_tbl',array('name'=>$_POST['new'],'pwd'=>$_POST['pwd'],'md5'=>md5($_POST['pwd'])),'ignore');
+            echo 'ok';
+            exit;
+        }
+        exit;
     }
 }
 ?>
