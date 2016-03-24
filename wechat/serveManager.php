@@ -160,6 +160,14 @@ function getOauthToken($code){
     $jsonData=$GLOBALS['mInterface']->getByCurl($url);
     return json_decode($jsonData,true);
 }
+function getUserInfByToken($data){
+    $openId=$data['openid'];
+    $token=$data['access_token'];
+    $url='https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openId.'&lang=zh_CN';
+    $jsonData=$GLOBALS['mInterface']->getByCurl($url);
+    return $jsonData;
+
+}
 function getMediaList($type, $offset)
 {
     $request = array('type' => $type, 'offset' => $offset, 'count' => 20);
