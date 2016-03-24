@@ -111,27 +111,102 @@ iframe {
 }
 
 div.orderView {
-
     position: relative;
-
+    float: left;
 }
-
+.orderView .order-inf {
+    float: left;
+}
+.orderView .order-id{
+    display:inline-block ;
+    float: left;
+}
+.orderView .order-time {
+    display: inline-block;
+    float: left;
+    margin-left: 15px;
+}
 div.orderItem {
     position: relative;
     width: 100%;
     border: solid;
     border-width: thin;
-    /*float:left;*/
+    float:left;
 
 }
 
 .orderView .hiddenContent {
     display: none;
+    width: 100%;
+    float: left;
+    padding-left: 10px;
+}
+.orderView .info{
+
+    width: 100%;
+    float: left;
 }
 
-.orderView .address {
-    width: 60%;
+.orderView .info .info-block {
+    display: inline-block;
+    float: left;
+    box-sizing: border-box;
+    padding: 5px;
+    margin: 10px 5px;
+    max-width: 25%;
+    min-height: 200px;
     border: 1px solid #ccc;
+
+}
+.orderView .info .address {
+
+}
+.orderView .info .user {
+
+}
+.orderView .info .user-remark {
+}
+.orderView .info .user .img-block {
+    float: left;
+    width: 100px;
+    /*line-height: 100px;*/
+}
+
+.orderView .info .user .img-block img {
+    width: 100%;
+    height: auto;
+}
+.orderView .info .user .name-block {
+    float:left;
+    clear: left;
+}
+.orderView .info h4 {
+    margin: 0;
+}
+.orderView .info p {
+    margin: 0;
+}
+.orderView .orderDetail {
+    overflow: hidden;
+    zoom:1;
+    width: 90%;
+    border: solid 1px #ddd;
+}
+.orderView .orderDetail .order-line {
+    width: 100%;
+    clear: left;
+    float: left;
+    border-bottom: solid 1px #ddd;
+    min-height: 16px;
+    line-height: 18px;
+    font-size: 16px;
+}
+.orderView .orderDetail .order-line .order-detail-block {
+    text-align: center;
+    float: left;
+    width: 25%;
+
+
 }
 
 /*首页*/
@@ -562,27 +637,58 @@ width: 8%;
 /*操作员界面*/
 
 .op-container {
+    font-size: 15px;
+    line-height: 39px;
     width: 90%;
-    margin: 0 auto;
+    margin: 30px auto;
 
 }
+
 .op-container .op-block {
     width: 100%;
-    height: 70px;
+    height: 35px;
+    border: solid 1px #ddd;
+    overflow: hidden;
 
 }
+.op-block input {
+    width: 90%;
+}
+
 .op-block .op-name {
+    box-sizing: border-box;
+    text-align: center;
+    width: 10%;
     float: left;
+    border-right: solid 1px #ddd;
 
 }
 .op-block .op-psw {
-    float: left;
+
 }
 .op-block .op-pms {
-    float: left
+    box-sizing: border-box;
+    width: 80%;
+    height: 35px;
+    float: left;
+
 }
 .op-pms .op-pms-block {
-    float: left
+    font-size: 12px;
+    text-align: center;
+    box-sizing: border-box;
+    float: left;
+    height: 35px;
+}
+.op-block .op-add{
+    float: left;
+    height: 35px;
+}
+.op-block .op-add button {
+    width: 160px;
+    text-align: center;
+    background-color: #ddd;
+    font-size: 14px;
 }
 
 

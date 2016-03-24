@@ -82,6 +82,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
                 include_once '../wechat/serveManager.php';
                 $orderId = $responseData['out_trade_no'];
                 pdoUpdate('order_tbl', array('stu' => "1"), array('id' => $orderId));
+                pdoInsert('order_record_tbl',array('order_id'=>$orderId,'event'=>1,'pay_mode'=>1));
                 $payChkArray=array(
                     'first'=>array('value'=>'您在阿诗顿商城的网购订单已支付成功：'),
                     'orderno'=>array('value'=>$orderId,'color'=>'#0000ff'),

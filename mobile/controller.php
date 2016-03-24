@@ -276,14 +276,42 @@ if (isset($_GET['oauth'])) {
             $data[$k] = addslashes($v);
         }
         $re = pdoInsert('custom_inf_tbl', $data, 'update');
-//        mylog($re);
     }
-
-
-
     exit;
-
 }
+if (isset($_GET['oauth_userInfo'])) {
+    include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
+    if ($_GET['code']) {
+        $userId = getOauthToken($_GET['code']);
+        $_SESSION['userInf']=json_decode(getUserInfByToken($userId),true);
+        $_SESSION['customerId'] = $userId['openid'];
+    } else {
+        mylog('cannot get Code');
+    }
+    $rand = rand(1000, 9999);
+    $_SESSION['rand'] = $rand;
+    if(isset($_GET['share'])){
+        if($_GET['part']==1){
+            header('location:controller.php?goodsdetail=1&g_id='.$_GET['share']);
+        }else{
+            header('location:controller.php?partsdetail=1&g_id='.$_GET['share']);
+        }
+        exit;
+    }
+    header('location:index.php?rand=' . $rand);
+    if (isset($_SESSION['userInf'])) {
+        foreach ($_SESSION['userInf'] as $k => $v) {
+            if ('subscribe_time' == $k) {
+                $v = date('Y-m-d H:i:s', $v);
+            }
+            if('privilege'==$k)continue;
+            $data[$k] = addslashes($v);
+        }
+        $re = pdoInsert('custom_inf_tbl', $data, 'update');
+    }
+    exit;
+}
+
 //获取主分类
 if (isset($_GET['getList'])) {
     $sc_id = $_GET['c_id'];

@@ -58,7 +58,7 @@
             <?php endforeach ?>
         </dl>
         <div class="orderInfo">
-            <div>支付时间：<span id="orderTime"><?php echo $order_inf['order_time'] ?></span></div>
+            <div>建立时间：<span id="orderTime"><?php echo $order_inf['order_time'] ?></span></div>
             <div>支付方式：<span id="payType">在线支付</span></div>
             <div class="express noDisplay">配送方式：<span
                     id="deliveryCompany"><?php echo $order_inf['express_name'] ?></span></div>

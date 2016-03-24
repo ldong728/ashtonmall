@@ -73,7 +73,7 @@
             </ul>
             <div class="fixedCartMenu">
                 <div class="settleBox">
-                    <p>总计：￥<span class="total"id="total-price"><?php echo $list['totalPrice']?></span>
+                    <p>总计：￥<span class="total"id="total-price"><?php echo number_format($list['totalPrice'],2,'.','')?></span>
                     </p>
                     <a class="settleBtn"id="buy-btn"href="controller.php?settleAccounts=1">结算</a>
                 </div>

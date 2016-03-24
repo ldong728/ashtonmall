@@ -124,11 +124,18 @@ if (isset($_SESSION['login'])) {
             $query=pdoQuery('pms_view',null,null,null);
             foreach ($query as $row) {
                 if(!isset($opList[$row['id']])){
-                    $opList[$row['id']]=$pmsList;
+                    $opList[$row['id']]=array(
+                        'id'=>$row['id'],
+                        'name'=>$row['name'],
+                        'pwd'=>$row['pwd'],
+                        'pms'=>$pmsList
+                    );
+//                    $opList[$row['id']]=$pmsList;
                 }
-                $opList[$row['id']][$row['pms']]['checked']='checked';
+                $opList[$row['id']]['pms'][$row['pms']]['checked']='checked';
             }
-            printView('operator.html.php','操作员管理');
+//            mylog(getArrayInf($opList));
+            printView('admin/view/operator.html.php','操作员管理');
             exit;
 
         }else{
@@ -149,6 +156,7 @@ if (isset($_SESSION['login'])) {
         $pwd= $_POST['password'];
         if ($_POST['adminName'] . $_POST['password'] == ADMIN.PASSWORD) {
             $_SESSION['login'] = 1;
+            $_SESSION['operator_id']=-1;
             $pms=pdoQuery('pms_tbl',null,null,null);
             foreach ($pms as $row) {
                 $_SESSION['pms'][$row['key']]=1;
@@ -162,6 +170,7 @@ if (isset($_SESSION['login'])) {
                 exit;
             }else{
                 $_SESSION['login'] = 1;
+                $_SESSION['operator_id']=$op_inf['id'];
                 $pms=pdoQuery('op_pms_tbl',null,array('o_id'=>$op_inf['id']),null);
                 foreach ($pms as $row) {
                     $_SESSION['pms'][$row['pms']]=1;

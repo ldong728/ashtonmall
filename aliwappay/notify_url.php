@@ -64,6 +64,7 @@ if($verify_result) {//验证成功
         include_once '../wechat/serveManager.php';
         $orderId = $out_trade_no;
         pdoUpdate('order_tbl', array('stu' => "1"), array('id' => $orderId));
+        pdoInsert('order_record_tbl',array('order_id'=>$orderId,'event'=>1,'pay_mode'=>2));
         $query=pdoQuery('order_tbl',null,array('id'=>$orderId),' limit 1');
         $inf=$query->fetch();
         $payChkArray=array(
