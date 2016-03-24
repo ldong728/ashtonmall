@@ -44,33 +44,23 @@
                 <div class="pName">
                     <span class="pro_name"><?php echo $inf['name'] ?></span>
                 </div>
-                <div class="inf">
-                    立即订购并获得免费送货服务，订购数量有限
-                </div>
                 <div class="p-remark">
-<!--                    <div class="p-remark-content">-->
-<!--                        认证企业-->
-<!--                    </div>-->
-<!--                    <div class="p-remark-content">-->
-<!--                        免运费-->
-<!--                    </div>-->
-<!--                    <div class="p-remark-content">-->
-<!--                        销量18件-->
-<!--                    </div>-->
-<!--                    <div class="p-remark-content">-->
-<!--                        库存96件-->
-<!--                    </div>-->
+                    <div class="p-remark-content">
+                        库存99件
+                    </div>
+                    <div class="p-remark-content">
+                        销量<?php echo $review['num'] ?>件
+                    </div>
 
                     <div class="price">
-                        RMB <?php echo $price= $inf['sale'] ?>
+                        RMB <?php echo $price = $inf['sale'] ?>
                     </div>
                 </div>
             </div>
             <div class="part module-box">
-                <div class="title">
+                <div class="title con-hid con-dis">
                     <div class="line-number"> 1</div>
                     <div class="title-name">适用机型:</div>
-
                 </div>
                 <div class="scroll-box">
                     <div class="part-box">
@@ -88,17 +78,13 @@
                         <?php endforeach ?>
                     </div>
                 </div>
-                <!--                <div class="partBuy">-->
-                <!--                    <button class="part-buy-now">立即购买</button>-->
-                <!--                    <button class="part-add-cart">加入购物车</button>-->
-                <!--                </div>-->
             </div>
             <div class="param module-box">
-                <div class="title">
+                <div class="title con-hid" id="param-title">
                     <div class="line-number">2</div>
                     <div class="title-name">参数</div>
                 </div>
-                <div class="param-container">
+                <div class="param-container" style="display: none">
                     <dl>
                         <dt>名称：</dt>
                         <dd><?php echo $inf['name'] ?></dd>
@@ -108,8 +94,6 @@
                         <dd>ashton/阿诗顿</dd>
                     </dl>
                 </div>
-
-
             </div>
 
             <div class="detail module-box">

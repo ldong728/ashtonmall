@@ -200,11 +200,14 @@ if (isset($_SESSION['customerId'])) {
 //        mylog('hh3');
         foreach ($query as $row) {
             if(in_array($row['d_id'],$reviewed)){
-//                mylog('continue');
                 continue;
             }
             $review[]=$row;
-//            mylog(getArrayInf($review));
+        }
+        if(!isset($review)){
+            pdoUpdate('order_tbl',array('stu'=>'3'),array('id'=>$_GET['order_id']));
+            header('location:controller.php?customerInf=1');
+            exit;
         }
         include 'view/review.html.php';
         exit;
@@ -335,7 +338,9 @@ if(isset($_GET['search'])){
     $cateName=array();
     $partList=array();
     $key='%'.$_GET['search'].'%';
-    $query=pdoQuery('user_g_inf_view',null,array('situation'=>'1'),' and (name like "'.$key.'" or intro like "'.$key.'")');
+//    $query=pdoQuery('user_g_inf_view',null,array('situation'=>'1'),' and (name like "'.$key.'" or intro like "'.$key.'")');
+    $query=pdoQuery('user_tmp_list_view',null,array('situation'=>'1'),' and (name like "'.$key.'") group by g_id');
+
     foreach ($query as $row) {
         $list[]=$row;
     }

@@ -49,9 +49,6 @@
         <div class="pName">
             <span class="pro_name"><?php echo $inf['name'] ?></span>
         </div>
-        <!--    <div class="inf">-->
-        <!--        立即订购并获得免费送货服务，订购数量有限-->
-        <!--    </div>-->
         <div class="p-remark">
 
 
