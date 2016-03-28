@@ -278,7 +278,7 @@ if(isset($_SESSION['login'])) {
             $detail['orderInf'][]=$row;
         }
         $detail['record']=$record;
-        mylog(getArrayInf($record));
+//        mylog(getArrayInf($record));
         echo json_encode($detail);
     }
     if(isset($_POST['changeCateHome'])){
