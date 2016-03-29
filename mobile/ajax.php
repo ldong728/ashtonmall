@@ -219,6 +219,9 @@ if(isset($_SESSION['customerId'])){
         echo -1;
         exit;
     }
+    if(isset($_POST['sdp'])){
+
+    }
 
 }
 
