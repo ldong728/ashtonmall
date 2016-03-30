@@ -30,6 +30,12 @@ if (isset($_GET['c_id'])) {
 
     $_SESSION['userInf']=$inf->fetch();
 }
+$state=isset($_SESSION['sdp']['sdp_id'])? $_SESSION['sdp']['sdp_id'] : '123';
+$url='https://open.weixin.qq.com/connect/oauth2/authorize?'
+    .'appid='.APP_ID
+    .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/mobile/controller.php?oauth=1')
+    .'&response_type=code&scope=snsapi_base'
+    .'&state='.$state.'#wechat_redirect';
 $config = getConfig('config/config.json');
 $adQuery = pdoQuery('ad_tbl', null, null, '');
 foreach ($adQuery as $adRow) {
@@ -38,3 +44,4 @@ foreach ($adQuery as $adRow) {
 $indexRmark=pdoQuery('index_remark_tbl',null,null,null);
 
 include 'view/index.html.php';
+exit;

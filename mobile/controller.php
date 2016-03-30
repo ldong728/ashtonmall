@@ -251,9 +251,7 @@ if (isset($_SESSION['customerId'])) {
 if (isset($_GET['oauth'])) {
     include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
     if ($_GET['code']) {
-//        mylog('getCode');
         $userId = getOauthToken($_GET['code']);
-//        mylog('getOpenId'.$userId['openid']);
         $_SESSION['customerId'] = $userId['openid'];
         $_SESSION['userInf'] = getUnionId($userId['openid']);
 
@@ -270,6 +268,8 @@ if (isset($_GET['oauth'])) {
         }
         exit;
     }
+    mylog(getArrayInf($_SESSION['userInf']));
+    mylog('nickName:'.$_SESSION['userInf']['nickname']);
     header('location:index.php?rand=' . $rand);
     if (isset($_SESSION['userInf'])) {
         foreach ($_SESSION['userInf'] as $k => $v) {

@@ -7,11 +7,26 @@
 
 <body>
 <div class="wrap">
+    <?php include_once 'templates/jssdkIncluder.php'?>
+    <script>
+        var url='<?php echo $url ?>';
+        wx.ready(function() {
+            wx.onMenuShareTimeline({
+                title: '分销系统测试链接，勿点', // 分享标题
+                link: url, // 分享链接
+                imgUrl: '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/img/place.jpg'?>', // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+        });
+    </script>
     <div class="search-container">
         <div type="button" class="icon-button"></div>
         <input type="text" class="search-box"/>
-
-
         <div class="button-container">
             <a class="search-button">搜索商品</a>
         </div>
@@ -90,7 +105,7 @@
     </div>
     <div class="foot-blank">
 
-        <div class="ss-button">
+        <div class="sdp-button">
             立即开通
         </div>
         <p>亲爱的<b><?php echo $_SESSION['userInf']['nickname']?></b>,开通微客，即可轻松分享赚取佣金</p>
@@ -109,11 +124,8 @@
         autoplay: 5000,
         lazyLoading: true,
         loop: true
-
     });
 </script>
-
-<?php //include_once 'templates/jssdkIncluder.php'?>
 <script>
     $('.search-button').click(function(){
         var key=$('.search-box').val()
