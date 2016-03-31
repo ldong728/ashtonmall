@@ -30,7 +30,7 @@ if (isset($_GET['c_id'])) {
 
     $_SESSION['userInf']=$inf->fetch();
 }
-$state=isset($_SESSION['sdp']['sdp_id'])? $_SESSION['sdp']['sdp_id'] : '123';
+$state=isset($_SESSION['sdp']['sdp_id'])? $_SESSION['sdp']['sdp_id'] : 'root';
 $url='https://open.weixin.qq.com/connect/oauth2/authorize?'
     .'appid='.APP_ID
     .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/mobile/controller.php?oauth=1')

@@ -146,3 +146,14 @@ function saveConfig($path,array $config){
     $data=json_encode($config);
     file_put_contents($path,$data);
 }
+
+function sdpPrice(array $list){
+    if(isset($_SESSION['sdp']['manage'])&&$_SESSION['sdp']['manage']['switch']=='on'){
+            $list['price']=$list['sale']*$_SESSION['sdp']['manage']['discount'];
+    }else{
+        if(isset($_SESSION['sdp']['price'][$list['g_id']])) $list['price']=$_SESSION['sdp']['price'][$list['g_id']];//分销商自定义价格
+    }
+    return $list;
+
+
+}

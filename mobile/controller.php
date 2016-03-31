@@ -255,8 +255,46 @@ if (isset($_GET['oauth'])) {
         $_SESSION['customerId'] = $userId['openid'];
         $_SESSION['userInf'] = getUnionId($userId['openid']);
 
+
     } else {
         mylog('cannot get Code');
+        echo "入口错误，请从公众号的“微商城”按钮进入本商城";
+        exit;
+    }
+    $query=pdoQuery('sdp_user_view',null,array('open_id'=>$_SESSION['customerId']),' limit 1');
+    $sdp=$query->fetch();
+    if($sdp){
+        $_SESSION['sdp']=array(
+            'sdp_id'=>$sdp['sdp_id'],
+            'f_id'=>$sdp['f_id'],
+            'root'=>$sdp['root']
+        );
+    }else{
+        $query=pdoQuery('sdp_relation_tbl',null,array('f_id'=>$_GET['state']),' limit 1');
+        $sdp=$query->fetch();
+        if($sdp){
+            $_SESSION['sdp']=array(
+                'f_id'=>$sdp['f_id'],
+                'root'=>$sdp['root']
+            );
+        }
+    }
+    if($_SESSION['sdp']['root']!='root'){
+        $priceQuery=pdoQuery('sdp_price_tbl',null,array('sdp_id'=>$_SESSION['sdp']['root']),null);
+        foreach ($priceQuery as $row) {
+            $_SESSION['sdp']['price'][$row['g_id']]=$row['price'];
+        }
+
+        if($_SESSION['sdp']['sdp_id']==$_SESSION['sdp']=['root']){
+            $manageQuery=pdoQuery('sdp_level_view',null,array('level_id'=>$sdp['root']),' limit 1');
+            $manage=$manage->fetch();
+            $_SESSION['sdp']['manage']=array(
+                'switch'=>'off',
+              'discount'=>$manage['discount'],
+                'min_sell'=>$manage['min_sell'],
+                'max_sell'=>$manage['max_sell'],
+            );
+        }
     }
     $rand = rand(1000, 9999);
     $_SESSION['rand'] = $rand;
@@ -290,6 +328,33 @@ if (isset($_GET['oauth_userInfo'])) {
         $_SESSION['customerId'] = $userId['openid'];
     } else {
         mylog('cannot get Code');
+        echo "入口错误，请从公众号的“微商城”按钮进入本商城";
+        exit;
+    }
+    $query=pdoQuery('sdp_user_view',null,array('open_id'=>$_SESSION['customerId']),' limit 1');
+    $sdp=$query->fetch();
+    if($sdp){
+        $_SESSION['sdp']=array(
+            'sdp_id'=>$sdp['sdp_id'],
+            'f_id'=>$sdp['f_id'],
+            'root'=>$sdp['root']
+            );
+    }else{
+        $query=pdoQuery('sdp_relation_tbl',null,array('f_id'=>$_GET['state']),' limit 1');
+        $sdp=$query->fetch();
+        if($sdp){
+            $_SESSION['sdp']=array(
+                'f_id'=>$sdp['f_id'],
+                'root'=>$sdp['root']
+            );
+        }
+    }
+    if($_SESSION['sdp']['root']!='root'){
+        $priceQuery=pdoQuery('sdp_price_tbl',null,array('sdp_id'=>$_SESSION['sdp']['root']),null);
+        foreach ($priceQuery as $row) {
+            $_SESSION['sdp']['price'][$row['g_id']]=$row['price'];
+        }
+
     }
     $rand = rand(1000, 9999);
     $_SESSION['rand'] = $rand;
@@ -320,6 +385,8 @@ if (isset($_GET['getList'])) {
     $sc_id = $_GET['c_id'];
     $query=pdoQuery('user_tmp_list_view',null,array('sc_id'=>$sc_id,'situation'=>'1'),' group by g_id');
     foreach ($query as $row) {
+//        if(isset($_SESSION['sdp']['price'][$row['g_id']])) $row['price']=$_SESSION['sdp']['price'][$row['g_id']];
+        $row=sdpPrice($row);
         $list[]=$row;
     }
     if(!isset($list))$list=array();
@@ -375,7 +442,6 @@ if (isset($_GET['goodsdetail'])) {
     }
     $query = pdoQuery('user_g_inf_view', null, array('g_id' => $_GET['g_id']), ' limit 1');
     $inf = $query->fetch();
-//    $imgQuery = pdoQuery('g_image_tbl', null, array('g_id' => $_GET['g_id'], 'front_cover' => '0'), 'order by id asc');
     $imgQuery = pdoQuery('g_image_tbl', null, array('g_id' => $_GET['g_id']), 'order by id asc');
     if (isset($_GET['d_id'])) {
         if (isset($_GET['number'])) {
@@ -385,15 +451,24 @@ if (isset($_GET['goodsdetail'])) {
             $number = 1;
             $fromCart = 0;
         }
-        $detailQuery = pdoQuery('user_detail_view', null, array('g_id' => $_GET['g_id']), ' and d_id != ' . $_GET['d_id']);
+        $detailQueryQ = pdoQuery('user_detail_view', null, array('g_id' => $_GET['g_id']), ' and d_id != ' . $_GET['d_id']);
         $query = pdoQuery('user_detail_view', null, array('d_id' => $_GET['d_id']), null);
         $default = $query->fetch();
     } else {
         $number = 1;
         $fromCart = 0;
-        $detailQuery = pdoQuery('user_detail_view', null, array('g_id' => $_GET['g_id']), null);
-        $default = $detailQuery->fetch();
+        $detailQueryQ = pdoQuery('user_detail_view', null, array('g_id' => $_GET['g_id']), null);
+        $default = $detailQueryQ->fetch();
     }
+//    if(isset($_SESSION['sdp']['price'][$default['g_id']]))$default['price']=$_SESSION['sdp']['price'][$default['g_id']];
+    $default=sdpPrice($default);
+    foreach ($detailQueryQ as $row) {
+//        if(isset($_SESSION['sdp']['price'][$row['g_id']])) $row['price']=$_SESSION['sdp']['price'][$row['g_id']];
+        $row=sdpPrice($row);
+            $detailQuery[]=$row;
+    }
+
+
     $partQuery = pdoQuery('user_parts_view', null, array('host_id' => $_GET['g_id']), null);
     $parts = array();
     $_SESSION['buyNow']['partsList'] = array();
@@ -412,12 +487,7 @@ if (isset($_GET['goodsdetail'])) {
             $coop[$cooprow['g_id']]=$cooprow;
         }
 
-//        $coopration=pdoQuery('coop_tbl')
-//        mylog('noparts');
     }
-//    $cate=pdoQuery('sub_category_tbl',null,array('id'=>$inf['sc_id']),' limit 1');
-//    $cate=$cate->fetch();
-
     $review=getReview($_GET['g_id']);
     $parm = getGoodsPar($_GET['g_id'], $inf['sc_id']);
     $paramvalue='';
@@ -518,6 +588,7 @@ function getCartDetail($customerId)
     $goodsQuery = pdoQuery('user_cart_view', null, array('c_id' => $customerId), null);
     $goodsList = array();
     foreach ($goodsQuery as $row) {
+        $row=sdpPrice($row);
         $part_price = $row['part_sale'];
         if (isset($goodsList[$row['cart_id']])) {
             $goodsList[$row['cart_id']]['total'] += $row['part_number'] * $part_price;
@@ -579,6 +650,8 @@ function getBuyNowDetail($d_id, $number, array $partsList)
 {
     $gInfQuery = pdoQuery('user_tmp_list_view', null, array('d_id' => $d_id), null);
     $row = $gInfQuery->fetch();
+//    if(isset($_SESSION['sdp']['price'][$row['g_id']])) $row['price']=$_SESSION['sdp']['price'][$row['g_id']];
+    $row=sdpPrice($row);
     $price = isset($row['price']) ? $row['price'] : $row['sale'];
     $goodsList[0] = array(
         'g_id' => $row['g_id'],
