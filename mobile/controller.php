@@ -261,7 +261,10 @@ if (isset($_GET['oauth'])) {
         echo "入口错误，请从公众号的“微商城”按钮进入本商城";
         exit;
     }
-    $query=pdoQuery('sdp_user_view',null,array('open_id'=>$_SESSION['customerId']),' limit 1');
+    if($_GET['state']!='root'){
+
+    }
+    $query=pdoQuery('sdp_relation_view',null,array('open_id'=>$_SESSION['customerId']),' limit 1');
     $sdp=$query->fetch();
     if($sdp){
         $_SESSION['sdp']=array(
@@ -289,7 +292,7 @@ if (isset($_GET['oauth'])) {
             $manageQuery=pdoQuery('sdp_level_view',null,array('level_id'=>$sdp['root']),' limit 1');
             $manage=$manage->fetch();
             $_SESSION['sdp']['manage']=array(
-                'switch'=>'off',
+                'switch'=>'on',
               'discount'=>$manage['discount'],
                 'min_sell'=>$manage['min_sell'],
                 'max_sell'=>$manage['max_sell'],
@@ -306,73 +309,13 @@ if (isset($_GET['oauth'])) {
         }
         exit;
     }
-    mylog(getArrayInf($_SESSION['userInf']));
-    mylog('nickName:'.$_SESSION['userInf']['nickname']);
+//    mylog('nickName:'.$_SESSION['userInf']['nickname']);
     header('location:index.php?rand=' . $rand);
     if (isset($_SESSION['userInf'])) {
         foreach ($_SESSION['userInf'] as $k => $v) {
             if ('subscribe_time' == $k) {
                 $v = date('Y-m-d H:i:s', $v);
             }
-            $data[$k] = addslashes($v);
-        }
-        $re = pdoInsert('custom_inf_tbl', $data, 'update');
-    }
-    exit;
-}
-if (isset($_GET['oauth_userInfo'])) {
-    include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
-    if ($_GET['code']) {
-        $userId = getOauthToken($_GET['code']);
-        $_SESSION['userInf']=json_decode(getUserInfByToken($userId),true);
-        $_SESSION['customerId'] = $userId['openid'];
-    } else {
-        mylog('cannot get Code');
-        echo "入口错误，请从公众号的“微商城”按钮进入本商城";
-        exit;
-    }
-    $query=pdoQuery('sdp_user_view',null,array('open_id'=>$_SESSION['customerId']),' limit 1');
-    $sdp=$query->fetch();
-    if($sdp){
-        $_SESSION['sdp']=array(
-            'sdp_id'=>$sdp['sdp_id'],
-            'f_id'=>$sdp['f_id'],
-            'root'=>$sdp['root']
-            );
-    }else{
-        $query=pdoQuery('sdp_relation_tbl',null,array('f_id'=>$_GET['state']),' limit 1');
-        $sdp=$query->fetch();
-        if($sdp){
-            $_SESSION['sdp']=array(
-                'f_id'=>$sdp['f_id'],
-                'root'=>$sdp['root']
-            );
-        }
-    }
-    if($_SESSION['sdp']['root']!='root'){
-        $priceQuery=pdoQuery('sdp_price_tbl',null,array('sdp_id'=>$_SESSION['sdp']['root']),null);
-        foreach ($priceQuery as $row) {
-            $_SESSION['sdp']['price'][$row['g_id']]=$row['price'];
-        }
-
-    }
-    $rand = rand(1000, 9999);
-    $_SESSION['rand'] = $rand;
-    if(isset($_GET['share'])){
-        if($_GET['part']==1){
-            header('location:controller.php?goodsdetail=1&g_id='.$_GET['share']);
-        }else{
-            header('location:controller.php?partsdetail=1&g_id='.$_GET['share']);
-        }
-        exit;
-    }
-    header('location:index.php?rand=' . $rand);
-    if (isset($_SESSION['userInf'])) {
-        foreach ($_SESSION['userInf'] as $k => $v) {
-            if ('subscribe_time' == $k) {
-                $v = date('Y-m-d H:i:s', $v);
-            }
-            if('privilege'==$k)continue;
             $data[$k] = addslashes($v);
         }
         $re = pdoInsert('custom_inf_tbl', $data, 'update');

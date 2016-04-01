@@ -20,9 +20,7 @@ if (!isset($_SESSION['cate'])) {
     $query=pdoQuery('user_promotion_view',null,null,null);
 foreach ($query as $row) {
     $promotion[$row['sc_id']][]=$row;
-
 }
-//mylog(getArrayInf($inf));
 
 if (isset($_GET['c_id'])) {
     $_SESSION['customerId'] = $_GET['c_id'];
@@ -42,6 +40,7 @@ foreach ($adQuery as $adRow) {
     $adList[$adRow['category']][] = $adRow;
 }
 $indexRmark=pdoQuery('index_remark_tbl',null,null,null);
+$menu=pdoQuery('sdp_menu_tbl',null,null,' where level like "%'.$_SESSION['userButton'].'%" limit 5');
 
 include 'view/index.html.php';
 exit;
