@@ -259,9 +259,8 @@ if (isset($_GET['oauth'])) {
         echo "入口错误，请从公众号的“微商城”按钮进入本商城";
         exit;
     }
-    if($_GET['state']!='root'){
-        $query=pdoQuery('sdp_user_view',null,array('open_id'=>$_GET['state']),' limit 1');
-        $sdpInf=$query->fetch();
+    $query=pdoQuery('sdp_user_view',null,array('open_id'=>$_GET['state']),' limit 1');
+    if($sdpInf=$query->fetch()){
         $_SESSION['sdp']['sdp_id']=$sdpInf['sdp_id'];
         if($sdpInf['level']>1){
             $manageQuery=pdoQuery('sdp_level_view',null,array('level_id'=>$sdpInf['level']),' limit 1');
@@ -278,41 +277,15 @@ if (isset($_GET['oauth'])) {
             $sdp=$query->fetch();
             $_SESSION['sdp']['root']=$sdp['root'];
         }
-
-
-    }
-    $query=pdoQuery('sdp_relation_view',null,array('open_id'=>$_SESSION['customerId']),' limit 1');
-    $sdp=$query->fetch();
-    if($sdp){
-        $_SESSION['sdp']=array(
-            'sdp_id'=>$sdp['sdp_id'],
-            'f_id'=>$sdp['f_id'],
-            'root'=>$sdp['root']
-        );
     }else{
-
-        if($sdp){
-            $_SESSION['sdp']=array(
-                'f_id'=>$sdp['f_id'],
-                'root'=>$sdp['root']
-            );
+        if($_GET['state']!='root'){
+            $_SESSION['sdp']['sdp_id']=$_GET['state'];
         }
     }
-    if($_SESSION['sdp']['root']!='root'){
+    if($_GET['state']!='root'){
         $priceQuery=pdoQuery('sdp_price_tbl',null,array('sdp_id'=>$_SESSION['sdp']['root']),null);
         foreach ($priceQuery as $row) {
             $_SESSION['sdp']['price'][$row['g_id']]=$row['price'];
-        }
-
-        if($_SESSION['sdp']['sdp_id']==$_SESSION['sdp']=['root']){
-            $manageQuery=pdoQuery('sdp_level_view',null,array('level_id'=>$sdp['root']),' limit 1');
-            $manage=$manage->fetch();
-            $_SESSION['sdp']['manage']=array(
-                'switch'=>'on',
-              'discount'=>$manage['discount'],
-                'min_sell'=>$manage['min_sell'],
-                'max_sell'=>$manage['max_sell'],
-            );
         }
     }
     $rand = rand(1000, 9999);
