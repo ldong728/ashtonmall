@@ -19,6 +19,7 @@ if (!isset($_SESSION['cate'])) {
 }
     $query=pdoQuery('user_promotion_view',null,null,null);
 foreach ($query as $row) {
+    $row['price']=getSdpPrice($row['id']);
     $promotion[$row['sc_id']][]=$row;
 }
 

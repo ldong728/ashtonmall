@@ -148,16 +148,37 @@ function saveConfig($path,array $config){
 }
 
 function sdpPrice(array $list){
-    mylog('priceHandle');
-    mylog(getArrayInf($list));
     if(isset($_SESSION['sdp']['manage'])&&$_SESSION['sdp']['manage']['switch']=='on'){
             $list['price']=$list['sale']*$_SESSION['sdp']['manage']['discount'];
     }else{
         if(isset($_SESSION['sdp']['price'][$list['g_id']])) $list['price']=$_SESSION['sdp']['price'][$list['g_id']];//分销商自定义价格
     }
-    mylog(getArrayInf($_SESSION));
-    mylog(getArrayInf($list));
     return $list;
+}
+function getSdpPrice($g_id){
+    $query=pdoQuery('g_detail_view',array('sale'),array('g_id'=>$g_id),' limit 1');
+    $inf=$query->fetch();
+    if(isset($_SESSION['sdp']['manage'])&&$_SESSION['sdp']['manage']['switch']=='on'){
+        $price=$inf['sale']*$_SESSION['sdp']['manage']['discount'];
+    }else{
+        $price=isset($_SESSION['sdp']['price'][$g_id])?$_SESSION['sdp']['price'][$g_id]:$inf['sale'];
+    }
+    return $price;
+}
+function gainshare($order_id){
+    $orderQuery=pdoQuery('order_tbl',null,array('id'=>$order_id,'stu'=>'1'),' limit 1');
+    if($order=$orderQuery->fetch()){
+        if($order['remark']!=''){
+            $sdpQuery=pdoQuery('sdp_gainshare_view',null,array('sdp_id'=>$order['remark']),' limit 1');
+            $sdpInf=$sdpQuery->fetch();
+            $root=$sdpInf['level']==0?$sdpInf['root'] :$order['remark'];
+        }else{
+            return;
+        }
+
+    }else{
+        return;
+    }
 
 
 }

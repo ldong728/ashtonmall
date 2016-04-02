@@ -21,7 +21,7 @@
 <!--                        --><?php //echo $row['intro'] ?>
 <!--                    </div>-->
                     <div class="price">
-                        <?php echo 'RMB '.$row['sale']?>
+                        RMB<?php echo isset($row['price'])? $row['price']:$row['sale']?>
                     </div>
                     <a class="buy"href="controller.php?goodsdetail=1&g_id=<?php echo $row['g_id'] ?>">
                         选购

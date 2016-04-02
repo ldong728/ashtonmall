@@ -16,7 +16,7 @@ function createButtonTemp()
         .'appid='.APP_ID
         .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/mobile/controller.php?oauth=1')
         .'&response_type=code&scope=snsapi_base'
-        .'&state=123#wechat_redirect';
+        .'&state=root#wechat_redirect';
     $button1sub1=array('type'=>'view','name'=>'关于品牌','url'=>'http://www.rabbitpre.com/m/fybUReEnj');
     $button1sub2=array('type'=>'view','name'=>'企业简介','url'=>'http://www.rabbitpre.com/m/ei7YZfiNi');
     $button1sub3=array('type'=>'view','name'=>'了解产品','url'=>'http://www.rabbitpre.com/m/yQbiqi7');
@@ -150,6 +150,7 @@ function getUnionId($openId)
     $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=' . $openId . '&lang=zh_CN';
     $jsonData = $GLOBALS['mInterface']->getByCurl($url);
     $inf=json_decode($jsonData,true);
+
     if(!isset($inf['nickname'])||$inf['nickname']==''){
         $inf['nickname']='游客';
         $jsonData=json_encode($inf,JSON_UNESCAPED_UNICODE);

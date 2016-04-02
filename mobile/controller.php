@@ -145,8 +145,8 @@ if (isset($_SESSION['customerId'])) {
                     }
                 }
             }
-
-            pdoInsert('order_tbl', array('id' => $orderId, 'c_id' => $_SESSION['customerId'], 'a_id' => $_GET['addrId'], 'total_fee' => $total_fee,'customer_remark'=>$_SESSION['customer_remark']));
+            $sdp=isset($_SESSION['sdp']['sdp_id'])?$_SESSION['sdp']['sdp_id'] : '';
+            pdoInsert('order_tbl', array('id' => $orderId, 'c_id' => $_SESSION['customerId'], 'a_id' => $_GET['addrId'], 'total_fee' => $total_fee,'customer_remark'=>$_SESSION['customer_remark'],'remark'=>$sdp));
             pdoBatchInsert('order_detail_tbl', $readyInsert);
             if ('buy_now' == $to) {
                 unset($_SESSION['buyNow']);
@@ -249,40 +249,54 @@ if (isset($_SESSION['customerId'])) {
 }
 //以下功能不需登录，不需判断$_SESSION['customerId']
 if (isset($_GET['oauth'])) {
+    unset($_SESSION['sdp']);
     include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
     if ($_GET['code']) {
         $userId = getOauthToken($_GET['code']);
         $_SESSION['customerId'] = $userId['openid'];
-        $_SESSION['userInf'] = getUnionId($userId['openid']);
+        $_SESSION['userInf'] = getUnionId($_SESSION['customerId']);
     } else {
         mylog('cannot get Code');
         echo "入口错误，请从公众号的“微商城”按钮进入本商城";
         exit;
     }
-    $query=pdoQuery('sdp_user_view',null,array('open_id'=>$_GET['state']),' limit 1');
-    if($sdpInf=$query->fetch()){
+    
+    $query=pdoQuery('sdp_user_view',null,array('open_id'=>$_SESSION['customerId']),' limit 1');
+    
+    if($sdpInf=$query->fetch()){//已注册为维商/分销商
+        
         $_SESSION['sdp']['sdp_id']=$sdpInf['sdp_id'];
-        if($sdpInf['level']>1){
+        
+        if($sdpInf['level']>1){//判断是否为分销商
             $manageQuery=pdoQuery('sdp_level_view',null,array('level_id'=>$sdpInf['level']),' limit 1');
-            $manage=$manage->fetch();
+            $manage=$manageQuery->fetch();
             $_SESSION['sdp']['manage']=array(
                 'switch'=>'on',
                 'discount'=>$manage['discount'],
                 'min_sell'=>$manage['min_sell'],
                 'max_sell'=>$manage['max_sell'],
             );
-            $_SESSION['sdp']['root']=$_GET['state'];
-        }else{
-            $query=pdoQuery('sdp_relation_tbl',null,array('sdp_id'=>$_GET['state']),' limit 1');
+            $_SESSION['sdp']['root']=$_SESSION['sdp']['sdp_id'];
+        }else{//微商
+            $query=pdoQuery('sdp_relation_tbl',null,array('sdp_id'=>$sdpInf['sdp_id']),' limit 1');
             $sdp=$query->fetch();
             $_SESSION['sdp']['root']=$sdp['root'];
         }
-    }else{
+    }else{//普通顾客
         if($_GET['state']!='root'){
-            $_SESSION['sdp']['sdp_id']=$_GET['state'];
+            $query=pdoQuery('sdp_user_view',null,array('sdp_id'=>$_GET['state']),' limit 1');
+            $sdpInf=$query->fetch();
+            $_SESSION['sdp']['sdp_id']=$sdpInf['sdp_id'];
+            if($sdpInf['level']>1){
+                $_SESSION['sdp']['root']=$_SESSION['sdp']['sdp_id'];
+            }else{
+                $query=pdoQuery('sdp_relation_tbl',null,array('sdp_id'=>$sdpInf['sdp_id']),' limit 1');
+                $sdp=$query->fetch();
+                $_SESSION['sdp']['root']=$sdp['root'];
+            }
         }
     }
-    if($_GET['state']!='root'){
+    if($_GET['state']!='root'&&$_SESSION['sdp']['root']!='root'){
         $priceQuery=pdoQuery('sdp_price_tbl',null,array('sdp_id'=>$_SESSION['sdp']['root']),null);
         foreach ($priceQuery as $row) {
             $_SESSION['sdp']['price'][$row['g_id']]=$row['price'];
@@ -290,6 +304,7 @@ if (isset($_GET['oauth'])) {
     }
     $rand = rand(1000, 9999);
     $_SESSION['rand'] = $rand;
+    
     if(isset($_GET['share'])){
         if($_GET['part']==1){
             header('location:controller.php?goodsdetail=1&g_id='.$_GET['share']);
@@ -298,7 +313,7 @@ if (isset($_GET['oauth'])) {
         }
         exit;
     }
-//    mylog('nickName:'.$_SESSION['userInf']['nickname']);
+    mylog(getArrayInf($_SESSION));
     header('location:index.php?rand=' . $rand);
     if (isset($_SESSION['userInf'])) {
         foreach ($_SESSION['userInf'] as $k => $v) {
