@@ -114,6 +114,14 @@ if (isset($_SESSION['login'])) {
         }
         if (isset($_GET['test'])){
 //            $data=curlTest();
+//            $query=pdoQuery('g_inf_tbl',array('id','inf'),null,null);
+//            foreach($query as $row){
+//                $newInf=preg_replace('/http:\/\/web.gooduo.net\/ashton/','..',$row['inf']);
+//                pdoUpdate('g_inf_tbl',array('inf'=>addslashes($newInf)),array('id'=>$row['id']));
+////                mylog($newInf);
+//                echo 'record'.$row['id'].' ok!';
+//            }
+//            echo 'all ok';
             $data=sendKFMessage('o_Luwt9OgYENChNK0bBZ4b1tl5hc','你好');
             echo $data;
             exit;
