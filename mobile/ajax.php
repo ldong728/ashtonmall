@@ -220,7 +220,16 @@ if(isset($_SESSION['customerId'])){
         exit;
     }
     if(isset($_POST['sdp'])){
+        if(isset($_POST['create_sdp'])){
+//            createSdp($_POST['phone']);
+            if(verifyAccount($_SESSION['sdp']['sdp_id'])){
+                echo 'ok';
+            }else{
+                echo 'not ok';
+            }
 
+//            echo ('ok');
+        }
 
     }
 

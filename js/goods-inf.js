@@ -15,6 +15,7 @@ $(document).on('change', '#category-select', function () {
             $('.sale').append('RMB' + inf.sale);
         }
         $('.price').append('RMB' + realPrice);
+
     });
 
 });

@@ -131,6 +131,9 @@
         var key=$('.search-box').val()
         window.location.href='controller.php?search='+key;
     });
+    $('.sdp-button').click(function(){
+        window.location.href='controller.php?sdp=1&sdp_signup=1';
+    });
 </script>
 
 </body>

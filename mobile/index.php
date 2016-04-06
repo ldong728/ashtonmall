@@ -35,13 +35,20 @@ $url='https://open.weixin.qq.com/connect/oauth2/authorize?'
     .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/mobile/controller.php?oauth=1')
     .'&response_type=code&scope=snsapi_base'
     .'&state='.$state.'#wechat_redirect';
+//mylog($url);
 $config = getConfig('config/config.json');
 $adQuery = pdoQuery('ad_tbl', null, null, '');
 foreach ($adQuery as $adRow) {
     $adList[$adRow['category']][] = $adRow;
 }
 $indexRmark=pdoQuery('index_remark_tbl',null,null,null);
-$menu=pdoQuery('sdp_menu_tbl',null,null,' where level like "%'.$_SESSION['userButton'].'%" limit 5');
+$menuid=$_SESSION['sdp']['level']>1?2:$_SESSION['sdp']['level'];
+mylog('level:'.$menuid);
+$menuQuery=pdoQuery('sdp_menu_tbl',null,null,' where level like "%'.$menuid.'%" limit 5');
+foreach ($menuQuery as $row) {
+    $menu[]=$row;
+}
+
 
 include 'view/index.html.php';
 exit;

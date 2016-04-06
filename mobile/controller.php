@@ -81,9 +81,9 @@ if (isset($_SESSION['customerId'])) {
 
             $orderId = 'dy' . time() . rand(100, 999);  //订单号生成，低并发情况下适用
             if ('buy_now' == $to) {
-                if(isset($_SESSION['buyNow'])){
+                if (isset($_SESSION['buyNow'])) {
                     $arr = getBuyNowDetail($_SESSION['buyNow']['d_id'], $_SESSION['buyNow']['number'], $_SESSION['buyNow']['partsList']);
-                }else{
+                } else {
                     header('location:index.php');
                     exit;
                 }
@@ -127,7 +127,7 @@ if (isset($_SESSION['customerId'])) {
                         $total_fee += $prow['part_sale'] * $prow['part_number'];
                     }
                 }
-                if(0==$readyInsert[$row['d_id']]['number']){
+                if (0 == $readyInsert[$row['d_id']]['number']) {
                     unset($readyInsert[$row['d_id']]);
                 }
             }
@@ -135,18 +135,18 @@ if (isset($_SESSION['customerId'])) {
                 header('location:index.php');
                 exit;
             }
-            if($_GET['card']!='none'){
-                $savefeeQuery=pdoQuery('card_record_tbl',null,array('card_code'=>$_GET['card'],'consumed'=>'0'),' limit 1');
-                if($save=$savefeeQuery->fetch()){
+            if ($_GET['card'] != 'none') {
+                $savefeeQuery = pdoQuery('card_record_tbl', null, array('card_code' => $_GET['card'], 'consumed' => '0'), ' limit 1');
+                if ($save = $savefeeQuery->fetch()) {
                     include_once '../wechat/cardManager.php';
-                    if(consumeCard($_GET['card'])!=false){
-                        $total_fee-=$save['fee'];
-                        pdoUpdate('card_record_tbl',array('order_id'=>$orderId,'consumed'=>'1'),array('card_code'=>$_GET['card']));
+                    if (consumeCard($_GET['card']) != false) {
+                        $total_fee -= $save['fee'];
+                        pdoUpdate('card_record_tbl', array('order_id' => $orderId, 'consumed' => '1'), array('card_code' => $_GET['card']));
                     }
                 }
             }
-            $sdp=isset($_SESSION['sdp']['sdp_id'])?$_SESSION['sdp']['sdp_id'] : '';
-            pdoInsert('order_tbl', array('id' => $orderId, 'c_id' => $_SESSION['customerId'], 'a_id' => $_GET['addrId'], 'total_fee' => $total_fee,'customer_remark'=>$_SESSION['customer_remark'],'remark'=>$sdp));
+            $sdp = isset($_SESSION['sdp']['sdp_id']) ? $_SESSION['sdp']['sdp_id'] : '';
+            pdoInsert('order_tbl', array('id' => $orderId, 'c_id' => $_SESSION['customerId'], 'a_id' => $_GET['addrId'], 'total_fee' => $total_fee, 'customer_remark' => $_SESSION['customer_remark'], 'remark' => $sdp));
             pdoBatchInsert('order_detail_tbl', $readyInsert);
             if ('buy_now' == $to) {
                 unset($_SESSION['buyNow']);
@@ -154,58 +154,65 @@ if (isset($_SESSION['customerId'])) {
                 pdoDelete('cart_tbl', array('c_id' => $_SESSION['customerId']));
             }
             $orderStu = 0;
+
+
+
+            gainshare($orderId);//测试代码
+
+
+
             include 'view/order_inf.html.php';
         } else {
             header('location:controller.php?editAddress=1&from=' . $to);
         }
         exit;
     }
-    if(isset($_GET['pay_order'])){
-        $orderId=$_GET['order_id'];
-        $orderStu=$_GET['order_stu'];
-        $total_fee=$_GET['total_fee'];
+    if (isset($_GET['pay_order'])) {
+        $orderId = $_GET['order_id'];
+        $orderStu = $_GET['order_stu'];
+        $total_fee = $_GET['total_fee'];
         include 'view/order_inf.html.php';
         exit;
     }
-    if(isset($_GET['preOrderOK'])){
-        if(isset($_SESSION['userKey']['package'])){
+    if (isset($_GET['preOrderOK'])) {
+        if (isset($_SESSION['userKey']['package'])) {
 //            mylog($_SESSION['userKey']['package']);
-            $preSign=array(
-                'appId'=>APP_ID,
-                'timeStamp'=>time(),
-                'nonceStr'=>getRandStr(32),
-                'package'=>$_SESSION['userKey']['package'],
-                'signType'=>'MD5'
+            $preSign = array(
+                'appId' => APP_ID,
+                'timeStamp' => time(),
+                'nonceStr' => getRandStr(32),
+                'package' => $_SESSION['userKey']['package'],
+                'signType' => 'MD5'
             );
-            $sign=makeSign($preSign,KEY);
-            $preSign['paySign']=$sign;
+            $sign = makeSign($preSign, KEY);
+            $preSign['paySign'] = $sign;
 //            mylog('jsAPiPry:'.toXml($preSign));
-            $orderId=
-            include 'view/wxpay.html.php';
-        }else{
+            $orderId =
+                include 'view/wxpay.html.php';
+        } else {
             header('location:index.php');
         }
         exit;
     }
-    if(isset($_GET['review'])){
+    if (isset($_GET['review'])) {
 //        mylog('haha');
-        $reviewedQuery=pdoQuery('review_tbl',array('d_id'),array('order_id'=>$_GET['order_id']),null);
+        $reviewedQuery = pdoQuery('review_tbl', array('d_id'), array('order_id' => $_GET['order_id']), null);
         foreach ($reviewedQuery as $row) {
-            $reviewed[]=$row['d_id'];
+            $reviewed[] = $row['d_id'];
         }
 //        mylog('hh2');
-        if(!isset($reviewed))$reviewed=array();
+        if (!isset($reviewed)) $reviewed = array();
 
-        $query=pdoQuery('user_input_review_view',null,array('order_id'=>$_GET['order_id']),null);
+        $query = pdoQuery('user_input_review_view', null, array('order_id' => $_GET['order_id']), null);
 //        mylog('hh3');
         foreach ($query as $row) {
-            if(in_array($row['d_id'],$reviewed)){
+            if (in_array($row['d_id'], $reviewed)) {
                 continue;
             }
-            $review[]=$row;
+            $review[] = $row;
         }
-        if(!isset($review)){
-            pdoUpdate('order_tbl',array('stu'=>'3'),array('id'=>$_GET['order_id']));
+        if (!isset($review)) {
+            pdoUpdate('order_tbl', array('stu' => '3'), array('id' => $_GET['order_id']));
             header('location:controller.php?customerInf=1');
             exit;
         }
@@ -213,13 +220,13 @@ if (isset($_SESSION['customerId'])) {
         exit;
 
     }
-    if(isset($_GET['toalipay'])){
-        $orderId=$_GET['orderId'];
+    if (isset($_GET['toalipay'])) {
+        $orderId = $_GET['orderId'];
         include 'view/alipay.html.php';
         exit;
     }
-    if(isset($_GET['jumpToAlipay'])){
-        $orderId=$_GET['orderId'];
+    if (isset($_GET['jumpToAlipay'])) {
+        $orderId = $_GET['orderId'];
 
 
     }
@@ -246,6 +253,11 @@ if (isset($_SESSION['customerId'])) {
         header('location:index.php?rand=' . $_SESSION['rand']);
         exit;
     }
+    if (isset($_GET['sdp'])){//分销逻辑处理
+        if(isset($_GET['sdp_signup'])){
+            include 'view/sdp_login.html.php';
+        }
+    }
 }
 //以下功能不需登录，不需判断$_SESSION['customerId']
 if (isset($_GET['oauth'])) {
@@ -260,59 +272,76 @@ if (isset($_GET['oauth'])) {
         echo "入口错误，请从公众号的“微商城”按钮进入本商城";
         exit;
     }
-    
-    $query=pdoQuery('sdp_user_view',null,array('open_id'=>$_SESSION['customerId']),' limit 1');
-    
-    if($sdpInf=$query->fetch()){//已注册为维商/分销商
-        
-        $_SESSION['sdp']['sdp_id']=$sdpInf['sdp_id'];
-        
-        if($sdpInf['level']>1){//判断是否为分销商
-            $manageQuery=pdoQuery('sdp_level_view',null,array('level_id'=>$sdpInf['level']),' limit 1');
-            $manage=$manageQuery->fetch();
-            $_SESSION['sdp']['manage']=array(
-                'switch'=>'on',
-                'discount'=>$manage['discount'],
-                'min_sell'=>$manage['min_sell'],
-                'max_sell'=>$manage['max_sell'],
+    $query = pdoQuery('sdp_user_view', null, array('open_id' => $_SESSION['customerId']), ' limit 1');
+    if ($sdpInf = $query->fetch()) {//已注册为维商/分销商
+        $_SESSION['sdp']['sdp_id'] = $sdpInf['sdp_id'];
+        $_SESSION['sdp']['level']=$sdpInf['level'];
+        if ($sdpInf['level'] > 1) {//判断是否为分销商
+            $manageQuery = pdoQuery('sdp_level_view', null, array('level_id' => $sdpInf['level']), ' limit 1');
+            $manage = $manageQuery->fetch();
+            $_SESSION['sdp']['manage'] = array(
+                'switch' => 'on',
+                'discount' => $manage['discount'],
+                'min_sell' => $manage['min_sell'],
+                'max_sell' => $manage['max_sell'],
             );
-            $_SESSION['sdp']['root']=$_SESSION['sdp']['sdp_id'];
-        }else{//微商
-            $query=pdoQuery('sdp_relation_tbl',null,array('sdp_id'=>$sdpInf['sdp_id']),' limit 1');
-            $sdp=$query->fetch();
-            $_SESSION['sdp']['root']=$sdp['root'];
+            $_SESSION['sdp']['root'] = $_SESSION['sdp']['sdp_id'];
+        } else {//微商
+            $query = pdoQuery('sdp_relation_tbl', null, array('sdp_id' => $sdpInf['sdp_id']), ' limit 1');
+            $sdp = $query->fetch();
+            $_SESSION['sdp']['root'] = $sdp['root'];
+            $scaleQuery=pdoQuery('sdp_gainshare_tbl',array('value'),array('root'=>$_SESSION['sdp']['root']),' order by rank asc limit 1');
+            $scale=$scaleQuery->fetch();
+            $_SESSION['sdp']['scale']=$scale['value'];
+
         }
-    }else{//普通顾客
-        if($_GET['state']!='root'){
-            $query=pdoQuery('sdp_user_view',null,array('sdp_id'=>$_GET['state']),' limit 1');
-            $sdpInf=$query->fetch();
-            $_SESSION['sdp']['sdp_id']=$sdpInf['sdp_id'];
-            if($sdpInf['level']>1){
-                $_SESSION['sdp']['root']=$_SESSION['sdp']['sdp_id'];
-            }else{
-                $query=pdoQuery('sdp_relation_tbl',null,array('sdp_id'=>$sdpInf['sdp_id']),' limit 1');
-                $sdp=$query->fetch();
-                $_SESSION['sdp']['root']=$sdp['root'];
+    } else {//普通顾客
+        if ($_GET['state'] != 'root') {//链接带有分销商标识
+            $query = pdoQuery('sdp_user_view', null, array('sdp_id' => $_GET['state']), ' limit 1');
+            $sdpInf = $query->fetch();
+            $_SESSION['sdp']['sdp_id'] = $sdpInf['sdp_id'];
+            if ($sdpInf['level'] > 1) {
+                $_SESSION['sdp']['root'] = $_SESSION['sdp']['sdp_id'];
+            } else {
+                $query = pdoQuery('sdp_relation_tbl', null, array('sdp_id' => $sdpInf['sdp_id']), ' limit 1');
+                $sdp = $query->fetch();
+                $_SESSION['sdp']['root'] = $sdp['root'];
+            }
+        } else {//链接不带有分销商标识，或者从公众号按钮进入
+            $query = pdoQuery('sdp_subscribe_view', null, array('open_id' => $_SESSION['customerId']), ' limit 1');
+            if ($sdpInf = $query->fetch()) {//如果通过带分销商标识二维码关注
+                $_SESSION['sdp']['sdp_id'] = $sdpInf['f_sdp_id'];
+                if ($sdpInf['level'] > 1) {
+                    $_SESSION['sdp']['root'] = $_SESSION['sdp']['sdp_id'];
+                } else {
+                    $query = pdoQuery('sdp_relation_tbl', null, array('sdp_id' => $sdpInf['sdp_id']), ' limit 1');
+                    $sdp = $query->fetch();
+                    $_SESSION['sdp']['root'] = $sdp['root'];
+                }
+            }else{//无任何分销商标识
+                $_SESSION['sdp']['root'] ='root';
             }
         }
+        $_SESSION['sdp']['level']=0;
     }
-    if($_GET['state']!='root'&&$_SESSION['sdp']['root']!='root'){
-        $priceQuery=pdoQuery('sdp_price_tbl',null,array('sdp_id'=>$_SESSION['sdp']['root']),null);
+    if ($_GET['state'] != 'root' && $_SESSION['sdp']['root'] != 'root') {
+        $priceQuery = pdoQuery('sdp_price_tbl', null, array('sdp_id' => $_SESSION['sdp']['root']), null);
         foreach ($priceQuery as $row) {
-            $_SESSION['sdp']['price'][$row['g_id']]=$row['price'];
+            $_SESSION['sdp']['price'][$row['g_id']] = $row['price'];
         }
     }
     $rand = rand(1000, 9999);
     $_SESSION['rand'] = $rand;
-    
-    if(isset($_GET['share'])){
-        if($_GET['part']==1){
-            header('location:controller.php?goodsdetail=1&g_id='.$_GET['share']);
-        }else{
-            header('location:controller.php?partsdetail=1&g_id='.$_GET['share']);
+
+    if (isset($_GET['share'])) {
+        if ($_GET['part'] == 1) {
+            header('location:controller.php?goodsdetail=1&g_id=' . $_GET['share']);
+        } else {
+            header('location:controller.php?partsdetail=1&g_id=' . $_GET['share']);
         }
         exit;
     }
+
     mylog(getArrayInf($_SESSION));
     header('location:index.php?rand=' . $rand);
     if (isset($_SESSION['userInf'])) {
@@ -330,37 +359,37 @@ if (isset($_GET['oauth'])) {
 //获取主分类
 if (isset($_GET['getList'])) {
     $sc_id = $_GET['c_id'];
-    $query=pdoQuery('user_tmp_list_view',null,array('sc_id'=>$sc_id,'situation'=>'1'),' group by g_id');
+    $query = pdoQuery('user_tmp_list_view', null, array('sc_id' => $sc_id, 'situation' => '1'), ' group by g_id');
     foreach ($query as $row) {
 //        if(isset($_SESSION['sdp']['price'][$row['g_id']])) $row['price']=$_SESSION['sdp']['price'][$row['g_id']];
-        $row=sdpPrice($row);
-        $list[]=$row;
+        $row = sdpPrice($row);
+        $list[] = $row;
     }
-    if(!isset($list))$list=array();
-    $cateName=pdoQuery('category_overview_view',null,array('id'=>$sc_id),' limit 1');
-    $cateName=$cateName->fetch();
-    $partQuery=pdoQuery('user_parts_view',null,array('sc_id'=>$sc_id),'group by g_id');
+    if (!isset($list)) $list = array();
+    $cateName = pdoQuery('category_overview_view', null, array('id' => $sc_id), ' limit 1');
+    $cateName = $cateName->fetch();
+    $partQuery = pdoQuery('user_parts_view', null, array('sc_id' => $sc_id), 'group by g_id');
     foreach ($partQuery as $row) {
-        $partList[]=$row;
+        $partList[] = $row;
     }
-    if(!isset($partList))$partList=array();
+    if (!isset($partList)) $partList = array();
     include 'view/goods_list.html.php';
     exit;
 }
 //获取搜索结果
-if(isset($_GET['search'])){
-    $cateName=array();
-    $partList=array();
-    $key='%'.$_GET['search'].'%';
+if (isset($_GET['search'])) {
+    $cateName = array();
+    $partList = array();
+    $key = '%' . $_GET['search'] . '%';
 //    $query=pdoQuery('user_g_inf_view',null,array('situation'=>'1'),' and (name like "'.$key.'" or intro like "'.$key.'")');
-    $query=pdoQuery('user_tmp_list_view',null,array('situation'=>'1'),' and (name like "'.$key.'") group by g_id');
+    $query = pdoQuery('user_tmp_list_view', null, array('situation' => '1'), ' and (name like "' . $key . '") group by g_id');
 
     foreach ($query as $row) {
-        $list[]=$row;
+        $list[] = $row;
     }
-    if(!isset($list)){
-        $list=array();
-        $cateName=array('sub_name'=>'无符合条件的搜索结果');
+    if (!isset($list)) {
+        $list = array();
+        $cateName = array('sub_name' => '无符合条件的搜索结果');
     }
     include 'view/goods_list.html.php';
     exit;
@@ -408,14 +437,12 @@ if (isset($_GET['goodsdetail'])) {
         $default = $detailQueryQ->fetch();
     }
 //    if(isset($_SESSION['sdp']['price'][$default['g_id']]))$default['price']=$_SESSION['sdp']['price'][$default['g_id']];
-    $default=sdpPrice($default);
+    $default = sdpPrice($default);
     foreach ($detailQueryQ as $row) {
 //        if(isset($_SESSION['sdp']['price'][$row['g_id']])) $row['price']=$_SESSION['sdp']['price'][$row['g_id']];
-        $row=sdpPrice($row);
-            $detailQuery[]=$row;
+        $row = sdpPrice($row);
+        $detailQuery[] = $row;
     }
-
-
     $partQuery = pdoQuery('user_parts_view', null, array('host_id' => $_GET['g_id']), null);
     $parts = array();
     $_SESSION['buyNow']['partsList'] = array();
@@ -428,37 +455,43 @@ if (isset($_GET['goodsdetail'])) {
         }
         $parts[] = $row;
     }
-    if(count($parts)==0){
+    if (count($parts) == 0) {
         $coopquery = pdoQuery('user_coop_view', null, array('host_id' => $_GET['g_id']), null);
         foreach ($coopquery as $cooprow) {
-            $coop[$cooprow['g_id']]=$cooprow;
+            $coop[$cooprow['g_id']] = $cooprow;
         }
 
     }
-    $review=getReview($_GET['g_id']);
+    $review = getReview($_GET['g_id']);
     $parm = getGoodsPar($_GET['g_id'], $inf['sc_id']);
-    $paramvalue='';
-    if(!isset($parm['技术参数'])){
-        $parm['技术参数']=array();
+    $paramvalue = '';
+    if (!isset($parm['技术参数'])) {
+        $parm['技术参数'] = array();
     }
-    if(isset($parm[''])){
+    if (isset($parm[''])) {
         foreach ($parm[''] as $t) {
-            if($t['name']=='功能'){
-                $paramvalue=$t['value'];
+            if ($t['name'] == '功能') {
+                $paramvalue = $t['value'];
             }
         }
-    }else{
-        $paramvalue='';
+    } else {
+        $paramvalue = '';
     }
+    $state=isset($_SESSION['sdp']['sdp_id'])? $_SESSION['sdp']['sdp_id'] : 'root';
+    $url='https://open.weixin.qq.com/connect/oauth2/authorize?'
+        .'appid='.APP_ID
+        .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/mobile/controller.php?oauth=1&share='.$_GET['g_id'])
+        .'&response_type=code&scope=snsapi_base'
+        .'&state='.$state.'#wechat_redirect';
 
 
 
     include 'view/goods_inf.html.php';
     exit;
 }
-if(isset($_GET['after_inf'])){
-    $reQuery=pdoQuery('after_inf_tbl',null,array('g_id'=>$_GET['after_inf']),' limit 1');
-    $remark=$reQuery->fetch();
+if (isset($_GET['after_inf'])) {
+    $reQuery = pdoQuery('after_inf_tbl', null, array('g_id' => $_GET['after_inf']), ' limit 1');
+    $remark = $reQuery->fetch();
     echo $remark['after_inf'];
     exit;
 }
@@ -473,17 +506,17 @@ if (isset($_GET['partsdetail'])) {
     $inf = $query->fetch();
     $imgQuery[] = $inf;
     $_SESSION['buyNow']['partsList'] = array();
-    $reQuery=pdoQuery('sub_category_tbl',null,array('id'=>$inf['sc_id']),' limit 1');
-    $hostQuery=pdoQuery('part_tbl',array('g_id'),array('part_g_id'=>$inf['g_id']),' limit 10');
+    $reQuery = pdoQuery('sub_category_tbl', null, array('id' => $inf['sc_id']), ' limit 1');
+    $hostQuery = pdoQuery('part_tbl', array('g_id'), array('part_g_id' => $inf['g_id']), ' limit 10');
     foreach ($hostQuery as $row) {
-        $host[]=$row['g_id'];
+        $host[] = $row['g_id'];
     }
-    $hostlist=pdoQuery('user_g_inf_view',null,array('g_id'=>$host),null);
+    $hostlist = pdoQuery('user_g_inf_view', null, array('g_id' => $host), null);
 
-    $remark=$reQuery->fetch();
-    $cate=$remark;
-    $number=1;
-    $review=getReview($_GET['g_id']);
+    $remark = $reQuery->fetch();
+    $cate = $remark;
+    $number = 1;
+    $review = getReview($_GET['g_id']);
     include 'view/part_inf.html.php';
     exit;
 }
@@ -515,17 +548,17 @@ if (isset($_GET['getSort'])) {
 if (isset($_GET['customerInf'])) {
 
 }
-if(isset($_GET['getMoreReview'])){
-    $start=isset($_GET['start'])?$_GET['start']:0;
-    $limit=isset($_GET['limit'])?$_GET['limit']:20;
-    $reviews=getReview($_GET['g_id'],$start,$limit);
-    $totalNumber=$reviews['num'];
-    $reviews=$reviews['inf'];
-    include'view/reviewdisplay.html.php';
+if (isset($_GET['getMoreReview'])) {
+    $start = isset($_GET['start']) ? $_GET['start'] : 0;
+    $limit = isset($_GET['limit']) ? $_GET['limit'] : 20;
+    $reviews = getReview($_GET['g_id'], $start, $limit);
+    $totalNumber = $reviews['num'];
+    $reviews = $reviews['inf'];
+    include 'view/reviewdisplay.html.php';
 //    $query=pdoQuery('user_review_view',null,array('g_id'=>$_GET['g_id'],''))
 }
-if(isset($_GET['paySuccess'])){
-    $orderId=$_GET['orderId'];
+if (isset($_GET['paySuccess'])) {
+    $orderId = $_GET['orderId'];
     include 'view/pay_success.html.php';
 }
 function getCartDetail($customerId)
@@ -535,7 +568,7 @@ function getCartDetail($customerId)
     $goodsQuery = pdoQuery('user_cart_view', null, array('c_id' => $customerId), null);
     $goodsList = array();
     foreach ($goodsQuery as $row) {
-        $row=sdpPrice($row);
+        $row = sdpPrice($row);
         $part_price = $row['part_sale'];
         if (isset($goodsList[$row['cart_id']])) {
             $goodsList[$row['cart_id']]['total'] += $row['part_number'] * $part_price;
@@ -554,13 +587,13 @@ function getCartDetail($customerId)
                 'g_id' => $row['g_id'],
                 'd_id' => $row['d_id'],
                 'name' => $row['name'],
-                'made_in'=>$row['made_in'],
+                'made_in' => $row['made_in'],
                 'produce_id' => $row['produce_id'],
                 'category' => $row['category'],
                 'price' => $price,//不带配件 单价
                 'full_price' => $price + $part_price,//单件+配件价格
                 'number' => $row['number'],
-                'total' => $row['number'] * $price + $row['part_number']*$part_price,//总价
+                'total' => $row['number'] * $price + $row['part_number'] * $part_price,//总价
                 'url' => $row['url'],
             );
         }
@@ -575,12 +608,12 @@ function getCartDetail($customerId)
                 'part_d_id' => $row['part_d_id'],
                 'part_url' => $row['part_url'],
                 'part_sale' => $row['part_sale'],
-                'part_number'=>$row['part_number']
+                'part_number' => $row['part_number']
             );
             $totalPrice += $row['part_sale'] * $row['part_number'];
 //            mylog(getArrayInf($goodsList[$row['cart_id']]['parts']));
         } else {
-            $goodsList[$row['cart_id']]['parts']=array();
+            $goodsList[$row['cart_id']]['parts'] = array();
         }
 
     }
@@ -598,7 +631,7 @@ function getBuyNowDetail($d_id, $number, array $partsList)
     $gInfQuery = pdoQuery('user_tmp_list_view', null, array('d_id' => $d_id), null);
     $row = $gInfQuery->fetch();
 //    if(isset($_SESSION['sdp']['price'][$row['g_id']])) $row['price']=$_SESSION['sdp']['price'][$row['g_id']];
-    $row=sdpPrice($row);
+    $row = sdpPrice($row);
     $price = isset($row['price']) ? $row['price'] : $row['sale'];
     $goodsList[0] = array(
         'g_id' => $row['g_id'],
@@ -611,10 +644,10 @@ function getBuyNowDetail($d_id, $number, array $partsList)
         'total' => $number * ($price),
         'url' => $row['url'],
     );
-    foreach ($partsList as $k=>$v) {
-        $partsId[]=$k;
+    foreach ($partsList as $k => $v) {
+        $partsId[] = $k;
     }
-    if(!isset($partsId))$partsId=array();
+    if (!isset($partsId)) $partsId = array();
     $pquery = pdoQuery('parts_view', null, array('g_id' => $partsId), null);
     foreach ($pquery as $prow) {
         $goodsList[0]['parts'][] = array(
@@ -625,11 +658,11 @@ function getBuyNowDetail($d_id, $number, array $partsList)
             'part_url' => $prow['url'],
             'part_sale' => $prow['sale'],
 //            'part_number'=>$partsList[$prow['g_id']]
-            'part_number'=>$number
+            'part_number' => $number
         );
         $goodsList[0]['total'] += $prow['sale'] * $number;
     }
-    if(!isset($goodsList[0]['parts']))$goodsList[0]['parts']=array();
+    if (!isset($goodsList[0]['parts'])) $goodsList[0]['parts'] = array();
     return array(
         'totalPrice' => $goodsList[0]['total'],
         'totalSave' => 0,

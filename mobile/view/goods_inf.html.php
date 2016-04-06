@@ -17,6 +17,9 @@
     <div class="button-block"><a href="controller.php?getCart=1$rand=<?php echo rand(1000, 9999) ?>"><div class="inf-block inf-cart">购物车</div></a></div>
     <div class="button-block"><a href="#"id="fav"><div class="inf-block inf-fav">收藏</div></a></div>
 </div>
+<div class="sdp-inf-header">
+
+</div>
 <div class="pDetail">
 <div class="category-name">
 </div>
@@ -259,6 +262,14 @@
 </script>
 <?php include_once 'templates/jssdkIncluder.php' ?>
 <script>
+    var scale=<?php echo isset($_SESSION['sdp']['scale'])?$_SESSION['sdp']['scale']:0?>;
+    if(scale>0){
+        var price=realPrice*scale;
+        price=price.toFixed(2);
+        $('.sdp-inf-header').css('display','block');
+        $('.sdp-inf-header').text('分享赚取佣金 ￥'+price);
+    }
+
 
 </script>
 </body>
