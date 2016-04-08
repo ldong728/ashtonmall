@@ -2,32 +2,118 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <title><?php echo $title?></title>
+    <title><?php echo $title ?></title>
     <script type="text/javascript" src="../js/jquery.js"></script>
-    <link rel="stylesheet" type="text/css" href="stylesheet/style.css">
+    <link rel="stylesheet" type="text/css" href="stylesheet/style.css?v=<?php echo rand(1000, 9999) ?>">
     <link href="../uedit/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
-<!--    <script type="text/javascript" src="../uedit/third-party/jquery.min.js"></script>-->
-<!--    <script type="text/javascript" charset="utf-8" src="../uedit/umeditor.config.js"></script>-->
-<!--    <script type="text/javascript" charset="utf-8" src="../uedit/umeditor.min.js"></script>-->
-<!--    <script type="text/javascript" src="../uedit/lang/zh-cn/zh-cn.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="stylesheet/style2.css?v=<?php echo rand(1000, 9999) ?>">
+    <script src="js/html5.js"></script>
+    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+        (function ($) {
+            $(window).load(function () {
+                $("a[rel='load-content']").click(function (e) {
+                    e.preventDefault();
+                    var url = $(this).attr("href");
+                    $.get(url, function (data) {
+                        $(".content .mCSB_container").append(data); //load new content inside .mCSB_container
+                        //scroll-to appended content
+                        $(".content").mCustomScrollbar("scrollTo", "h2:last");
+                    });
+                });
+
+                $(".content").delegate("a[href='top']", "click", function (e) {
+                    e.preventDefault();
+                    $(".content").mCustomScrollbar("scrollTo", $(this).attr("href"));
+                });
+
+            });
+        })(jQuery);
+    </script>
 </head>
+
+<header>
+    <h1><img src="images/admin_logo.png"/></h1>
+    <ul class="rt_nav">
+        <li><a href="#" target="_blank" class="website_icon">站点首页</a></li>
+        <li><a href="#" class="admin_icon">DeathGhost</a></li>
+        <li><a href="#" class="set_icon">账号设置</a></li>
+        <li><a href="index.php?logout=1" class="quit_icon">安全退出</a></li>
+    </ul>
+</header>
 
 <body>
 <div class="toast"></div>
-
-<nav align="center">
+<aside class="lt_aside_nav content mCustomScrollbar">
+    <h2><a href="index.php">起始页</a></h2>
     <ul>
-        <?php echo isset($_SESSION['pms']['index'])? '<li><a href="index.php?index=1">首页编辑</a></li>':''?>
-        <?php echo isset($_SESSION['pms']['add'])? '<li><a href="index.php?add-goods=1">新增商品</a></li>':''?>
-        <?php echo isset($_SESSION['pms']['edit'])? '<li><a href="index.php?goods-config=1">商品修改</a> </li>':''?>
-        <?php echo isset($_SESSION['pms']['cate'])? '<li><a href="index.php?category-config=1">分类管理</a></li>':''?>
-        <?php echo isset($_SESSION['pms']['index'])? '<li><a href="index.php?promotions=1">首页展示</a></li>':''?>
-        <?php echo isset($_SESSION['pms']['order'])? '<li><a href="index.php?orders=1">订单管理</a></li>':''?>
-        <?php echo isset($_SESSION['pms']['review'])? '<li><a href="index.php?review=1">评价管理</a></li>':''?>
-        <?php echo isset($_SESSION['pms']['card'])? '<li><a href="index.php?card=1">优惠券</a></li>':''?>
-        <?php echo isset($_SESSION['pms']['wechat'])? '<li><a href="index.php?wechatConfig=1">微信公众号</a></li>':''?>
-        <?php echo isset($_SESSION['pms']['operator'])? '<li><a href="index.php?operator=1">操作员管理</a></li>':''?>
-        <li><a href="index.php?logout=1">退出</a></li>
+        <li>
+            <dl>
+                <dt>首页管理</dt>
+                <?php if (isset($_SESSION['pms']['index'])): ?>
+                    <dd><a href="index.php?index=1">首页编辑</a></dd><?php endif ?>
+                <?php if (isset($_SESSION['pms']['index'])): ?>
+                    <dd><a href="index.php?promotions=1">首页商品</a></dd><?php endif ?>
+            </dl>
+        </li>
+        <li>
+            <dl>
+                <dt>商品信息</dt>
+                <!--当前链接则添加class:active-->
+                <?php if (isset($_SESSION['pms']['add'])): ?>
+                    <dd><a href="index.php?add-goods=1" class="active">新增商品</a></dd><?php endif ?>
+                <?php if (isset($_SESSION['pms']['edit'])): ?>
+                    <dd><a href="index.php?goods-config=1">商品属性</a></dd><?php endif ?>
+                <?php if (isset($_SESSION['pms']['cate'])): ?>
+                    <dd><a href="index.php?category-config=1">类别管理</a></dd><?php endif ?>
+            </dl>
+        </li>
+        <li>
+            <dl>
+                <dt>订单管理</dt>
+                <?php if (isset($_SESSION['pms']['order'])): ?>
+                    <dd><a href="index.php?orders=-1">订单信息</a></dd><?php endif ?>
+                <?php if (isset($_SESSION['pms']['order'])): ?>
+                    <dd><a href="index.php?orders=0">订单修改</a></dd><?php endif ?>
+                <?php if (isset($_SESSION['pms']['order'])): ?>
+                    <dd><a href="index.php?orders=1">发货</a></dd><?php endif ?>
+            </dl>
+        </li>
 
+        <li>
+            <dl>
+                <dt>评价管理</dt>
+                <?php if (isset($_SESSION['pms']['review'])): ?>
+                    <dd><a href="index.php?review=1">查看评价</a></dd><?php endif ?>
+            </dl>
+        </li>
+        <?php if (isset($_SESSION['pms']['review'])): ?>
+            <li>
+                <dl>
+                    <dt>分销系统</dt>
+                    <dd><a href="index.php?sdp=1&level=1">等级管理</a></dd>
+                    <dd><a href="index.php?sdp=1&rootsdp=1">分销商管理</a></dd>
+                    <dd><a href="index.php?sdp=1&sdp=1">微商管理</a></dd>
+                    <dd><a href="index.php?sdp=1&sdpInf=1">数据分析</a></dd>
+                </dl>
+            </li>
+        <?php endif ?>
+        <li>
+            <dl>
+                <dt>管理员</dt>
+                <?php if (isset($_SESSION['pms']['operator'])): ?>
+                    <dd><a href="index.php?operator=1">管理员信息</a></dd><?php endif ?>
+            </dl>
+        </li>
+
+        <li>
+            <p class="btm_infor">© 谷多网络 版权所有</p>
+        </li>
     </ul>
-</nav>
+</aside>
+<section class="rt_wrap content mCustomScrollbar">
+    <div cla="rt_content">
+
+
+        <!--        --><?php //echo isset($_SESSION['pms']['card'])? '<li><a href="index.php?card=1">优惠券</a></li>':''?>
+        <!--        --><?php //echo isset($_SESSION['pms']['wechat'])? '<li><a href="index.php?wechatConfig=1">微信公众号</a></li>':''?>

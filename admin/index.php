@@ -143,6 +143,22 @@ if (isset($_SESSION['login'])) {
             exit;
         }
     }
+    if(isset($_GET['sdp'])){
+        if(isset($_SESSION['pms']['sdp'])){
+            if(isset($_GET['level'])){
+                $levelQuery=pdoQuery('sdp_level_tbl',null,null,null);
+                foreach ($levelQuery as $row) {
+                    $levelList[]=$row;
+                }
+                printView('admin/view/sdpLevel.html.php');
+            }
+
+
+        }else{
+            echo '权限不足';
+            exit;
+        }
+    }
     if (isset($_GET['logout'])) {//登出
         session_unset();
         include 'view/login.html.php';

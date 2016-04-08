@@ -429,5 +429,11 @@ if(isset($_SESSION['login'])) {
         }
         exit;
     }
+    if(isset($_POST['alteTblVal'])){
+        mylog(getArrayInf($_POST));
+        $data=pdoUpdate($_POST['tbl'],array($_POST['col']=>$_POST['value']),array($_POST['index']=>$_POST['id']));
+        echo $data;
+        exit;
+    }
 }
 ?>

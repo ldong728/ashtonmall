@@ -39,13 +39,13 @@ define('WEIXIN_ID','gh_bc1d700f0582');
 define('MCH_ID','1285420201');
 define('KEY','Hlb2005booth20160101hlbbooth0625');
 define("TOKEN", "godlee");
-define('DOMAIN',"ashton");
+define('DOMAIN',"/ashton");
 define('NOTIFY_URL',"now is null");
 define('DB_IP','localhost');
 define("DB_NAME","ashton_db");
 define("DB_USER","aston_db_manager");
 define("DB_PSW","c6cychNznJWGhQC8");
-$mypath = $_SERVER['DOCUMENT_ROOT'] . '/'.DOMAIN;   //用于直接部署
+$mypath = $_SERVER['DOCUMENT_ROOT'] .DOMAIN;   //用于直接部署
 $template_key_order='XpZKkl2LFqxN95XpKFRKcR7Dxu1Nh9ZCj3ILRzrbMUY';//模板网购成功通知
 $template_key_express='OWQiu_I2B-ZpxPDMrJpxU0al1fNN-onZE7uGeUTtcks';//模板快递物流提醒
 

@@ -256,6 +256,10 @@ if (isset($_SESSION['customerId'])) {
     if (isset($_GET['sdp'])){//分销逻辑处理
         if(isset($_GET['sdp_signup'])){
             include 'view/sdp_login.html.php';
+            eixt;
+        }
+        if(isset($_GET['account'])){
+
         }
     }
 }
@@ -480,7 +484,7 @@ if (isset($_GET['goodsdetail'])) {
     $state=isset($_SESSION['sdp']['sdp_id'])? $_SESSION['sdp']['sdp_id'] : 'root';
     $url='https://open.weixin.qq.com/connect/oauth2/authorize?'
         .'appid='.APP_ID
-        .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/mobile/controller.php?oauth=1&share='.$_GET['g_id'])
+        .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].DOMAIN.'/mobile/controller.php?oauth=1&share='.$_GET['g_id'])
         .'&response_type=code&scope=snsapi_base'
         .'&state='.$state.'#wechat_redirect';
 

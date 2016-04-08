@@ -118,7 +118,7 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
 </div>
 <script>
     var editWidth=$(document).width()*0.4;
-    var editHeight=600;
+    var editHeight=400;
 </script>
 <script type="text/javascript" charset="utf-8" src="../uedit/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="../uedit/umeditor.min.js"></script>

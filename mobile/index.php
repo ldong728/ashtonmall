@@ -32,7 +32,7 @@ if (isset($_GET['c_id'])) {
 $state=isset($_SESSION['sdp']['sdp_id'])? $_SESSION['sdp']['sdp_id'] : 'root';
 $url='https://open.weixin.qq.com/connect/oauth2/authorize?'
     .'appid='.APP_ID
-    .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/mobile/controller.php?oauth=1')
+    .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].DOMAIN.'/mobile/controller.php?oauth=1')
     .'&response_type=code&scope=snsapi_base'
     .'&state='.$state.'#wechat_redirect';
 //mylog($url);
