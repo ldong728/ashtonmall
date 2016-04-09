@@ -7,7 +7,6 @@ function showToast(str){
 }
 //例：<div class="ipt-toggle" id="row id" data-tbl="table name"data-col="col name" data-index="index col">
 $('.ipt-toggle').dblclick(function () {
-    alert($(this).attr('id'));
     var id = $(this).attr('id');
     var value = $.trim($(this).text());
 
@@ -45,7 +44,7 @@ $(document).on('change', '.ipt', function () {
             input.parent().text(value);
             input.remove();
         }else{
-            alert(data);
+            //alert(data);
         }
     })
 })

@@ -52,7 +52,7 @@
             <a class="myManage1"href="controller.php?getCart=1">我的购物车
                 <i class="iright"></i></a>
             <a class="myManage5">完善用户信息
-                </i></a>
+                <i class="iright"></i></a>
         </div>
 
     </div>

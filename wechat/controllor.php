@@ -17,7 +17,8 @@ $eventList=array
     'kf_close_session',
     'user_get_card',
     'user_del_card',
-    'CLICK'
+    'CLICK',
+    'subscribe'
 
 );
 //mylog(getArrayInf($msg));

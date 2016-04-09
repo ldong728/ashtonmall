@@ -244,7 +244,7 @@ function gainshare($order_id){
                 }
                 $discountQuery=pdoQuery('sdp_level_view',null,array('sdp_id'=>$root),' limit 1');
                 $rootinf=$discountQuery->fetch();
-                $costQuery=pdoQuery('sdp_prime_cost_tbl',null,array('o_id'=>$order_id),' limit 1');
+                $costQuery=pdoQuery('sdp_prime_cost_view',null,array('o_id'=>$order_id),' limit 1');
                 $cost=$costQuery->fetch();
                 $rootEarn=$cost['sale']*(1-$rootinf['discount'])-$totalShared;
                 alterSdpAccount($order_id,$root,$rootEarn);
@@ -276,6 +276,42 @@ function alterSdpAccount($order_id,$sdp_id,$price,$type='in'){
     $verify=md5($order_id.$price.$totalBalence.SDP_KEY);//每一笔记录都进行签名
     pdoInsert('sdp_record_tbl',array('order_id'=>$order_id,'sdp_id'=>$sdp_id,'fee'=>$price,'type'=>$type),'ignore');
     pdoUpdate('sdp_account_tbl',array('total_balence'=>$totalBalence,'verify'=>$verify),array('sdp_id'=>$sdp_id));
+}
+function getSdpInf($index,$size,$level=0){
+
+    if(0==$level){
+        $where=null;
+        $whereStr=' where level>1 ';
+    }else{
+        $where=array('level'=>$level);
+        $whereStr='';
+    }
+    $count=pdoQuery('sdp_user_level_tbl',array('count(*) as total_num'),$where,$whereStr);
+    $c=$count->fetch();
+
+    $return['count']=$c['total_num'];
+    $infQuery=pdoQuery('sdp_full_inf_view',null,$where,$whereStr." limit $index,$size");
+    foreach ($infQuery as $row) {
+        $return['sdp'][]=$row;
+    }
+    return $return;
+
+}
+function changeSdpLevel($sdpId,$level){
+
+}
+function getSubSdp(array $fullList,array $sdpList){
+    $return=array();
+    foreach ($fullList as $f => $s) {
+        if(in_array($f,$sdpList)){
+            $return[]=$s;
+        }
+    }
+    if(count($return)>0){
+        return array_merge($sdpList,getSubSdp($fullList,$return));
+    }else{
+        return $sdpList;
+    }
 }
 
 /**账户验证函数

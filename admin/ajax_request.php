@@ -435,5 +435,50 @@ if(isset($_SESSION['login'])) {
         echo $data;
         exit;
     }
+
+    if(isset($_POST['sdp'])){
+        if(isset($_POST['addSdpLevel'])){
+            $id=pdoInsert('sdp_level_tbl',array('level_name'=>'新建分销商','discount'=>1,'min_sell'=>1,'max_sell'=>1));
+            echo $id;
+            exit;
+        }
+        if(isset($_POST['alterSdpLevel'])){
+            $sdp_id=$_POST['sdp_id'];
+            $level=$_POST['alterSdpLevel'];
+            pdoDelete('sdp_gainshare_tbl',array('root'=>$sdp_id));//清楚用户自设的佣金比例
+            if(1==$level){
+                $rootQuery=pdoQuery('sdp_relation_view',array('root','level'),array('sdp_id=>$sdp_id'),' limit 1');
+                $r=$rootQuery->fetch();
+                if($r['level']>1){
+                    $fullQuery=pdoQuery('sdp_relation_tbl',array('sdp_id','f_id'),array('root'=>$sdp_id),null);
+                    foreach ($fullQuery as $row) {
+                        $fullList[$row['f_id']]=$row['sdp_id'];
+                    }
+                    $list=getSubSdp($fullList,array($sdp_id));
+                    pdoUpdate('sdp_relation_tbl',array('root'=>'root'),array('sdp_id'=>$list));
+                    pdoInsert('sdp_relation_tbl',array('sdp_id'=>$sdp_id,'f_id'=>'root','root'=>'id'),'update');
+                }
+            }elseif($level>1){
+                $rootQuery=pdoQuery('sdp_relation_view',array('root','level'),array('sdp_id=>$sdp_id'),' limit 1');
+                $r=$rootQuery->fetch();
+                if($r['level']==1){
+                    $root=$r['root'];
+                    $fullQuery=pdoQuery('sdp_relation_tbl',array('sdp_id','f_id'),array('root'=>$root),null);
+                    foreach ($fullQuery as $row) {
+                        $fullList[$row['f_id']]=$row['sdp_id'];
+                    }
+                    $list=getSubSdp($fullList,array($sdp_id));
+                    pdoUpdate('sdp_relation_tbl',array('root'=>$sdp_id),array('sdp_id'=>$list));
+                    pdoDelete('sdp_relation_tbl',array('sdp_id'=>$sdp_id));
+                }
+                pdoUpdate('sdp_user_level_tbl',array('level'=>$level),array('sdp_id'=>$sdp_id));
+                echo 'ok';
+            }
+        }
+
+
+
+        exit;
+    }
 }
 ?>

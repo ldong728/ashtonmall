@@ -261,6 +261,10 @@ if (isset($_SESSION['customerId'])) {
         if(isset($_GET['account'])){
 
         }
+        if(isset($_GET['sdpUserInf'])){
+
+            include 'view/sdp_user_html.php';
+        }
     }
 }
 //以下功能不需登录，不需判断$_SESSION['customerId']
@@ -280,6 +284,7 @@ if (isset($_GET['oauth'])) {
     if ($sdpInf = $query->fetch()) {//已注册为维商/分销商
         $_SESSION['sdp']['sdp_id'] = $sdpInf['sdp_id'];
         $_SESSION['sdp']['level']=$sdpInf['level'];
+        $_SESSION['sdp']['name']=$sdpInf['level_name'];
         if ($sdpInf['level'] > 1) {//判断是否为分销商
             $manageQuery = pdoQuery('sdp_level_view', null, array('level_id' => $sdpInf['level']), ' limit 1');
             $manage = $manageQuery->fetch();

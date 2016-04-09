@@ -104,12 +104,17 @@
 
     </div>
     <div class="foot-blank">
-
+        <?php if($_SESSION['sdp']['level']<1):?>
         <div class="sdp-button">
             立即开通
         </div>
         <p>亲爱的<b><?php echo $_SESSION['userInf']['nickname']?></b>,开通微客，即可轻松分享赚取佣金</p>
         <p style="color: #0587f6">分享健康料理，体验智能厨电</p>
+        <?php endif?>
+        <?php if($_SESSION['sdp']['level']>0):?>
+            <p>亲爱的<?php echo $_SESSION['sdp']['name']?><b><?php echo $_SESSION['userInf']['nickname']?></b>,欢迎回来</p>
+            <p style="color: #0587f6">分享健康料理，体验智能厨电</p>
+        <?php endif?>
     </div>
 
     <div class="toast"></div>

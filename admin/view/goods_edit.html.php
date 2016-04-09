@@ -14,7 +14,7 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
         <?php echo '"'.$m_i.'"' ?>;
 
 </script>
-<div class="editWrap">
+<section>
 
 
     <div>
@@ -50,28 +50,32 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
         </div>
         <div class="main-inf">
             <form action="consle.php" method="post">
+
+
+
                 <div class="g-inf-name">
                     <label for="name">名称
-                        <input id="name" type="text" name="name" />
+                        <input class="textbox textbox_295" id="name" type="text" name="name" />
                     </label>
                 </div>
                 <div class="g-inf-name">
                     <label for="s_name">短名称
-                        <input id="s_name" type="text" name="s_name" />
+                        <input class="textbox textbox_225" id="s_name" type="text" name="s_name" />
                     </label>
                 </div>
-                <div clas="g-inf-produce-id">
+                <div class="g-inf-produce-id">
                     <lable for="produce_id">型号
-                        <input type="text" id="produce_id"name="produce_id"/>
+                        <input class="textbox textbox_225" type="text" id="produce_id"name="produce_id"/>
                     </lable>
 
                 </div>
 
                 <div class="g-inf-intro">
                     <label for="intro">简介
-                        <textarea id="intro" name="intro"cols="50"rows="6"></textarea>
+                        <textarea class="textarea" id="intro" name="intro"cols="50"rows="6"></textarea>
                     </label>
                 </div>
+                <button class="link_btn">提交商品信息修改</button>
                 <div class="g-inf-detail">
                     <label for="inf">图文信息：
                         <script type="text/plain" id="uInput" name="g_inf" style="width:1000px;height:240px;">
@@ -115,7 +119,7 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
 
 
 
-</div>
+</section>
 <script>
     var editWidth=$(document).width()*0.4;
     var editHeight=400;

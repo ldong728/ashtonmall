@@ -145,7 +145,17 @@ function pdoUpdate($tableName,array $value,array $where,$str=''){
                 $j++;
                 continue;
             }
-            $sql = $sql . $k . '=' . '"' . $v . '"';
+            if(is_array($v)){
+                $sql.=$k.' in(';
+                foreach ($v as $d) {
+                    $sql.='"'.$d.'",';
+                }
+                $sql=trim($sql,',');
+                $sql.=')';
+            }else{
+                $sql = $sql . $k . '=' . '"' . $v . '"';
+            }
+//            $sql = $sql . $k . '=' . '"' . $v . '"';
             if ($j < $whereCount - 1) $sql = $sql . ' AND ';
             $j++;
         }

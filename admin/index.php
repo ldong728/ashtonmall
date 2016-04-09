@@ -150,7 +150,27 @@ if (isset($_SESSION['login'])) {
                 foreach ($levelQuery as $row) {
                     $levelList[]=$row;
                 }
-                printView('admin/view/sdpLevel.html.php');
+                $gainShare=pdoQuery('sdp_gainshare_tbl',null,array('root'=>'root'),' limit 3');
+                printView('admin/view/sdpLevel.html.php','分销管理');
+
+            }
+            if(isset($_GET['rootsdp'])){
+                $page=isset($_GET['page'])?$_GET['page']-1:0;
+                $levelQuery=pdoQuery('sdp_level_tbl',null,null,' where level_id>1');
+                foreach ($levelQuery as $row) {
+                    $levelList[]=$row;
+                }
+                $sdpInf=getSdpInf($page*20,20,$_GET['rootsdp']);
+                printView('admin/view/sdpManage.html.php','分销商管理');
+            }
+            if(isset($_GET['sdp'])){
+                $levelQuery=pdoQuery('sdp_level_tbl',null,null,' where level_id>1');
+                foreach ($levelQuery as $row) {
+                    $levelList[]=$row;
+                }
+                $page=isset($_GET['page'])?$_GET['page']-1:0;
+                $sdpInf=getSdpInf($page*20,20,1);
+                printView('admin/view/sdpUser.html.php','微商管理');
             }
 
 
@@ -158,6 +178,7 @@ if (isset($_SESSION['login'])) {
             echo '权限不足';
             exit;
         }
+        exit;
     }
     if (isset($_GET['logout'])) {//登出
         session_unset();
