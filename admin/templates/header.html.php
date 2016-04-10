@@ -33,11 +33,11 @@
 </head>
 
 <header>
-    <h1><img src="images/admin_logo.png"/></h1>
+<!--    <h1><img src="../img/ccd01ba9efdc42f238b7504b643cb285.jpg"/></h1>-->
     <ul class="rt_nav">
         <li><a href="#" target="_blank" class="website_icon">站点首页</a></li>
-        <li><a href="#" class="admin_icon">DeathGhost</a></li>
-        <li><a href="#" class="set_icon">账号设置</a></li>
+<!--        <li><a href="#" class="admin_icon">DeathGhost</a></li>-->
+<!--        <li><a href="#" class="set_icon">账号设置</a></li>-->
         <li><a href="index.php?logout=1" class="quit_icon">安全退出</a></li>
     </ul>
 </header>

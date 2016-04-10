@@ -156,9 +156,7 @@ if (isset($_SESSION['customerId'])) {
             $orderStu = 0;
 
 
-
-            gainshare($orderId);//测试代码
-
+            //测试代码
 
 
             include 'view/order_inf.html.php';
@@ -234,7 +232,6 @@ if (isset($_SESSION['customerId'])) {
         include 'view/customer_inf.html.php';
         exit;
     }
-
     if (isset($_GET['getOrderDetail'])) {
         $orderQuery = pdoQuery('order_view', null, array("id" => $_GET['id']), ' limit 1');
         $order_inf = $orderQuery->fetch();
@@ -253,18 +250,64 @@ if (isset($_SESSION['customerId'])) {
         header('location:index.php?rand=' . $_SESSION['rand']);
         exit;
     }
-    if (isset($_GET['sdp'])){//分销逻辑处理
-        if(isset($_GET['sdp_signup'])){
+    if (isset($_GET['sdp'])) {//分销逻辑处理
+        if (isset($_GET['sdp_signup'])) {
             include 'view/sdp_login.html.php';
             eixt;
         }
-        if(isset($_GET['account'])){
+        if (isset($_GET['account'])) {
+            if ($_SESSION['sdp']['level'] > 0) {
+                $accountQuery = pdoQuery('sdp_account_tbl', null, array('sdp_id' => $_SESSION['sdp']['sdp_id']), ' limit 1');
+                $account = $accountQuery->fetch();
+                include 'view/sdp_account.html.php';
+            }
 
         }
-        if(isset($_GET['sdpUserInf'])){
-
-            include 'view/sdp_user_html.php';
+        if (isset($_GET['sdpUserInf'])) {
+            if(!file_exists('../img/'.$_SESSION['sdp']['sdp_id'].'.jpg')){
+                mylog('what?');
+                include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
+                $date=createQrcode($_SESSION['sdp']['sdp_id']);
+            }
+            include 'view/sdp_users_html.php';
         }
+        if ($_SESSION['sdp']['level'] > 1) {
+            if(isset($_GET['manage'])){
+                if($_SESSION['sdp']['manage']['switch']=='on'){
+                    $_SESSION['sdp']['manage']['switch']='off';
+                }else{
+                    $_SESSION['sdp']['manage']['switch']='on';
+                }
+                $rand=rand(1000,9999);
+                header(header('location:index.php?rand=' . $rand));
+            }
+
+
+            if (isset($_GET['sdpManageInf'])) {
+
+                include 'view/sdp_manage_html.php';
+            }
+            if (isset($_GET['gainshare'])) {
+
+            }
+            if (isset($_GET['sdpSell'])) {
+                $listQuery=pdoQuery('user_tmp_list_view',null,array('situation'=>1),' group by g_id');
+                foreach ($listQuery as $row) {
+                    $row=sdpPrice($row);
+                    $list[]=$row;
+                }
+                include 'view/sdp_price_html.php';
+
+
+            }
+            if (isset($_GET['subSdp'])) {
+                include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
+                $date=createQrcode($_SESSION['sdp']['sdp_id']);
+                echo $date?$date:'no';
+                exit;
+            }
+        }
+        exit;
     }
 }
 //以下功能不需登录，不需判断$_SESSION['customerId']
@@ -283,13 +326,13 @@ if (isset($_GET['oauth'])) {
     $query = pdoQuery('sdp_user_view', null, array('open_id' => $_SESSION['customerId']), ' limit 1');
     if ($sdpInf = $query->fetch()) {//已注册为维商/分销商
         $_SESSION['sdp']['sdp_id'] = $sdpInf['sdp_id'];
-        $_SESSION['sdp']['level']=$sdpInf['level'];
-        $_SESSION['sdp']['name']=$sdpInf['level_name'];
+        $_SESSION['sdp']['level'] = $sdpInf['level'];
+        $_SESSION['sdp']['name'] = $sdpInf['level_name'];
         if ($sdpInf['level'] > 1) {//判断是否为分销商
             $manageQuery = pdoQuery('sdp_level_view', null, array('level_id' => $sdpInf['level']), ' limit 1');
             $manage = $manageQuery->fetch();
             $_SESSION['sdp']['manage'] = array(
-                'switch' => 'on',
+                'switch' => 'off',
                 'discount' => $manage['discount'],
                 'min_sell' => $manage['min_sell'],
                 'max_sell' => $manage['max_sell'],
@@ -299,9 +342,9 @@ if (isset($_GET['oauth'])) {
             $query = pdoQuery('sdp_relation_tbl', null, array('sdp_id' => $sdpInf['sdp_id']), ' limit 1');
             $sdp = $query->fetch();
             $_SESSION['sdp']['root'] = $sdp['root'];
-            $scaleQuery=pdoQuery('sdp_gainshare_tbl',array('value'),array('root'=>$_SESSION['sdp']['root']),' order by rank asc limit 1');
-            $scale=$scaleQuery->fetch();
-            $_SESSION['sdp']['scale']=$scale['value'];
+            $scaleQuery = pdoQuery('sdp_gainshare_tbl', array('value'), array('root' => $_SESSION['sdp']['root']), ' order by rank asc limit 1');
+            $scale = $scaleQuery->fetch();
+            $_SESSION['sdp']['scale'] = $scale['value'];
 
         }
     } else {//普通顾客
@@ -327,13 +370,13 @@ if (isset($_GET['oauth'])) {
                     $sdp = $query->fetch();
                     $_SESSION['sdp']['root'] = $sdp['root'];
                 }
-            }else{//无任何分销商标识
-                $_SESSION['sdp']['root'] ='root';
+            } else {//无任何分销商标识
+                $_SESSION['sdp']['root'] = 'root';
             }
         }
-        $_SESSION['sdp']['level']=0;
+        $_SESSION['sdp']['level'] = 0;
     }
-    if ($_GET['state'] != 'root' && $_SESSION['sdp']['root'] != 'root') {
+    if ($_SESSION['sdp']['root'] != 'root') {
         $priceQuery = pdoQuery('sdp_price_tbl', null, array('sdp_id' => $_SESSION['sdp']['root']), null);
         foreach ($priceQuery as $row) {
             $_SESSION['sdp']['price'][$row['g_id']] = $row['price'];
@@ -351,7 +394,7 @@ if (isset($_GET['oauth'])) {
         exit;
     }
 
-    mylog(getArrayInf($_SESSION));
+//    mylog(getArrayInf($_SESSION));
     header('location:index.php?rand=' . $rand);
     if (isset($_SESSION['userInf'])) {
         foreach ($_SESSION['userInf'] as $k => $v) {
@@ -486,13 +529,12 @@ if (isset($_GET['goodsdetail'])) {
     } else {
         $paramvalue = '';
     }
-    $state=isset($_SESSION['sdp']['sdp_id'])? $_SESSION['sdp']['sdp_id'] : 'root';
-    $url='https://open.weixin.qq.com/connect/oauth2/authorize?'
-        .'appid='.APP_ID
-        .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].DOMAIN.'/mobile/controller.php?oauth=1&share='.$_GET['g_id'])
-        .'&response_type=code&scope=snsapi_base'
-        .'&state='.$state.'#wechat_redirect';
-
+    $state = isset($_SESSION['sdp']['sdp_id']) ? $_SESSION['sdp']['sdp_id'] : 'root';
+    $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?'
+        . 'appid=' . APP_ID
+        . '&redirect_uri=' . urlencode('http://' . $_SERVER['HTTP_HOST'] . DOMAIN . '/mobile/controller.php?oauth=1&share=' . $_GET['g_id'])
+        . '&response_type=code&scope=snsapi_base'
+        . '&state=' . $state . '#wechat_redirect';
 
 
     include 'view/goods_inf.html.php';

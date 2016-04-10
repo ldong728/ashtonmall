@@ -29,6 +29,6 @@ function CLICK($msg){
 }
 function subscribe($msg){
     $f_sdp_id=preg_replace('/qrscene_/','',$msg['EventKey']);
-    pdoInsert('sdp_subscribe_tbl',array('open_id'=>$msg['fromUserName'],'f_sdp_id'=>$f_sdp_id));
+    pdoInsert('sdp_subscribe_tbl',array('open_id'=>$msg['FromUserName'],'f_sdp_id'=>$f_sdp_id));
     return;
 }

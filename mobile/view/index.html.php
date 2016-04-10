@@ -12,9 +12,9 @@
         var url='<?php echo $url ?>';
         wx.ready(function() {
             wx.onMenuShareTimeline({
-                title: '分销系统测试链接，勿点', // 分享标题
+                title: 'ashton官方商城', // 分享标题
                 link: url, // 分享链接
-                imgUrl: '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/img/place.jpg'?>', // 分享图标
+                imgUrl: '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/img/logo.jpg'?>', // 分享图标
                 success: function () {
                     // 用户确认分享后执行的回调函数
                 },
@@ -68,7 +68,7 @@
                         <?php echo $row['intro'] ?>
                     </div>
                     <div class="hot-sale-price">
-                        RMB <?php echo $row['price'] ?>
+                        RMB <?php echo number_format($row['price'],2,'.','') ?>
                     </div>
                     <a href="controller.php?goodsdetail=1&g_id=<?php echo $row['id'] ?>" class="hot-sale-buy">
                     选购

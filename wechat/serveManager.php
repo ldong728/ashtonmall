@@ -150,9 +150,9 @@ function getUnionId($openId)
     $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=' . $openId . '&lang=zh_CN';
     $jsonData = $GLOBALS['mInterface']->getByCurl($url);
     $inf=json_decode($jsonData,true);
-
     if(!isset($inf['nickname'])||$inf['nickname']==''){
         $inf['nickname']='游客';
+        $inf['subscribe']=0;
         $jsonData=json_encode($inf,JSON_UNESCAPED_UNICODE);
     }
 //    mylog(getArrayInf($inf));
@@ -169,6 +169,22 @@ function getUserInfByToken($data){
     $url='https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openId.'&lang=zh_CN';
     $jsonData=$GLOBALS['mInterface']->getByCurl($url);
     return $jsonData;
+
+}
+function createQrcode($str){
+    $data=array('action_name'=>'QR_LIMIT_STR_SCENE','action_info'=>array('scene'=>array('scene_str'=>$str)));
+    $json = $GLOBALS['mInterface']->postArrayByCurl('https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=ACCESS_TOKEN', $data);
+    $ticket=json_decode($json,true);
+    if(!isset($ticket['errcode'])){
+        $urticket=urlencode($ticket['ticket']);
+        $url='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$urticket;
+        $qr=$GLOBALS['mInterface']->getByCurl($url);
+        $filePath=$GLOBALS['mypath'].'/img/'.$str.'.jpg';
+        file_put_contents($filePath,$qr);
+        return $qr;
+    }else{
+        return false;
+    }
 
 }
 function getMediaList($type, $offset)

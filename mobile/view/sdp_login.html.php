@@ -6,7 +6,10 @@
 </head>
 <body>
     <div class="wrap">
-        <input type="tel"class="phone-input"id="phone"placeholder="请输入手机号">
+        <div class="log-tel-box">
+            <input type="tel"class="phone-input"id="phone"placeholder="请输入手机号">
+        </div>
+
         <button class="create-sdp">成为微商</button>
 
     </div>
@@ -16,6 +19,7 @@
         var phone=$('#phone').val()
         $.post('ajax.php',{sdp:1,create_sdp:1,phone:phone},function(data){
             alert(data);
+            window.location.href="index.php?rand=0000";
         })
     });
 </script>

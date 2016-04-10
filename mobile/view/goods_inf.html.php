@@ -63,7 +63,7 @@
             </div>
 
             <div class="price">
-                RMB <?php echo $price = ((isset($default['price'])) ? $default['price'] : $default['sale']) ?>
+                RMB <?php echo $price = ((isset($default['price'])) ? number_format($default['price'],2,'.','') : number_format($default['sale'],2,'.','')) ?>
             </div>
         </div>
     </div>
@@ -269,6 +269,9 @@
         $('.sdp-inf-header').css('display','block');
         $('.sdp-inf-header').text('分享赚取佣金 ￥'+price);
     }
+    $(document).on('click','.sdp-inf-header',function(){
+       $(this).fadeOut();
+    });
 
 
 </script>

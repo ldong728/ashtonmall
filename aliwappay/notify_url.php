@@ -74,6 +74,7 @@ if($verify_result) {//验证成功
             'remark'=>array('value'=>'商城即将安排发货，请留意物流通知')
         );
         $re=sendTemplateMsg($inf['c_id'],$template_key_order,'',$payChkArray);
+        gainshare($orderId);
 		//判断该笔订单是否在商户网站中已经做过处理
 			//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
 			//请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的

@@ -43,7 +43,7 @@ foreach ($adQuery as $adRow) {
 }
 $indexRmark=pdoQuery('index_remark_tbl',null,null,null);
 $menuid=$_SESSION['sdp']['level']>1?2:$_SESSION['sdp']['level'];
-mylog('level:'.$menuid);
+//mylog('level:'.$menuid);
 $menuQuery=pdoQuery('sdp_menu_tbl',null,null,' where level like "%'.$menuid.'%" limit 5');
 foreach ($menuQuery as $row) {
     $menu[]=$row;

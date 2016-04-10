@@ -148,7 +148,7 @@ function saveConfig($path,array $config){
     file_put_contents($path,$data);
 }
 
-function sdpPrice(array $list){
+function sdpPrice(array $list){//将数组中的price字段对应价格替换为分销商设置价格
     if(isset($_SESSION['sdp']['manage'])&&$_SESSION['sdp']['manage']['switch']=='on'){
             $list['price']=$list['sale']*$_SESSION['sdp']['manage']['discount'];
     }else{
@@ -175,6 +175,10 @@ function createSdp($phone){
     pdoInsert('sdp_relation_tbl',array('sdp_id'=>$sdp_id,'f_id'=>$f_id,'root'=>$_SESSION['sdp']['root']),'update');
     pdoInsert('sdp_account_tbl',array('sdp_id'=>$sdp_id,'total_balence'=>'0'),'update');
     pdoDelete('sdp_subscribe_tbl',array('open_id'=>$_SESSION['customerId']));
+    $_SESSION['sdp']['sdp_id']=$sdp_id;
+//    include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
+//    createQrcode($_SESSION['sdp']['sdp_id']);
+
 }
 
 
@@ -184,8 +188,8 @@ function createSdp($phone){
  */
 function gainshare($order_id){
 //    mylog('gainshare');
-//    $orderQuery=pdoQuery('order_tbl',null,array('id'=>$order_id,'stu'=>'1'),' limit 1');//获取订单信息
-    $orderQuery=pdoQuery('order_tbl',null,array('id'=>$order_id),' limit 1');//获取订单信息测试用代码
+    $orderQuery=pdoQuery('order_tbl',null,array('id'=>$order_id,'stu'=>'1'),' limit 1');//获取订单信息
+//    $orderQuery=pdoQuery('order_tbl',null,array('id'=>$order_id),' limit 1');//获取订单信息测试用代码
     
     if($order=$orderQuery->fetch()){
         
@@ -258,7 +262,7 @@ function gainshare($order_id){
         return;
     }
 }
-function gainshareAccount(array $gainshareList,$order_id){
+function gainshareAccount(array $gainshareList,$order_id){//根据数组处理佣金
     $totalPrice=0;
     foreach ($gainshareList as $row) {
         $price=$row['total_fee']*$row['value'];
@@ -294,6 +298,7 @@ function getSdpInf($index,$size,$level=0){
     foreach ($infQuery as $row) {
         $return['sdp'][]=$row;
     }
+    if(!isset($return['sdp']))$return['sdp']=array();
     return $return;
 
 }

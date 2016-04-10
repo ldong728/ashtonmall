@@ -6,6 +6,22 @@
 </head>
 <body>
 <div class="wrap">
+<div class="main-info">
+    <div class="imgbox">
+        <img src="../img/account.png">
+    </div>
+    <div class="title">
+        我的账户
+    </div>
+    <div class="total_balence">
+        ￥<?php echo $account['total_balence']?>
+    </div>
+    <a class="feeback-button">
+        提现
+    </a>
+
+</div>
+
 
 
 </div>

@@ -71,7 +71,6 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
             'remark' => array('value' => '欢迎再次选购'),
         )
     );
-
     $error = array('return_code' => 'SUCCESS', 'return_msg' => 'OK');
     $responseData = xmlToArray($GLOBALS["HTTP_RAW_POST_DATA"]);
 //    mylog(getArrayInf($responseData));
@@ -90,6 +89,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
                     'remark'=>array('value'=>'商城即将安排发货，请留意物流通知')
                 );
                 $re=sendTemplateMsg($responseData['openid'],$template_key_order,'',$payChkArray);
+                gainshare($orderId);
             } else {
 
             }

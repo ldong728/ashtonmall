@@ -225,6 +225,20 @@ if(isset($_SESSION['customerId'])){
             echo ('ok');
             exit;
         }
+        if($_SESSION['sdp']['level']>1){
+            if(isset($_POST['alterSdpPrice'])){
+                $id=pdoInsert('sdp_price_tbl',array('sdp_id'=>$_SESSION['sdp']['root'],'g_id'=>$_POST['g_id'],'price'=>$_POST['price']),'update');
+                if($id>-1){
+                    $_SESSION['sdp']['price'][$_POST['g_id']]=$_POST['price'];
+                    echo 'ok';
+                    exit;
+                }else{
+                    echo ' not ok';
+                    exit;
+                }
+        }
+        }
+
 
     }
 

@@ -15,7 +15,7 @@
             </div>
             <div class="pd_detail">
                 <p class="pd_name"><?php echo $row['name']?></p>
-                <p class="pd_price">￥<?php echo isset($row['price'])? $row['price']:$row['sale']?><span class="payOffline marked"><em>正品保证</em></span></p>
+                <p class="pd_price">￥<?php echo isset($row['price'])? number_format($row['price'],2,'.',''):number_format($row['sale'],2,'.','')?><span class="payOffline marked"><em>正品保证</em></span></p>
                 <p class="pd_standard"><?php echo $row['category']?></p>
             </div>
         </a>
