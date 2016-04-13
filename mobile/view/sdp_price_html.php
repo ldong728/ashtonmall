@@ -12,7 +12,7 @@
                 <img class="list-img" src="../<?php echo $row['url']?>"/>
                 <div class="title-box">
                     <div class="list-main-title">
-                        <?php echo $row['name']?>
+                        <?php echo $row['made_in']?>
                     </div>
                     <div class="list-sub-title">
                         <?php echo $row['produce_id']?>

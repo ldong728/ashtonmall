@@ -262,6 +262,23 @@
 </script>
 <?php include_once 'templates/jssdkIncluder.php' ?>
 <script>
+    var url='<?php echo $url ?>';
+    wx.ready(function() {
+        wx.onMenuShareTimeline({
+            title: 'ashton官方商城', // 分享标题
+            link: url, // 分享链接
+            imgUrl: '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/img/logo.jpg'?>', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+
+</script>
+<script>
     var scale=<?php echo isset($_SESSION['sdp']['scale'])?$_SESSION['sdp']['scale']:0?>;
     if(scale>0){
         var price=realPrice*scale;

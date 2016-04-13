@@ -17,7 +17,7 @@
 <!--    </div>-->
 <!---->
 <!--</div>-->
-<img src="../img/<?php echo $_SESSION['sdp']['sdp_name']?>.jpg"style="width: 100%;height: auto"/>
+<img src="../img/<?php echo $_SESSION['sdp']['sdp_id']?>.jpg"style="width: 100%;height: auto"/>
 <?php //include_once 'templates/foot.php'?>
 <script>
 

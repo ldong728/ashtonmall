@@ -236,10 +236,17 @@ if(isset($_SESSION['customerId'])){
                     echo ' not ok';
                     exit;
                 }
+             }
         }
+        if(isset($_POST['altGainshare'])){
+            if($_SESSION['sdp']['level']>1){
+            foreach ($_POST['data'] as $row) {
+                $id=pdoInsert('sdp_gainshare_tbl',array('root'=>$_SESSION['sdp']['root'],'rank'=>$row['rank'],'value'=>$row['value']),'update');
+            }
+            echo 'ok';
+            exit;
+            }
         }
-
-
     }
 
 }

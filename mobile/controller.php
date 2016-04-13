@@ -279,16 +279,28 @@ if (isset($_SESSION['customerId'])) {
                     $_SESSION['sdp']['manage']['switch']='on';
                 }
                 $rand=rand(1000,9999);
-                header(header('location:index.php?rand=' . $rand));
+                header('location:index.php?rand=' . $rand);
             }
 
 
             if (isset($_GET['sdpManageInf'])) {
-
                 include 'view/sdp_manage_html.php';
             }
             if (isset($_GET['gainshare'])) {
-
+                $gainshareQuery=pdoQuery('sdp_gainshare_tbl',null,array('root'=>$_SESSION['sdp']['root']),' or root="root" order by rank');
+                foreach ($gainshareQuery as $grow) {//获取佣金设置，包含默认和自设
+                    if($grow['root']=='root') {
+                        $gslist['root'][] = $grow;
+                    }else{
+                        $gslist[$_SESSION['sdp']['root']][]=$grow;
+                    }
+                }
+                if(isset($gslist[$_SESSION['sdp']['root']])){//如果有自设就使用自设佣金
+                    $gs=$gslist[$_SESSION['sdp']['root']];
+                }else{
+                    $gs=$gslist['root'];
+                }
+                include 'view/sdp_gainshare.html.php';
             }
             if (isset($_GET['sdpSell'])) {
                 $listQuery=pdoQuery('user_tmp_list_view',null,array('situation'=>1),' group by g_id');
@@ -301,9 +313,14 @@ if (isset($_SESSION['customerId'])) {
 
             }
             if (isset($_GET['subSdp'])) {
-                include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
-                $date=createQrcode($_SESSION['sdp']['sdp_id']);
-                echo $date?$date:'no';
+                $query=pdoQuery('sdp_relation_tbl',null,array('f_id'=>$_SESSION['sdp']['sdp_id']),null);
+                foreach ($query as $row) {
+                    $subList[]=$row;
+                }
+                if(isset($subList))$subList=array();
+                include 'sdp_subSdp.html.php';
+
+
                 exit;
             }
         }
@@ -376,7 +393,7 @@ if (isset($_GET['oauth'])) {
         }
         $_SESSION['sdp']['level'] = 0;
     }
-    if ($_SESSION['sdp']['root'] != 'root') {
+    if ($_SESSION['sdp']['root'] != 'root') {//获取分销商定价
         $priceQuery = pdoQuery('sdp_price_tbl', null, array('sdp_id' => $_SESSION['sdp']['root']), null);
         foreach ($priceQuery as $row) {
             $_SESSION['sdp']['price'][$row['g_id']] = $row['price'];

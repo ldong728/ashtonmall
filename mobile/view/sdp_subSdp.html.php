@@ -7,7 +7,7 @@
 <body>
 <div class="wrap">
     <div class="category-name">
-        佣金设置
+        我的下级微商
     </div>
     <div class="h-slash">
 
@@ -34,11 +34,11 @@
 <script>
     $('.button').click(function(){
         var values=new Array();
-       $('.gs-value').each(function(){
-           var rank=$(this).attr('id').slice(2);
-           var value=$(this).val();
-           values.push({rank:rank,value:value});
-       })
+        $('.gs-value').each(function(){
+            var rank=$(this).attr('id').slice(2);
+            var value=$(this).val();
+            values.push({rank:rank,value:value});
+        })
         $.post('ajax.php',{sdp:1,altGainshare:1,data:values},function(data){
             if(data='ok'){
                 showToast('更改成功');

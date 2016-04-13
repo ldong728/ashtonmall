@@ -102,6 +102,7 @@
             <dl>
                 <dt>管理员</dt>
                 <?php if (isset($_SESSION['pms']['operator'])): ?>
+                    <dd><a href="index.php?wechatConfig=1">微信公众号</a></dd>
                     <dd><a href="index.php?operator=1">管理员信息</a></dd><?php endif ?>
             </dl>
         </li>
@@ -116,4 +117,4 @@
 
 
         <!--        --><?php //echo isset($_SESSION['pms']['card'])? '<li><a href="index.php?card=1">优惠券</a></li>':''?>
-        <!--        --><?php //echo isset($_SESSION['pms']['wechat'])? '<li><a href="index.php?wechatConfig=1">微信公众号</a></li>':''?>
+
