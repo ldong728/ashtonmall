@@ -156,7 +156,7 @@ if (isset($_SESSION['customerId'])) {
             $orderStu = 0;
 
 
-            //测试代码
+            gainshare($orderId);//测试代码
 
 
             include 'view/order_inf.html.php';
@@ -252,7 +252,15 @@ if (isset($_SESSION['customerId'])) {
     }
     if (isset($_GET['sdp'])) {//分销逻辑处理
         if (isset($_GET['sdp_signup'])) {
-            include 'view/sdp_login.html.php';
+            if($_SESSION['userInf']['subscribe']>0){
+                include 'view/sdp_login.html.php';
+            }else{
+                if(!file_exists('../img/'.$_SESSION['sdp']['sdp_id'].'.jpg')){
+                    include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
+                    $date=createQrcode($_SESSION['sdp']['sdp_id']);
+                }
+                include 'view/sdp_users_html.php';
+            }
             eixt;
         }
         if (isset($_GET['account'])) {
@@ -265,7 +273,6 @@ if (isset($_SESSION['customerId'])) {
         }
         if (isset($_GET['sdpUserInf'])) {
             if(!file_exists('../img/'.$_SESSION['sdp']['sdp_id'].'.jpg')){
-                mylog('what?');
                 include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
                 $date=createQrcode($_SESSION['sdp']['sdp_id']);
             }
@@ -354,6 +361,11 @@ if (isset($_GET['oauth'])) {
                 'min_sell' => $manage['min_sell'],
                 'max_sell' => $manage['max_sell'],
             );
+            $wholesaleQuery = pdoQuery('sdp_wholesale_tbl', null, array('level_id' => $_SESSION['sdp']['level']), null);
+            foreach ($wholesaleQuery as $whrow) {
+                $_SESSION['sdp']['wholesale'][$whrow['g_id']] = $whrow['price'];
+            }
+
             $_SESSION['sdp']['root'] = $_SESSION['sdp']['sdp_id'];
         } else {//微商
             $query = pdoQuery('sdp_relation_tbl', null, array('sdp_id' => $sdpInf['sdp_id']), ' limit 1');

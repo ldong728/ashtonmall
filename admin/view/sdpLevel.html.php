@@ -17,7 +17,7 @@ $gainShare=$GLOBALS['gainShare'];
         <?php foreach($levelList as $row):?>
             <tr>
                <td><?php echo $row['level_id']?></td>
-                <td class="ipt-toggle" id="<?php echo $row['level_id']?>" data-tbl="sdp_level_tbl"data-col="level_name" data-index="level_id"><?php echo $row['level_name']?></td>
+                <td class="ipt-toggle" id="<?php echo $row['level_id']?>" data-tbl="sdp_level_tbl"data-col="level_name" data-index="level_id"><a href="consle.php?sdp=1&setWholesale=<?php echo $row['level_id']?>"><?php echo $row['level_name']?></a></td>
                 <td class="ipt-toggle" id="<?php echo $row['level_id']?>" data-tbl="sdp_level_tbl"data-col="discount" data-index="level_id"><?php echo $row['discount']?></td>
                 <td class="ipt-toggle" id="<?php echo $row['level_id']?>" data-tbl="sdp_level_tbl"data-col="min_sell" data-index="level_id"><?php echo $row['min_sell']?></td>
                 <td class="ipt-toggle" id="<?php echo $row['level_id']?>" data-tbl="sdp_level_tbl"data-col="max_sell" data-index="level_id"><?php echo $row['max_sell']?></td>

@@ -475,6 +475,30 @@ if(isset($_SESSION['login'])) {
                 pdoUpdate('sdp_user_level_tbl',array('level'=>$level),array('sdp_id'=>$sdp_id));
                 echo 'ok';
             }
+
+        }
+        if(isset($_POST['alterWholesale'])){
+            $id=pdoInsert('sdp_wholesale_tbl',array('level_id'=>$_POST['alterWholesale'],'g_id'=>$_POST['g_id'],'price'=>$_POST['wholesale'],'min_sell'=>$_POST['min'],'max_sell'=>$_POST['max']),'update');
+            if($id>-1){
+                echo 'ok';
+
+            }else{
+                echo 'not ok';
+            }
+        }
+        if(isset($_POST['getGainshareList'])){
+            $gainshare=getGainshareConfig($_POST['root'],$_POST['g_id']);
+            echo json_encode($gainshare);
+            exit;
+        }
+        if(isset($_POST['altGainshare'])){
+            $temp='hello';
+            mylog((float)$temp);
+            foreach ($_POST['data'] as $row) {
+                $id=pdoInsert('sdp_gainshare_tbl',array('root'=>$_POST['root'],'g_id'=>$_POST['g_id'],'rank'=>(int)$row['rank'],'value'=>(float)$row['value']),'update');
+            }
+            echo 'ok';
+            exit;
         }
 
 

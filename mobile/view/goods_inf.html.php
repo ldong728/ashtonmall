@@ -265,9 +265,9 @@
     var url='<?php echo $url ?>';
     wx.ready(function() {
         wx.onMenuShareTimeline({
-            title: 'ashton官方商城', // 分享标题
+            title: '<?php echo $inf['name'] ?> ', // 分享标题
             link: url, // 分享链接
-            imgUrl: '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/img/logo.jpg'?>', // 分享图标
+            imgUrl: '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/'.$inf['url']?>', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
             },

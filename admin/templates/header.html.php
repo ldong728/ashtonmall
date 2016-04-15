@@ -92,7 +92,7 @@
                 <dl>
                     <dt>分销系统</dt>
                     <dd><a href="index.php?sdp=1&level=1">等级管理</a></dd>
-                    <dd><a href="index.php?sdp=1&rootsdp=1">分销商管理</a></dd>
+                    <dd><a href="index.php?sdp=1&rootsdp=2">分销商管理</a></dd>
                     <dd><a href="index.php?sdp=1&sdp=1">微商管理</a></dd>
                     <dd><a href="index.php?sdp=1&sdpInf=1">数据分析</a></dd>
                 </dl>
