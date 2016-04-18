@@ -1,5 +1,6 @@
 <?php $frontImg=$GLOBALS['frontImg']?>
 <?php $remarkQuery=$GLOBALS['remarkQuery']?>
+<?php $config=$GLOBALS['config']?>
 <script src="js/ajaxfileupload.js"></script>
 <div class="module-block front_img_block">
     <div class="module-title">
@@ -61,9 +62,12 @@
 
     <?php endforeach?>
 
+
+
 <!--    <a class="index-remark-img-upload"></a><input type="file"id="index-remark-img-up"name="front-img-up"style="display: none">-->
 
     <script>
+
         $(document).on('click','.index-remark-img-upload',function(){
             var id=$(this).attr('id').slice(5);
             $('#img-up'+id).click();
@@ -106,8 +110,23 @@
     </script>
 
 </div>
+<section>
+    <h2>分享设置</h2>
+    <ul class="ulcolumn2">
+        <li><span class="item_name">朋友圈分享名称：</span><input class="alt-config textbox_295" type="text"id="timeLineTitle"value="<?php echo $config['timeLineTitle']?>"/> </li>
+        <li><span class="item_name">好友分享名称：</span><input class="alt-config textbox_295" type="text"id="appMessageTitle"value="<?php echo $config['appMessageTitle']?>"/> </li>
+        <li><span class="item_name">好友分享描述：</span><textarea class="textarea alt-config"id="appMessageDesc"style="width: 500px;height: 100px"><?php echo $config['appMessageDesc']?></textarea> </li>
+    </ul>
+</section>
 
 <script>
+    $(document).on('change','.alt-config',function(){
+        var key=$(this).attr('id');
+        var value=$(this).val();
+        $.post('ajax_request.php',{altConfig:1,key:key,value:value},function(data){
+            if(data=='ok')showToast('修改成功');
+        })
+    });
 
     $(document).on('click','.delete-front-img',function(){
         var id=$(this).attr('id');

@@ -10,9 +10,12 @@
     <?php include_once 'templates/jssdkIncluder.php'?>
     <script>
         var url='<?php echo $url ?>';
+        var tltitle='<?php echo $config['timeLineTitle']?>';
+        var amtitle='<?php echo $config['appMessageTitle']?>';
+        var desc='<?php echo $config['appMessageDesc']?>';
         wx.ready(function() {
             wx.onMenuShareTimeline({
-                title: 'ashton官方商城', // 分享标题
+                title: tltitle, // 分享标题
                 link: url, // 分享链接
                 imgUrl: '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/img/logo.jpg'?>', // 分享图标
                 success: function () {
@@ -22,7 +25,30 @@
                     // 用户取消分享后执行的回调函数
                 }
             });
+            wx.onMenuShareAppMessage({
+                title: amtitle, // 分享标题
+                desc: desc, // 分享描述
+                link: url, // 分享链接
+                imgUrl: '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/img/logo.jpg'?>', // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+            wx.hideMenuItems({
+                menuList: [
+                    "menuItem:copyUrl",
+                    "menuItem:originPage",
+                    "menuItem:openWithQQBrowser",
+                    "menuItem:openWithSafari",
+                    "menuItem:share:weiboApp",
+                    "menuItem:share:qq"
+                ] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+            });
         });
+
     </script>
     <div class="search-container">
         <div type="button" class="icon-button"></div>

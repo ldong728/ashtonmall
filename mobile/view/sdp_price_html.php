@@ -18,18 +18,21 @@
                         <?php echo $row['produce_id']?>
                     </div>
                 </div>
+                <a class="inner-button gsbutton" href="controller.php?sdp=1&gainshare=1&g_id=<?php echo $row['g_id']?>&p_id=<?php echo $row['produce_id']?>">
+                    佣金设置
+                </a>
             </div>
             <div class="price-box">
                 <div class="discount-box">
-                    <p>进货价</p><p>￥<?php echo number_format($row['sale']*$_SESSION['sdp']['manage']['discount'],2,'.','')?></p>
+                    <p>进货价</p><p>￥<?php echo number_format($row['wholesale'],2,'.','')?></p>
                 </div>
                 <div class="setting-box">
                     <div class="min">
-                        最低￥<span id="min<?php echo $row['g_id']?>"><?php echo number_format($row['sale']*$_SESSION['sdp']['manage']['min_sell'],2,'.','')?></span>
+                        最低￥<span id="min<?php echo $row['g_id']?>"><?php echo number_format($row['min_sell'],2,'.','')?></span>
                     </div>
                     <input type="tel" class="priceinput"id="<?php echo $row['g_id']?>"value="<?php echo isset($row['price'])?number_format($row['price'],2,'.',''):number_format($row['sale'],2,'.','')?>"/>
                     <div class="max">
-                       最高￥<span id="max<?php echo $row['g_id']?>"><?php echo number_format($row['sale']*$_SESSION['sdp']['manage']['max_sell'],2,'.','')?></span>
+                       最高￥<span id="max<?php echo $row['g_id']?>"><?php echo number_format($row['max_sell'],2,'.','')?></span>
                     </div>
                 </div>
             </div>

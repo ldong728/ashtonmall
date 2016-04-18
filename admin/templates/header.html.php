@@ -48,7 +48,7 @@
     <h2><a href="index.php">起始页</a></h2>
     <ul>
         <li>
-            <dl>
+            <dl class="main-menu">
                 <dt>首页管理</dt>
                 <?php if (isset($_SESSION['pms']['index'])): ?>
                     <dd><a href="index.php?index=1">首页编辑</a></dd><?php endif ?>
@@ -57,7 +57,7 @@
             </dl>
         </li>
         <li>
-            <dl>
+            <dl class="main-menu">
                 <dt>商品信息</dt>
                 <!--当前链接则添加class:active-->
                 <?php if (isset($_SESSION['pms']['add'])): ?>
@@ -69,7 +69,7 @@
             </dl>
         </li>
         <li>
-            <dl>
+            <dl class="main-menu">
                 <dt>订单管理</dt>
                 <?php if (isset($_SESSION['pms']['order'])): ?>
                     <dd><a href="index.php?orders=-1">订单信息</a></dd><?php endif ?>
@@ -81,7 +81,7 @@
         </li>
 
         <li>
-            <dl>
+            <dl class="main-menu">
                 <dt>评价管理</dt>
                 <?php if (isset($_SESSION['pms']['review'])): ?>
                     <dd><a href="index.php?review=1">查看评价</a></dd><?php endif ?>
@@ -89,17 +89,17 @@
         </li>
         <?php if (isset($_SESSION['pms']['review'])): ?>
             <li>
-                <dl>
+                <dl class="main-menu">
                     <dt>分销系统</dt>
                     <dd><a href="index.php?sdp=1&level=1">等级管理</a></dd>
                     <dd><a href="index.php?sdp=1&rootsdp=2">分销商管理</a></dd>
-                    <dd><a href="index.php?sdp=1&sdp=1">微商管理</a></dd>
+                    <dd><a href="index.php?sdp=1&usersdp=1">微商管理</a></dd>
                     <dd><a href="index.php?sdp=1&sdpInf=1">数据分析</a></dd>
                 </dl>
             </li>
         <?php endif ?>
         <li>
-            <dl>
+            <dl class="main-menu">
                 <dt>管理员</dt>
                 <?php if (isset($_SESSION['pms']['operator'])): ?>
                     <dd><a href="index.php?wechatConfig=1">微信公众号</a></dd>
@@ -112,6 +112,11 @@
         </li>
     </ul>
 </aside>
+<script>
+    $('dt').click(function(){
+       $(this).nextAll('dd').toggle();
+    });
+</script>
 <section class="rt_wrap content mCustomScrollbar">
     <div cla="rt_content">
 

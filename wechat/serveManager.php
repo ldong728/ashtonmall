@@ -239,18 +239,10 @@ function sendTemplateMsg($customerId,$templateId,$url,array $msg){
         'touser'=>$customerId,
         'template_id'=>$templateId,
         'url'=>$url,
-
         'data'=>$msg
-//            array(
-//            'first'=>array('value'=>'交易成功'),
-//            'product'=>array('value'=>'测试商品1'),
-//            'price'=>array('value'=>'1988.00'),
-//            'time'=>array('value'=>'1月9日16:00'),
-//            'remark'=>array('value'=>'欢迎再次选购'),
-//        )
     );
-//    $response=json_encode(array($index=>$fullMsg),JSON_UNESCAPED_UNICODE);
-    $response=$GLOBALS['mInterface']->postArrayByCurl('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN',$fullMsg);
+    $mInterface=new interfaceHandler(WEIXIN_ID);
+    $response=$mInterface->postArrayByCurl('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN',$fullMsg);
     return $response;
 }
 function formatContent($type, $content)

@@ -628,6 +628,10 @@ width: 8%;
     font-size: 14px;
 }
 
+dl.main-menu dd {
+    display: none;
+}
+
 
 
 

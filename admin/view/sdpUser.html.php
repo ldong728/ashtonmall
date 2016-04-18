@@ -44,7 +44,7 @@ $sdpInf=$GLOBALS['sdpInf'];
     </table>
     <aside class="paging">
         <?php for($i=1;$i<$sdpInf['count']/20+1; $i++): ?>
-            <a href="index.php?sdp=1&rootsdp=<?php echo $_GET['rootsdp']?>&page=<?php echo $i?>"><?php echo $i?></a>
+            <a href="index.php?sdp=1&usersdp=1&page=<?php echo $i?>"><?php echo $i?></a>
         <?php endfor ?>
     </aside>
 </section>

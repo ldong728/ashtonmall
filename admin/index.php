@@ -106,6 +106,7 @@ if (isset($_SESSION['login'])) {
     }
     if(isset($_GET['index'])){
         if(isset($_SESSION['pms']['index'])) {
+            $config=getConfig('../mobile/config/config.json');
             $remarkQuery = pdoQuery('index_remark_tbl', null, null, null);
             $frontImg = pdoQuery('ad_tbl', null, array('category' => 'banner'), null);
             printView('admin/view/admin_index.html.php', '阿诗顿官方商城控制台');
@@ -163,7 +164,7 @@ if (isset($_SESSION['login'])) {
                 $sdpInf=getSdpInf($page*20,20,$_GET['rootsdp']);
                 printView('admin/view/sdpManage.html.php','分销商管理');
             }
-            if(isset($_GET['sdp'])){
+            if(isset($_GET['usersdp'])){
                 $levelQuery=pdoQuery('sdp_level_tbl',null,null,' where level_id>1');
                 foreach ($levelQuery as $row) {
                     $levelList[]=$row;

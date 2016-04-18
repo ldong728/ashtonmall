@@ -190,83 +190,9 @@ function createSdp($phone){
  * 佣金分配函数
  * @param $order_id 订单号
  */
-function gainshare_old($order_id){
+function gainshare($order_id){
     $orderQuery=pdoQuery('order_tbl',null,array('id'=>$order_id,'stu'=>'1'),' limit 1');//获取订单信息
 //    $orderQuery=pdoQuery('order_tbl',null,array('id'=>$order_id),' limit 1');//获取订单信息测试用代码
-    
-    if($order=$orderQuery->fetch()){
-        
-        if($order['remark']!=''){//订单包含分销商/微商信息
-
-            $totalShared=0;
-            $sdp_id=$order['remark'];
-            $sdpQuery=pdoQuery('sdp_gainshare_view',null,array('sdp_id'=>$order['remark']),' limit 1');//获取分销商
-            $sdpInf=$sdpQuery->fetch();
-            if($sdpInf['level']==1){//分享者为微商
-                $glist=array();
-                $root=$sdpInf['root'];
-                $gainQuery=pdoQuery('sdp_gainshare_tbl',null,array('root'=>$root),' order by rank asc');//获取微商所属分销商的佣金分配设置
-                foreach ($gainQuery as $row) {//获取微商佣金比例，存入数组
-                    $glist[]=array(
-                      'rank'=>$row['rank'],
-                        'value'=>$row['value']
-                    );
-                }
-                if(count($glist)<1){//若分销商未设置佣金比例，则使用默认值
-                    $gainQuery=pdoQuery('sdp_gainshare_tbl',null,array('root'=>'root'),' order by rank asc');
-                    foreach ($gainQuery as $row) {//获取微商佣金比例，存入数组
-                        $glist[]=array(
-                            'rank'=>$row['rank'],
-                            'value'=>$row['value']
-                        );
-                    }
-                }
-                foreach ($glist as $row) {//便利佣金分配数组，获取对应微商sdp_id
-                    $relationQuery=pdoQuery('sdp_relation_tbl',null,array('sdp_id'=>$sdp_id),' limit 1');
-                    $rel=$relationQuery->fetch();
-                    $gainshareList[]=array(
-                      'sdp_id'=>$rel['sdp_id'],
-                        'rank'=>$row['rank'],
-                        'value'=>$row['value'],
-                        'total_fee'=>$order['total_fee']
-                    );
-                    $sdp_id=$rel['f_id'];
-                    if($rel['f_id']==$rel['root']){
-                        break;
-                    }
-                }
-//                mylog(getArrayInf($gainshareList));
-                $totalShared=gainshareAccount($gainshareList,$order['id']);//将佣金按比例存入微商账户
-            }else{//分享者为分销商
-                $root=$order['remark'];
-            }
-//            $root=$sdpInf['level']==0?$sdpInf['root'] :$order['remark'];
-            if($root!='root'){//分销商提成
-                $query=pdoQuery('sdp_user_tbl',null,array('open_id'=>$order['c_id']),' limit 1');
-                if($temp=$query->fetch()){
-                    if($temp['sdp_id']==$root){//分销商自己购买
-                        return;
-                    }
-                }
-                $discountQuery=pdoQuery('sdp_level_view',null,array('sdp_id'=>$root),' limit 1');
-                $rootinf=$discountQuery->fetch();
-                $costQuery=pdoQuery('sdp_prime_cost_view',null,array('o_id'=>$order_id),' limit 1');
-                $cost=$costQuery->fetch();
-                $rootEarn=$cost['sale']*(1-$rootinf['discount'])-$totalShared;
-                alterSdpAccount($order_id,$root,$rootEarn);
-            }
-        }else{
-            return;
-        }
-
-    }else{
-        
-        return;
-    }
-}
-function gainshare($order_id){
-//    $orderQuery=pdoQuery('order_tbl',null,array('id'=>$order_id,'stu'=>'1'),' limit 1');//获取订单信息
-    $orderQuery=pdoQuery('order_tbl',null,array('id'=>$order_id),' limit 1');//获取订单信息测试用代码
     if($order=$orderQuery->fetch()){
         if($order['remark']!=''){//订单包含分销商/微商信息
             
@@ -281,49 +207,33 @@ function gainshare($order_id){
                 
                 $usedglist=array();
                 $root=$sdpInf['root'];
-                $gainshareList=array();
+                $gainshareList=array(array('sdp_id'=>$sdp_id,'open_id'=>$sdpInf['open_id'],'fee'=>0,'level'=>$sdpInf['level']));
                 foreach ($orderDetail as $detailRow) {
                     $g_id=$detailRow['g_id'];
                     $num=$detailRow['number'];
                     $price=$detailRow['price'];
-                    $usedglist=getGainshareConfig($root,$g_id);
-//                    $gainshareQuery=pdoQuery('sdp_gainshare_tbl',null,null,' where root in ("root","'.$root.'") and (g_id=-1 or g_id='.$g_id.')  order by rank asc');
-//                    foreach ($gainshareQuery as $gainshareRow) {
-//                        $glist[$gainshareRow['g_id']][$gainshareRow['root']][]=$gainshareRow;
-//                    }
-//                    if(isset($glist[$g_id][$root])){
-//                        $pre=$glist[$g_id][$root];
-//                    }elseif(isset($glist[$g_id]['root'])){
-//                        $pre=$glist[$g_id]['root'];
-//                    }elseif(isset($glist[-1][$root])){
-//                        $pre=$glist[-1][$root];
-//                    }else{
-//                        $pre=$glist[-1]['root'];
-//                    }
-//                    foreach ($pre as $prrow){
-//                        $usedglist[]=array(
-//                            'rank'=>$prrow['rank'],
-//                            'value'=>$prrow['value']
-//                        );
-//                    }
-                    mylog('g_list:'.getArrayInf($usedglist));
+                    $usedglist=getGainshareConfig($root,$g_id);//获取该商品的佣金分配数组
                     foreach ($usedglist as $k=>$grow) {//遍历佣金分配数组，获取对应微商sdp_id
-                        if($gainshareList[$k]=='root')break;
-                        $shared=$num*$price*$grow['value'];
-                        $totalShared+=$shared;
-                        if(!isset($gainshareList[$k])){
-                            $relationQuery=pdoQuery('sdp_relation_tbl',null,array('sdp_id'=>$sdp_id),' limit 1');
+                        if($gainshareList[$k]=='root')break;//终止标记，表示此级已是分销商
+                        $shared=$num*$price*$grow['value'];//计算佣金
+//                        $totalShared+=$shared;//总佣金支出累计，用于从分销商利润中扣除
+                        if(!isset($gainshareList[$k])){//微商数组中对应级为空
+                            $relationQuery=pdoQuery('sdp_relation_view',null,array('sdp_id'=>$gainshareList[$k-1]['sdp_id']),' limit 1');//获取上一级sdp
                             $rel=$relationQuery->fetch();
-                            $gainshareList[$k]=array('sdp_id'=>$sdp_id,'fee'=>$shared);
-                            if($rel['f_id']==$rel['root'])$gainshareList[$k+1]='root';
+                            if($rel['f_id']==$rel['root']){
+                                $gainshareList[$k]='root';
+                                break;
+                            }
+                            $gainshareList[$k]=array('sdp_id'=>$rel['f_id'],'open_id'=>$rel['f_open_id'],'fee'=>$shared,'level'=>$rel['level']);
+
                         }else{
                             $gainshareList[$k]['fee']+=$shared;
                         }
-                        mylog('gainshareList'.getArrayInf($gainshareList));
+                        $totalShared+=$shared;//总佣金支出累计，用于从分销商利润中扣除
                     }
                 }
                 foreach ($gainshareList as $gsrow) {
-                    if($gsrow!='root')alterSdpAccount($order_id,$gsrow['sdp_id'],$gsrow['fee']);
+                    if($gsrow!='root')alterSdpAccount($order_id,$gsrow['sdp_id'],$gsrow['fee'],$gsrow['open_id'],'in');
                 }
             }else{//分享者为分销商
                 
@@ -366,7 +276,7 @@ function gainshareAccount(array $gainshareList,$order_id){//根据数组处理�
     return $totalPrice;
 }
 
-function alterSdpAccount($order_id,$sdp_id,$price,$type='in'){
+function alterSdpAccount($order_id,$sdp_id,$price,$openid=null,$type='in'){
     $balenceQuery=pdoQuery('sdp_account_tbl',null,array('sdp_id'=>$sdp_id),' limit 1');
     $balence=$balenceQuery->fetch();
 
@@ -375,6 +285,24 @@ function alterSdpAccount($order_id,$sdp_id,$price,$type='in'){
     $verify=md5($order_id.$price.$totalBalence.SDP_KEY);//每一笔记录都进行签名
     pdoInsert('sdp_record_tbl',array('order_id'=>$order_id,'sdp_id'=>$sdp_id,'fee'=>$price,'type'=>$type),'ignore');
     pdoUpdate('sdp_account_tbl',array('total_balence'=>$totalBalence,'verify'=>$verify),array('sdp_id'=>$sdp_id));
+    if(isset($openid)) {
+        if($type=='in') {
+            $intro='您获得一笔新佣金！';
+        }elseif($type=='out') {
+            $intro='您的佣金帐户有一笔取现操作';
+        }
+        include_once $GLOBALS['mypath'].'/wechat/serveManager.php';
+        $templateArray = array(
+            'first' => array('value' => $intro),
+            'keyword1' => array('value' => number_format($price,2,'.',''), 'color' => '#0000ff'),
+            'keyword2' => array('value' => date('Y-m-d H:i:s', time()), 'color' => '#0000ff'),
+            'remark' => array('value' => '祝您生意兴隆')
+        );
+        mylog($openid);
+        mylog(getArrayInf($templateArray));
+        $request = sendTemplateMsg($openid, $GLOBALS['template_key_gainshare'], '', $templateArray);
+        mylog($request);
+    }
 }
 function getSdpInf($index,$size,$level=0){
 
@@ -459,4 +387,67 @@ function getGainshareConfig($root="root",$g_id=-1){
     }
     if(!$usedglist)$usedglist=array();
     return $usedglist;
+}
+function getsdpWholesale($level){
+    $levelInf=pdoQuery('sdp_level_tbl',null,array('level_id'=>$level),' limit 1');
+    $levelInf=$levelInf->fetch();
+    $wsQuery=pdoQuery('sdp_wholesale_tbl',null,array('level_id'=>$level),null);
+    foreach ($wsQuery as $row) {
+        $wslist[$row['g_id']]=$row;
+    }
+    $gList=pdoQuery('user_tmp_list_view',null,null,' group by g_id');
+    foreach ($gList as $row) {
+        if(isset($wslist[$row['g_id']])){
+            $ws= $wslist[$row['g_id']]['price'];
+            $min=isset($wslist[$row['g_id']]['min_sell'])?$wslist[$row['g_id']]['min_sell']:$levelInf['min_sell']*$row['sale'];
+            $max=isset($wslist[$row['g_id']]['max_sell'])?$wslist[$row['g_id']]['max_sell']:$levelInf['max_sell']*$row['sale'];
+        }else{
+            $ws=$levelInf['discount']*$row['sale'];
+            $min=$levelInf['min_sell']*$row['sale'];
+            $max=$levelInf['max_sell']*$row['sale'];
+        }
+        $wholesale[]=array(
+            'g_id'=>$row['g_id'],
+            'made_in'=>$row['made_in'],
+            'produce_id'=>$row['produce_id'],
+            'url'=>$row['url'],
+            'sale'=>$row['sale'],
+            'wholesale'=>$ws,
+            'min_sell'=>$min,
+            'max_sell'=>$max
+        );
+    }
+//    mylog(getArrayInf($wholesale));
+    return $wholesale;
+}
+
+function twoBfilter($sdp_id,$g_id){
+    $sale=pdoQuery('g_detail_tbl',array('sale'),array('g_id'=>$g_id),' limit 1');
+    $sale=$sale->fetch();
+    $wholeSale=pdoQuery('sdp_wholesale_tbl',null,array('level_id'=>$_SESSION['sdp']['level'],'g_id'=>$g_id),' limit 1');
+    if($ws=$wholeSale->fetch()){
+        $cost=$ws['price'];
+    }else{
+        $cost=$sale['sale']*$_SESSION['sdp']['manage']['discount'];
+    }
+    $priceQuery=pdoQuery('sdp_price_tbl',null,array('sdp_id'=>sdp_id,'g_id'=>g_id),' limit 1');
+    if($p=$priceQuery->fetch()){
+        $price=$p['price'];
+    }else{
+        $price=$sale['sale'];
+    }
+    $gainshareList=getGainshareConfig($sdp_id,$g_id);
+    $totalGs=0;
+    foreach ($gainshareList as $row) {
+     $totalGs+=$row['value'];
+    }
+    $cCost=(1-$totalGs)*$price;
+    if($cCost<$cost){
+        pdoDelete('sdp_gainshare_tbl',array('root'=>$sdp_id,'g_id'=>$g_id));
+        return false;
+    }else{
+        return true;
+    }
+
+
 }

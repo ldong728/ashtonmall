@@ -71,6 +71,7 @@
 
             $.post('ajax.php',{altAddr:1,id:$(this).attr('id').slice(3)},function(data){
                 $('#add_addr').fadeIn('slow');
+                $('#add_addr').show();
                 value=eval('('+data+')');
                 $('#address_id').val(value.id);
                 $('#name').val(value.name);
@@ -85,7 +86,8 @@
             $.post('ajax.php',{addrNumRequest:1},function(data){
                 if(data<5){
                     $('#address_id').val(-1);
-                    $('#add_addr').fadeToggle('slow');
+//                    $('#add_addr').fadeToggle('slow');
+                    $('#add_addr').toggle();
                 }else{
                     showToast('无法添加新地址');
                 }

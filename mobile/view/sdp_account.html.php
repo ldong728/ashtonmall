@@ -19,8 +19,13 @@
     <a class="feeback-button">
         提现
     </a>
+    <div class="account-record">
+        <a href="controller.php?sdp=1&accRecord=1">账户明细</a>
+    </div>
 
 </div>
+
+
 
 
 

@@ -17,13 +17,14 @@ $signPackage = $jssdk->GetSignPackage();
         nonceStr: '<?php echo $signPackage["nonceStr"];?>',
         signature: '<?php echo $signPackage["signature"];?>',
         jsApiList: [
-            'hideOptionMenu',
+            'hideMenuItems',
             'chooseImage',
             'uploadImage',
 //            'scanQRCode',
 //            'getLocation',
 //            'openLocation',
             'onMenuShareTimeline',
+            'onMenuShareAppMessage',
             'chooseWXPay',
             'chooseCard'
         ]

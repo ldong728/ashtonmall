@@ -275,6 +275,29 @@
                 // 用户取消分享后执行的回调函数
             }
         });
+        wx.onMenuShareAppMessage({
+            title: '<?php echo $inf['name'] ?> ', // 分享标题
+            desc: '<?php echo $paramvalue ?>', // 分享描述
+            link: url, // 分享链接
+            imgUrl: '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/'.$inf['url']?>', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        wx.hideMenuItems({
+            menuList: [
+                "menuItem:copyUrl",
+                "menuItem:originPage",
+                "menuItem:openWithQQBrowser",
+                "menuItem:openWithSafari",
+                "menuItem:share:weiboApp",
+                "menuItem:share:qq"
+
+            ] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+        });
     });
 
 </script>

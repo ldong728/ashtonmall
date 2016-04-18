@@ -14,15 +14,7 @@
         </div>
 
         <div class="mymanage">
-            <a class="myManage3"href="controller.php?sdp=1&gainshare=1">佣金分配
-                <i class="iright"></i></a>
-        </div>
-        <div class="mymanage">
-            <a class="myManage1"href="controller.php?sdp=1&sdpSell=1">售价设置
-                <i class="iright"></i></a>
-        </div>
-        <div class="mymanage">
-            <a class="myManage1"href="controller.php?sdp=1&userSdp=1">我的微商
+            <a class="myManage1"href="controller.php?sdp=1&subSdp=1">我的微商
                 <i class="iright"></i></a>
         </div>
         <div class="mymanage">

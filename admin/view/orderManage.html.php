@@ -46,13 +46,18 @@
                         <h4>用户留言</h4>
                         <p><?php echo $row['remark']?></p>
                     </div>
+                    <div class="info-block">
+                        <h4>总金额</h4>
+                        <p>￥<?php echo $row['total_fee'] ?></p>
+                    </div>
+
                 </div>
                 <div class="orderDetail" id="content<?php echo $row['id'] ?>">
 
 
                 </div>
                 <form action="consle.php" method="post">
-                    <select name="express"style="display: <?php echo $stu==1? 'block':'none'?>">
+                    <select name="express"style="display: <?php echo ($stu==1||$stu==2)? 'block':'none'?>">
                         <?php foreach ($express as $expresrow): ?>
                             <option
                                 value="<?php echo $expresrow['id'] ?>"<?php echo $expresrow['id'] == $row['express_id'] ? 'selected="selected"' : '' ?>>
@@ -62,11 +67,12 @@
                     </select>
                     <input type="hidden" name="filtOrder" value="<?php echo $row['id'] ?>">
                     <input name="expressNumber" type="text"
-                           placeholder="输入单号"<?php echo $row['express_order'] != 0 ? 'value="' . $row['express_order'] . '"' : '' ?>style="display: <?php echo $stu==1? 'block':'none'?>">
+                           placeholder="输入单号"<?php echo $row['express_order'] != 0 ? 'value="' . $row['express_order'] . '"' : '' ?>style="display: <?php echo ($stu==1||$stu==2)? 'block':'none'?>">
                     <div style="display: <?php echo $stu==0? 'block':'none'?>">价格：<input name="total_fee" type="text" value="<?php echo $row['total_fee'] ?>"></div>
                     <input type="hidden" name="stu" value="2">
                     <?php if($stu==0)echo '<input type="submit" id="submit'.$row['id'].'" value="修改">'?>
                     <?php if($stu==1)echo '<input type="submit" id="submit'.$row['id'].'" value="发货">'?>
+                    <?php if($stu==2)echo '<input type="submit" id="submit'.$row['id'].'" value="修改">'?>
                 </form>
             </div>
         </div>

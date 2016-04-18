@@ -18,8 +18,8 @@
     $('.create-sdp').click(function(){
         var phone=$('#phone').val()
         $.post('ajax.php',{sdp:1,create_sdp:1,phone:phone},function(data){
-            alert(data);
-            window.location.href="index.php?rand=0000";
+            if(data="ok")showToast('注册完成');
+            window.location.href ='index.php?rand=0';
         })
     });
 </script>

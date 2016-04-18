@@ -156,7 +156,7 @@ if (isset($_SESSION['customerId'])) {
             $orderStu = 0;
 
 
-            gainshare($orderId);//测试代码
+//            gainshare($orderId);//测试代码
 
 
             include 'view/order_inf.html.php';
@@ -252,14 +252,14 @@ if (isset($_SESSION['customerId'])) {
     }
     if (isset($_GET['sdp'])) {//分销逻辑处理
         if (isset($_GET['sdp_signup'])) {
-            if($_SESSION['userInf']['subscribe']>0){
+            if ($_SESSION['userInf']['subscribe'] > 0) {
                 include 'view/sdp_login.html.php';
-            }else{
-                if(!file_exists('../img/'.$_SESSION['sdp']['sdp_id'].'.jpg')){
+            } else {
+                if (!file_exists('../img/' . $_SESSION['sdp']['sdp_id'] . '.jpg')) {
                     include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
-                    $date=createQrcode($_SESSION['sdp']['sdp_id']);
+                    $date = createQrcode($_SESSION['sdp']['sdp_id']);
                 }
-                include 'view/sdp_users_html.php';
+                include 'view/shareQr.html.php';
             }
             eixt;
         }
@@ -271,66 +271,104 @@ if (isset($_SESSION['customerId'])) {
             }
 
         }
+
         if (isset($_GET['sdpUserInf'])) {
-            if(!file_exists('../img/'.$_SESSION['sdp']['sdp_id'].'.jpg')){
-                include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
-                $date=createQrcode($_SESSION['sdp']['sdp_id']);
-            }
-            include 'view/sdp_users_html.php';
+            include 'view/sdp_user.html.php';
+            exit;
         }
         if ($_SESSION['sdp']['level'] > 1) {
-            if(isset($_GET['manage'])){
-                if($_SESSION['sdp']['manage']['switch']=='on'){
-                    $_SESSION['sdp']['manage']['switch']='off';
-                }else{
-                    $_SESSION['sdp']['manage']['switch']='on';
+            if (isset($_GET['manage'])) {
+                if ($_SESSION['sdp']['manage']['switch'] == 'on') {
+                    $_SESSION['sdp']['manage']['switch'] = 'off';
+                } else {
+                    $_SESSION['sdp']['manage']['switch'] = 'on';
                 }
-                $rand=rand(1000,9999);
+                $rand = rand(1000, 9999);
                 header('location:index.php?rand=' . $rand);
+                exit;
             }
 
 
             if (isset($_GET['sdpManageInf'])) {
                 include 'view/sdp_manage_html.php';
             }
-            if (isset($_GET['gainshare'])) {
-                $gainshareQuery=pdoQuery('sdp_gainshare_tbl',null,array('root'=>$_SESSION['sdp']['root']),' or root="root" order by rank');
-                foreach ($gainshareQuery as $grow) {//获取佣金设置，包含默认和自设
-                    if($grow['root']=='root') {
-                        $gslist['root'][] = $grow;
-                    }else{
-                        $gslist[$_SESSION['sdp']['root']][]=$grow;
-                    }
-                }
-                if(isset($gslist[$_SESSION['sdp']['root']])){//如果有自设就使用自设佣金
-                    $gs=$gslist[$_SESSION['sdp']['root']];
-                }else{
-                    $gs=$gslist['root'];
+            if (isset($_GET['gainshare'])) {//设置佣金比例
+                $g_id = isset($_GET['g_id']) ? $_GET['g_id'] : -1;
+                $p_id = isset($_GET['p_id']) ? $_GET['p_id'] : '';
+                $gs = getGainshareConfig($_SESSION['sdp']['root'], $g_id);
+                if ($g_id > -1) {
+                    $g_inf = pdoQuery('user_g_inf_view', null, array('g_id' => $g_id), ' limit 1');
+                    $g_inf = $g_inf->fetch();
                 }
                 include 'view/sdp_gainshare.html.php';
             }
             if (isset($_GET['sdpSell'])) {
-                $listQuery=pdoQuery('user_tmp_list_view',null,array('situation'=>1),' group by g_id');
-                foreach ($listQuery as $row) {
-                    $row=sdpPrice($row);
+                $listp = getsdpWholesale($_SESSION['sdp']['level']);
+                $price = pdoQuery('sdp_price_tbl', null, array('sdp_id' => $_SESSION['sdp']['root']), null);
+                foreach ($price as $row) {
+                    $plist[$row['g_id']] = $row['price'];
+                }
+                foreach ($listp as $row) {
+                    if (isset($plist[$row['g_id']])) {
+                        $row['sale'] = $plist[$row['g_id']];
+                    }
+                    $list[] = $row;
+                }
+//                mylog(getArrayInf($list));
+                include 'view/sdp_price_html.php';
+            }
+            if (isset($_GET['userSdp'])) {
+                $listmode = 'userSdp';
+                $step = 30;
+                $page = isset($_GET['page'])?$_GET['page']:0;
+                $index = isset($_GET['page']) && $_GET['page'] > 0 ? $_GET['page'] * $step : 0;
+                $query = pdoQuery('sdp_user_full_inf_view', null, array('root' => $_SESSION['sdp']['sdp_id']), " limit $index,$step");
+                foreach ($query as $row) {
+                    $subList[] = $row;
+                }
+                if (!isset($subList)) $subList = array();
+                include 'view/sdp_subSdp.html.php';
+                exit;
+            }
+
+
+        }
+        if ($_SESSION['sdp']['level'] > 0) {
+
+            if (isset($_GET['subSdp'])) {
+                $listmode = 'subSdp';
+                $step = 30;
+                $page = isset($_GET['page'])?$_GET['page']:0;
+                $index = isset($_GET['page']) && $_GET['page'] > 0 ? $_GET['page'] * $step : 0;
+                $query = pdoQuery('sdp_user_full_inf_view', null, array('f_sdp_id' => $_SESSION['sdp']['sdp_id']), " limit $index,$step");
+                foreach ($query as $row) {
+                    $subList[] = $row;
+                }
+                if (!isset($subList)) $subList = array();
+                include 'view/sdp_subSdp.html.php';
+                exit;
+            }
+            if (isset($_GET['sdpQr'])) {
+                if (!file_exists('../img/' . $_SESSION['sdp']['sdp_id'] . '.jpg')) {
+                    include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
+                    $date = createQrcode($_SESSION['sdp']['sdp_id']);
+                }
+                include 'view/shareQr.html.php';
+            }
+            if(isset($_GET['accRecord'])){
+                $step = 30;
+                $page = isset($_GET['page'])?$_GET['page']:0;
+                $index = isset($_GET['page']) && $_GET['page'] > 0 ? $_GET['page'] * $step : 0;
+                $listQ=pdoQuery('sdp_record_tbl',null,array('sdp_id'=>$_SESSION['sdp']['sdp_id'])," order by creat_time desc limit $index,$step");
+                foreach ($listQ as $row) {
                     $list[]=$row;
                 }
-                include 'view/sdp_price_html.php';
-
-
-            }
-            if (isset($_GET['subSdp'])) {
-                $query=pdoQuery('sdp_relation_tbl',null,array('f_id'=>$_SESSION['sdp']['sdp_id']),null);
-                foreach ($query as $row) {
-                    $subList[]=$row;
-                }
-                if(isset($subList))$subList=array();
-                include 'sdp_subSdp.html.php';
-
-
+                if(!isset($list))$list=array();
+                include 'view/sdp_account_record.html.php';
                 exit;
             }
         }
+
         exit;
     }
 }
@@ -371,9 +409,10 @@ if (isset($_GET['oauth'])) {
             $query = pdoQuery('sdp_relation_tbl', null, array('sdp_id' => $sdpInf['sdp_id']), ' limit 1');
             $sdp = $query->fetch();
             $_SESSION['sdp']['root'] = $sdp['root'];
-            $scaleQuery = pdoQuery('sdp_gainshare_tbl', array('value'), array('root' => $_SESSION['sdp']['root']), ' order by rank asc limit 1');
-            $scale = $scaleQuery->fetch();
-            $_SESSION['sdp']['scale'] = $scale['value'];
+//            $scaleQuery = pdoQuery('sdp_gainshare_tbl', array('value'), array('root' => $_SESSION['sdp']['root']), ' order by rank asc limit 1');
+//            $scale = $scaleQuery->fetch();
+            $_SESSION['sdp']['scale'] = 0;
+//            $gainList=getGainshareConfig($sdp['root'],$g_id);
 
         }
     } else {//普通顾客
@@ -391,12 +430,15 @@ if (isset($_GET['oauth'])) {
         } else {//链接不带有分销商标识，或者从公众号按钮进入
             $query = pdoQuery('sdp_subscribe_view', null, array('open_id' => $_SESSION['customerId']), ' limit 1');
             if ($sdpInf = $query->fetch()) {//如果通过带分销商标识二维码关注
+//                mylog('from button');
                 $_SESSION['sdp']['sdp_id'] = $sdpInf['f_sdp_id'];
                 if ($sdpInf['level'] > 1) {
                     $_SESSION['sdp']['root'] = $_SESSION['sdp']['sdp_id'];
                 } else {
-                    $query = pdoQuery('sdp_relation_tbl', null, array('sdp_id' => $sdpInf['sdp_id']), ' limit 1');
+//                    mylog('get root');
+                    $query = pdoQuery('sdp_relation_tbl', null, array('sdp_id' => $sdpInf['f_sdp_id']), ' limit 1');
                     $sdp = $query->fetch();
+//                    mylog(getArrayInf($sdp));
                     $_SESSION['sdp']['root'] = $sdp['root'];
                 }
             } else {//无任何分销商标识
@@ -423,7 +465,7 @@ if (isset($_GET['oauth'])) {
         exit;
     }
 
-//    mylog(getArrayInf($_SESSION));
+//    mylog(json_encode($_SESSION));
     header('location:index.php?rand=' . $rand);
     if (isset($_SESSION['userInf'])) {
         foreach ($_SESSION['userInf'] as $k => $v) {
@@ -557,6 +599,10 @@ if (isset($_GET['goodsdetail'])) {
         }
     } else {
         $paramvalue = '';
+    }
+    if (isset($_SESSION['sdp']['scale'])) {
+        $gsList = getGainshareConfig($_SESSION['sdp']['root'], $_GET['g_id']);
+        $_SESSION['sdp']['scale'] = $gsList[0]['value'];
     }
     $state = isset($_SESSION['sdp']['sdp_id']) ? $_SESSION['sdp']['sdp_id'] : 'root';
     $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?'

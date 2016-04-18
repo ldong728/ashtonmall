@@ -227,7 +227,17 @@ if(isset($_SESSION['customerId'])){
         }
         if($_SESSION['sdp']['level']>1){
             if(isset($_POST['alterSdpPrice'])){
-                $id=pdoInsert('sdp_price_tbl',array('sdp_id'=>$_SESSION['sdp']['root'],'g_id'=>$_POST['g_id'],'price'=>$_POST['price']),'update');
+                $priceLimit=pdoQuery('sdp_wholesale_tbl',null,array('level_id'=>$_SESSION['sdp']['level'],'g_id'=>$_POST['g_id']),' limit 1');
+                if($priceLimit=$priceLimit->fetch()){
+                    if((float)$_POST['price']<$priceLimit['min_sell']||(float)$_POST['price']>$priceLimit['max_sell']){
+                        echo 'not ok';
+                        exit;
+                    }else{
+
+                    }
+                }
+
+                $id=pdoInsert('sdp_price_tbl',array('sdp_id'=>$_SESSION['sdp']['root'],'g_id'=>$_POST['g_id'],'price'=>(float)$_POST['price']),'update');
                 if($id>-1){
                     $_SESSION['sdp']['price'][$_POST['g_id']]=$_POST['price'];
                     echo 'ok';
@@ -241,7 +251,7 @@ if(isset($_SESSION['customerId'])){
         if(isset($_POST['altGainshare'])){
             if($_SESSION['sdp']['level']>1){
             foreach ($_POST['data'] as $row) {
-                $id=pdoInsert('sdp_gainshare_tbl',array('root'=>$_SESSION['sdp']['root'],'rank'=>$row['rank'],'value'=>$row['value']),'update');
+                $id=pdoInsert('sdp_gainshare_tbl',array('root'=>$_SESSION['sdp']['root'],'rank'=>(int)$row['rank'],'value'=>(float)$row['value'],'g_id'=>$_POST['g_id']),'update');
             }
             echo 'ok';
             exit;

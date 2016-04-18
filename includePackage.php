@@ -48,6 +48,8 @@ define("DB_PSW","c6cychNznJWGhQC8");
 $mypath = $_SERVER['DOCUMENT_ROOT'] .DOMAIN;   //用于直接部署
 $template_key_order='XpZKkl2LFqxN95XpKFRKcR7Dxu1Nh9ZCj3ILRzrbMUY';//模板网购成功通知
 $template_key_express='OWQiu_I2B-ZpxPDMrJpxU0al1fNN-onZE7uGeUTtcks';//模板快递物流提醒
+$template_key_gainshare='Z_GWJKcBIwvjItkjjiUlQMZCX8CLb9PQR2CQ_HvDujU';//佣金分配提醒
+$template_key_readyShip='WVCFi95PeBWyppGfzu5dUflTzfTUu7zaCCT-2nwxVAQ';//订单待发货提醒
 
 ////以下为阿诗顿官方商城专用
 //define('ADMIN','ashton');

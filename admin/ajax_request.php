@@ -430,9 +430,17 @@ if(isset($_SESSION['login'])) {
         exit;
     }
     if(isset($_POST['alteTblVal'])){
-        mylog(getArrayInf($_POST));
+//        mylog(getArrayInf($_POST));
         $data=pdoUpdate($_POST['tbl'],array($_POST['col']=>$_POST['value']),array($_POST['index']=>$_POST['id']));
         echo $data;
+        exit;
+    }
+    if(isset($_POST['altConfig'])){
+        mylog($_POST['key'].$_POST['value']);
+        $config=getConfig('../mobile/config/config.json');
+        $config[$_POST['key']]=$_POST['value'];
+        saveConfig('../mobile/config/config.json',$config);
+        echo 'ok';
         exit;
     }
 
@@ -493,7 +501,6 @@ if(isset($_SESSION['login'])) {
         }
         if(isset($_POST['altGainshare'])){
             $temp='hello';
-            mylog((float)$temp);
             foreach ($_POST['data'] as $row) {
                 $id=pdoInsert('sdp_gainshare_tbl',array('root'=>$_POST['root'],'g_id'=>$_POST['g_id'],'rank'=>(int)$row['rank'],'value'=>(float)$row['value']),'update');
             }
