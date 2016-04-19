@@ -160,7 +160,7 @@
 }
  .price-box .discount-box {
     float: left;
-    width: 100px;
+    width: 75px;
      padding-top:10px;
     /*background-color: #cccccc;*/
     height: 50px;
@@ -177,7 +177,7 @@
      display: inline-block;
      height: 50px;
      line-height: 55px;
-     padding: 0 2px 0 0;
+     padding: 0 1px 0 0;
 
 }
  .setting-box .max {
@@ -185,7 +185,7 @@
      display: inline-block;
      height: 50px;
      line-height: 55px;
-     padding: 0 0 0 2px;
+     padding: 0 0 0 1px;
 }
  .setting-box .priceinput{
      float: left;

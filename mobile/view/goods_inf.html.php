@@ -304,7 +304,7 @@
 <script>
     var scale=<?php echo isset($_SESSION['sdp']['scale'])?$_SESSION['sdp']['scale']:0?>;
     if(scale>0){
-        var price=realPrice*scale;
+        var price=scale;
         price=price.toFixed(2);
         $('.sdp-inf-header').css('display','block');
         $('.sdp-inf-header').text('分享赚取佣金 ￥'+price);

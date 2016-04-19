@@ -11,6 +11,15 @@
 </head>
 <body>
 <div class="wrap">
+    <div class="inf-header">
+        <div class="button-block"><a href="index.php"><div class="inf-block inf-home">首页</div></a></div>
+        <div class="button-block"><a class="title-kf"><div class="inf-block inf-kf">客服</div></a></div>
+        <div class="button-block"><a href="controller.php?getCart=1$rand=<?php echo rand(1000, 9999) ?>"><div class="inf-block inf-cart">购物车</div></a></div>
+        <div class="button-block"><a href="#"id="fav"><div class="inf-block inf-fav">收藏</div></a></div>
+    </div>
+    <div class="sdp-inf-header">
+
+    </div>
     <div class="pDetail">
         <a href="controller.php?getList=1&c_id=<?php echo $cate['id']?>"><div class="cate-name">
                 <?php echo $cate['name'].' '.$cate['e_name']?> 配件
@@ -133,6 +142,7 @@
     <div class="toast"></div>
 
 </div>
+
 <script>
     var g_id =<?php echo $inf['g_id']?>;
     var d_id = <?php echo $inf['d_id']?>;
@@ -140,7 +150,67 @@
     var number = parseInt($('#number').val());
     var parts = new Array();
 </script>
-<script src="../js/goods-inf.js"></script>
-<?php //include 'templates/jssdkIncluder.php'?>
+<script>
+    $('.detail-select').click(function () {
+        var id = $(this).attr('id');
+        $('default-content').css('display', 'none');
+        $('#' + id + '-content').css('display', 'block');
+    });
+</script>
+<?php include_once 'templates/jssdkIncluder.php' ?>
+<script>
+    var url='<?php echo $url ?>';
+    wx.ready(function() {
+        wx.onMenuShareTimeline({
+            title: '<?php echo $inf['name'] ?> ', // 分享标题
+            link: url, // 分享链接
+            imgUrl: '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/'.$inf['url']?>', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        wx.onMenuShareAppMessage({
+            title: '<?php echo $inf['name'] ?> ', // 分享标题
+            desc: '<?php echo $paramvalue ?>', // 分享描述
+            link: url, // 分享链接
+            imgUrl: '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/'.DOMAIN.'/'.$inf['url']?>', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        wx.hideMenuItems({
+            menuList: [
+                "menuItem:copyUrl",
+                "menuItem:originPage",
+                "menuItem:openWithQQBrowser",
+                "menuItem:openWithSafari",
+                "menuItem:share:weiboApp",
+                "menuItem:share:qq"
+
+            ] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+        });
+    });
+
+</script>
+<script>
+    var scale=<?php echo isset($_SESSION['sdp']['scale'])?$_SESSION['sdp']['scale']:0?>;
+    if(scale>0){
+        var price=scale;
+        price=price.toFixed(2);
+        $('.sdp-inf-header').css('display','block');
+        $('.sdp-inf-header').text('分享赚取佣金 ￥'+price);
+    }
+    $(document).on('click','.sdp-inf-header',function(){
+        $(this).fadeOut();
+    });
+
+
+</script>
 </body>
 

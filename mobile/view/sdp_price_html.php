@@ -24,7 +24,7 @@
             </div>
             <div class="price-box">
                 <div class="discount-box">
-                    <p>进货价</p><p>￥<?php echo number_format($row['wholesale'],2,'.','')?></p>
+                    <p>进货</p><p>￥<?php echo number_format($row['wholesale'],2,'.','')?></p>
                 </div>
                 <div class="setting-box">
                     <div class="min">

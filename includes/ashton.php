@@ -160,6 +160,19 @@ function sdpPrice(array $list){//将数组中的price字段对应价格替换为
     }
     return $list;
 }
+function sdpPartPrice(array $list,$idColName='g_id',$priceColName='part_sale'){//将数组中的price字段对应价格替换为分销商设置价格
+    if(isset($_SESSION['sdp']['manage'])&&$_SESSION['sdp']['manage']['switch']=='on'){//开启进货模式，价格为供货商管理员设置价格或分销商折扣率
+        if(isset($_SESSION['sdp']['wholesale'][$list[$idColName]])){
+            $list[$priceColName]=$_SESSION['sdp']['wholesale'][$list[$idColName]];
+        }else{
+            $list[$priceColName]=$list[$priceColName]*$_SESSION['sdp']['manage']['discount'];
+        }
+    }else{
+        if(isset($_SESSION['sdp']['price'][$list[$idColName]])) $list[$priceColName]=$_SESSION['sdp']['price'][$list[$idColName]];//分销商自定义价格
+    }
+    return $list;
+}
+
 function getSdpPrice($g_id){
     $query=pdoQuery('g_detail_view',array('sale'),array('g_id'=>$g_id),' limit 1');
     $inf=$query->fetch();
@@ -204,7 +217,6 @@ function gainshare($order_id){
             $orderDtetailQuery=pdoQuery('sdp_order_view',null,array('o_id'=>$order_id),null);
             $orderDetail=$orderDtetailQuery->fetchall();
             if($sdpInf['level']==1){//分享者为微商
-                
                 $usedglist=array();
                 $root=$sdpInf['root'];
                 $gainshareList=array(array('sdp_id'=>$sdp_id,'open_id'=>$sdpInf['open_id'],'fee'=>0,'level'=>$sdpInf['level']));
@@ -215,7 +227,7 @@ function gainshare($order_id){
                     $usedglist=getGainshareConfig($root,$g_id);//获取该商品的佣金分配数组
                     foreach ($usedglist as $k=>$grow) {//遍历佣金分配数组，获取对应微商sdp_id
                         if($gainshareList[$k]=='root')break;//终止标记，表示此级已是分销商
-                        $shared=$num*$price*$grow['value'];//计算佣金
+                        $shared=$num*$grow['value'];//计算佣金
 //                        $totalShared+=$shared;//总佣金支出累计，用于从分销商利润中扣除
                         if(!isset($gainshareList[$k])){//微商数组中对应级为空
                             $relationQuery=pdoQuery('sdp_relation_view',null,array('sdp_id'=>$gainshareList[$k-1]['sdp_id']),' limit 1');//获取上一级sdp
@@ -298,10 +310,10 @@ function alterSdpAccount($order_id,$sdp_id,$price,$openid=null,$type='in'){
             'keyword2' => array('value' => date('Y-m-d H:i:s', time()), 'color' => '#0000ff'),
             'remark' => array('value' => '祝您生意兴隆')
         );
-        mylog($openid);
-        mylog(getArrayInf($templateArray));
+//        mylog($openid);
+//        mylog(getArrayInf($templateArray));
         $request = sendTemplateMsg($openid, $GLOBALS['template_key_gainshare'], '', $templateArray);
-        mylog($request);
+//        mylog($request);
     }
 }
 function getSdpInf($index,$size,$level=0){

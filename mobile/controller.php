@@ -193,16 +193,13 @@ if (isset($_SESSION['customerId'])) {
         exit;
     }
     if (isset($_GET['review'])) {
-//        mylog('haha');
         $reviewedQuery = pdoQuery('review_tbl', array('d_id'), array('order_id' => $_GET['order_id']), null);
         foreach ($reviewedQuery as $row) {
             $reviewed[] = $row['d_id'];
         }
-//        mylog('hh2');
         if (!isset($reviewed)) $reviewed = array();
 
         $query = pdoQuery('user_input_review_view', null, array('order_id' => $_GET['order_id']), null);
-//        mylog('hh3');
         foreach ($query as $row) {
             if (in_array($row['d_id'], $reviewed)) {
                 continue;
@@ -458,9 +455,10 @@ if (isset($_GET['oauth'])) {
 
     if (isset($_GET['share'])) {
         if ($_GET['part'] == 1) {
-            header('location:controller.php?goodsdetail=1&g_id=' . $_GET['share']);
-        } else {
             header('location:controller.php?partsdetail=1&g_id=' . $_GET['share']);
+        } else {
+            header('location:controller.php?goodsdetail=1&g_id=' . $_GET['share']);
+
         }
         exit;
     }
@@ -493,6 +491,7 @@ if (isset($_GET['getList'])) {
     $cateName = $cateName->fetch();
     $partQuery = pdoQuery('user_parts_view', null, array('sc_id' => $sc_id), 'group by g_id');
     foreach ($partQuery as $row) {
+        $row=sdpPartPrice($row,'g_id','sale');
         $partList[] = $row;
     }
     if (!isset($partList)) $partList = array();
@@ -534,6 +533,7 @@ if (isset($_GET['search'])) {
 //
 //}
 if (isset($_GET['goodsdetail'])) {
+    mylog('goodsDetail'.$_GET['g_id']);
     unset($_SESSION['buyNow']);
     if ($_GET['g_id'] == null) {
         header('location:index.php');
@@ -559,10 +559,8 @@ if (isset($_GET['goodsdetail'])) {
         $detailQueryQ = pdoQuery('user_detail_view', null, array('g_id' => $_GET['g_id']), null);
         $default = $detailQueryQ->fetch();
     }
-//    if(isset($_SESSION['sdp']['price'][$default['g_id']]))$default['price']=$_SESSION['sdp']['price'][$default['g_id']];
     $default = sdpPrice($default);
     foreach ($detailQueryQ as $row) {
-//        if(isset($_SESSION['sdp']['price'][$row['g_id']])) $row['price']=$_SESSION['sdp']['price'][$row['g_id']];
         $row = sdpPrice($row);
         $detailQuery[] = $row;
     }
@@ -570,6 +568,7 @@ if (isset($_GET['goodsdetail'])) {
     $parts = array();
     $_SESSION['buyNow']['partsList'] = array();
     foreach ($partQuery as $row) {
+        $row=sdpPartPrice($row,'g_id','sale');
         if (1 == $row['dft_check'] || isset($_SESSION['buyNow']['partsList'][$row['g_id']])) {
             $row['dft'] = 'checked';
             $_SESSION['buyNow']['partsList'][$row['g_id']] = 1;
@@ -605,12 +604,11 @@ if (isset($_GET['goodsdetail'])) {
         $_SESSION['sdp']['scale'] = $gsList[0]['value'];
     }
     $state = isset($_SESSION['sdp']['sdp_id']) ? $_SESSION['sdp']['sdp_id'] : 'root';
-    $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?'
-        . 'appid=' . APP_ID
-        . '&redirect_uri=' . urlencode('http://' . $_SERVER['HTTP_HOST'] . DOMAIN . '/mobile/controller.php?oauth=1&share=' . $_GET['g_id'])
-        . '&response_type=code&scope=snsapi_base'
-        . '&state=' . $state . '#wechat_redirect';
-
+    $url='https://open.weixin.qq.com/connect/oauth2/authorize?'
+        .'appid='.APP_ID
+        .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].DOMAIN.'/mobile/controller.php?oauth=1&share='.$_GET['g_id'])
+        .'&response_type=code&scope=snsapi_base'
+        .'&state='.$state.'#wechat_redirect';
 
     include 'view/goods_inf.html.php';
     exit;
@@ -630,6 +628,7 @@ if (isset($_GET['partsdetail'])) {
     }
     $query = pdoQuery('user_parts_view', null, array('g_id' => $_GET['g_id']), ' limit 1');
     $inf = $query->fetch();
+    $inf=sdpPartPrice($inf,'g_id','sale');
     $imgQuery[] = $inf;
     $_SESSION['buyNow']['partsList'] = array();
     $reQuery = pdoQuery('sub_category_tbl', null, array('id' => $inf['sc_id']), ' limit 1');
@@ -643,6 +642,11 @@ if (isset($_GET['partsdetail'])) {
     $cate = $remark;
     $number = 1;
     $review = getReview($_GET['g_id']);
+    $url='https://open.weixin.qq.com/connect/oauth2/authorize?'
+        .'appid='.APP_ID
+        .'&redirect_uri='.urlencode('http://'.$_SERVER['HTTP_HOST'].DOMAIN.'/mobile/controller.php?oauth=1&part=1&share='.$_GET['g_id'])
+        .'&response_type=code&scope=snsapi_base'
+        .'&state='.$state.'#wechat_redirect';
     include 'view/part_inf.html.php';
     exit;
 }
@@ -726,6 +730,7 @@ function getCartDetail($customerId)
         //配件信息
 //        $partList=array();
         if (isset($row['part_d_id'])) {
+            $row=sdpPartPrice($row,'part_id','part_sale');
 //            mylog('part_d_id setted');
             $goodsList[$row['cart_id']]['parts'][] = array(
                 'part_id' => $row['part_id'],
@@ -776,6 +781,7 @@ function getBuyNowDetail($d_id, $number, array $partsList)
     if (!isset($partsId)) $partsId = array();
     $pquery = pdoQuery('parts_view', null, array('g_id' => $partsId), null);
     foreach ($pquery as $prow) {
+        $prow=sdpPartPrice($prow,'g_id','sale');
         $goodsList[0]['parts'][] = array(
             'part_id' => $prow['g_id'],
             'part_name' => $prow['name'],
