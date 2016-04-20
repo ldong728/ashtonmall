@@ -166,6 +166,18 @@
         window.location.href='controller.php?sdp=1&sdp_signup=1';
     });
 </script>
+<script>
+    var scale=<?php echo isset($_SESSION['sdp']['scale'])?$_SESSION['sdp']['scale']:0?>;
+    if(scale==0){
+        $('.sdp-inf-header').css('display','block');
+        $('.sdp-inf-header').text('加盟微客，分享佣金');
+    }
+    $(document).on('click','.sdp-inf-header',function(){
+        $(this).fadeOut();
+    });
+
+
+</script>
 
 </body>
 
