@@ -249,6 +249,7 @@ if (isset($_SESSION['customerId'])) {
     }
     if (isset($_GET['sdp'])) {//分销逻辑处理
         if (isset($_GET['sdp_signup'])) {
+
             if ($_SESSION['userInf']['subscribe'] > 0) {
                 include 'view/sdp_login.html.php';
             } else {

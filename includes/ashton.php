@@ -185,14 +185,22 @@ function getSdpPrice($g_id){
 }
 
 function createSdp($phone){
-    $sdp_id=md5($_SESSION['customerId'].$phone.SDP_KEY);
-    pdoInsert('sdp_user_tbl',array('sdp_id'=>$sdp_id,'open_id'=>$_SESSION['customerId'],'phone'=>$phone),'update');
-    pdoInsert('sdp_user_level_tbl',array('sdp_id'=>$sdp_id,'level'=>'1'),'update');
-    $f_id=isset($_SESSION['sdp']['sdp_id'])?$_SESSION['sdp']['sdp_id'] : 'root';
-    pdoInsert('sdp_relation_tbl',array('sdp_id'=>$sdp_id,'f_id'=>$f_id,'root'=>$_SESSION['sdp']['root']),'update');
-    pdoInsert('sdp_account_tbl',array('sdp_id'=>$sdp_id,'total_balence'=>'0'),'update');
-    pdoDelete('sdp_subscribe_tbl',array('open_id'=>$_SESSION['customerId']));
-    $_SESSION['sdp']['sdp_id']=$sdp_id;
+    $query=pdoQuery('sdp_user_tbl',null,array('open_id'=>$_SESSION['customerId']),'limit 1');
+    if(!$query->fetch()){
+        $sdp_id=md5($_SESSION['customerId'].$phone.SDP_KEY);
+        pdoInsert('sdp_user_tbl',array('sdp_id'=>$sdp_id,'open_id'=>$_SESSION['customerId'],'phone'=>$phone),'update');
+        pdoInsert('sdp_user_level_tbl',array('sdp_id'=>$sdp_id,'level'=>'1'),'update');
+        $f_id=isset($_SESSION['sdp']['sdp_id'])?$_SESSION['sdp']['sdp_id'] : 'root';
+        pdoInsert('sdp_relation_tbl',array('sdp_id'=>$sdp_id,'f_id'=>$f_id,'root'=>$_SESSION['sdp']['root']),'update');
+        pdoInsert('sdp_account_tbl',array('sdp_id'=>$sdp_id,'total_balence'=>'0'),'update');
+        pdoDelete('sdp_subscribe_tbl',array('open_id'=>$_SESSION['customerId']));
+        $_SESSION['sdp']['sdp_id']=$sdp_id;
+        return 'ok';
+    }else{
+        return false;
+    }
+
+
 //    include_once $GLOBALS['mypath'] . '/wechat/serveManager.php';
 //    createQrcode($_SESSION['sdp']['sdp_id']);
 
@@ -244,6 +252,7 @@ function gainshare($order_id){
                         $totalShared+=$shared;//总佣金支出累计，用于从分销商利润中扣除
                     }
                 }
+//                mylog(getArrayInf($gainshareList));
                 foreach ($gainshareList as $gsrow) {
                     if($gsrow!='root')alterSdpAccount($order_id,$gsrow['sdp_id'],$gsrow['fee'],$gsrow['open_id'],'in');
                 }
