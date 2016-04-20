@@ -10,7 +10,23 @@
         <div class="list-content">
             <div class="list-block">
                 <img class="list-img" src="../<?php echo $row['url']?>"/>
-                <div class="title-box">
+                <div class="price-box">
+                    <div class="discount-box">
+                        <p>进货价</p><p>￥<?php echo number_format($row['wholesale'],2,'.','')?></p>
+                    </div>
+                    <div class="setting-box">
+                        <div class="min">
+                            最低￥<span id="min<?php echo $row['g_id']?>"><?php echo number_format($row['min_sell'],2,'.','')?></span>
+                        </div>
+
+                        <div class="min">
+                            最高￥<span id="max<?php echo $row['g_id']?>"><?php echo number_format($row['max_sell'],2,'.','')?></span>
+                        </div>
+
+                    </div>
+                    <input type="tel" class="priceinput"id="<?php echo $row['g_id']?>"value="<?php echo isset($row['price'])?number_format($row['price'],2,'.',''):number_format($row['sale'],2,'.','')?>"/>
+                </div>
+                <div class="title-box"style="clear: left">
                     <div class="list-main-title">
                         <?php echo $row['made_in']?>
                     </div>
@@ -22,22 +38,13 @@
                     佣金设置
                 </a>
             </div>
-            <div class="price-box">
-                <div class="discount-box">
-                    <p>进货</p><p>￥<?php echo number_format($row['wholesale'],2,'.','')?></p>
-                </div>
-                <div class="setting-box">
-                    <div class="min">
-                        最低￥<span id="min<?php echo $row['g_id']?>"><?php echo number_format($row['min_sell'],2,'.','')?></span>
-                    </div>
-                    <input type="tel" class="priceinput"id="<?php echo $row['g_id']?>"value="<?php echo isset($row['price'])?number_format($row['price'],2,'.',''):number_format($row['sale'],2,'.','')?>"/>
-                    <div class="max">
-                       最高￥<span id="max<?php echo $row['g_id']?>"><?php echo number_format($row['max_sell'],2,'.','')?></span>
-                    </div>
-                </div>
-            </div>
+
         </div>
     <?php endforeach ?>
+    <div class="hidden-layer">
+        <
+
+    </div>
 
     <div class="toast"></div>
 
