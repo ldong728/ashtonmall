@@ -535,7 +535,6 @@ if (isset($_GET['search'])) {
 //
 //}
 if (isset($_GET['goodsdetail'])) {
-    mylog('goodsDetail'.$_GET['g_id']);
     unset($_SESSION['buyNow']);
     if ($_GET['g_id'] == null) {
         header('location:index.php');

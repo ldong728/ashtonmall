@@ -454,7 +454,7 @@ if(isset($_SESSION['login'])) {
             $sdp_id=$_POST['sdp_id'];
             $level=$_POST['alterSdpLevel'];
             $re=altSdpLevel($sdp_id,$level);
-            echo ok;
+            echo 'ok';
 //            if($sdp_id!='root'){
 //                pdoDelete('sdp_gainshare_tbl',array('root'=>$sdp_id));//清除用户自设的佣金比例
 //                pdoDelete('sdp_price_tbl',array('sdp_id'=>$sdp_id));//清除用户自设的商品价格

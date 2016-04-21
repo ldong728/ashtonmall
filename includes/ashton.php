@@ -221,10 +221,13 @@ function altSdpLevel($sdp_id,$level){
             foreach ($fullQuery as $row) {
                 $fullList[$row['f_id']]=$row['sdp_id'];
             }
-            $list=getSubSdp($fullList,array($sdp_id));
-            pdoUpdate('sdp_relation_tbl',array('root'=>'root'),array('sdp_id'=>$list));
+            if(count($fullList)>0){
+                $list=getSubSdp($fullList,array($sdp_id));
+                pdoUpdate('sdp_relation_tbl',array('root'=>'root'),array('sdp_id'=>$list));
+            }
             pdoInsert('sdp_relation_tbl',array('sdp_id'=>$sdp_id,'f_id'=>'root','root'=>'root'),'update');
             pdoUpdate('sdp_user_level_tbl',array('level'=>$level),array('sdp_id'=>$sdp_id));
+
         }
     }elseif($level>1){
         $rootQuery=pdoQuery('sdp_relation_view',array('root','level'),array('sdp_id=>$sdp_id'),' limit 1');
