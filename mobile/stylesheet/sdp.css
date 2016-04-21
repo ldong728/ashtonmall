@@ -6,7 +6,7 @@
     height:100%;
     z-index: 500;
     display: none;
-   opacity: 0.8 ;
+   opacity: 0.95 ;
     background-color: #000000;
 }
 .hidden-layer .hidden-container {
@@ -32,17 +32,24 @@
     margin: 10px 0 20px 0;
     height: 30px;
     width: 100%;
-    border-bottom: solid 1px #ddd;
-    border-top: solid 1px #ddd;
+    text-align: center;
+    /*border-bottom: solid 1px #ddd;*/
+    /*border-top: solid 1px #ddd;*/
 }
 
-.log-tel-box .phone-input {
+.log-tel-box .inf-input {
     width: 100%;
     margin: 1px auto;
     height: 28px;
-    border: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     font-size: 17px;
 }
+.log-tel-box input.short{
+    width: 45%;
+    margin-left: 10px;
+}
+
 
 .create-sdp {
     margin: 20px auto 0 auto;
@@ -53,6 +60,7 @@
     color: #ffffff;
     background-color: #45C018;
     border-radius: 4px;
+    display: block;
 }
 
 /*账户页面*/

@@ -221,9 +221,21 @@ if(isset($_SESSION['customerId'])){
     }
     if(isset($_POST['sdp'])){
         if(isset($_POST['create_sdp'])){
-            createSdp($_POST['phone']);
-            echo ('ok');
-            exit;
+            if(isset($_POST['phone'])&&isset($_POST['name'])&&isset($_POST['province'])&&isset($_POST['city'])){
+                $data=createSdp($_POST['phone'],$_POST['name'],$_POST['province'],$_POST['city']);
+                if($data){
+                    echo ('ok');
+                    exit;
+                }else{
+                    echo 'not ok';
+                    exit;
+                }
+            }else{
+                echo 'not ok';
+                exit;
+            }
+
+
         }
         if($_SESSION['sdp']['level']>1){
             if(isset($_POST['alterSdpPrice'])){

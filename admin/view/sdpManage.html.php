@@ -20,14 +20,21 @@
         <tr>
             <th>微信名</th>
             <th>电话</th>
+            <th>姓名</th>
+            <th>省</th>
+            <th>市</th>
             <th>订单数</th>
             <th>微商数</th>
             <th>账户余额</th>
-            <th>更改级别</th>
+            <th>升级</th>
+            <th>操作</th>
         </tr>
         <?php foreach($sdpInf['sdp'] as $row):?>
             <tr class="sdp-content"><td><?php echo $row['nickname']?></td>
                 <td><?php echo $row['phone']?></td>
+                <td><?php echo $row['name']?></td>
+                <td><?php echo $row['province']?></td>
+                <td><?php echo $row['city']?></td>
                 <td><?php echo $row['order_num']?></td>
                 <td><?php echo $row['sub_num']?></td>
                 <td><?php echo $row['total_balence']?></td>
@@ -37,6 +44,9 @@
                         <option value="<?php echo $lrow['level_id']?>"<?php echo $lrow['level_id']==$_GET['rootsdp']?'selected="selected"':''?>><?php echo $lrow['level_name']?></option>
                     <?php endforeach ?>
                     </select>
+                </td>
+                <td>
+                    <a class="inner_btn downGradeSdp"id="downgr<?php echo $row['sdp_id']?>">取消资格</a>
                 </td>
             </tr>
         <?php endforeach ?>
@@ -56,6 +66,19 @@
             $.post('ajax_request.php',{sdp:1,alterSdpLevel:level,sdp_id:sdp_id},function(data){
                 if(data=='ok'){
                     showToast('等级已变更')
+                }
+            });
+        }else{
+        }
+    });
+    $('.downGradeSdp').click(function(){
+
+        var level=1;
+        var sdp_id=$(this).attr('id').slice(6);
+        if(confirm('确认撤销分销商资格？')){
+            $.post('ajax_request.php',{sdp:1,alterSdpLevel:level,sdp_id:sdp_id},function(data){
+                if(data=='ok'){
+                    showToast('已撤销，请刷新页面')
                 }
             });
         }else{

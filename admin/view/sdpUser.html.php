@@ -20,14 +20,21 @@ $sdpInf=$GLOBALS['sdpInf'];
         <tr>
             <th>微信名</th>
             <th>电话</th>
+            <th>姓名</th>
+            <th>省</th>
+            <th>市</th>
             <th>订单数</th>
             <th>微商数</th>
             <th>账户余额</th>
             <th>升级</th>
+            <th>操作</th>
         </tr>
         <?php foreach($sdpInf['sdp'] as $row):?>
             <tr class="sdp-content"><td><?php echo $row['nickname']?></td>
                 <td><?php echo $row['phone']?></td>
+                <td><?php echo $row['name']?></td>
+                <td><?php echo $row['province']?></td>
+                <td><?php echo $row['city']?></td>
                 <td><?php echo $row['order_num']?></td>
                 <td><?php echo $row['sub_num']?></td>
                 <td><?php echo $row['total_balence']?></td>
@@ -38,6 +45,9 @@ $sdpInf=$GLOBALS['sdpInf'];
                             <option value="<?php echo $lrow['level_id']?>"><?php echo $lrow['level_name']?></option>
                         <?php endforeach ?>
                     </select>
+                </td>
+                <td>
+                    <a class="inner_btn delSdp"id="del<?php echo $row['sdp_id']?>">取消资格</a>
                 </td>
             </tr>
         <?php endforeach ?>
@@ -52,7 +62,6 @@ $sdpInf=$GLOBALS['sdpInf'];
     $('.update').change(function(){
 
         var level=$(this).find('option:selected').val();
-        alert(level);
         var sdp_id=$(this).attr('id').slice(6);
             if(confirm('确认升级？')){
                 $.post('ajax_request.php',{sdp:1,alterSdpLevel:level,sdp_id:sdp_id},function(data){
@@ -62,6 +71,16 @@ $sdpInf=$GLOBALS['sdpInf'];
                 });
             }else{
             }
+    });
+    $('.delSdp').click(function(){
+       var sdp_id=$(this).attr('id').slice(3);
+        if(confirm('确定撤销此微商的资格？')){
+            $.post('ajax_request.php',{sdp:1,deleteSdp:1,sdp_id:sdp_id},function(data){
+                if(data=='ok'){
+                    alert('已撤销此微商资格，请刷新页面')
+                }
+            })
+        }
     });
 
 

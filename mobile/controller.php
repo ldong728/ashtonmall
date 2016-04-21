@@ -251,6 +251,7 @@ if (isset($_SESSION['customerId'])) {
         if (isset($_GET['sdp_signup'])) {
 
             if ($_SESSION['userInf']['subscribe'] > 0) {
+
                 include 'view/sdp_login.html.php';
             } else {
                 if (!file_exists('../img/' . $_SESSION['sdp']['sdp_id'] . '.jpg')) {

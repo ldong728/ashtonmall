@@ -453,39 +453,41 @@ if(isset($_SESSION['login'])) {
         if(isset($_POST['alterSdpLevel'])){
             $sdp_id=$_POST['sdp_id'];
             $level=$_POST['alterSdpLevel'];
-            if($sdp_id!='root'){
-                pdoDelete('sdp_gainshare_tbl',array('root'=>$sdp_id));//清除用户自设的佣金比例
-                pdoDelete('sdp_price_tbl',array('sdp_id'=>$sdp_id));//清除用户自设的商品价格
-            }
-
-            if(1==$level){
-                $rootQuery=pdoQuery('sdp_relation_view',array('root','level'),array('sdp_id=>$sdp_id'),' limit 1');
-                $r=$rootQuery->fetch();
-                if($r['level']>1){
-                    $fullQuery=pdoQuery('sdp_relation_tbl',array('sdp_id','f_id'),array('root'=>$sdp_id),null);
-                    foreach ($fullQuery as $row) {
-                        $fullList[$row['f_id']]=$row['sdp_id'];
-                    }
-                    $list=getSubSdp($fullList,array($sdp_id));
-                    pdoUpdate('sdp_relation_tbl',array('root'=>'root'),array('sdp_id'=>$list));
-                    pdoInsert('sdp_relation_tbl',array('sdp_id'=>$sdp_id,'f_id'=>'root','root'=>'id'),'update');
-                }
-            }elseif($level>1){
-                $rootQuery=pdoQuery('sdp_relation_view',array('root','level'),array('sdp_id=>$sdp_id'),' limit 1');
-                $r=$rootQuery->fetch();
-                if($r['level']==1){
-                    $root=$r['root'];
-                    $fullQuery=pdoQuery('sdp_relation_tbl',array('sdp_id','f_id'),array('root'=>$root),null);
-                    foreach ($fullQuery as $row) {
-                        $fullList[$row['f_id']]=$row['sdp_id'];
-                    }
-                    $list=getSubSdp($fullList,array($sdp_id));
-                    pdoUpdate('sdp_relation_tbl',array('root'=>$sdp_id),array('sdp_id'=>$list));
-                    pdoDelete('sdp_relation_tbl',array('sdp_id'=>$sdp_id));
-                }
-                pdoUpdate('sdp_user_level_tbl',array('level'=>$level),array('sdp_id'=>$sdp_id));
-                echo 'ok';
-            }
+            $re=altSdpLevel($sdp_id,$level);
+            echo ok;
+//            if($sdp_id!='root'){
+//                pdoDelete('sdp_gainshare_tbl',array('root'=>$sdp_id));//清除用户自设的佣金比例
+//                pdoDelete('sdp_price_tbl',array('sdp_id'=>$sdp_id));//清除用户自设的商品价格
+//            }
+//
+//            if(1==$level){
+//                $rootQuery=pdoQuery('sdp_relation_view',array('root','level'),array('sdp_id=>$sdp_id'),' limit 1');
+//                $r=$rootQuery->fetch();
+//                if($r['level']>1){
+//                    $fullQuery=pdoQuery('sdp_relation_tbl',array('sdp_id','f_id'),array('root'=>$sdp_id),null);
+//                    foreach ($fullQuery as $row) {
+//                        $fullList[$row['f_id']]=$row['sdp_id'];
+//                    }
+//                    $list=getSubSdp($fullList,array($sdp_id));
+//                    pdoUpdate('sdp_relation_tbl',array('root'=>'root'),array('sdp_id'=>$list));
+//                    pdoInsert('sdp_relation_tbl',array('sdp_id'=>$sdp_id,'f_id'=>'root','root'=>'id'),'update');
+//                }
+//            }elseif($level>1){
+//                $rootQuery=pdoQuery('sdp_relation_view',array('root','level'),array('sdp_id=>$sdp_id'),' limit 1');
+//                $r=$rootQuery->fetch();
+//                if($r['level']==1){
+//                    $root=$r['root'];
+//                    $fullQuery=pdoQuery('sdp_relation_tbl',array('sdp_id','f_id'),array('root'=>$root),null);
+//                    foreach ($fullQuery as $row) {
+//                        $fullList[$row['f_id']]=$row['sdp_id'];
+//                    }
+//                    $list=getSubSdp($fullList,array($sdp_id));
+//                    pdoUpdate('sdp_relation_tbl',array('root'=>$sdp_id),array('sdp_id'=>$list));
+//                    pdoDelete('sdp_relation_tbl',array('sdp_id'=>$sdp_id));
+//                }
+//                pdoUpdate('sdp_user_level_tbl',array('level'=>$level),array('sdp_id'=>$sdp_id));
+//                echo 'ok';
+//            }
 
         }
         if(isset($_POST['alterWholesale'])){
@@ -507,6 +509,11 @@ if(isset($_SESSION['login'])) {
             foreach ($_POST['data'] as $row) {
                 $id=pdoInsert('sdp_gainshare_tbl',array('root'=>$_POST['root'],'g_id'=>$_POST['g_id'],'rank'=>(int)$row['rank'],'value'=>(float)$row['value']),'update');
             }
+            echo 'ok';
+            exit;
+        }
+        if(isset($_POST['deleteSdp'])){
+            deleteSdp($_POST['sdp_id']);
             echo 'ok';
             exit;
         }
