@@ -30,11 +30,14 @@
                     <div class="list-main-title">
                         <?php echo $row['made_in']?>
                     </div>
-                    <div class="list-sub-title">
+                    <div class="list-sub-title"id="pid<?php echo $row['g_id']?>">
                         <?php echo $row['produce_id']?>
                     </div>
                 </div>
-                <a class="inner-button gsbutton" href="controller.php?sdp=1&gainshare=1&g_id=<?php echo $row['g_id']?>&p_id=<?php echo $row['produce_id']?>">
+<!--                <a class="inner-button gsbutton" href="controller.php?sdp=1&gainshare=1&g_id=--><?php //echo $row['g_id']?><!--&p_id=--><?php //echo $row['produce_id']?><!--">-->
+<!--                    佣金设置-->
+<!--                </a>-->
+                <a class="inner-button gsbutton"id="getgs<?php echo $row['g_id']?>" >
                     佣金设置
                 </a>
             </div>
@@ -42,7 +45,33 @@
         </div>
     <?php endforeach ?>
     <div class="hidden-layer">
-        <
+        <div class="hidden-container">
+                <div class="category-name">
+                    佣金设置
+                </div>
+                <div class="h-slash">
+                </div>
+            <div class="dyn-content">
+                    <div class="gslist-block"id="block">
+                        <div class="gs-rank">
+                            等级<?php echo $k+1 ?>
+                        </div>
+                        <div class="gs-input-box">
+                            佣金：<input class="number gs-value"id="gs" value=""/>元
+                        </div>
+                    </div>
+            </div>
+
+                <div class="gslist-block">
+                    <input type="hidden"class="g_id"value=""/>
+                    <button class="button altGainshare">更改设置</button>
+                </div>
+            <div class="gslist-block">
+                <button class="button close"style="background-color: #f13031">关闭</button>
+            </div>
+                <div class="toast"?></div>
+
+        </div>
 
     </div>
 
@@ -51,6 +80,46 @@
 </div>
 
 <script>
+    $('.gsbutton').click(function(){
+        var g_id=$(this).attr('id').slice(5);
+        var name=$('#pid'+g_id).text();
+        $.post('ajax.php',{sdp:1,getGainshare:1,g_id:g_id},function(data){
+            var gslist=eval('('+data+')');
+            $('.category-name').text(name+'佣金设置');
+            $('.g_id').val(g_id);
+            $('.dyn-content').empty();
+            $.each(gslist,function(id,v){
+                var content='<div class="gslist-block"id="block'+id+'">'+
+                    '<div class="gs-rank">'+
+                '等级'+(id+1)+
+                '</div>'+
+                '<div class="gs-input-box">'+
+                '佣金：<input class="number gs-value"id="gs'+id+'" value="'+ v.value+'"/>元'+
+                '</div></div>'
+                $('.dyn-content').append(content);
+            });
+            $('.hidden-layer').fadeToggle('fast');
+        });
+
+    });
+    $('.close').click(function(){
+        $('.dyn-content').empty();
+        $('.g_id').val('');
+        $('.hidden-layer').fadeOut('fast');
+    })
+    $('.altGainshare').click(function(){
+        var values=new Array();
+        $('.gs-value').each(function(){
+            var rank=$(this).attr('id').slice(2);
+            var value=$(this).val();
+            values.push({rank:rank,value:value});
+        })
+        $.post('ajax.php',{sdp:1,altGainshare:1,data:values,g_id:$('.g_id').val()},function(data){
+            if(data='ok'){
+                showToast('更改成功');
+            }
+        })
+    });
     $('.priceinput').change(function(){
        var g_id=$(this).attr('id');
         var price=parseFloat($(this).val());

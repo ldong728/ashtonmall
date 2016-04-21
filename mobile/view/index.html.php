@@ -50,6 +50,7 @@
         });
 
     </script>
+
     <div class="search-container">
         <div type="button" class="icon-button"></div>
         <input type="text" class="search-box"/>
@@ -58,6 +59,8 @@
         </div>
     </div>
     <div style="width: 100%;height: 40px;z-index: 0"></div>
+
+
 
     <div class="swiper-container" id="ad-swiper">
         <div class="swiper-wrapper" style="width: 4368px; height: 60vw">
@@ -129,7 +132,7 @@
         <?php endforeach ?>
 
     </div>
-    <div class="foot-blank">
+    <div class="foot-blank"id="bottom">
         <?php if($_SESSION['sdp']['level']<1):?>
         <div class="sdp-button">
             立即开通
@@ -144,6 +147,7 @@
     </div>
 
     <div class="toast"></div>
+    <div class="sdp-inf-header"></div>
 
 
 </div>
@@ -167,10 +171,10 @@
     });
 </script>
 <script>
-    var scale=<?php echo isset($_SESSION['sdp']['scale'])?$_SESSION['sdp']['scale']:0?>;
+    var scale=<?php echo $_SESSION['sdp']['level']>0?1:0?>;
     if(scale==0){
         $('.sdp-inf-header').css('display','block');
-        $('.sdp-inf-header').text('加盟微客，分享佣金');
+        $('.sdp-inf-header').html('<a href="#bottom">加盟微客，分享佣金</a>');
     }
     $(document).on('click','.sdp-inf-header',function(){
         $(this).fadeOut();

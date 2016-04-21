@@ -18,8 +18,8 @@
 
     <?php endforeach?>
 </div>
-<div class="sub-menu foot-user-sub"style="height: <?php echo count($menu)*45?>px">
-    <?php foreach($menu as $row):?>
+<div class="sub-menu foot-user-sub"style="height: <?php echo count($_SESSION['sdp']['menu'])*45?>px">
+    <?php foreach( $_SESSION['sdp']['menu'] as $row):?>
         <a href="<?php echo $row['href']?>"class="<?php echo $row['class']?>"id="<?php echo $row['id']?>"><?php echo $row['text']?></a>
     <?php endforeach;?>
 

@@ -257,6 +257,14 @@ if(isset($_SESSION['customerId'])){
             exit;
             }
         }
+        if(isset($_POST['getGainshare'])){
+            if($_SESSION['sdp']['level']>1){
+                $gainshare=getGainshareConfig($_SESSION['sdp']['sdp_id'],$_POST['g_id']);
+                $gainshare=json_encode($gainshare);
+                echo $gainshare;
+                exit;
+            }
+        }
     }
 
 }

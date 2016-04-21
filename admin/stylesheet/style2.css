@@ -543,12 +543,14 @@ header .rt_nav li .quit_icon:before {
     margin-right: 10px;
     height: 100%;
     position: relative;
+    overflow: scroll;
 }
 
 .rt_content {
     margin-bottom: 80px;
     margin-right: 8px;
-    overflow: hidden;
+    overflow: scroll;
+
 }
 
 .textWhite {

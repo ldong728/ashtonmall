@@ -388,6 +388,7 @@ function verifyAccount($sdp_id){
 
 function getGainshareConfig($root="root",$g_id=-1){
     $gainshareQuery=pdoQuery('sdp_gainshare_tbl',null,null,' where root in ("root","'.$root.'") and (g_id=-1 or g_id='.$g_id.')  order by rank asc');
+
     foreach ($gainshareQuery as $gainshareRow) {
         $glist[$gainshareRow['g_id']][$gainshareRow['root']][]=$gainshareRow;
     }
