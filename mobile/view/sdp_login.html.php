@@ -19,7 +19,7 @@
 
 
         <button class="create-sdp">成为微商</button>
-
+    <div class="toast"></div>
     </div>
 
 <script>
@@ -28,15 +28,20 @@
         var name=$('#name').val();
         var province=$('#province').val();
         var city=$('#city').val();
-        $.post('ajax.php',{sdp:1,create_sdp:1,phone:phone,name:name,province:province,city:city},function(data){
-            if(data="ok"){
-                showToast('注册完成');
-                window.location.href ='index.php?rand=0';
-            }else{
+        if($.trim(name)!=''){
+            $.post('ajax.php',{sdp:1,create_sdp:1,phone:phone,name:name,province:province,city:city},function(data){
+                if(data=="ok"){
+                    showToast('注册完成');
+                    window.location.href ='index.php?rand=0';
+                }else{
+                    showToast(data);
+                }
 
-            }
+            })
+        }else{
+            showToast('请输入姓名');
+        }
 
-        })
     });
 </script>
 </body>

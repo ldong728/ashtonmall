@@ -221,19 +221,28 @@ if(isset($_SESSION['customerId'])){
     }
     if(isset($_POST['sdp'])){
         if(isset($_POST['create_sdp'])){
-            if(isset($_POST['phone'])&&isset($_POST['name'])&&isset($_POST['province'])&&isset($_POST['city'])){
+            $errorStr='not ok';
+            if(!preg_match('/^(\d{11})$/',$_POST['phone'])){
+                $errorStr='手机号码输入有误';
+                echo $errorStr;
+                exit;
+            }else{
                 $data=createSdp($_POST['phone'],$_POST['name'],$_POST['province'],$_POST['city']);
                 if($data){
-                    echo ('ok');
+                    echo 'ok';
                     exit;
                 }else{
                     echo 'not ok';
                     exit;
                 }
-            }else{
-                echo 'not ok';
-                exit;
             }
+
+//            if(isset($_POST['phone'])&&isset($_POST['name'])&&isset($_POST['province'])&&isset($_POST['city'])){
+//
+//            }else{
+//                echo 'not ok';
+//                exit;
+//            }
 
 
         }
