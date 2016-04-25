@@ -113,9 +113,19 @@ if (isset($_SESSION['login'])) {
             exit;
         }
         if (isset($_GET['test'])){
+            $data=getMediaList('news',0);
+            foreach ($data['item'] as $row) {
+                if(isset($row['media_id'])){
+                    $list[]=array('media_id'=>$row['media_id'],'title'=>$row['content']['news_item'][0]['title'],'count'=>count($row['content']['news_item']));
+                }
+            }
+//            $list=$data['item'][0];
+//            echo $list['media_id'];
+
+            echo json_encode($list,JSON_UNESCAPED_UNICODE);
 //            $data=curlTest();
-            $data=sendKFMessage('o_Luwt9OgYENChNK0bBZ4b1tl5hc','你好');
-            echo $data;
+//            $data=sendKFMessage('o_Luwt9OgYENChNK0bBZ4b1tl5hc','你好');
+//            echo $data;
             exit;
         }
 
