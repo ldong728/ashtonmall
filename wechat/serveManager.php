@@ -25,9 +25,10 @@ function createButtonTemp()
 //    $button2sub2=array('type'=>'click','name'=>'新年抢红包','key'=>'hongbao');
     $button2=array('type'=>'view','name'=>'微商城','url'=>$url);
     $button3sub1=array('type'=>'click','name'=>'在线客服','key'=>'kf');
-    $button3sub2=array('type'=>'click','name'=>'个人中心','key'=>'user');
-    $button3sub3=array('type'=>'click','name'=>'会员优惠','key'=>'artical');
-    $button3=array('name'=>'咨询专区','sub_button'=>array($button3sub1,$button3sub2,$button3sub3));
+    $button3sub2=array('type'=>'media_id','name'=>'微商','media_id'=>'tyN9MLRkKkVVPHsRiE2Lr7UWos06ON1W9WxsxnojgFk');
+    $button3sub3=array('type'=>'media_id','name'=>'产品概览','media_id'=>'7oa_ntD1cfMgKkqqo6bS7gGJxWv49c0C6Bg5A1RqwII');
+    $button3sub4=array('type'=>'media_id','name'=>'售后客服','media_id'=>'p_Z_iuE5Npdv5UIjI4-zs3a1cc7Knrz9GRQ18zfUhyw');
+    $button3=array('name'=>'咨询专区','sub_button'=>array($button3sub1,$button3sub2,$button3sub3,$button3sub4));
     $mainButton=array('button'=>array($button1,$button2,$button3));
     $jsondata = json_encode($mainButton,JSON_UNESCAPED_UNICODE);
     mylog($jsondata);
