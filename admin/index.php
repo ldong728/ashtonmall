@@ -59,11 +59,16 @@ if (isset($_SESSION['login'])) {
     }
     if(isset($_GET['orders'])){
         if(isset($_SESSION['pms']['order'])) {
-            $query = pdoQuery('express_tbl', null, null, '');
-            foreach ($query as $row) {
-                $expressQuery[] = $row;
+            $where=$_GET['orders']>-1?array('stu'=>$_GET['orders']):null;
+            $num = 15;
+            $page = isset($_GET['page']) ? $_GET['page'] : 0;
+            $orderQuery = pdoQuery('order_tbl', null, $where, ' limit ' . $page * $num . ', ' . $num);
+            $getStr='';
+            foreach ($_GET as $k => $v) {
+                if($k=='page')continue;
+                $getStr.=$k.'='.$v.'&';
             }
-            $orderQuery = pdoQuery('order_view', null, array('stu' => $_GET['orders']), '');
+            $getStr=rtrim($getStr,'&');
             printView('admin/view/orderManage.html.php', '订单管理');
             exit;
         }else{
