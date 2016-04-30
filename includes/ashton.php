@@ -38,6 +38,10 @@ function getOrderStu($index){
     $list=array('待付款','已付款','已发货','已完成','异常','退款中','退货中','已取消','已过期','处理中');
     return $list[$index];
 }
+function setOrderStu($orderId,$stu,$operator=-1,$paymode=0){
+    pdoUpdate('order_tbl', array('stu' => $stu), array('id' => $orderId));
+    pdoInsert('order_record_tbl',array('order_id'=>$orderId,'event'=>$stu,'pay_mode'=>$paymode,'operator_id'=>$operator));
+}
 function getProvince($pro){
     $datafile = 'config/province.inc.php';
     if(file_exists($datafile)){

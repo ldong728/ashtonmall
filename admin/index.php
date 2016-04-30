@@ -76,6 +76,19 @@ if (isset($_SESSION['login'])) {
             exit;
         }
     }
+    if(isset($_GET['orderDetail'])){
+        $orderinf=pdoQuery('order_view',null,array('id'=>$_GET['orderDetail']),' limit 1');
+        $orderinf=$orderinf->fetch();
+        $query=pdoQuery('user_order_view',null,array('o_id'=>$_GET['orderDetail']),null);
+        $orderdetail=$query->fetchAll();
+        $recordQuery=pdoQuery('order_record_tbl',null,array('order_id'=>$_GET['orderDetail']),' order by event_time asc');
+        foreach ($recordQuery as $row) {
+            $record[$row['event']]=$row;
+        }
+        if(!isset($record))$record=array();
+        printView('admin/view/orderDetail.html.php','订单详情');
+        exit;
+    }
     if(isset($_GET['review'])){
         if(isset($_SESSION['pms']['review'])) {
             $limit = isset($_GET['index']) ? ' limit ' . $_GET['index'] . ', 20' : ' limit 20';

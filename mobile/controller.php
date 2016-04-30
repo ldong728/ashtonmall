@@ -147,6 +147,7 @@ if (isset($_SESSION['customerId'])) {
             }
             $sdp = isset($_SESSION['sdp']['sdp_id']) ? $_SESSION['sdp']['sdp_id'] : '';
             pdoInsert('order_tbl', array('id' => $orderId, 'c_id' => $_SESSION['customerId'], 'a_id' => $_GET['addrId'], 'total_fee' => $total_fee, 'customer_remark' => $_SESSION['customer_remark'], 'remark' => $sdp));
+            pdoInsert('order_record_tbl',array('order_id'=>$orderId,'event'=>'0'));
             pdoBatchInsert('order_detail_tbl', $readyInsert);
             if ('buy_now' == $to) {
                 unset($_SESSION['buyNow']);

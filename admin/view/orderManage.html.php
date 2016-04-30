@@ -26,6 +26,7 @@ $getStr = $GLOBALS['getStr'];
         <tr>
             <th>订单号</th>
             <th>创建时间</th>
+            <th>状态</th>
             <th>总金额</th>
             <th>收货人</th>
             <th>操作</th>
@@ -33,10 +34,13 @@ $getStr = $GLOBALS['getStr'];
         <?php foreach ($orderList as $row): ?>
             <tr>
                 <td><?php echo $row['id'] ?></td>
+                <td><?php echo getOrderStu($row['stu'])?></td>
                 <td><?php echo $row['order_time'] ?></td>
                 <td><?php echo $row['total_fee'] ?></td>
                 <td><?php echo $row['name'] ?></td>
-                <td><a class="inner_btn">详情</a></td>
+                <td>
+                    <a href="index.php?dorder=1&orderDetail=<?php echo $row['id']?>" class="inner_btn">详情</a>
+                </td>
             </tr>
         <?php endforeach ?>
 
@@ -48,6 +52,6 @@ $getStr = $GLOBALS['getStr'];
 <script>
 $('.stuFilter').change(function(){
     var stu=$(this).val();
-    window.location.href='index.php?orders='+stu;
+    window.location.href='index.php?dorder=1&orders='+stu;
 })
 </script>
