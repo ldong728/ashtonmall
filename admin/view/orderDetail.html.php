@@ -83,6 +83,29 @@ $record=$GLOBALS['record'];
         </div>
     </div>
     <?php endif ?>
+    <div class="order-wrap">
+        <div class="od-th">
+            物流信息
+        </div>
+        <div class="od-tr">
+            <div class="od-td">
+                收件人：<?php echo $orderinf['name']?>
+            </div>
+            <div class="od-td">
+                联系电话：<?php echo $orderinf['phone']?>
+            </div>
+            <div class="od-td">
+                地区：<?php echo $orderinf['province'].' '.$orderinf['city'].' '.$orderinf['area']?>
+            </div>
+
+        </div>
+        <div class="od-tr">
+            <div class="od-td">
+                详细地址：<?php echo $orderinf['address']?>
+            </div>
+        </div>
+
+    </div>
 
 
 
