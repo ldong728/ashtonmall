@@ -76,13 +76,17 @@
                 <dt>订单管理</dt>
                 <?php if (isset($_SESSION['pms']['order'])): ?>
                 <dd style="display: <?php echo isset($_GET['dorder']) ? 'block' : 'none' ?>"><a
-                            href="index.php?orders=-1&dorder=1">订单信息</a></dd><?php endif ?>
+                            href="index.php?orders=1&dorder=1">待发货订单</a></dd><?php endif ?>
                 <?php if (isset($_SESSION['pms']['order'])): ?>
                 <dd style="display: <?php echo isset($_GET['dorder']) ? 'block' : 'none' ?>"><a
-                            href="index.php?orders=0&dorder=1">订单修改</a></dd><?php endif ?>
+                            href="index.php?orders=2&dorder=1">已发货订单</a></dd><?php endif ?>
                 <?php if (isset($_SESSION['pms']['order'])): ?>
                 <dd style="display: <?php echo isset($_GET['dorder']) ? 'block' : 'none' ?>"><a
-                            href="index.php?orders=1&dorder=1">发货</a></dd><?php endif ?>
+                            href="index.php?orders=0&dorder=1">未付款订单</a></dd><?php endif ?>
+                <?php if (isset($_SESSION['pms']['order'])): ?>
+                <dd style="display: <?php echo isset($_GET['dorder']) ? 'block' : 'none' ?>"><a
+                            href="index.php?orders=-1&dorder=1">全部订单</a></dd><?php endif ?>
+
             </dl>
         </li>
 

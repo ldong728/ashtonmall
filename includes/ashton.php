@@ -6,6 +6,7 @@
  * Time: 23:20
  */
 define('SDP_KEY','329qkd98ekjd9aqkrmr87t');
+define('TIME_OUT',15);
 
 function printView($addr,$title='abc'){
     $mypath= $GLOBALS['mypath'];
@@ -41,6 +42,17 @@ function getOrderStu($index){
 function setOrderStu($orderId,$stu,$operator=-1,$paymode=0){
     pdoUpdate('order_tbl', array('stu' => $stu), array('id' => $orderId));
     pdoInsert('order_record_tbl',array('order_id'=>$orderId,'event'=>$stu,'pay_mode'=>$paymode,'operator_id'=>$operator));
+}
+
+/**将长期未评价和未付款的订单给出默认好评，或取消
+ * @param int $time
+ * @return bool
+ */
+
+function clearOrders($time=TIME_OUT){
+    pdoUpdate('order_tbl',array('stu'=>'7'),array('stu'=>'0'),' and to_days(order_time)<to_days(now())-'.$time);
+    $dealed=pdoQuery('order_tbl',null,array('stu'=>'2'),' and to_days(order_time)<to_days(now())-'.$time);
+    return false;
 }
 function getProvince($pro){
     $datafile = 'config/province.inc.php';

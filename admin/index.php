@@ -58,11 +58,14 @@ if (isset($_SESSION['login'])) {
         exit;
     }
     if(isset($_GET['orders'])){
+        if(!$_SESSION['clearOrders']){
+            $_SESSION['clearOrders']=clearOrders(10);
+        }
         if(isset($_SESSION['pms']['order'])) {
-            $where=$_GET['orders']>-1?array('stu'=>$_GET['orders']):null;
+            $where=$_GET['orders']>-1?array('stu'=>array($_GET['orders'])):array('stu'=>array('0',1,2,3));
             $num = 15;
             $page = isset($_GET['page']) ? $_GET['page'] : 0;
-            $orderQuery = pdoQuery('order_tbl', null, $where, ' limit ' . $page * $num . ', ' . $num);
+            $orderQuery = pdoQuery('order_view', null, $where, ' limit ' . $page * $num . ', ' . $num);
             $getStr='';
             foreach ($_GET as $k => $v) {
                 if($k=='page')continue;
@@ -85,6 +88,8 @@ if (isset($_SESSION['login'])) {
         foreach ($recordQuery as $row) {
             $record[$row['event']]=$row;
         }
+        $express=pdoQuery('express_tbl',null,null,' order by dft desc');
+        $express=$express->fetchAll();
         if(!isset($record))$record=array();
         printView('admin/view/orderDetail.html.php','订单详情');
         exit;
@@ -213,6 +218,7 @@ if (isset($_SESSION['login'])) {
         if ($_POST['adminName'] . $_POST['password'] == ADMIN.PASSWORD) {
             $_SESSION['login'] = 1;
             $_SESSION['operator_id']=-1;
+            $_SESSION['clearOrders']=false;
             $pms=pdoQuery('pms_tbl',null,null,null);
             foreach ($pms as $row) {
                 $_SESSION['pms'][$row['key']]=1;
@@ -227,6 +233,7 @@ if (isset($_SESSION['login'])) {
             }else{
                 $_SESSION['login'] = 1;
                 $_SESSION['operator_id']=$op_inf['id'];
+                $_SESSION['clearOrders']=false;
                 $pms=pdoQuery('op_pms_tbl',null,array('o_id'=>$op_inf['id']),null);
                 foreach ($pms as $row) {
                     $_SESSION['pms'][$row['pms']]=1;
