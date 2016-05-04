@@ -48,30 +48,30 @@ if (isset($_SESSION['login'])) {
         header('location:index.php?goods-config=1&g_id=' . $g_id . $is_part);
         exit;
     }
-    if (isset($_POST['filtOrder'])) {
-        if(isset($_POST['express'])&&isset($_POST['expressNumber'])&&$_POST['expressNumber']!='') {
-            pdoUpdate('order_tbl', array('stu' => $_POST['stu'], 'express_id' => $_POST['express'], 'express_order' => $_POST['expressNumber']),
-                array('id' => $_POST['filtOrder']));
-            pdoInsert('order_record_tbl',array('order_id'=>$_POST['filtOrder'],'event'=>$_POST['stu'],'operator_id'=>$_SESSION['operator_id']));
-            if ($_POST['stu'] == '2') {
-                include_once '../wechat/serveManager.php';
-                $query = pdoQuery('user_express_query_view', null, array('id' => $_POST['filtOrder']), ' limit 1');
-                $inf = $query->fetch();
-                $templateArray = array(
-                    'first' => array('value' => '您在阿诗顿官方商城的网购订单已发货：'),
-                    'keyword1' => array('value' => $inf['express_name'], 'color' => '#0000ff'),
-                    'keyword2' => array('value' => $inf['express_order'], 'color' => '#0000ff'),
-                    'remark' => array('value' => '请留意物流电话通知')
-                );
-
-                $request = sendTemplateMsg($inf['c_id'], $template_key_express, 'http://m.kuaidi100.com/index_all.html?type=' . $inf['express_id'] . '&postid=' . $inf['express_order'], $templateArray);
-            }
-        }else{
-            pdoUpdate('order_tbl',array('total_fee'=>$_POST['total_fee']),array('id'=>$_POST['filtOrder']));
-        }
-        header('location: index.php?orders=1');
-        exit;
-    }
+//    if (isset($_POST['filtOrder'])) {
+//        if(isset($_POST['express'])&&isset($_POST['expressNumber'])&&$_POST['expressNumber']!='') {
+//            pdoUpdate('order_tbl', array('stu' => $_POST['stu'], 'express_id' => $_POST['express'], 'express_order' => $_POST['expressNumber']),
+//                array('id' => $_POST['filtOrder']));
+//            pdoInsert('order_record_tbl',array('order_id'=>$_POST['filtOrder'],'event'=>$_POST['stu'],'operator_id'=>$_SESSION['operator_id']));
+//            if ($_POST['stu'] == '2') {
+//                include_once '../wechat/serveManager.php';
+//                $query = pdoQuery('user_express_query_view', null, array('id' => $_POST['filtOrder']), ' limit 1');
+//                $inf = $query->fetch();
+//                $templateArray = array(
+//                    'first' => array('value' => '您在阿诗顿官方商城的网购订单已发货：'),
+//                    'keyword1' => array('value' => $inf['express_name'], 'color' => '#0000ff'),
+//                    'keyword2' => array('value' => $inf['express_order'], 'color' => '#0000ff'),
+//                    'remark' => array('value' => '请留意物流电话通知')
+//                );
+//
+//                $request = sendTemplateMsg($inf['c_id'], $template_key_express, 'http://m.kuaidi100.com/index_all.html?type=' . $inf['express_id'] . '&postid=' . $inf['express_order'], $templateArray);
+//            }
+//        }else{
+//            pdoUpdate('order_tbl',array('total_fee'=>$_POST['total_fee']),array('id'=>$_POST['filtOrder']));
+//        }
+//        header('location: index.php?orders=1');
+//        exit;
+//    }
     if (isset($_GET['start_promotions'])) {
         $id = pdoInsert('promotions_tbl', array('g_id' => $_GET['g_id'], 'd_id' => $_GET['d_id']));
         $dquery=pdoQuery('g_detail_view',null,array('d_id'=>$_GET['d_id']),' limit 1');

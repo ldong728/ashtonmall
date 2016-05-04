@@ -51,8 +51,22 @@ function setOrderStu($orderId,$stu,$operator=-1,$paymode=0){
 
 function clearOrders($time=TIME_OUT){
     pdoUpdate('order_tbl',array('stu'=>'7'),array('stu'=>'0'),' and to_days(order_time)<to_days(now())-'.$time);
-    $dealed=pdoQuery('order_tbl',null,array('stu'=>'2'),' and to_days(order_time)<to_days(now())-'.$time);
-    return false;
+    $dealed=pdoQuery('user_order_view',null,array('stu'=>'2'),' and to_days(order_time)<to_days(now())-'.$time);
+    foreach ($dealed as $row) {
+        $values[]=array(
+            'c_id'=>$row['c_id'],
+            'order_id'=>$row['o_id'],
+            'g_id'=>$row['g_id'],
+            'd_id'=>$row['d_id'],
+            'score'=>'5',
+            'public'=>1
+        );
+    }
+    pdoUpdate('order_tbl',array('stu'=>'3'),array('stu'=>'2'),' and to_days(order_time)<to_days(now())-'.$time);
+    if(isset($values)){
+        pdoBatchInsert('review_tbl',$values);
+    }
+    return true;
 }
 function getProvince($pro){
     $datafile = 'config/province.inc.php';
