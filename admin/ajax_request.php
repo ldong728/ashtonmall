@@ -310,7 +310,7 @@ if (isset($_SESSION['login'])) {
             $totalFee = $_POST['value']['totalFee'];
             pdoUpdate('order_tbl', array('total_fee' => $totalFee, 'remark' => ''), array('id' => $order_id));
             pdoInsert('order_record_tbl', array('order_id' => $order_id, 'event' => -1, 'operator_id' => $_SESSION['operator_id']));
-            echo('ok');
+            echo 'ok';
             exit;
         }
         exit;

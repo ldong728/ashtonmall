@@ -14,7 +14,7 @@
  * 该页面调试工具请使用写文本函数logResult，该函数已被默认关闭，见alipay_notify_class.php中的函数verifyNotify
  * 如果没有收到该页面返回的 success 信息，支付宝会在24小时内按一定的时间策略重发通知
  */
-
+require_once("../includePackage.php");
 require_once("alipay.config.php");
 require_once("lib/alipay_notify.class.php");
 
@@ -98,6 +98,6 @@ else {
     echo "fail";
 
     //调试用，写文本函数记录程序运行情况是否正常
-    //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
+    logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
 }
 ?>

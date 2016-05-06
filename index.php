@@ -20,6 +20,6 @@ if(isset($_GET['encrypt_code'])){
 }
 
 
-echo '404 notFound';
+echo '请关闭当前网页，并从微信公众号入口进入';
 exit;
 ?>

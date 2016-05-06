@@ -94,7 +94,7 @@ $express=$GLOBALS['express'];
             </div>
         <?php endif ?>
     </div>
-    <?php if(isset($record[1])&&$orderinf['stu']==1):?>
+    <?php if(isset($record[1])):?>
     <div class="order-wrap">
         <div class="od-th">
             付款信息
@@ -201,10 +201,11 @@ $express=$GLOBALS['express'];
             });
 
             $.post('ajax_request.php',{altOrder:altMode,orderId:orderid,value:pValue},function(data){
-                if(data=='ok'){
+                if('ok'==data){
                     showToast('完成');
                 }else{
-                    alert('发生错误，请稍后再试');
+                    alert(data);
+//                    alert('发生错误，请稍后再试');
                 }
             });
         }

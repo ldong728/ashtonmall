@@ -1,3 +1,9 @@
 集成时请注意：
 本文件log.txt请不要删除。
 该文本用于写日志函数。
+执行日期：20160505101040
+responseTxt=true
+ notify_url_log:isSign=true,payment_type=1&subject=阿诗顿商城订单&trade_no=2016050521001004590249079975&buyer_email=god_lee@163.com&gmt_create=2016-05-05 09:46:46&notify_type=trade_status_sync&quantity=1&out_trade_no=dy1462412729380&notify_time=2016-05-05 10:10:40&seller_id=2088221282930694&trade_status=TRADE_SUCCESS&is_total_fee_adjust=N&total_fee=0.10&gmt_payment=2016-05-05 09:46:46&seller_email=ashton_wei@126.com&price=0.10&buyer_id=2088002109402592&notify_id=c7c5ce6d0a00fd313e9db379b034c12kjy&use_coupon=N&sign_type=MD5&sign=8f45bdfa84e98c9c9e54c3d4486c5d86
+执行日期：20160505101215
+responseTxt=true
+ notify_url_log:isSign=true,payment_type=1&subject=阿诗顿商城订单&trade_no=2016050521001004590243135378&buyer_email=god_lee@163.com&gmt_create=2016-05-05 10:12:11&notify_type=trade_status_sync&quantity=1&out_trade_no=dy1462414254653&notify_time=2016-05-05 10:12:12&seller_id=2088221282930694&trade_status=TRADE_SUCCESS&is_total_fee_adjust=N&total_fee=0.10&gmt_payment=2016-05-05 10:12:12&seller_email=ashton_wei@126.com&price=0.10&buyer_id=2088002109402592&notify_id=be70684e038299064dca3a70710e215kjy&use_coupon=N&sign_type=MD5&sign=acfe1edf4ee8332516704769cc559784
