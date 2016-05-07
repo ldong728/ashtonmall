@@ -415,13 +415,13 @@ function alterSdpAccount($order_id,$sdp_id,$price,$openid=null,$type='in'){
 //        mylog($request);
     }
 }
-function getSdpInf($index,$size,$level=0){
+function getSdpInf($index,$size,$level=0,array $filter=null){
 
     if(0==$level){
         $where=null;
         $whereStr=' where level>1 ';
     }else{
-        $where=array('level'=>$level);
+        $where['level']=$level;
         $whereStr='';
     }
     $count=pdoQuery('sdp_user_level_tbl',array('count(*) as total_num'),$where,$whereStr);
