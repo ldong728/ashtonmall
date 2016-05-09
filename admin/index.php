@@ -190,8 +190,6 @@ if (isset($_SESSION['login'])) {
             if(isset($_GET['usersdp'])){
                 if(isset($_GET['order']))$filter['order']=$_GET['order'];
                 if(isset($_GET['rule']))$filter['rule']=$_GET['rule'];
-                
-
                 $num = 15;
                 $page = isset($_GET['page']) ? $_GET['page'] : 0;
                 $levelQuery=pdoQuery('sdp_level_tbl',null,null,' where level_id>1');
