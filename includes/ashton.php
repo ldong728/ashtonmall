@@ -313,7 +313,7 @@ function gainshare($order_id){
             $sdpInf=$sdpQuery->fetch();
             
             $orderDtetailQuery=pdoQuery('sdp_order_view',null,array('o_id'=>$order_id),null);
-            $orderDetail=$orderDtetailQuery->fetchall();
+            $orderDetail=$orderDtetailQuery->fetchAll();
             if($sdpInf['level']==1){//分享者为微商
                 $usedglist=array();
                 $root=$sdpInf['root'];

@@ -58,6 +58,7 @@ $sdpInf=$GLOBALS['sdpInf'];
         <?php endfor ?>
     </aside>
 </section>
+<div class="space"></div>
 <script>
     $('.update').change(function(){
 
