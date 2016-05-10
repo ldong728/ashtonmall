@@ -486,10 +486,22 @@ if (isset($_SESSION['login'])) {
             exit;
         }
         if (isset($_POST['alterSdpLevel'])) {
-            $sdp_id = $_POST['sdp_id'];
             $level = $_POST['alterSdpLevel'];
-            $re = altSdpLevel($sdp_id, $level);
-            echo 'ok';
+            if(isset($_POST['batch'])){
+                foreach ($_POST['sdp_id'] as $k => $v) {
+                    if($v==1){
+                        altSdpLevel($k,$level);
+                    }
+
+                }
+
+                echo 'ok';
+            }else{
+                $sdp_id = $_POST['sdp_id'];
+                $re = altSdpLevel($sdp_id, $level);
+                echo 'ok';
+            }
+
 //            if($sdp_id!='root'){
 //                pdoDelete('sdp_gainshare_tbl',array('root'=>$sdp_id));//清除用户自设的佣金比例
 //                pdoDelete('sdp_price_tbl',array('sdp_id'=>$sdp_id));//清除用户自设的商品价格
@@ -548,8 +560,18 @@ if (isset($_SESSION['login'])) {
             exit;
         }
         if (isset($_POST['deleteSdp'])) {
-            deleteSdp($_POST['sdp_id']);
-            echo 'ok';
+            if(isset($_POST['batch'])){
+                foreach ($_POST['sdp_id'] as $k => $v) {
+                    if($v==1){
+                        deleteSdp($k);
+                    }
+                }
+                echo 'ok';
+            }else{
+                deleteSdp($_POST['sdp_id']);
+                echo 'ok';
+            }
+
             exit;
         }
 

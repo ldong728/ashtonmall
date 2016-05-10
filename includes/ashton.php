@@ -306,7 +306,6 @@ function gainshare($order_id){
 //    $orderQuery=pdoQuery('order_tbl',null,array('id'=>$order_id),' limit 1');//获取订单信息测试用代码
     if($order=$orderQuery->fetch()){
         if($order['remark']!=''){//订单包含分销商/微商信息
-            
             $totalShared=0;
             $sdp_id=$order['remark'];
             $sdpQuery=pdoQuery('sdp_gainshare_view',null,array('sdp_id'=>$order['remark']),' limit 1');//获取分销商
@@ -416,19 +415,29 @@ function alterSdpAccount($order_id,$sdp_id,$price,$openid=null,$type='in'){
     }
 }
 function getSdpInf($index,$size,$level=0,array $filter=null){
+        $orderby=isset($filter['order']) ? $filter['order']:'create_time';
+        $rule=isset($filter['rule']) ? $filter['rule']:'desc';
 
     if(0==$level){
-        $where=null;
-        $whereStr=' where level>1 ';
+        $levelQuery=pdoQuery('sdp_level_tbl',array('level_id'),null,' where level_id>1');
+        foreach ($levelQuery as $row) {
+            mylog();
+            $levelList[]=$row['level_id'];
+        }
+        $where['level']=$levelList;
     }else{
         $where['level']=$level;
         $whereStr='';
     }
+    if(isset($filter['where'])){
+        foreach ($filter['where'] as $k=>$v) {
+            $where[$k]=$v;
+        }
+    }
     $count=pdoQuery('sdp_user_level_tbl',array('count(*) as total_num'),$where,$whereStr);
     $c=$count->fetch();
-
     $return['count']=$c['total_num'];
-    $infQuery=pdoQuery('sdp_full_inf_view',null,$where,$whereStr." limit $index,$size");
+    $infQuery=pdoQuery('sdp_full_inf_view',null,$where,$whereStr."order by $orderby $rule limit $index,$size");
     foreach ($infQuery as $row) {
         $return['sdp'][]=$row;
     }

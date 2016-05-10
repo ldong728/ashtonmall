@@ -191,7 +191,7 @@ if (isset($_SESSION['login'])) {
                 if(isset($_GET['order']))$filter['order']=$_GET['order'];
                 if(isset($_GET['rule']))$filter['rule']=$_GET['rule'];
                 $num = 15;
-                $page = isset($_GET['page']) ? $_GET['page'] : 0;
+                $page = isset($_GET['page']) ? $_GET['page'] : 1;
                 $levelQuery=pdoQuery('sdp_level_tbl',null,null,' where level_id>1');
                 foreach ($levelQuery as $row) {
                     $levelList[]=$row;
@@ -203,7 +203,7 @@ if (isset($_SESSION['login'])) {
                 }
                 $getStr=rtrim($getStr,'&');
 //                $page=isset($_GET['page'])?$_GET['page']-1:0;
-                $sdpInf=getSdpInf($page*$num,$num,1,$filter);
+                $sdpInf=getSdpInf(($page-1)*$num,$num,1,$filter);
                 printView('admin/view/sdpUser.html.php','微商管理');
             }
 

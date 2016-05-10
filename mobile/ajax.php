@@ -232,7 +232,7 @@ if(isset($_SESSION['customerId'])){
                     echo 'ok';
                     exit;
                 }else{
-                    echo 'not ok';
+                    echo '请勿重复注册';
                     exit;
                 }
             }
