@@ -105,7 +105,7 @@
                     <dd style="display: <?php echo isset($_GET['sdp']) ? 'block' : 'none' ?>"><a
                             href="index.php?sdp=1&level=1">等级管理</a></dd>
                     <dd style="display: <?php echo isset($_GET['sdp']) ? 'block' : 'none' ?>"><a
-                            href="index.php?sdp=1&rootsdp=2">分销商管理</a></dd>
+                            href="index.php?sdp=1&usersdp=2&rootsdp=2">分销商管理</a></dd>
                     <dd style="display: <?php echo isset($_GET['sdp']) ? 'block' : 'none' ?>"><a
                             href="index.php?sdp=1&usersdp=1">微商管理</a></dd>
                     <dd style="display: <?php echo isset($_GET['sdp']) ? 'block' : 'none' ?>"><a

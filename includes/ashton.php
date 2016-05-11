@@ -434,10 +434,15 @@ function getSdpInf($index,$size,$level=0,array $filter=null){
             $where[$k]=$v;
         }
     }
+
     $count=pdoQuery('sdp_user_level_tbl',array('count(*) as total_num'),$where,$whereStr);
     $c=$count->fetch();
     $return['count']=$c['total_num'];
-    $infQuery=pdoQuery('sdp_full_inf_view',null,$where,$whereStr."order by $orderby $rule limit $index,$size");
+    if($level>1){
+        $infQuery=pdoQuery('sdp_root_full_inf_view',null,$where,$whereStr."order by $orderby $rule limit $index,$size");
+    }else{
+        $infQuery=pdoQuery('sdp_full_inf_view',null,$where,$whereStr."order by $orderby $rule limit $index,$size");
+    }
     foreach ($infQuery as $row) {
         $return['sdp'][]=$row;
     }
