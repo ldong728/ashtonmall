@@ -322,6 +322,7 @@ function gainshare($order_id){
                     $num=$detailRow['number'];
                     $price=$detailRow['price'];
                     $usedglist=getGainshareConfig($root,$g_id);//获取该商品的佣金分配数组
+                    mylog(json_encode($usedglist));
                     foreach ($usedglist as $k=>$grow) {//遍历佣金分配数组，获取对应微商sdp_id
                         if($gainshareList[$k]=='root')break;//终止标记，表示此级已是分销商
                         $shared=$num*$grow['value'];//计算佣金
@@ -358,8 +359,13 @@ function gainshare($order_id){
                 foreach ($orderDetail as $orow) {
                     $wholesale=pdoQuery('sdp_wholesale_tbl',null,array('level_id'=>$rootLevel,'g_id'=>$orow['g_id']), ' limit 1');
                     $wholesale=$wholesale->fetch();
-                    $cost=isset($wholesale)?$wholesale['price']*$orow['number']:$orow['total_sale']*$rootinf['discount'];
+                    $cost=$wholesale?$wholesale['price']*$orow['number']:$orow['total_sale']*$rootinf['discount'];
+//                    mylog('wholesale='.$wholesale['price']);
+//                    mylog('total_sale='.$orow['total_sale']);
+//                    mylog('discount='.$rootinf['discount']);
+//                    mylog($cost);
                     $totalCost+=$cost;
+
                 }
                 $totalCost+=$totalShared;
                     $rootEarn=$order['total_fee']-$totalCost;
@@ -392,11 +398,15 @@ function alterSdpAccount($order_id,$sdp_id,$price,$openid=null,$type='in'){
 
     if($type=='out')$price=-$price;
     $totalBalence=$balence['total_balence']+$price;
+    $price=number_format($price,2,'.','');
+    $totalBalence=number_format($totalBalence,2,'.','');
     $verify=md5($order_id.$price.$totalBalence.SDP_KEY);//每一笔记录都进行签名
-    mylog($order_id.$price.$totalBalence.SDP_KEY);
+//    mylog($price);
+//    mylog($totalBalence);
+//    mylog($order_id.$price.$totalBalence.SDP_KEY);
     pdoInsert('sdp_record_tbl',array('order_id'=>$order_id,'sdp_id'=>$sdp_id,'fee'=>$price,'type'=>$type),'ignore');
     pdoUpdate('sdp_account_tbl',array('total_balence'=>$totalBalence,'verify'=>$verify),array('sdp_id'=>$sdp_id));
-    if(isset($openid)) {
+    if(isset($openid)&&$price>0) {
         if($type=='in') {
             $intro='您获得一笔新佣金！';
         }elseif($type=='out') {
@@ -478,9 +488,11 @@ function verifyAccount($sdp_id){
     $account=$accountQuery->fetch();
     if($record['type']=='out')$record['fee']=-$record['fee'];
     $verify=md5($record['order_id'].$record['fee'].$account['total_balence'].SDP_KEY);
-    mylog($record['order_id'].$record['fee'].$account['total_balence'].SDP_KEY);
-    mylog($verify);
-    mylog($account['verify']);
+//    mylog($record['fee']);
+//    mylog($account['total_balence']);
+//    mylog($record['order_id'].$record['fee'].$account['total_balence'].SDP_KEY);
+//    mylog($verify);
+//    mylog($account['verify']);
     if($verify==$account['verify']){
         return true;
     }else{
