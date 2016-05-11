@@ -393,6 +393,7 @@ function alterSdpAccount($order_id,$sdp_id,$price,$openid=null,$type='in'){
     if($type=='out')$price=-$price;
     $totalBalence=$balence['total_balence']+$price;
     $verify=md5($order_id.$price.$totalBalence.SDP_KEY);//每一笔记录都进行签名
+    mylog($order_id.$price.$totalBalence.SDP_KEY);
     pdoInsert('sdp_record_tbl',array('order_id'=>$order_id,'sdp_id'=>$sdp_id,'fee'=>$price,'type'=>$type),'ignore');
     pdoUpdate('sdp_account_tbl',array('total_balence'=>$totalBalence,'verify'=>$verify),array('sdp_id'=>$sdp_id));
     if(isset($openid)) {
@@ -435,13 +436,13 @@ function getSdpInf($index,$size,$level=0,array $filter=null){
         }
     }
 
-    $count=pdoQuery('sdp_user_level_tbl',array('count(*) as total_num'),$where,$whereStr);
+    $count=pdoQuery('sdp_user_full_inf_view',array('count(*) as total_num'),$where,$whereStr);
     $c=$count->fetch();
     $return['count']=$c['total_num'];
     if($level>1){
         $infQuery=pdoQuery('sdp_root_full_inf_view',null,$where,$whereStr."order by $orderby $rule limit $index,$size");
     }else{
-        $infQuery=pdoQuery('sdp_full_inf_view',null,$where,$whereStr."order by $orderby $rule limit $index,$size");
+        $infQuery=pdoQuery('sdp_user_full_inf_view',null,$where,$whereStr."order by $orderby $rule limit $index,$size");
     }
     foreach ($infQuery as $row) {
         $return['sdp'][]=$row;
@@ -477,6 +478,9 @@ function verifyAccount($sdp_id){
     $account=$accountQuery->fetch();
     if($record['type']=='out')$record['fee']=-$record['fee'];
     $verify=md5($record['order_id'].$record['fee'].$account['total_balence'].SDP_KEY);
+    mylog($record['order_id'].$record['fee'].$account['total_balence'].SDP_KEY);
+    mylog($verify);
+    mylog($account['verify']);
     if($verify==$account['verify']){
         return true;
     }else{

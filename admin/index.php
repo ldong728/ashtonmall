@@ -66,8 +66,8 @@ if (isset($_SESSION['login'])) {
             $num = 15;
             $page = isset($_GET['page']) ? $_GET['page'] : 0;
             if(isset($_GET['sdp']))$where['sdp_id']=$_GET['sdp'];
-            if(isset($_GET['root']))$where['root']=$_GET['sdp'];
-            $orderQuery = pdoQuery('order_view', null, $where, ' limit ' . $page * $num . ', ' . $num);
+            if(isset($_GET['root']))$where['root']=$_GET['root'];
+            $orderQuery = pdoQuery('order_full_inf_view', null, $where, ' limit ' . $page * $num . ', ' . $num);
             $getStr='';
             foreach ($_GET as $k => $v) {
                 if($k=='page')continue;
@@ -180,28 +180,40 @@ if (isset($_SESSION['login'])) {
                 printView('admin/view/sdpLevel.html.php','分销管理');
 
             }
-//            if(isset($_GET['rootsdp'])){
-//                if(isset($_GET['order']))$filter['order']=$_GET['order'];
-//                if(isset($_GET['rule']))$filter['rule']=$_GET['rule'];
-//                $num = 15;
-//                $page = isset($_GET['page']) ? $_GET['page'] : 1;
-//                $levelQuery=pdoQuery('sdp_level_tbl',null,null,' where level_id>1');
-//                foreach ($levelQuery as $row) {
-//                    $levelList[]=$row;
-//                }
-//                $getStr='';
-//                foreach ($_GET as $k => $v) {
-//                    if($k=='page')continue;
-//                    $getStr.=$k.'='.$v.'&';
-//                }
-//                $getStr=rtrim($getStr,'&');
-//                $sdpInf=getSdpInf($page*20,20,$_GET['rootsdp']);
-//                printView('admin/view/sdpManage.html.php','分销商管理');
-//            }
+            if(isset($_GET['userAccount'])){
+                $sdp_id=$_GET['userAccount'];
+                $verify=true;
+                $stu="正常";
+                $inf=pdoQuery('sdp_user_full_inf_view',null,array('sdp_id'=>$sdp_id),' limit 1');
+                $inf=$inf->fetch();
+                $level=pdoQuery('sdp_level_view',null,array('sdp_id'),' limit 1');
+                $level=$level->fetch();
+                if($inf['total_balence']>0){
+                    $verify=verifyAccount($sdp_id);
+                    $total_count=pdoQuery('sdp_record_tbl',array('sum(fee) as total_count'),array('sdp_id'=>$sdp_id),null);
+                    $total_count=$total_count->fetch();
+
+                    if($verify&&($total_count['total_count']==$inf['total_balence'])){
+                        $stu="正常";
+                    }else{
+                        $stu="异常";
+                    }
+                    $recordQuery=pdoQuery('sdp_record_tbl',null,array('sdp_id'=>$sdp_id),' order by creat_time desc');
+                    foreach ($recordQuery as $row) {
+                        $record[]=$row;
+                    }
+                }
+                if(!isset($record)){
+                    $record=array();
+                }
+                printView('admin/view/sdp_account.html.php','分销管理');
+                exit;
+            }
             if(isset($_GET['usersdp'])){
                 if(isset($_GET['order']))$filter['order']=$_GET['order'];
                 if(isset($_GET['rule']))$filter['rule']=$_GET['rule'];
-                if(isset($_GET['f_id']))$filter['where']['f_id']=$_GET['f_id'];
+                if(isset($_GET['f_sdp_id']))$filter['where']['f_sdp_id']=$_GET['f_sdp_id'];
+                if(isset($_GET['root']))$filter['where']['root']=$_GET['root'];
                 $num = 15;
                 $page = isset($_GET['page']) ? $_GET['page'] : 1;
                 $levelQuery=pdoQuery('sdp_level_tbl',null,null,' where level_id>1');

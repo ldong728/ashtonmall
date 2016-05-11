@@ -42,9 +42,9 @@ $getStr = $GLOBALS['getStr'];
                 <td><?php echo $row['name'] ?></td>
                 <td><?php echo $row['province'] ?></td>
                 <td><?php echo $row['city'] ?></td>
-                <td><?php echo $row['order_num'] ?></td>
-                <td><?php echo $row['sub_num'] ?></td>
-                <td><?php echo $row['total_balence'] ?></td>
+                <td><a href="index.php?orders=-1&dorder=1&root=<?php echo $row['sdp_id']?>"><?php echo $row['order_num'] ?></td>
+                <td><a href="index.php?sdp=1&usersdp=1&root=<?php echo $row['sdp_id']?>"><?php echo $row['sub_num'] ?></a></td>
+                <td><a href="index.php?sdp=1&userAccount=<?php echo $row['sdp_id']?>"><?php echo $row['total_balence'] ?></a></td>
                 <td><?php echo $row['total_sell']?></td>
                 <td>
                     <select class="select change" id="select<?php echo $row['sdp_id'] ?>">
