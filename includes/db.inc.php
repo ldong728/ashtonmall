@@ -1,4 +1,10 @@
 <?php
+/*20160512 支持事务操作
+ *
+ */
+
+
+
 try {
     $pdo = new PDO('mysql:host='.DB_IP.';dbname=' . DB_NAME, DB_USER,DB_PSW);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -17,9 +23,11 @@ function exeNew($s){
         $GLOBALS['pdo']->exec($s);
         return $GLOBALS['pdo']->lastInsertId();
     }catch(PDOException $e){
-        $error = 'exeError' . $e->getMessage();
-        include 'error.html.php';
-        exit();
+//        echo $e->getMessage();
+        throw $e;
+//        $error = 'exeError' . $e->getMessage();
+//        include 'error.html.php';
+//        exit();
     }
 }
 function pdoQuery($tableName, $fields, $where, $append)
@@ -121,9 +129,10 @@ function pdoInsert($tableName,$value,$str=''){
         return $GLOBALS['pdo']->lastInsertId();
 
     }catch (PDOException $e) {
-        $error = 'Unable to insert to the database server.' . $e->getMessage();
-        return $error;
-        exit();
+//        $error = 'Unable to insert to the database server.' . $e->getMessage();
+//        return $error;
+//        exit();
+        throw $e;
     }
 
 }
@@ -203,9 +212,10 @@ function pdoDelete($tableName,array $where,$str=''){
         return $GLOBALS['pdo']->lastInsertId();
 
     }catch (PDOException $e) {
-        $error = 'Unable to insert to the database server.' . $e->getMessage();
-        include 'error.html.php';
-        exit();
+//        $error = 'Unable to insert to the database server.' . $e->getMessage();
+//        include 'error.html.php';
+//        exit();
+        throw $e;
     }
 
 }
@@ -295,6 +305,26 @@ function pdoBatchInsert($tableName,array $value,$str=''){
     }
 
 
+}
+function pdoTransReady()
+{
+    $GLOBALS['pdo']->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
+    $GLOBALS['pdo']->beginTransaction();
+//    mylog('ready');
+}
+
+function pdoCommit()
+{
+    $GLOBALS['pdo']->commit();
+    $GLOBALS['pdo']->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+//    mylog('commit');
+}
+
+function pdoRollBack()
+{
+    $GLOBALS['pdo']->rollBack();
+    $GLOBALS['pdo']->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+//    mylog('rollback');
 }
 
 ?>

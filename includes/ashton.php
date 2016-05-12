@@ -218,14 +218,21 @@ function createSdp($phone,$name,$province,$city){
     $query=pdoQuery('sdp_user_tbl',null,array('open_id'=>$_SESSION['customerId']),'limit 1');
     if(!$query->fetch()){
         $sdp_id=md5($_SESSION['customerId'].$phone.SDP_KEY);
-        pdoInsert('sdp_user_tbl',array('sdp_id'=>$sdp_id,'open_id'=>$_SESSION['customerId'],'phone'=>trim($phone),'name'=>trim($name),'province'=>trim($province),'city'=>trim($city)),'update');
-        pdoInsert('sdp_user_level_tbl',array('sdp_id'=>$sdp_id,'level'=>'1'),'update');
-        $f_id=isset($_SESSION['sdp']['sdp_id'])?$_SESSION['sdp']['sdp_id'] : 'root';
-        pdoInsert('sdp_relation_tbl',array('sdp_id'=>$sdp_id,'f_id'=>$f_id,'root'=>$_SESSION['sdp']['root']),'update');
-        pdoInsert('sdp_account_tbl',array('sdp_id'=>$sdp_id,'total_balence'=>'0'),'update');
-        pdoDelete('sdp_subscribe_tbl',array('open_id'=>$_SESSION['customerId']));
-        $_SESSION['sdp']['sdp_id']=$sdp_id;
-        $_SESSION['sdp']['level']=1;
+        pdoTransReady();
+        try{
+            pdoInsert('sdp_user_tbl',array('sdp_id'=>$sdp_id,'open_id'=>$_SESSION['customerId'],'phone'=>trim($phone),'name'=>trim($name),'province'=>trim($province),'city'=>trim($city)),'update');
+            pdoInsert('sdp_user_level_tbl',array('sdp_id'=>$sdp_id,'level'=>'1'),'update');
+            $f_id=isset($_SESSION['sdp']['sdp_id'])?$_SESSION['sdp']['sdp_id'] : 'root';
+            pdoInsert('sdp_relation_tbl',array('sdp_id'=>$sdp_id,'f_id'=>$f_id,'root'=>$_SESSION['sdp']['root']),'update');
+            pdoInsert('sdp_account_tbl',array('sdp_id'=>$sdp_id,'total_balence'=>'0'),'update');
+            pdoDelete('sdp_subscribe_tbl',array('open_id'=>$_SESSION['customerId']));
+            $_SESSION['sdp']['sdp_id']=$sdp_id;
+            $_SESSION['sdp']['level']=1;
+            pdoCommit();
+        }catch(PDOException $e){
+            pdoRollBack();
+            return false;
+        }
         return 'ok';
     }else{
         return false;
@@ -238,6 +245,7 @@ function createSdp($phone,$name,$province,$city){
 
 }
 function altSdpLevel($sdp_id,$level){
+    $return='ok';
     if($sdp_id!='root'){
         pdoDelete('sdp_gainshare_tbl',array('root'=>$sdp_id));//清除用户自设的佣金比例
         pdoDelete('sdp_price_tbl',array('sdp_id'=>$sdp_id));//清除用户自设的商品价格
@@ -251,30 +259,47 @@ function altSdpLevel($sdp_id,$level){
             foreach ($fullQuery as $row) {
                 $fullList[$row['f_id']]=$row['sdp_id'];
             }
-            if(count($fullList)>0){
-                $list=getSubSdp($fullList,array($sdp_id));
-                pdoUpdate('sdp_relation_tbl',array('root'=>'root'),array('sdp_id'=>$list));
+            pdoTransReady();
+            try{
+                if(count($fullList)>0){
+                    $list=getSubSdp($fullList,array($sdp_id));
+                    pdoUpdate('sdp_relation_tbl',array('root'=>'root'),array('sdp_id'=>$list));
+                }
+                pdoInsert('sdp_relation_tbl',array('sdp_id'=>$sdp_id,'f_id'=>'root','root'=>'root'),'update');
+                pdoUpdate('sdp_user_level_tbl',array('level'=>$level),array('sdp_id'=>$sdp_id));
+                pdoCommit();
+
+            }catch(PDOException $e){
+                pdoRollBack();
+                $return=false;
             }
-            pdoInsert('sdp_relation_tbl',array('sdp_id'=>$sdp_id,'f_id'=>'root','root'=>'root'),'update');
-            pdoUpdate('sdp_user_level_tbl',array('level'=>$level),array('sdp_id'=>$sdp_id));
+
         }
     }elseif($level>1){
         $rootQuery=pdoQuery('sdp_relation_view',array('root','level'),array('sdp_id=>$sdp_id'),' limit 1');
         $r=$rootQuery->fetch();
-        if($r['level']==1){
-            $root=$r['root'];
-            $fullQuery=pdoQuery('sdp_relation_tbl',array('sdp_id','f_id'),array('root'=>$root),null);
-            foreach ($fullQuery as $row) {
-                $fullList[$row['f_id']]=$row['sdp_id'];
+        pdoTransReady();
+        try{
+            if($r['level']==1){
+                $root=$r['root'];
+                $fullQuery=pdoQuery('sdp_relation_tbl',array('sdp_id','f_id'),array('root'=>$root),null);
+                foreach ($fullQuery as $row) {
+                    $fullList[$row['f_id']]=$row['sdp_id'];
+                }
+                $list=getSubSdp($fullList,array($sdp_id));
+                pdoUpdate('sdp_relation_tbl',array('root'=>$sdp_id),array('sdp_id'=>$list));
+                pdoDelete('sdp_relation_tbl',array('sdp_id'=>$sdp_id));
             }
-            $list=getSubSdp($fullList,array($sdp_id));
-            pdoUpdate('sdp_relation_tbl',array('root'=>$sdp_id),array('sdp_id'=>$list));
-            pdoDelete('sdp_relation_tbl',array('sdp_id'=>$sdp_id));
+            pdoUpdate('sdp_user_level_tbl',array('level'=>$level),array('sdp_id'=>$sdp_id));
+            pdoCommit();
+        }catch(PDOException $e){
+            pdoRollBack();
+            $return=false;
         }
-        pdoUpdate('sdp_user_level_tbl',array('level'=>$level),array('sdp_id'=>$sdp_id));
+
 
     }
-    return 'ok';
+    return $return;
 }
 function deleteSdp($sdp_id){
     $query=pdoQuery('sdp_relation_tbl',null,array('sdp_id'=>$sdp_id),' limit 1');
@@ -288,10 +313,19 @@ function deleteSdp($sdp_id){
     if(isset($alt)){
         $num=pdoUpdate('sdp_relation_tbl',array('f_id'=>$f_id),array('sdp_id'=>$alt));
     }
-    pdoDelete('sdp_user_tbl',array('sdp_id'=>$sdp_id));
-    pdoDelete('sdp_user_level_tbl',array('sdp_id'=>$sdp_id));
-    pdoDelete('sdp_relation_tbl',array('sdp_id'=>$sdp_id));
-    pdoDelete('sdp_account_tbl',array('sdp_id'=>$sdp_id));
+    pdoTransReady();
+    try{
+        pdoDelete('sdp_user_tbl',array('sdp_id'=>$sdp_id));
+        pdoDelete('sdp_user_level_tbl',array('sdp_id'=>$sdp_id));
+        pdoDelete('sdp_relation_tbl',array('sdp_id'=>$sdp_id));
+        pdoDelete('sdp_account_tbl',array('sdp_id'=>$sdp_id));
+        pdoCommit();
+        return true;
+    }catch (PDOException $e){
+        pdoRollBack();
+        return false;
+    }
+
     return;
 }
 

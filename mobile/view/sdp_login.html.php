@@ -34,7 +34,7 @@
                     showToast('注册完成');
                     window.location.href ='index.php?rand=0';
                 }else{
-                    showToast(data);
+                    showToast("已注册或服务器错误");
                 }
 
             })
