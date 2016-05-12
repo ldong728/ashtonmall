@@ -257,7 +257,6 @@ function altSdpLevel($sdp_id,$level){
             }
             pdoInsert('sdp_relation_tbl',array('sdp_id'=>$sdp_id,'f_id'=>'root','root'=>'root'),'update');
             pdoUpdate('sdp_user_level_tbl',array('level'=>$level),array('sdp_id'=>$sdp_id));
-
         }
     }elseif($level>1){
         $rootQuery=pdoQuery('sdp_relation_view',array('root','level'),array('sdp_id=>$sdp_id'),' limit 1');
@@ -360,10 +359,6 @@ function gainshare($order_id){
                     $wholesale=pdoQuery('sdp_wholesale_tbl',null,array('level_id'=>$rootLevel,'g_id'=>$orow['g_id']), ' limit 1');
                     $wholesale=$wholesale->fetch();
                     $cost=$wholesale?$wholesale['price']*$orow['number']:$orow['total_sale']*$rootinf['discount'];
-//                    mylog('wholesale='.$wholesale['price']);
-//                    mylog('total_sale='.$orow['total_sale']);
-//                    mylog('discount='.$rootinf['discount']);
-//                    mylog($cost);
                     $totalCost+=$cost;
 
                 }
@@ -406,7 +401,7 @@ function alterSdpAccount($order_id,$sdp_id,$price,$openid=null,$type='in'){
 //    mylog($order_id.$price.$totalBalence.SDP_KEY);
     pdoInsert('sdp_record_tbl',array('order_id'=>$order_id,'sdp_id'=>$sdp_id,'fee'=>$price,'type'=>$type),'ignore');
     pdoUpdate('sdp_account_tbl',array('total_balence'=>$totalBalence,'verify'=>$verify),array('sdp_id'=>$sdp_id));
-    if(isset($openid)&&$price>0) {
+    if(isset($openid)&&$price!=0) {
         if($type=='in') {
             $intro='您获得一笔新佣金！';
         }elseif($type=='out') {
@@ -419,10 +414,9 @@ function alterSdpAccount($order_id,$sdp_id,$price,$openid=null,$type='in'){
             'keyword2' => array('value' => date('Y-m-d H:i:s', time()), 'color' => '#0000ff'),
             'remark' => array('value' => '祝您生意兴隆')
         );
-//        mylog($openid);
-//        mylog(getArrayInf($templateArray));
+
         $request = sendTemplateMsg($openid, $GLOBALS['template_key_gainshare'], '', $templateArray);
-//        mylog($request);
+
     }
 }
 function getSdpInf($index,$size,$level=0,array $filter=null){

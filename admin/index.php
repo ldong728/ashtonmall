@@ -186,7 +186,7 @@ if (isset($_SESSION['login'])) {
                 $stu="正常";
                 $inf=pdoQuery('sdp_user_full_inf_view',null,array('sdp_id'=>$sdp_id),' limit 1');
                 $inf=$inf->fetch();
-                $level=pdoQuery('sdp_level_view',null,array('sdp_id'),' limit 1');
+                $level=pdoQuery('sdp_level_view',null,array('sdp_id'=>$sdp_id),' limit 1');
                 $level=$level->fetch();
                 if($inf['total_balence']>0){
                     $verify=verifyAccount($sdp_id);

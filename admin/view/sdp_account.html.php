@@ -145,6 +145,9 @@ $level = $GLOBALS['level'];
         </div>
         <div class="od-tr">
             <div class="od-td">
+                账户金额：<span style="font-size: 1.5em">￥<?php echo $inf['total_balence'] ?></span>
+            </div>
+            <div class="od-td">
                 账户状态：<span style="font-size: 1.5em"><?php echo $stu ?></span>
             </div>
         </div>
@@ -161,7 +164,7 @@ $level = $GLOBALS['level'];
             </tr>
             <?php foreach($record as $row):?>
                 <tr>
-                    <td><?php echo $row['order_id']?></td>
+                    <td><a href="index.php?dorder=1&orderDetail=<?php echo $row['order_id']?>"><?php echo $row['order_id']?></a></td>
                     <td><?php echo $row['creat_time']?></td>
                     <td><?php echo $row['fee']?></td>
                     <td><?php echo $row['type']?></td>
@@ -172,3 +175,4 @@ $level = $GLOBALS['level'];
     </div>
 
 </section>
+<div class="space"></div>
