@@ -99,7 +99,7 @@ if (isset($_SESSION['login'])) {
     if(isset($_GET['review'])){
         if(isset($_SESSION['pms']['review'])) {
             $limit = isset($_GET['index']) ? ' limit ' . $_GET['index'] . ', 20' : ' limit 20';
-            $reviewQuery = pdoQuery('review_tbl', null, array('priority' => '5', 'public' => '0'), $limit);
+            $reviewQuery = pdoQuery('review_view', null, array('priority' => '5', 'public' => '0'), $limit);
             foreach ($reviewQuery as $row) {
                 $review[] = $row;
             };
@@ -177,6 +177,7 @@ if (isset($_SESSION['login'])) {
                     $levelList[]=$row;
                 }
                 $gainShare=pdoQuery('sdp_gainshare_tbl',null,array('root'=>'root'),' limit 3');
+                $config=getConfig('../mobile/config/feebackCon.config');
                 printView('admin/view/sdpLevel.html.php','分销管理');
 
             }

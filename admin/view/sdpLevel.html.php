@@ -1,6 +1,7 @@
 <?php
 $levelList=$GLOBALS['levelList'];
 $gainShare=$GLOBALS['gainShare'];
+$config=$GLOBALS['config'];
 ?>
 <section>
     <div class="page_title">
@@ -40,9 +41,27 @@ $gainShare=$GLOBALS['gainShare'];
             </tr>
         <?php endforeach ?>
     </table>
+    <div class="page_title">
+        <h2>佣金提现设置</h2>
+    </div>
+    <ul class="ulcolumn2">
+        <li><span class="item_name" style="width: 120px;text-align: right">最低提现额：</span><input class="feeback_con textbox textbox_295" type="number"id="minAmount"value="<?php echo $config['minAmount']?>"/> </li>
+        <li><span class="item_name" style="width: 120px;text-align: right">单笔最高提现额：</span><input class="feeback_con textbox textbox_295" type="number"id="maxAmount"value="<?php echo $config['maxAmount']?>"/> </li>
+
+    </ul>
+
 
 </section>
+<div class="space"></div>
 <script>
+    $(document).on('change','.feeback_con',function(){
+        alert('ok');
+        var key=$(this).attr('id');
+        var value=$(this).val();
+        $.post('ajax_request.php',{sdp:1,altFeebackCon:1,key:key,value:value},function(data){
+            if(data=='ok')showToast('修改成功');
+        })
+    });
     $('.add-level').click(function(){
         $.post('ajax_request.php',{sdp:1,addSdpLevel:1},function(data){
             if(data>0){

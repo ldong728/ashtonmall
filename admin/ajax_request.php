@@ -575,6 +575,15 @@ if (isset($_SESSION['login'])) {
 
             exit;
         }
+        if(isset($_POST['altFeebackCon'])){
+            $config=getConfig('../mobile/config/feebackCon.config');
+            $config[$_POST['key']]=$_POST['value'];
+            saveConfig('../mobile/config/feebackCon.config',$config);
+            echo 'ok';
+            exit;
+
+
+        }
 
 
         exit;

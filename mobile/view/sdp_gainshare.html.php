@@ -19,7 +19,7 @@
                 等级<?php echo $k+1 ?>
             </div>
             <div class="gs-input-box">
-                佣金：<input class="number gs-value"id="gs<?php echo $k?>" value="<?php echo $row['value']?>"/>
+                佣金：<input type="number" class="number gs-value"id="gs<?php echo $k?>" value="<?php echo $row['value']?>"/>元
             </div>
         </div>
 
@@ -44,7 +44,8 @@
             if(data='ok'){
                 showToast('更改成功');
             }
-        })
+        });
+
     });
 
 </script>

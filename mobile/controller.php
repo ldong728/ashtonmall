@@ -265,6 +265,8 @@ if (isset($_SESSION['customerId'])) {
         }
         if (isset($_GET['account'])) {
             if ($_SESSION['sdp']['level'] > 0) {
+                $config=getConfig('config/feebackCon.config');
+
                 $accountQuery = pdoQuery('sdp_account_tbl', null, array('sdp_id' => $_SESSION['sdp']['sdp_id']), ' limit 1');
                 $account = $accountQuery->fetch();
                 include 'view/sdp_account.html.php';

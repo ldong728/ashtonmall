@@ -24,7 +24,7 @@
                         </div>
 
                     </div>
-                    <input type="tel" class="priceinput"id="<?php echo $row['g_id']?>"value="<?php echo isset($row['price'])?number_format($row['price'],2,'.',''):number_format($row['sale'],2,'.','')?>"/>
+                    <input type="number" class="priceinput"id="<?php echo $row['g_id']?>"value="<?php echo isset($row['price'])?number_format($row['price'],2,'.',''):number_format($row['sale'],2,'.','')?>"/>
                 </div>
                 <div class="title-box"style="clear: left">
                     <div class="list-main-title">
@@ -57,7 +57,7 @@
                             等级<?php echo $k+1 ?>
                         </div>
                         <div class="gs-input-box">
-                            佣金：<input class="number gs-value"id="gs" value=""/>元
+                            佣金：<input type="number" class="number gs-value"id="gs" value=""/>元
                         </div>
                     </div>
             </div>
@@ -94,7 +94,7 @@
                 '等级'+(id+1)+
                 '</div>'+
                 '<div class="gs-input-box">'+
-                '佣金：<input class="number gs-value"id="gs'+id+'" value="'+ v.value+'"/>元'+
+                '佣金：<input type="number" class="number gs-value"id="gs'+id+'" value="'+ v.value+'"/>元'+
                 '</div></div>'
                 $('.dyn-content').append(content);
             });

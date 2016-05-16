@@ -148,8 +148,10 @@ div.orderItem {
 
 /*首页*/
 .front_img_block{
+    overflow: hidden;
+    zoom: 1;
     padding: 25px;
-    float: left;
+    /*float: left;*/
     /*min-height: 400px;*/
     /*overflow: hidden;*/
 }
@@ -183,13 +185,16 @@ div.orderItem {
     background-repeat: no-repeat;
 }
 .index-remark {
-    float:left;
+    overflow: hidden;
+    zoom: 1;
+    /*float:left;*/
 }
 
 .index-remark .remark-box {
     border: solid 1px #ccc;
-    overflow: hidden;
-    zoom:1;
+    /*overflow: hidden;*/
+    /*zoom:1;*/
+    float: left;
     width: 400px;
     min-height: 160px;
     margin: 15px;
