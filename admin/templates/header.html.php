@@ -109,7 +109,7 @@
                     <dd style="display: <?php echo isset($_GET['sdp']) ? 'block' : 'none' ?>"><a
                             href="index.php?sdp=1&usersdp=1">微商管理</a></dd>
                     <dd style="display: <?php echo isset($_GET['sdp']) ? 'block' : 'none' ?>"><a
-                            href="index.php?sdp=1&sdpInf=1">数据分析</a></dd>
+                            href="index.php?sdp=1&feeback=1">返佣审核</a></dd>
                 </dl>
             </li>
         <?php endif ?>

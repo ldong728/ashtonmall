@@ -581,7 +581,43 @@ if (isset($_SESSION['login'])) {
             saveConfig('../mobile/config/feebackCon.config',$config);
             echo 'ok';
             exit;
-
+        }
+        if(isset($_POST['feeback_confirm'])){
+            $feeback_id=$_POST['feeback_id'];
+            $query=pdoQuery('sdp_feeback_tbl',null,array('id'=>$feeback_id,'stu'=>0),' limit 1');
+            if($inf=$query->fetch()){
+                $user=pdoQuery('sdp_user_tbl',null,array('sdp_id'=>$inf['sdp_id']),' limit 1');
+                $user=$user->fetch();
+                $date = array();
+                $date['mch_appid'] = APP_ID;
+                $date['mchid'] = MCH_ID;
+                $date['nonce_str'] = getRandStr(32);
+                $date['spbill_create_ip'] = $_SERVER['REMOTE_ADDR'];
+                $date['partner_trade_no'] = $feeback_id;
+                $date['check_name'] = 'OPTION_CHECK';
+                $date['re_user_name'] = $user['name'];
+                $date['amount'] = $inf['amount']*100;
+                $date['desc'] = '返佣';
+                $date['openid'] = $user['open_id'];
+                $sign = makeSign($date, KEY);
+                $date['sign'] = $sign;
+                $xml = toXml($date);
+                $url='https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers';
+                $return=curl_post_ssl($url,$xml);
+                $returnArray=xmlToArray($return);
+                if($returnArray['result_code']=='SUCCESS'){
+                    pdoUpdate('sdp_feeback_tbl',array('stu'=>1,'feeback_time'=>time()),array('id'=>$feeback_id));
+                    alterSdpAccount($feeback_id,$inf['sdp_id'],$inf['amount'],$user['open_id'],'out');
+                    echo 'ok';
+                    exit;
+                }else{
+                    echo '出错，请检查余额';
+                    exit;
+                }
+            }else{
+                echo '未查询到订单';
+                exit;
+            }
 
         }
 

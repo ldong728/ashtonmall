@@ -10,10 +10,14 @@ session_start();
 if(isset($_SESSION['customerId'])&&isset($_SESSION['sdp_id'])){
     if (isset($_POST['feeback'])) {
         $feebackConfig=getConfig('config/feebackCon.config');
+        $total=pdoQuery('sdp_account_tbl',array('total_balence'),array('sdp_id'=>$_SESSION['sdp_id']), ' limit 1');
+        $total=$total->fetch();
+
+//        $totalBalence=verifyAccount($sdp_id);
         $amount=$_POST['amount'];
         $minAmount=$feebackConfig['minAmount'];
         $maxAmount=$feebackConfig['maxAmount'];
-        if($amount<$minAmount||$amount>$maxAmount){
+        if($amount<$minAmount||$amount>$maxAmount||$amount>$total['total_balence']){
             echo "金额错误";
             exit;
         }
@@ -57,9 +61,15 @@ if(isset($_SESSION['customerId'])&&isset($_SESSION['sdp_id'])){
         $xml = toXml($date);
         $url='https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers';
         $return=curl_post_ssl($url,$xml);
-        $return =json_decode($return,true);
+        $returnArray=xmlToArray($return);
+        if($returnArray['result_code']=='SUCCESS'){
+            pdoUpdate('sdp_feeback_tbl',array('stu'=>1,'feeback_time'=>time()),array('id'=>$feeback_id));
+            alterSdpAccount($feeback_id,$sdp_id,$amount,$openid,'out');
+            echo '取现成功';
+        }
+        echo "取现申请已提交";
 
-        echo 'ok';
+
 
         exit;
 

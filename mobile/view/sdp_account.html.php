@@ -83,7 +83,8 @@
                 showToast('单次返佣金额最高为￥'+maxAmount);
             }else{
                 $.post('feeback.php',{feeback:1,amount:amount},function(data){
-
+                    alert(data);
+                    if('取现成功'==data)window.location.href='index.php';
                 });
 
             }

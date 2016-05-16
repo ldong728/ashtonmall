@@ -236,6 +236,10 @@ if (isset($_SESSION['login'])) {
                 printView('admin/view/sdpUser.html.php','微商管理');
                 exit;
             }
+            if(isset($_GET['feeback'])){
+                $query=pdoQuery('sdp_feeback_tbl',null,array('stu'=>"0"),' order by create_time asc');
+                printView('admin/view/sdp_feeback.html.php');
+            }
             if(isset($_GET['sdp_record'])){
 
             }
