@@ -34,5 +34,6 @@ function subscribe($msg){
             pdoInsert('sdp_subscribe_tbl',array('open_id'=>$msg['FromUserName'],'f_sdp_id'=>$f_sdp_id),'update');
         }
     }
+    $GLOBALS['weixin']->replyText("感谢您关注阿诗顿中国！\n进入微商城选购商品、申请成为微客，赚取佣金。\n烘焙学院，实力卖家可加微信：283879889，欢迎洽谈！\n售后服务电话：400-8890-240");
     return;
 }
