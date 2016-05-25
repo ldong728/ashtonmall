@@ -18,7 +18,7 @@ $getStr=$GLOBALS['getStr'];
 <!--            </li>-->
 <!--        --><?php //endforeach?>
 <!--    </ul>-->
-
+    <input type="text" class="textbox textbox_225" id="search" placeholder="请输入昵称，姓名，或电话"/><button class="link_btn search_btn">搜索</button>
     <table class="table">
         <tr>
             <th><input type="checkbox"class="selectAll"value="all"></th>
@@ -68,8 +68,9 @@ $getStr=$GLOBALS['getStr'];
         <?php endforeach ?>
     </select>
     <button class="link_btn batchDelSdp">取消资格</button>
+
     <aside class="paging">
-        <?php for($i=1;$i<$sdpInf['count']/20+1; $i++): ?>
+        <?php for($i=1;$i<$sdpInf['count']/15+1; $i++): ?>
             <a href="index.php?<?php echo $getStr?>&page=<?php echo $i?>"><?php echo $i?></a>
         <?php endfor ?>
     </aside>
@@ -145,6 +146,10 @@ $getStr=$GLOBALS['getStr'];
         }else{
             sdp_list[$(this).attr('id').slice(3)]=0;
         }
+    });
+    $('.search_btn').click(function(){
+        var search=$('#search').val();
+        window.location.href='index.php?sdp=1&usersdp=1&search='+search;
     });
 
 

@@ -10,15 +10,17 @@ $getStr = $GLOBALS['getStr'];
         <strong>分销商管理</strong>
     </h2>
 
+
     <ul class="admin_tab">
 
         <?php foreach ($levelList as $row): ?>
             <li id="level<?php echo $row['level_id'] ?>">
                 <a href="index.php?sdp=1&usersdp=<?php echo $row['level_id'] ?>&rootsdp=1"
-                   class="level_select <?php echo $_GET['rootsdp'] == $row['level_id'] ? 'active' : '' ?>"><?php echo $row['level_name'] ?></a>
+                   class="level_select <?php echo $_GET['usersdp'] == $row['level_id'] ? 'active' : '' ?>"><?php echo $row['level_name'] ?></a>
             </li>
         <?php endforeach ?>
     </ul>
+    <input type="text" class="textbox textbox_225" id="search" placeholder="请输入昵称，姓名，或电话"/><button class="link_btn search_btn">搜索</button>
     <table class="table">
         <tr>
             <th><input type="checkbox"class="selectAll"value="all"></th>
@@ -68,12 +70,14 @@ $getStr = $GLOBALS['getStr'];
         <?php endforeach ?>
     </select>
     <button class="link_btn batchDownGrade">取消资格</button>
+
     <aside class="paging">
-        <?php for($i=1;$i<$sdpInf['count']/20+1; $i++): ?>
+        <?php for($i=1;$i<$sdpInf['count']/15+1; $i++): ?>
             <a href="index.php?<?php echo $getStr?>&page=<?php echo $i?>"><?php echo $i?></a>
         <?php endfor ?>
     </aside>
 </section>
+<div class="space"></div>
 <script>
     var sdp_list={};
     $('.change').change(function () {
@@ -149,6 +153,10 @@ $getStr = $GLOBALS['getStr'];
         }else{
             sdp_list[$(this).attr('id').slice(3)]=0;
         }
+    });
+    $('.search_btn').click(function(){
+        var search=$('#search').val();
+        window.location.href='index.php?sdp=1&usersdp=2&search='+search;
     });
 
 </script>

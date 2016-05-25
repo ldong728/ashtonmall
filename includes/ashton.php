@@ -489,8 +489,17 @@ function getSdpInf($index,$size,$level=0,array $filter=null){
     return $return;
 
 }
-function changeSdpLevel($sdpId,$level){
-
+function searchSdp($keyWord,$index,$size,$level='0'){
+    if($level>1){
+        $infQuery=pdoQuery('sdp_root_full_inf_view',null,null,"where nickname like \"%$keyWord%\" or name like \"%$keyWord%\" or phone like \"%$keyWord%\" limit $index,$size");
+    }else{
+        $infQuery=pdoQuery('sdp_user_full_inf_view',null,null,"where nickname like \"%$keyWord%\" or name like \"%$keyWord%\" or phone like \"%$keyWord%\" limit $index,$size");
+    }
+    foreach ($infQuery as $row) {
+        $return['sdp'][]=$row;
+    }
+    if(!isset($return['sdp']))$return['sdp']=array();
+    return $return;
 }
 function getSubSdp(array $fullList,array $sdpList){
     $return=array();
