@@ -35,7 +35,7 @@
     <style>
         body {
             height: 100%;
-            background: #16a085;
+            background: #2673BF;
             overflow: hidden;
         }
 
@@ -51,19 +51,18 @@
         $(document).ready(function () {
             //粒子背景特效
             $('body').particleground({
-                dotColor: '#5cbdaa',
-                lineColor: '#5cbdaa'
+                dotColor: '#2b82d9',
+                lineColor: '#2b82d9'
             });
             //验证码
             createCode();
-//            测试提交，对接程序删除即可
-//            $(".submit_btn").click(function(){
-//                location.href="index.html";
-//            });
+
         });
     </script>
 </head>
 <body>
+
+<a href="http://www.gooduo.net"><div class="logo"></div></a>
 <dl class="admin_login">
     <dt>
         <strong>阿诗顿商城后台管理系统</strong>
