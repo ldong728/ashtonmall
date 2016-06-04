@@ -42,10 +42,10 @@ $(document).on('change', '.wholesale', function () {
 });
 $(document).on('click', '#add_category', function () {
     $.post('ajax_request.php', {addNewCategory: 1, g_id: g_id}, function (data) {
-            $('#add-button').before( '<p>规格：<input class="detail-input category" type="text" id="' + data + '"value="规格' +data + '"/>' +
-            '售价：<input class="detail-input" type="text" class="sale" id="' +data + '"value="9999"/>' +
-            '<a class="detail-delete" href="consle.php?del_detail_id=' +data + '&g_id=' + g_id + '">删除此规格</a>' +
-            '</p>');
+            $('#add-button').before( '<div class="detail-block">规格：<input class="detail-input category textbox textbox_295" type="text" id="' + data + '"value="规格' +data + '"/>' +
+            '售价：<input class="detail-input textbox sale" type="number"  id="' +data + '"value="9999"/>' +
+            '<a class="detail-delete link_btn" href="consle.php?del_detail_id=' +data + '&g_id=' + g_id + '">删除此规格</a>' +
+            '</div>');
     });
 });
 
@@ -180,16 +180,16 @@ function getGInf() {
 
         if(null!=inf.detail) {
             $.each(inf.detail, function (k, v) {
-                var content = '<p>规格：<input class="detail-input category" type="text" id="' + v.id + '"value="' + v.category + '"/>' +
-                    '售价：<input class="detail-input sale" type="text" class="sale" id="' + v.id + '"value="' + v.sale + '"/>' +
-                    '<a class="detail-delete" href="consle.php?del_detail_id=' + v.id + '&g_id=' + g_id + '">删除此规格</a>' +
-                    '</p>';
+                var content = '<div class="detail-block">规格：<input class="detail-input category textbox textbox_295" type="text" id="' + v.id + '"value="' + v.category + '"/>' +
+                    '售价：<input class="detail-input sale textbox sale" type="number" id="' + v.id + '"value="' + v.sale + '"/>' +
+                    '<a class="detail-delete link_btn" href="consle.php?del_detail_id=' + v.id + '&g_id=' + g_id + '">删除此规格</a>' +
+                    '</div>';
                 $('#goods_detail').append(content);
             });
-            $('#goods_detail').append('<div class="divButton"id="add-button"><p id="add_category">添加规格</p></div>');
+            $('#goods_detail').append('<div class="detail-block"><a class="divButton link_btn"id="add-button"><span id="add_category">添加规格</span></a></div>');
         }
         if (null != inf.img) {
-            $('#goods_image').append('<div class="module-title"><h4>图片展示</h4></div>');
+            //$('#goods_image').append('<div class="module-title"><h4>图片展示</h4></div>');
             $.each(inf.img, function (k, v) {
                 var isCheck = (1 == v.front_cover ? 'checked = true' : '');
                 var content = '<div class="demo-box"><input type="radio" name="is_cover"class="is_cover"value="' + v.id + '"' + isCheck + '/>作为缩略图'

@@ -393,6 +393,7 @@ div#g_inf .main-inf{
     border-right-style: solid;
 }
 .main-inf .g-inf-name{
+
     clear: left;
     margin: 5px;
     float:left;
@@ -412,20 +413,25 @@ div#g_inf .main-inf{
     clear: left;
 }
 #g_inf #goods_detail{
-    width: 45%;
+    margin-left: 120px;
+    /*width: 45%;*/
     margin: 4% 2px 0 0;
-    float: left;
+    /*float: left;*/
 }
 #goods_detail .detail-input{
-    width:12%
+    /*width:12%*/
+}
+#goods_detail .detail-block {
+    margin-left: 120px;
+    padding: 5px 0;
 }
 #g_inf #goods_image{
     position: relative;
-    border: solid thin;
+    /*border: solid thin;*/
     margin-top:3%;
     padding-top:25px;
-    float:left;
-    width:45%;
+    /*float:left;*/
+    /*width:45%;*/
     min-height:120px;
 
 }

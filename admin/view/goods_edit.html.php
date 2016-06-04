@@ -12,96 +12,121 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
         <?php echo $sc_id?>;
     var mi =
         <?php echo '"'.$m_i.'"' ?>;
-
 </script>
 <section>
 
 
-    <div>
-        商品修改
+    <div class="page_title">
+        <h2>商品修改</h2>
     </div>
-    <div class="filter">
+    <select class="select" id="sc_id" style="margin-left: 120px">
+        <option value="0">分类</option>
+        <option value="-1">未分类</option>
+        <?php foreach ($_SESSION['smq'] as $r): ?>
+            <option value="<?php echo $r['id'] ?>"><?php htmlout($r['name']) ?></option>
+        <?php endforeach; ?>
+    </select>
+    <select class="select" id="g_name" name="g_name">
+        <option></option>
+    </select>
+    <a href="index.php?goods-config=1&is_part=1">配件修改</a>
 
-        <select id="sc_id">
-            <option value="0">分类</option>
-            <option value="-1">未分类</option>
-            <?php foreach ($_SESSION['smq'] as $r): ?>
-                <option value="<?php echo $r['id'] ?>"><?php htmlout($r['name']) ?></option>
-            <?php endforeach; ?>
-        </select>
+    <!--        <label id="changeCategory" style="display: none">更改分类为-->
+    <!--            <select id="changeSc">-->
+    <!--                <option value="-1">未分类</option>-->
+    <!--                --><?php //foreach ($_SESSION['smq'] as $r): ?>
+    <!---->
+    <!--                    <option value="--><?php //echo $r['id'] ?><!--">-->
+    <?php //htmlout($r['name']) ?><!--</option>-->
+    <!--                --><?php //endforeach; ?>
+    <!--            </select>-->
+    <!--        </label>-->
+    <section id="g_inf" style="display: none">
+        <section>
+            <div class="page_title">
+                <h2>基本信息</h2>
+            </div>
+
+            <div class="main-inf">
+                <form action="consle.php" method="post">
 
 
-        <select id="g_name" name="g_name"></select>
-        <a href="index.php?goods-config=1&is_part=1">配件修改</a>
+                    <ul class="ulColumn2">
+                        <li class="g-inf-name">
+                            <label for="name"><span class="item_name" style="width: 120px"><br/>名称：</span>
+                                <input class="textbox textbox_295" id="name" type="text" name="name"/>
+                            </label>
+                        </li>
+                        <li class="g-inf-name">
+                            <label for="s_name"><span class="item_name" style="width: 120px"><br/>短名称：</span>
+                                <input class="textbox textbox_225" id="s_name" type="text" name="s_name"/>
+                            </label>
+                        </li>
+                        <li class="g-inf-produce-id">
+                            <lable for="produce_id"><span class="item_name" style="width: 120px"><br/>型号：</span>
+                                <input class="textbox textbox_225" type="text" id="produce_id" name="produce_id"/>
+                            </lable>
 
-        <label id="changeCategory" style="display: none">更改分类为
-            <select id="changeSc">
-                <option value="-1">未分类</option>
-                <?php foreach ($_SESSION['smq'] as $r): ?>
+                        </li>
 
-                    <option value="<?php echo $r['id'] ?>"><?php htmlout($r['name']) ?></option>
-                <?php endforeach; ?>
-            </select>
-        </label>
-    </div>
-    <div id="g_inf" style="display: none">
-        <div class="module-title">
-            <h4>基本信息<h4>
-        </div>
-        <div class="main-inf">
-            <form action="consle.php" method="post">
+                        <li class="g-inf-name">
+                            <label><span class="item_name" style="width: 120px"><br/>简介：</span>
+                                <textarea class="textarea" id="intro" name="intro" cols="50" rows="6"></textarea>
+                            </label>
+                        </li>
+                        <!--                <button class="link_btn">提交商品信息修改</button>-->
+                        <li class="g-inf-name">
+                            <label for="inf"><span class="item_name" style="width: 120px"><br/>图文信息：</span>
 
-
-
-                <div class="g-inf-name">
-                    <label for="name">名称
-                        <input class="textbox textbox_295" id="name" type="text" name="name" />
-                    </label>
-                </div>
-                <div class="g-inf-name">
-                    <label for="s_name">短名称
-                        <input class="textbox textbox_225" id="s_name" type="text" name="s_name" />
-                    </label>
-                </div>
-                <div class="g-inf-produce-id">
-                    <lable for="produce_id">型号
-                        <input class="textbox textbox_225" type="text" id="produce_id"name="produce_id"/>
-                    </lable>
-
-                </div>
-
-                <div class="g-inf-intro">
-                    <label for="intro">简介
-                        <textarea class="textarea" id="intro" name="intro"cols="50"rows="6"></textarea>
-                    </label>
-                </div>
-                <button class="link_btn">提交商品信息修改</button>
-                <div class="g-inf-detail">
-                    <label for="inf">图文信息：
-                        <script type="text/plain" id="uInput" name="g_inf" style="width:1000px;height:240px;">
+                                <div style="display: inline-block">
+                                    <script type="text/plain" id="uInput" name="g_inf">
                 <p>在这里编辑商品信息</p>
-                        </script>
-                    </label>
-                </div>
-                <div class="g-inf-detail">
-                    <label for="inf">售后条款：
-                        <script type="text/plain" id="afterInfInput" name="after_inf">
+
+
+                                    </script>
+                                </div>
+
+                            </label>
+                        </li>
+                        <li class="g-inf-name">
+                            <labelfor
+                            ="inf"><span class="item_name" style="width: 120px">售后条款：</span>
+
+                            <div style="display: inline-block">
+                                <script type="text/plain" id="afterInfInput" name="after_inf">
                 <p>在这里编辑售后条款</p>
-                        </script>
-                    </label>
-                </div>
 
-                <input type="hidden" name="alter" value="1"/>
-                <input type="hidden" name="g_id" id="hidden_g_id" value="<?php echo $_POST['g_id']?>"/>
-                <button>提交商品信息修改</button>
-            </form>
-        </div>
-        <div id="goods_detail">
 
-        </div>
+                                </script>
+                            </div>
+                            </label>
+                        </li>
+                    </ul>
 
-        <div id="goods_image">
-        </div>
+                    <input type="hidden" name="alter" value="1"/>
+                    <input type="hidden" name="g_id" id="hidden_g_id" value="<?php echo $_POST['g_id'] ?>"/>
+
+                    <div style="margin-left: 120px">
+                        <button class="link_btn">提交商品信息修改</button>
+                    </div>
+                </form>
+
+            </div>
+        </section>
+        <section>
+            <div class="page_title"><h2>产品规格</h2></div>
+            <div id="goods_detail">
+
+            </div>
+        </section>
+        <section>
+            <div class="page_title"><h2>产品图片</h2></div>
+            <div id="goods_image">
+            </div>
+        </section>
+
+
+
         <div class="parm-set">
             <div class="module-title">
                 <h4>参数设置</h4>
@@ -115,23 +140,22 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
         </div>
         <div id="changeSituation">
         </div>
-    </div>
-
+    </section>
 
 
 </section>
 <script>
-    var editWidth=$(document).width()*0.4;
-    var editHeight=400;
+    var editWidth = $(document).width() * 0.4;
+    var editHeight = 400;
 </script>
 <script type="text/javascript" charset="utf-8" src="../uedit/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="../uedit/umeditor.min.js"></script>
 <script type="text/javascript">
     var um = UM.getEditor('uInput');
-    var afterEdit=UM.getEditor('afterInfInput',{
-        toolbar:[
+    var afterEdit = UM.getEditor('afterInfInput', {
+        toolbar: [
             'source | undo redo | bold italic underline strikethrough | superscript subscript | forecolor backcolor | removeformat |',
-            'insertorderedlist insertunorderedlist | selectall cleardoc paragraph | fontfamily fontsize' ,
+            'insertorderedlist insertunorderedlist | selectall cleardoc paragraph | fontfamily fontsize',
             '| justifyleft justifycenter justifyright justifyjustify |',
             'link unlink ',
             '| horizontal '

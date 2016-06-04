@@ -3,48 +3,43 @@ $smq=$_SESSION['smq'];
 ?>
 
 
-<div>
+<section>
+    <h2><strong>新建商品</strong></h2>
     <form action="consle.php" method="post">
-        <div>
-            <p>
-                新商品登录
-            </p>
-            <select name="sc_id">
-                <option value="-1">分类</option>
-                <?php foreach ($smq as $r): ?>
-                    <option value="<?php echo $r['id'] ?>"><?php htmlout($r['name']) ?></option>
-                <?php endforeach; ?>
-            </select>
-            <br/>
-            <label for="g_name">名称：
-                <input type="text" name="g_name"/>
-            </label>
-            <label for="produce_id">型号：
-                <input type="text" name="produce_id"/>
-            </label>
-            <input type="checkbox"name="is_part"value="1"/>配件
-
-        </div>
-        <div>
-        </div>
-        <div>
-            <label for="sale">销售价：
-                <input type="text" name="sale">
-            </label>
-            <label for="wholesale">批发价：
-                <input type="text" name="wholesale">
-            </label>
-        </div>
-        <div>
-
-
-        </div>
-
-
-        <div>
-            <input type="hidden" name="insert" value="true">
-            <input type="submit" value="确定">
-        </div>
+        <ul class="ulColumn2">
+            <li>
+                <label><span class="item_name" style="width: 150px">请选择商品分类：</span>
+                    <select name="sc_id" class="select">
+                    <option value="-1">选择分类</option>
+                    <?php foreach ($smq as $r): ?>
+                        <option value="<?php echo $r['id'] ?>"><?php htmlout($r['name']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+                </label>
+            </li>
+            <li>
+                <label for="g_name"><span class="item_name" style="width: 150px">名称：</span>
+                    <input type="text" class="textbox textbox_295" name="g_name"/>
+                </label>
+            </li>
+            <li>
+                <label for="produce_id"><span class="item_name" style="width: 150px">型号：</span>
+                    <input type="text" class="textbox" name="produce_id"/>
+                </label>
+            </li>
+            <li>
+                <label for="sale"><span class="item_name" style="width: 150px">销售价：</span>
+                    <input type="number" class="textbox" name="sale">
+                </label>
+            </li>
+            <li>
+                <span class="item_name" style="width: 150px"></span><input type="checkbox"name="is_part"value="1"/>作为配件添加
+            </li>
+            <li>
+                <input type="hidden" name="insert" value="true">
+                <span class="item_name" style="width: 150px"></span><input type="submit" class="link_btn" value="确定">
+            </li>
+        </ul>
 
     </form>
 
@@ -58,4 +53,4 @@ $smq=$_SESSION['smq'];
 <!---->
 <!--    </script>-->
 
-</div>
+</section>

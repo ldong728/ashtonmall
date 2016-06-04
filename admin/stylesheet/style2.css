@@ -127,7 +127,7 @@ button, input, select, textarea {
 }
 
 a {
-    color: #06c1ae;
+    color: #2b82d9;
     text-decoration: none;
     outline: 0
 }
@@ -282,7 +282,7 @@ small, weak {
     text-indent: 2em;
     border: none;
     /*background: #5cbdaa;*/
-    color: white;
+    /*color: white;*/
 }
 
 .admin_login dd .login_txtbx::-webkit-input-placeholder {
@@ -301,7 +301,7 @@ small, weak {
 }
 
 .admin_login dd .login_txtbx:focus {
-    background: #55b7a4;
+    /*background: #2b82d9;*/
 }
 
 .admin_login dd:before {
@@ -376,7 +376,7 @@ small, weak {
 }
 
 .admin_login dd .submit_btn:hover {
-    background: #0c9076;
+    /*background: #0c9076;*/
     color: #f4f4f4;
 }
 
@@ -588,13 +588,12 @@ header .rt_nav li .quit_icon:before {
 }
 
 .link_btn:hover {
-    background: #11a274;
-    border: 1px #0e8f61 solid;
+    background: #30719B;
+    /*border: 1px #0e8f61 solid;*/
 }
 
 .link_btn:active {
-    background: #0c9c6e;
-    border: 1px #0e8f61 solid;
+    background: #30719B;
 }
 
 .textbox {
@@ -812,6 +811,7 @@ header .rt_nav li .quit_icon:before {
 }
 
 .ulColumn2 li .item_name {
+    vertical-align: top;
     text-align: right;
     display: inline-block;
 }

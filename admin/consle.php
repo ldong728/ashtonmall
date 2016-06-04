@@ -10,7 +10,7 @@ session_start();
 
 
 if (isset($_SESSION['login'])) {
-    if (isset($_POST['insert']) && isset($_POST['g_name'])) {
+    if (isset($_POST['insert']) && $_POST['g_name'] && $_POST['produce_id'] && $_POST['sc_id']>-1) {
         $situation = isset($_POST['is_part']) ? 9 : 1;
         $g_id = pdoInsert('g_inf_tbl', array('produce_id' => $_POST['produce_id'], 'name' => $_POST['g_name'], 'sc_id' => $_POST['sc_id'], 'situation' => $situation));
 //        mylog('newgoods:'.$g_id);
@@ -214,6 +214,7 @@ if (isset($_SESSION['login'])) {
         }
 
     }
+    header('location:index.php');
     exit;
 }
 header('location:index.php');
