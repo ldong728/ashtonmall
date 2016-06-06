@@ -645,9 +645,10 @@ header .rt_nav li .quit_icon:before {
 }
 
 .page_title {
-    height: 40px;
-    line-height: 40px;
+    height: 25px;
+    line-height: 25px;
     border-bottom: 1px #b6b6b6 solid;
+    margin-top: 20px;
     margin-bottom: 5px;
 }
 

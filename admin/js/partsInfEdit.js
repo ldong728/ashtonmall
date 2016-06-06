@@ -27,14 +27,20 @@ $('#changeSc').change(function(){
 });
 //detail 更改
 $(document).on('change', '.category', function () {
-    $.post('ajax_request.php', {changeCategory: 1, d_id: $(this).attr('id'), value: $(this).val()});
+    $.post('ajax_request.php', {changeCategory: 1, d_id: $(this).attr('id'), value: $(this).val()},function(){
+        showToast('修改完成')
+    });
 
 })
 $(document).on('change', '.sale', function () {
-    $.post('ajax_request.php', {changeSale: 1, d_id: $(this).attr("id"), value: $(this).val()});
+    $.post('ajax_request.php', {changeSale: 1, d_id: $(this).attr("id"), value: $(this).val()},function(){
+        showToast('修改完成')
+    });
 });
 $(document).on('change', '.wholesale', function () {
-    $.post('ajax_request.php', {changeWholesale: 1, d_id: $(this).attr("id"), value: $(this).val()});
+    $.post('ajax_request.php', {changeWholesale: 1, d_id: $(this).attr("id"), value: $(this).val()},function(){
+        showToast('修改完成')
+    });
 });
 $(document).on('click', '#add_category', function () {
     $.post('ajax_request.php', {addNewCategory: 1, g_id: g_id}, function (data) {
@@ -58,7 +64,7 @@ $(document).on('change','#parts-img-up',function(){
             var isCheck = (1 == v.front_cover ? 'checked = true' : '');
             var content ='<img class="demo" src= "../' + v.url +'" alt = "error" />';
             $('#goods_image').empty();
-            $('#goods_image').append('<a class="img-upload">'+content+'</a><input type="file"id="parts-img-up"name="parts-img-up"style="display: none">');;
+            $('#goods_image').append('<a class="img-upload">'+content+'</a><input type="file"id="parts-img-up"name="parts-img-up"style="display: none">');
 
         },  //服务器成功响应处理函数
         error: function(data, status, e){
@@ -107,8 +113,8 @@ function getGInf() {
         }else{
             var content='';
         }
-        $('#goods_image').append('<div class="module-title"><h4>图片展示</h4></div><a class="img-upload">'+content+'</a><input type="file"id="parts-img-up"name="parts-img-up"style="display: none">');
-        $('#host_set').append('<div class="module-title"><h4>对应产品</h4></div>')
+        $('#goods_image').append('<a class="img-upload">'+content+'</a><input type="file"id="parts-img-up"name="parts-img-up"style="display: none">');
+        //$('#host_set').append('<div class="module-title"><h4>对应产品</h4></div>')
         $.each(inf.hostGoods,function(k,v){
             var check=v.checked!=null?'checked="true"':''
             var con='<input type=checkbox class="hostset"id="'+ v.id+'"'+check+'/>'+ v.name

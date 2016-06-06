@@ -124,26 +124,33 @@ $m_i = (isset($_GET['made_in']) ? $_GET['made_in'] : -1);
             <div id="goods_image">
             </div>
         </section>
+        <section>
+            <div class="page_title"><h2>参数设置</h2></div>
+            <div class="parm-set">
 
-
-
-        <div class="parm-set">
-            <div class="module-title">
-                <h4>参数设置</h4>
             </div>
-        </div>
-        <div id="host_set">
+        </section>
+        <section>
+            <div class="page_title"><h2>默认配件</h2></div>
+            <div id="host_set">
 
-        </div>
-        <div id="coop_set">
+            </div>
+        </section>
+        <section>
+            <div class="page_title"><h2>搭配产品</h2></div>
+            <div id="coop_set">
 
-        </div>
-        <div id="changeSituation">
-        </div>
+            </div>
+        </section>
+        <section>
+            <div class="page_title"><h2>操作</h2></div>
+            <div id="changeSituation">
+
+            </div>
+        </section>
     </section>
-
-
 </section>
+<div class="space"></div>
 <script>
     var editWidth = $(document).width() * 0.4;
     var editHeight = 400;
