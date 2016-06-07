@@ -259,6 +259,26 @@ if (isset($_SESSION['login'])) {
         echo $json;
         exit;
     }
+    if(isset($_POST['start_promotions'])){
+        $d_id=$_POST['start_promotions'];
+        $inf=pdoQuery('g_detail_tbl',null,array('id'=>$d_id),' limit 1');
+        $inf=$inf->fetch();
+        pdoTransReady();
+        try{
+            $now=time();
+            $startTime= date('Y-m-d H:i:s', $now);
+            $endTime= date('Y-m-d H:i:s', $now+31536000);
+            pdoInsert('promotions_tbl',array('g_id'=>$inf['g_id'],'d_id'=>$d_id,'price'=>$inf['sale'],'start_time'=>$startTime,'end_time'=>$endTime),'update');
+            pdoCommit();
+            echo '1';
+        }catch(PDOException $e){
+            mylog($e->getMessage());
+            pdoRollBack();
+            echo 'error';
+        }
+        exit;
+
+    }
     if (isset($_POST['switch_ad'])) {
 //    $inf=pdoUpdate('g_inf_tbl',array('on_ad'=>"on_ad+1"),array('id'=>$_POST['ad_g_id']));
         $sqlstr = 'update g_inf_tbl set on_ad=on_ad+1 where id=' . $_POST['ad_g_id'];

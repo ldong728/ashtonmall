@@ -281,8 +281,8 @@ div.css_table {
     /*background-repeat: no-repeat;*/
 }
 .pro-img-upload img.pro-img {
-    width: 100%;
-    height: 100%;
+    width: 60px;
+    height: auto;
 }
 
 #inPromotions{
@@ -337,25 +337,25 @@ td{
 
 }
 table button{
-    padding: 0;
-    width: 50px;
+    /*padding: 0;*/
+    /*width: 50px;*/
     /*height:6px;*/
-    display: inline;
-    font-size: 0.7em;
+    /*display: inline;*/
+    /*font-size: 0.7em;*/
 }
 table input{
-    display: inline;
-    width: 60%;
+    /*display: inline;*/
+    /*width: 60%;*/
 }
 table div.delete{
     /*display: inline-block;*/
-    float: right;
-    width: 15px;
-    height:15px;
-    background-image: url(images/x.png);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    margin: 2px 0 auto 20px;
+    /*float: right;*/
+    /*width: 15px;*/
+    /*height:15px;*/
+    /*background-image: url(images/x.png);*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: 100% 100%;*/
+    /*margin: 2px 0 auto 20px;*/
 }
 
 

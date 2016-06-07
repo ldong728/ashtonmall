@@ -44,6 +44,27 @@ if (isset($_SESSION['login'])) {
     }
     if (isset($_GET['promotions'])) {
         if (isset($_SESSION['pms']['index'])) {
+            $fcQuery=pdoQuery('category_tbl',null,null,null);
+            $fc=$fcQuery->fetchAll();
+            $where=null;
+            if(isset($_GET['f_id'])){
+                $ready=pdoQuery('g_detail_view',null,array('situation'=>1),' and sc_id in(select id from sub_category_tbl where father_id='.$_GET['f_id'].')');
+                foreach ($ready as $row) {
+                    if(!isset($readyList[$row['g_id']]))$readyList[$row['g_id']]=$row;
+                    $readyList[$row['g_id']]['type'][]=array(
+                        'd_id'=>$row['d_id'],
+                        'name'=>$row['category'],
+                        'sale'=>$row['sale']
+                    );
+                }
+                if(!isset($readyList))$readyList=array();
+                $where['f_id']=$_GET['f_id'];
+            }
+            $proQuery=pdoQuery('promotions_view',null,$where,null);
+            foreach ($proQuery as $row) {
+                $proList[]=$row;
+            }
+            if(!isset($proList))$proList=array();
             printView('admin/view/promotions.html.php', '首页设置');
             exit;
         } else {
