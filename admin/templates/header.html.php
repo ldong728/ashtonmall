@@ -42,6 +42,7 @@
 
 <body>
 <div class="toast"></div>
+<div class="loading"></div>
 <aside class="lt_aside_nav content mCustomScrollbar">
     <h2><a href="index.php">起始页</a></h2>
     <ul>

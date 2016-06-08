@@ -1,121 +1,165 @@
 <?php
-$category = $GLOBALS['category'];
-$smq = $_SESSION['smq'];
+$fc = $GLOBALS['fc'];
+$sc = $GLOBALS['sc'];
 ?>
-<div class="module-block">
-    <div class="module-title">
-        <h4>新建主分类</h4>
-    </div>
-    <form action='consle.php' method="post">
-
+<section>
+    <h2><strong>类别管理</strong></h2>
+    <section>
+        <div class="page_title"><h2>主分类</h2></div>
         <div>
-            <label for="category">名称：
-                <input type="text" name="category">
-            </label>
-        </div>
-        <div>
-            <label for="remark">备注：
-                <input type="text" name="remark">
-            </label>
-        </div>
-        <div>
-            <input type="submit" value="确定">
-        </div>
-    </form>
-</div>
+            <table class="table">
+                <tr>
+                    <th>分类名</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                <?php foreach($fc as $row):?>
+                    <tr>
+                        <td id="fName<?php echo $row['id']?>"><?php echo $row['name']?></td>
+                        <td><input class="std_switcher" id="std<?php echo $row['id']?>" type="checkbox" <?php echo 1==$row['stu']? 'checked="checked"' :''?></td>
+                        <td><a class="inner_btn altFc" id="alt<?php echo $row['id']?>">修改</a></td>
+                    </tr>
+                <?php endforeach ?>
+                <tr>
+                    <td colspan="3"><a class="link_btn addf" style="color: #ffffff">新增主分类</a></td>
+                </tr>
+            </table>
 
-<div class="module-block">
-    <div class="module-title">
-        <h4>新建子分类</h4>
+        </div>
+    </section>
+    <section>
+        <div class="page_title"><h2>子分类</h2></div>
+        <div style="overflow: hidden;zoom: 1">
+            <?php foreach($sc as $k=>$row):?>
+                <table class="table fl " style="margin: 15px 20px; width: 40%">
+                 <tr>
+                     <th colspan="2"><?php echo $row['name']?></th>
+                 </tr>
+                    <?php foreach($row['sc'] as $sRow):?>
+                    <tr>
+                        <td><?php echo $sRow['name']?></td>
+                        <td><a class="inner_btn alts" id="alts<?php echo $sRow['id']?>">修改</a><a class="inner_btn">参数设置</a></td>
+                    </tr>
+                    <?php endforeach ?>
+                    <tr><td colspan="2"><a class="link_btn adds" id="add<?php echo $k ?>" style="color: #ffffff">新增子分类</a></td></tr>
+                </table>
+            <?php endforeach ?>
+        </div>
+    </section>
+</section>
+<section class="pop_bg cate_edit">
+    <div class="pop_cont">
+            <h3 class="cate_type">主类编辑</h3>
+        <div class="pop_cont_input">
+            <ul>
+                <li>
+                    <span>名称</span>
+                    <input type="text" class="textbox name" placeholder="请输入类名"/>
+                </li>
+                <li class="sc_input">
+                    <span>别名</span>
+                    <input type="text" class="textbox e_name" placeholder="请输入类名"/>
+                </li>
+            </ul>
+        </div>
+        <div class="btm_btn">
+            <input type="hidden" id="c_id"/>
+            <input type="hidden" id="type"/>
+            <input type="button" value="确认" class="input_btn trueBtn"/>
+            <input type="button" value="关闭" class="input_btn falseBtn"/>
+        </div>
     </div>
-    <form action='consle.php' method="post" class="pose">
+</section>
 
-        <div>
-            <select name="father_cg_id">
-                <option value="0">父类</option>
-                <?php foreach ($_SESSION['mq'] as $row): ?>
-                    <option value="<?php echo $row['id'] ?>"><?php htmlout($row['name']) ?></option>
-                <?php endforeach; ?>
-            </select>
-            <br/>
-
-            <label for="sub_category">名称：
-                <input type="text" name="sub_category">
-            </label>
-        </div>
-        <div>
-            <label for="e_name">英文名：
-                <input type="text" name="e_name">
-            </label>
-        </div>
-        <div>
-            <input type="submit" value="确定">
-        </div>
-    </form>
-</div>
-<div class="module-block">
-    <div class="module-title">
-        <h4>分类管理</h4>
-    </div>
-    <select id="manage_sc_id">
-        <option value="-1">选择分类</option>
-        <?php foreach ($smq as $r): ?>
-            <option value="<?php echo $r['id'] ?>"><?php htmlout($r['name']) ?></option>
-        <?php endforeach; ?>
-
-    </select>
-    <div class="cate_config"style="display: none">
-        名称：<input type="text"id="config-cate-name"placeholder="类型名">
-        详细名称：<input type="text"id="config-cate-e-name"placeholder="详细名称">
-        <button id="alter_cate">修改</button>
-        <button id="delete_cate">删除</button>
-    </div>
-</div>
-
-<div class="module-block sc-edit">
-    <div class="module-title"><h4>参数模板设置</h4></div>
-    <select id="sc_id">
-        <option value="-1">分类</option>
-        <?php foreach ($smq as $r): ?>
-            <option value="<?php echo $r['id'] ?>"><?php htmlout($r['name']) ?></option>
-        <?php endforeach; ?>
-    </select>
-
-    <div id="parameter-edit">
-
-
-    </div>
-    <div class="cate-button" style="display: none">
-        <button class="add-par-cate">添加新参数类型</button>
-    </div>
-
-
-</div>
-<div class="module-block remark-edit" style="display: none">
-    <div class="module-title"><h4>售后条例</h4></div>
-    <script type="text/plain" id="uInput" name="cate-remark" style="width:1000px;height:240px;">
-                <p>在这里编辑</p>
-                        </script>
-
-    <button class="remark-button">提交</button>
-
-</div>
+<div class="space"></div>
 
 <script>
-//    var editWidth=$(document).width()*0.4;
-//    var editHeight=600;
-</script>
-<script>
-    var editWidth=$(document).width()*0.8;
-    var editHeight=300;
+    $('.altFc').click(function(){
+        var c_id=$(this).attr('id').slice(3)
+        var oName=$('#fName'+c_id).text();
+        $('#c_id').val(c_id);
+        $('#type').val('altf');
+        $('.sc_input').hide();
+        $('.name').val(oName);
+        $('.cate_edit').show();
+    });
+    $('.addf').click(function(){
+        $('.cate_type').text('添加主类');
+        $('#type').val('addf');
+        $('.name').val('');
+        $('.sc_input').hide();
+        $('.cate_edit').show();
+    });
+    $('.adds').click(function(){
+       $('.cate_type').text('添加子类');
+        var f_id=$(this).attr('id').slice(3);
+        $('#c_id').val(f_id);
+        $('#type').val('adds');
+        $('.sc_input').show();
+        $('.cate_edit').show();
+    });
+    $('.alts').click(function(){
+        var c_id=$(this).attr('id').slice(4);
+        loading();
+        $.post('ajax_request.php',{getConfigCate:1,sc_id:c_id},function(data){
+            stoploading();
+            var inf=eval('('+data+')');
+            $('.cate_type').text('编辑子类');
+            $('#c_id').val(c_id);
+            $('#type').val('alts');
+            $('.name').val(inf.name);
+            $('.e_name').val(inf.e_name);
+            $('.sc_input').show();
+            $('.cate_edit').show();
+
+        })
+
+    });
+    $('.std_switcher').change(function(){
+        var id=$(this).attr('id').slice(3);
+        var stu=$(this).prop('checked')?1:0;
+//        alert(id+stu);
+        loading();
+        $.post('ajax_request.php',{cateStu:1,id:id,stu:stu},function(data){
+                stoploading();
+            location.reload(true);
+        });
+    });
+
+
+
+    $('.falseBtn').click(function(){
+        $('.cate_edit').hide();
+    })
+    $('.trueBtn').click(function(){
+       cateAlter(function(data){
+           $('.cate_edit').hide()
+           location.reload(true);
+       });
+
+    });
+
+    function cateAlter(recall){
+        loading();
+        var type=$('#type').val();
+        var c_id=$('#c_id').val();
+        var name= $('.name').val();
+        var e_name=$('.e_name').val();
+        if(name!=''){
+            $.post('ajax_request.php',{configCate:1,type:type,id:c_id,name:name,e_name:e_name},function(data){
+                recall(data);
+                stoploading();
+            })
+        }
+
+    }
+
 </script>
 
-<script type="text/javascript" charset="utf-8" src="js/cate-remark-umeditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="../uedit/umeditor.min.js"></script>
-<script type="text/javascript">
-    var um = UM.getEditor('uInput');
-</script>
-<!--<script src="js/goodsInfEdit.js"></script>-->
+
+
+
+
 
 <script>
     var cateIndex = 0;
@@ -149,113 +193,6 @@ $smq = $_SESSION['smq'];
             showToast('修改完成')
         })
     });
-    $('#delete_cate').click(function(){
-        var del_id= $("#manage_sc_id option:selected").val();
-            $.post('ajax_request.php',{delCate:1,sc_id:del_id},function(data){
-                window.location='index.php?category-config=1';
-            })
-    });
-
-    $('.add-par-cate').click(function () {
-        var newCate =
-                '<div class="par-category">' +
-                '参数类型名：<input id="cate-name" type="text"/>' +
-                '<button class="set-cat-name">确定</button>' +
-                '</div>'
-            ;
-        $('#parameter-edit').append(newCate);
-    });
-    $(document).on('click', '.set-cat-name', function () {
-        var parent = $(this).parent();
-        var cateName = $('#cate-name').val();
-        var content = '';
-        var content = '<h3 class="par-cate"><a href="#"class="delCate">' + cateName + '</a></h3>';
-        var parinput = '<table class="par-table">' + parInputBox +
-            '<table>';
-        content += parinput
-        parent.empty();
-        parent.append(content);
-    });
-    $(document).on('click', '.set-par-name', function () {
-        var pmt = $(this).parents('.input-tr').find('.par-name').val();
-        if ('' == pmt)return;
-        var category = $(this).parents('.par-category').find('h3').text();
-        var dft = $(this).siblings('.par-dft').val();
-
-        var pareTr = $(this).parents('tr');
-        $.post('ajax_request.php', {
-            add_sc_parm: 1,
-            sc_id: sc_id,
-            name: pmt,
-            par_category: category,
-            dft_value: dft
-        }, function (data) {
-            pareTr.before('<tr><td>' + pmt + '</td><td>' + dft + '<div id="del' + data + '"class="delete"></td></tr>');
-        });
-//        alert(category);
-//        alert(pmt);
-//        alert(dft);
-    });
-    $(document).on('click', '.delete', function () {
-        var id = $(this).attr('id').slice(3);
-        $(this).parents('tr').remove();
-        $.post('ajax_request.php', {del_sc_parm: 1, id: id}, function (data) {
-            $(this).parents('tr').remove();
-
-        });
-
-    });
-    $(document).on('click', '.delCate', function () {
-        var value = $(this).text();
-        if (confirm('删除'+value+'这一参数分类？')) {
-            $.post('ajax_request.php', {del_parm: 1,sc_id:sc_id,cate: value}, function (data) {
-                getParInf();
-            })
-
-
-        }
-    });
-    $(document).on('change','.p_alt',function(){
-        var id=$(this).attr('id').slice(5);
-        var value=$(this).val();
-        $.post('ajax_request.php',{p_alt_key:id,value:value},function(data){
-            if(data=='ok'){
-                showToast('已修改')
-            }
-        })
-    })
-    $(document).on('click','.remark-button',function(){
-        if(sc_id!=null){
-        var remark=$('#uInput').html();
-        $.post('ajax_request.php',{cateRemark:1,content:remark,sc_id:sc_id},function(data){
-           showToast('修改成功')
-        });
-        }
-    });
-
-    function getParInf() {
-        $('#parameter-edit').empty();
-        $.post('ajax_request.php', {get_sc_parm: 1, sc_id: sc_id}, function (data) {
-//            alert(data);
-            var value = eval('(' + data + ')');
-            um.setContent(value.remark);
-            $.each(value.parm, function (k, v) {
-                var content = '<div class="par-category"><h3><a href="#"class="delCate">' +
-                    k +
-                    '</a></h3><table class="par-table">' + '<tr><td>参数名</td><td>默认值</td></tr>';
-                $.each(v, function (k2, v2) {
-
-                    var intab = '<tr><td><input class="p_alt"id="p_alt'+v2.id+'"value="' + v2.name + '"></td><td>' + v2.dft_value + '<div id="del' + v2.id + '" class="delete"></td></tr>';
-                    content += intab;
-                });
-                content += parInputBox;
-                content += '</table></div>'
-                $('#parameter-edit').append(content);
-
-            });
-        })
-
-    }
 
 
 

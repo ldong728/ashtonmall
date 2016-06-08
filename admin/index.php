@@ -34,8 +34,22 @@ if (isset($_SESSION['login'])) {
     }
     if (isset($_GET['category-config'])) {
         if (isset($_SESSION['pms']['cate'])) {
-            $category = pdoQuery('category_tbl', null, null, null);
-            printView('admin/view/category_config.html.php', '分类修改');
+            $fc=pdoQuery('category_tbl',null,null,null);
+            $fc=$fc->fetchAll();
+            $scQuery=pdoQuery('category_view',null,null,null);
+            foreach ($scQuery as $row) {
+                if(!isset($sc[$row['father_id']]))$sc[$row['father_id']]['name']=$row['father_name'];
+                if($row['sc_id']){
+                    $sc[$row['father_id']]['sc'][]=array(
+                        'id'=>$row['sc_id'],
+                        'name'=>$row['sc_name']
+                    );
+                }
+            }
+
+
+//            $category = pdoQuery('category_tbl', null, null, null);
+            printView('admin/view/category_config.html.php', '分类管理');
             exit;
         } else {
             echo '权限不足';

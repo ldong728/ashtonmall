@@ -55,7 +55,40 @@ if (isset($_SESSION['login'])) {
         exit;
     }
     if (isset($_POST['configCate'])) {
-        pdoUpdate('sub_category_tbl', array('name' => $_POST['name'], 'e_name' => $_POST['e_name']), array('id' => $_POST['sc_id']));
+        $id=$_POST['id'];
+        $name=$_POST['name'];
+        $e_name=$_POST['e_name'];
+        switch($_POST['type']){
+            case 'altf':{
+                pdoUpdate('category_tbl',array('name'=>$name),array('id'=>$id));
+                echo 'ok';
+                break;
+            }
+            case 'alts':{
+                pdoUpdate('sub_category_tbl',array('name'=>$name,'e_name'=>$e_name),array('id'=>$id));
+                            echo 'ok';
+                break;
+            }
+            case 'addf':{
+                pdoInsert('category_tbl',array('name'=>$name));
+                            echo 'ok';
+                break;
+            }
+            case 'adds':{
+                pdoInsert('sub_category_tbl',array('father_id'=>$id,'name'=>$name,'e_name'=>$e_name));
+                            echo 'ok';
+                break;
+            }
+        }
+        exit;
+
+//        pdoUpdate('sub_category_tbl', array('name' => $_POST['name'], 'e_name' => $_POST['e_name']), array('id' => $_POST['sc_id']));
+//        echo 'ok';
+//        exit;
+    }
+    if(isset($_POST['cateStu'])){
+        $stu='0'==$_POST['stu']?'0':$_POST['stu'];
+        pdoUpdate('category_tbl',array('stu'=>$stu),array('id'=>$_POST['id']));
         echo 'ok';
         exit;
     }

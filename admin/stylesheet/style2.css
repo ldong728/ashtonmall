@@ -731,12 +731,12 @@ header .rt_nav li .quit_icon:before {
 }
 
 .paging a:hover {
-    background: #11a274;
+    background: #30719B;
     border: 1px #0e8f61 solid;
 }
 
 .paging a:active {
-    background: #17a578;
+    background: #30719B;
     border: 1px #0e8f61 solid;
 }
 
@@ -793,7 +793,7 @@ header .rt_nav li .quit_icon:before {
 }
 
 .uploadImg span:hover {
-    color: #209f71;
+    color: #30719B;
 }
 
 .uploadImg span:before {
@@ -967,9 +967,9 @@ header .rt_nav li .quit_icon:before {
 }
 
 .pop_cont .btm_btn .trueBtn:hover {
-    background: #13a174;
+    background: #30719B;
     border-radius: 0;
-    border: 1px #13a174 solid;
+    border: 1px #30719B solid;
 }
 
 .pop_cont .btm_btn .falseBtn {

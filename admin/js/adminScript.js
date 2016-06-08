@@ -5,6 +5,12 @@ function showToast(str){
     $('.toast').fadeIn('fast')
     var t = setTimeout('$(".toast").fadeOut("slow")', 800);
 }
+function loading(){
+    $('.loading').show();
+}
+function stoploading(){
+    $('.loading').hide();
+}
 //例：<div class="ipt-toggle" id="row id" data-tbl="table name"data-col="col name" data-index="index col">
 $('.ipt-toggle').dblclick(function () {
     var id = $(this).attr('id');
