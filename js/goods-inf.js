@@ -4,19 +4,26 @@ $(document).on('change', '#category-select', function () {
     $('#select-display').empty();
     $('#select-display').append($('#category-select option:selected').text());
 
-    $.post('ajax.php', {getdetailprice: 1, d_id: $('#category-select option:selected').val()}, function (data) {
-        var inf = eval('(' + data + ')');
-        $('.price').empty();
-        $('.sale').empty();
-        if (inf.price == null) {
-            realPrice = inf.sale;
-        } else {
-            realPrice = inf.price;
-            $('.sale').append('RMB' + inf.sale);
-        }
-        $('.price').append('RMB' + realPrice);
-
-    });
+    //规格不同价的处理方法，已作废
+    //$.post('ajax.php', {getdetailprice: 1, d_id: $('#category-select option:selected').val()}, function (data) {
+    //    var inf = eval('(' + data + ')');
+    //    $('.price').empty();
+    //    $('.sale').empty();
+    //
+    //    if (inf.price == null) {
+    //        realPrice = inf.sale;
+    //    } else {
+    //        realPrice = inf.price;
+    //        $('.sale').append('RMB' + inf.sale);
+    //    }
+    //    $('.price').append('RMB' + realPrice);
+    //    $('.total-price').text('合计￥'+realPrice);
+    //    number=1;
+    //    $('#number').val(number);
+    //
+    //
+    //
+    //});
 
 });
 $(document).on('click','#review-title',function(){

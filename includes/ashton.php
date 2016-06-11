@@ -187,6 +187,7 @@ function sdpPrice(array $list){//将数组中的price字段对应价格替换为
         }
     }else{
         if(isset($_SESSION['sdp']['price'][$list['g_id']])) $list['price']=$_SESSION['sdp']['price'][$list['g_id']];//分销商自定义价格
+        else $list['price']=$list['sale'];
     }
     return $list;
 }
@@ -203,7 +204,7 @@ function sdpPartPrice(array $list,$idColName='g_id',$priceColName='part_sale'){/
     return $list;
 }
 
-function getSdpPrice($g_id){
+function getSdpPrice($g_id){//将单个商品价格替换为分销商设置价格
     $query=pdoQuery('g_detail_view',array('sale'),array('g_id'=>$g_id),' limit 1');
     $inf=$query->fetch();
     if(isset($_SESSION['sdp']['manage'])&&$_SESSION['sdp']['manage']['switch']=='on'){
