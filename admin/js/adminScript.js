@@ -8,7 +8,7 @@ function showToast(str){
 function loading(){
     $('.loading').show();
 }
-function stoploading(){
+function stopLoading(){
     $('.loading').hide();
 }
 //例：<div class="ipt-toggle" id="row id" data-tbl="table name"data-col="col name" data-index="index col">

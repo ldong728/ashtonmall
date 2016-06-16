@@ -102,7 +102,7 @@ $sc = $GLOBALS['sc'];
         var c_id=$(this).attr('id').slice(4);
         loading();
         $.post('ajax_request.php',{getConfigCate:1,sc_id:c_id},function(data){
-            stoploading();
+            stopLoading();
             var inf=eval('('+data+')');
             $('.cate_type').text('编辑子类');
             $('#c_id').val(c_id);
@@ -121,13 +121,10 @@ $sc = $GLOBALS['sc'];
 //        alert(id+stu);
         loading();
         $.post('ajax_request.php',{cateStu:1,id:id,stu:stu},function(data){
-                stoploading();
+                stopLoading();
             location.reload(true);
         });
     });
-
-
-
     $('.falseBtn').click(function(){
         $('.cate_edit').hide();
     })
@@ -148,7 +145,7 @@ $sc = $GLOBALS['sc'];
         if(name!=''){
             $.post('ajax_request.php',{configCate:1,type:type,id:c_id,name:name,e_name:e_name},function(data){
                 recall(data);
-                stoploading();
+                stopLoading();
             })
         }
 
