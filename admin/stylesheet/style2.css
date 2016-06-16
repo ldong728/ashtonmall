@@ -700,15 +700,15 @@ header .rt_nav li .quit_icon:before {
 }
 
 .table td .inner_btn {
-    background: #F9F;
+    background: #2b82d9;
     color: white;
     padding: 5px 8px;
     border-radius: 2px;
 }
 
 .table td .inner_btn:hover {
-    background: #ffa4ff;
-    color: #f8f8f8;
+    background: #30719B;
+    color: #30719B;
 }
 
 .table td .cut_title {

@@ -34,6 +34,11 @@ if (isset($_SESSION['login'])) {
     }
     if (isset($_GET['category-config'])) {
         if (isset($_SESSION['pms']['cate'])) {
+            if(isset($_GET['cate-param'])){
+
+                printView('admin/view/category_param.html.php', '分类参数模板');
+                exit;
+            }
             $fc=pdoQuery('category_tbl',null,null,null);
             $fc=$fc->fetchAll();
             $scQuery=pdoQuery('category_view',null,null,null);
@@ -46,8 +51,6 @@ if (isset($_SESSION['login'])) {
                     );
                 }
             }
-
-
 //            $category = pdoQuery('category_tbl', null, null, null);
             printView('admin/view/category_config.html.php', '分类管理');
             exit;

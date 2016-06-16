@@ -407,7 +407,6 @@ if (isset($_SESSION['login'])) {
         }
         $data = array('remark' => $remark['remark'], 'parm' => $parList);
         $data = json_encode($data);
-
         echo $data;
         exit;
     }

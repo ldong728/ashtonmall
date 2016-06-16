@@ -38,7 +38,7 @@ $sc = $GLOBALS['sc'];
                     <?php foreach($row['sc'] as $sRow):?>
                     <tr>
                         <td><?php echo $sRow['name']?></td>
-                        <td><a class="inner_btn alts" id="alts<?php echo $sRow['id']?>">修改</a><a class="inner_btn">参数设置</a></td>
+                        <td><a class="inner_btn alts" id="alts<?php echo $sRow['id']?>">修改</a><a class="inner_btn set_param" id="prm<?php echo $sRow['id']?>">参数设置</a></td>
                     </tr>
                     <?php endforeach ?>
                     <tr><td colspan="2"><a class="link_btn adds" id="add<?php echo $k ?>" style="color: #ffffff">新增子分类</a></td></tr>
@@ -65,10 +65,41 @@ $sc = $GLOBALS['sc'];
         <div class="btm_btn">
             <input type="hidden" id="c_id"/>
             <input type="hidden" id="type"/>
-            <input type="button" value="确认" class="input_btn trueBtn"/>
-            <input type="button" value="关闭" class="input_btn falseBtn"/>
+            <input type="button" value="确认" class="input_btn trueBtn cate_set_true"/>
+            <input type="button" value="关闭" class="input_btn falseBtn cate_set_false"/>
         </div>
     </div>
+</section>
+
+<section class="pop_bg cate_param">
+    <div class="pop_cont">
+        <h3 class="cate_type">参数模板</h3>
+        <div class="pop_cont_input">
+            <table class="table">
+                <tr>
+                    <td colspan="2">参数种类</td>
+                    <td><a class="inner_btn">全部删除</a></td>
+                </tr>
+                <tr>
+                    <th>参数名</th>
+                    <th>参数默认值</th>
+                    <th>操作</th>
+                </tr>
+                <tr>
+                    <td><input type="text" class="textbox"/> </td>
+                    <td><textarea></textarea></td>
+                    <td><a class="inner_btn">删除</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="btm_btn">
+        <input type="hidden" id="c_id"/>
+        <input type="hidden" id="type"/>
+        <input type="button" value="确认" class="input_btn trueBtn cate_param_true"/>
+        <input type="button" value="关闭" class="input_btn falseBtn cate_param_false"/>
+    </div>
+
 </section>
 
 <div class="space"></div>
@@ -115,6 +146,13 @@ $sc = $GLOBALS['sc'];
         })
 
     });
+    $('.set_param').click(function(){
+        var id=$(this).attr('id').slice(3);
+        window.location.href='index.php?category-config=1&dgoods=1&cate-param='+id;
+//        $('.cate_param').show();
+//        alert('id');
+
+    });
     $('.std_switcher').change(function(){
         var id=$(this).attr('id').slice(3);
         var stu=$(this).prop('checked')?1:0;
@@ -125,12 +163,12 @@ $sc = $GLOBALS['sc'];
             location.reload(true);
         });
     });
-    $('.falseBtn').click(function(){
+    $('.cate_set_false').click(function(){
         $('.cate_edit').hide();
     })
-    $('.trueBtn').click(function(){
+    $('.cate_set_true').click(function(){
        cateAlter(function(data){
-           $('.cate_edit').hide()
+           $('.cate_edit').hide();
            location.reload(true);
        });
 
@@ -159,37 +197,10 @@ $sc = $GLOBALS['sc'];
 
 
 <script>
-    var cateIndex = 0;
-    var sc_id;
-    var parInputBox = '<tr class="input-tr">' +
-        '<td><input type="text"class="par-name"/></td>' +
-        '<td><input type="text"class="par-dft"/>' +
-        '<button class="set-par-name">确定</button></td>' +
-        '</tr>';
-    $('#sc_id').change(function () {
-        sc_id = $("#sc_id option:selected").val();
-        getParInf();
-        $('.cate-button').css('display', 'block');
-        $('.remark-edit').css('display','block');
-    });
-    $('#manage_sc_id').change(function(){
-        var config_id = $("#manage_sc_id option:selected").val();
-        $.post('ajax_request.php',{getConfigCate:1,sc_id:config_id},function(data){
-            var inf=eval('('+data+')');
-            $('#config-cate-name').val(inf.name);
-            $('#config-cate-e-name').val(inf.e_name);
-            $('.cate_config').show();
-        });
-    });
-    $('#alter_cate').click(function(){
-        var alter_id = $("#manage_sc_id option:selected").val();
-        var name=$('#config-cate-name').val();
-        var e_name=$('#config-cate-e-name').val();
-        $.post('ajax_request.php',{configCate:1,sc_id:alter_id,name:name,e_name:e_name},function(data){
-//            var inf=eval('('+data+')');
-            showToast('修改完成')
-        })
-    });
+
+
+
+
 
 
 
