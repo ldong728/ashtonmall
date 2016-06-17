@@ -146,7 +146,8 @@ function getGoodsPar($g_id,$sc_id){
     $parmQuery=pdoQuery('parameter_tbl',null,array('g_id'=>$g_id),' limit 1');
     if($parm=$parmQuery->fetch()){
         foreach($parmKeyQuery as $parRow){
-            $back[$parRow['par_category']][]=array('col'=>$parRow['col_name'],'name'=>$parRow['name'],'value'=>$parm[$parRow['col_name']]);
+            $value=empty($parm[$parRow['col_name']])? $parRow['dft_value']:$parm[$parRow['col_name']];
+            $back[$parRow['par_category']][]=array('col'=>$parRow['col_name'],'name'=>$parRow['name'],'value'=>$value);
         }
     }else{
         foreach($parmKeyQuery as $parRow){

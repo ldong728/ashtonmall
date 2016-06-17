@@ -13,6 +13,7 @@ $("#g_name").change(function () {
     getGInf();
 });
 $("#sc_id").change(function () {
+    sc_id=$(this).val();
     $("#g_name").load("ajax_request.php", {
         categoryCheck: $("#sc_id option:selected").val(),
         situation:1
@@ -204,7 +205,8 @@ function getGInf() {
 
         }
         $('#goods_image').append('<a class="img-upload"></a><input type="file"id="g-img-up"name="g-img-up"style="display: none">');
-        var precon='</div><form id="updateParm"action="consle.php?updateParm=1&g_id='+g_id+'"method="post">';
+        var precon='</div><form id="updateParm"action="consle.php?updateParm=1&g_id='+g_id+'"method="post">'+
+            '<input type="hidden" name="sc_id" value="'+sc_id+'"/>';
         $.each(inf.parm,function(k,v){
             var cateName=k;
             var con='<table class="parmInput table"><tr><td colspan="2">'+cateName+'</td></tr>'

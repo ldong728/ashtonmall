@@ -178,9 +178,10 @@ function pdoUpdate($tableName,array $value,array $where,$str=''){
         return $rows;
 
     }catch (PDOException $e) {
-        $error = 'Unable to insert to the database server.' . $e->getMessage();
-        include 'error.html.php';
-        exit();
+        throw $e;
+//        $error = 'Unable to insert to the database server.' . $e->getMessage();
+//        include 'error.html.php';
+//        exit();
     }
 
 }

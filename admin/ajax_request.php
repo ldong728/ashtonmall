@@ -411,13 +411,40 @@ if (isset($_SESSION['login'])) {
         exit;
     }
     if (isset($_POST['del_sc_parm'])) {
-        pdoDelete('par_col_tbl', array('id' => $_POST['id']));
+        $parInf=pdoQuery('par_col_tbl',null,array('id'=>$_POST['id']),' limit 1');
+        $parInf=$parInf->fetch();
+        pdoTransReady();
+        try{
+            pdoDelete('par_col_tbl', array('id' => $_POST['id']));
+            pdoUpdate('parameter_tbl',array($parInf['col_name']=>'0'),array('sc_id'=>$parInf['sc_id']));
+            pdoCommit();
+        }catch(PDOException $e){
+            pdoRollBack();
+            mylog($e->getMessage());
+        }
         echo 'ok';
         exit;
     }
     if (isset($_POST['del_parm'])) {
 //        mylog($_POST['cate']);
-        pdoDelete('par_col_tbl', array('sc_id' => $_POST['sc_id'], 'par_category' => $_POST['cate']));
+        $cate=$_POST['cate']?$_POST['cate'] : '';
+        if($cate){
+            $inf=pdoQuery('par_col_tbl',array('col_name'),array('sc_id'=>$_POST['sc_id'],'par_category'=>$cate),null);
+            foreach ($inf as $row) {
+                $value[$row['col_name']]='0';
+            }
+            pdoTransReady();
+            try{
+                pdoDelete('par_col_tbl', array('sc_id' => $_POST['sc_id'], 'par_category' => $cate));
+                pdoUpdate('parameter_tbl',$value,array('sc_id'=>$_POST['sc_id']));
+                pdoCommit();
+            }catch(PDOException $e){
+                mylog($e->getMessage());
+                pdoRollBack();
+            }
+
+        }
+
         echo 'ok';
         exit;
     }
@@ -429,6 +456,11 @@ if (isset($_SESSION['login'])) {
     }
     if (isset($_POST['p_alt_key'])) {
         pdoUpdate('par_col_tbl', array('name' => $_POST['value']), array('id' => $_POST['p_alt_key']));
+        echo 'ok';
+        exit;
+    }
+    if (isset($_POST['p_alt_dft'])) {
+        pdoUpdate('par_col_tbl', array('dft_value' => $_POST['value']), array('id' => $_POST['p_alt_dft']));
         echo 'ok';
         exit;
     }
