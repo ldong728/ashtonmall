@@ -50,7 +50,7 @@ $express=$GLOBALS['express'];
         </div>
         <div class="od-tr">
             <div class="od-td">
-                用户备注：<?php echo $orderinf['remark']?>
+                用户备注：<?php htmlout($orderinf['remark'])?>
             </div>
         </div>
         <?php if($orderinf['stu']==1):?>
@@ -120,18 +120,18 @@ $express=$GLOBALS['express'];
         </div>
         <div class="od-tr">
             <div class="od-td">
-                收件人：<?php echo $orderinf['name']?>
+                收件人：<?php htmlout($orderinf['name'])?>
             </div>
             <div class="od-td">
-                联系电话：<?php echo $orderinf['phone']?>
+                联系电话：<?php htmlout($orderinf['phone'])?>
             </div>
             <div class="od-td">
-                地区：<?php echo $orderinf['province'].' '.$orderinf['city'].' '.$orderinf['area']?>
+                地区：<?php htmlout($orderinf['province'].' '.$orderinf['city'].' '.$orderinf['area'])?>
             </div>
         </div>
         <div class="od-tr">
             <div class="od-td">
-                详细地址：<?php echo $orderinf['address']?>
+                详细地址：<?php htmlout($orderinf['address'])?>
             </div>
         </div>
         <?php if($orderinf['stu']==2):?>

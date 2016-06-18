@@ -10,10 +10,10 @@
             <div class="address">
                 <p class="add_tit">收货地址</p>
 
-                <p id="address"><?php echo $order_inf['province'] ?>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <?php echo $order_inf['city'] ?>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <?php echo $order_inf['area'] ?>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <?php echo $order_inf['address'] ?></p>
+                <p id="address"><?php htmlout($order_inf['province'])?>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <?php htmlout($order_inf['city']) ?>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <?php htmlout($order_inf['area']) ?>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <?php htmlout($order_inf['address']) ?></p>
 
                 <p id="nameAndTel"><?php echo $order_inf['name'] ?>
                     &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $order_inf['phone'] ?></p>
@@ -78,7 +78,7 @@
                 </span></span>
         </div>
         <div class="remark">
-            <span>买家留言：</span><span><?php echo $order_inf['remark']?></span>
+            <span>买家留言：</span><span><?php htmlout($order_inf['remark'])?></span>
         </div>
         <div class="order_btn noDisplay">
             <a class="btn_orange payOrder  payButton" href="#" id="pay_now">

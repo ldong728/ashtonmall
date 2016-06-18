@@ -79,7 +79,6 @@ if (isset($_SESSION['login'])) {
         pdoUpdate('promotions_tbl', array('img' => 'g_img/pro-img-up' . $id . '.jpg','price'=>$g_inf['sale'],'p_name'=>$g_inf['name']), array('id' => $id));
         header('location: index.php?promotions=1');
         exit;
-
     }
     if (isset($_GET['delete_promotions'])) {
         $query = pdoQuery('promotions_tbl', null, array('d_id' => $_GET['d_id']), ' limit 1');

@@ -9,9 +9,9 @@
         <a class="address"href="controller.php?editAddress=1&from=<?php echo $from?>">
             <i class="iCar"></i>
             <div class="adInfo">
-               <p><?php echo $addr['province'].'  '.$addr['city'].'   '.$addr['area']?></p>
-                <p><?php echo $addr['address']?></p>
-                <p><?php echo $addr['name']?><span class="recPhone"><?php echo $addr['phone']?></span></p>
+               <p><?php htmlout($addr['province'].'  '.$addr['city'].'   '.$addr['area'])?></p>
+                <p><?php htmlout($addr['address'])?></p>
+                <p><?php htmlout($addr['name'])?><span class="recPhone"><?php htmlout($addr['phone'])?></span></p>
             </div>
         </a>
         <ul class="odList">

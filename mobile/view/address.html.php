@@ -11,10 +11,10 @@
                 <a class="address"href="controller.php?settleAccounts=1&addressId=<?php echo $row['id']?>&from=<?php echo $to?>">
                     <div class="address_hd">
                         <p>
-                            <?php echo $row['name']?>
+                            <?php htmlout( $row['name'])?>
                             <span><?php echo $row['phone']?></span>
                         </p>
-                        <span><?php echo $row['province'].$row['city'].$row['area'].'  '.$row['address']?></span>
+                        <span><?php htmlout($row['province'].$row['city'].$row['area'].'  '.$row['address'])?></span>
                     </div>
                 </a>
                 <div class="address_ft"id="<?php echo $row['id']?>">
@@ -34,9 +34,9 @@
             <div class="inputBox">
                 <input type="hidden"name="address_id"id="address_id"value="-1">
                 <input type="text" id="name"name="name"placeholder="请输入姓名">
-                <input type="text" id="phone"name="phone"placeholder="请输入手机号">
+                <input type="tel" id="phone"name="phone"placeholder="请输入手机号">
             </div>
-            <div class="select"id="area-select">
+            <div class="select" id="area-select">
 
             </div>
             <div class="textarea">

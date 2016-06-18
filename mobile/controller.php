@@ -51,8 +51,8 @@ if (isset($_SESSION['customerId'])) {
         $city = getCity($_POST['pro'], $_POST['city']);
         $area = getArea($_POST['pro'], $_POST['city'], $_POST['area']);
         $value = array('pro_id' => $_POST['pro'], 'city_id' => $_POST['city'], 'area_id' => $_POST['area'],
-            'area' => $_POST['area'], 'province' => $pro, 'city' => $city, 'area' => $area, 'address' => $_POST['address'], 'name' => $_POST['name'],
-            'phone' => $_POST['phone']);
+            'area' => $_POST['area'], 'province' => addslashes($pro), 'city' => addslashes($city), 'area' => addslashes($area), 'address' => addslashes($_POST['address']), 'name' => addslashes($_POST['name']),
+            'phone' => addslashes($_POST['phone']));
         if (-1 == $_POST['address_id']) {
             $value['c_id'] = $_SESSION['customerId'];
             $value['dft_a'] = 0;
@@ -61,8 +61,13 @@ if (isset($_SESSION['customerId'])) {
             pdoUpdate('address_tbl', $value,
                 array('id' => $_POST['address_id']));
         }
-        $from = isset($_GET['from']) ? '&from=' . $_GET['from'] : '';
-        header('location:controller.php?editAddress=1' . $from);
+        if(isset($_GET['from'])){
+            $from='&from=' . $_GET['from'];
+            header('location:controller.php?editAddress=1' . $from);
+        }else{
+            header('location:controller.php?address_manage=1');
+        }
+
     }
 
     if (isset($_GET['editAddress'])) {
@@ -73,6 +78,15 @@ if (isset($_SESSION['customerId'])) {
             $addrlist[] = $row;
         }
         include 'view/address.html.php';
+        exit;
+    }
+    if(isset($_GET['address_manage'])){
+        $addrQuery = pdoQuery('address_tbl', null, array('c_id' => $_SESSION['customerId']), ' limit 5');
+        foreach ($addrQuery as $row) {
+            $addrlist[] = $row;
+        }
+        if(!isset($addrlist))$addrlist=array();
+        include 'view/address_manage.html.php';
         exit;
     }
     if (isset($_GET['orderConfirm'])) {

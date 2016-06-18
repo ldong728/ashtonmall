@@ -51,9 +51,33 @@
         <div class="mymanage">
             <a class="myManage1"href="controller.php?getCart=1">我的购物车
                 <i class="iright"></i></a>
-            <a class="myManage5">完善用户信息
+        </div>
+        <div class="mymanage">
+            <a class="myManage1"href="controller.php?address_manage=1">收货地址管理
                 <i class="iright"></i></a>
         </div>
+        <?php if($_SESSION['sdp']['level']<1):?>
+                    <div class="mymanage">
+                        <a href="controller.php?sdp=1&sdp_signup=1" class="myManage4">加盟微客
+                            <i class="iright"></i></a>
+                    </div>
+        <?php endif?>
+        <?php if($_SESSION['sdp']['level']>1):?>
+            <div class="mymanage">
+                <a href="controller.php?sdp=1&sdpManageInf=1" class="myManage4">分销商后台
+                    <i class="iright"></i></a>
+            </div>
+        <?php endif?>
+        <?php if($_SESSION['sdp']['level']==1):?>
+            <div class="mymanage">
+                <a href="controller.php?sdp=1&sdpUserInf=1" class="myManage4">微商后台
+                    <i class="iright"></i></a>
+            </div>
+        <?php endif?>
+<!--        <div class="mymanage">-->
+<!--            <a class="myManage5">完善用户信息-->
+<!--                <i class="iright"></i></a>-->
+<!--        </div>-->
 
     </div>
 
